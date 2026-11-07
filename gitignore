@@ -1,0 +1,46 @@
+# ===== Vivado generated files =====
+# Build, simulation and cache directories
+*.cache/
+*.runs/
+*.sim/
+*.hw/
+*.ip_user_files/
+*.gen/
+*.srcs/
+.Xil/
+xsim.dir/
+
+# Logs, journals and backups
+*.jou
+*.log
+*.str
+*.backup.*
+vivado*.zip
+webtalk*
+usage_statistics_webtalk.*
+
+# Simulation databases and waveforms
+*.wdb
+*.pb
+*.vcd
+
+# Vivado project file (recreate the project with scripts/create_project.tcl instead)
+*.xpr
+
+# Bitstreams: rebuildable. Comment out if you want to commit the final one.
+*.bit
+*.bin
+*.ltx
+
+# ===== Python (assembler) =====
+__pycache__/
+*.pyc
+.venv/
+
+# ===== OS / editor junk =====
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+*.swp
+*~
