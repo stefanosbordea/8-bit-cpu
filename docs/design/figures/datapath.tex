@@ -1,0 +1,199 @@
+% datapath: the complete LS datapath
+\begin{tikzpicture}[x=1mm,y=1mm,
+  dp blk/.style={draw=lsnavy,fill=white,rounded corners=1.5pt,line width=0.6pt,align=center,
+    inner sep=1pt,minimum height=7mm,font=\sffamily\scriptsize,text=lsink},
+  dp ctrl/.style={dp blk,draw=lsblue,fill=lsbluelight},
+  dp data/.style={dp blk,draw=lsteal,fill=lstealight},
+  dp mem/.style={dp blk,draw=lsviolet,fill=lsvioletlight},
+  dp mac/.style={dp blk,draw=lsamber!90!black,fill=lsamberlight},
+  dp io/.style={dp blk,draw=lsgrey,fill=lspaper},
+  dp name/.style={font=\sffamily\footnotesize\bfseries,text=lsnavy},
+  dp reg/.style={font=\ttfamily\footnotesize\bfseries,text=lsnavy},
+  dp sub/.style={font=\sffamily\scriptsize,text=lsgrey},
+  dp region/.style={rounded corners=3pt,line width=0.4pt},
+  dp rlabel/.style={font=\sffamily\scriptsize\bfseries,anchor=north west,inner sep=0pt},
+  dp ff/.style={draw=lsamber!90!black,fill=white,line width=0.5pt,minimum width=6mm,
+    minimum height=5mm,inner sep=0pt,font=\sffamily\scriptsize\bfseries,text=lsnavy},
+  dp bus/.style={draw=lsnavy,line width=1pt,-{Stealth[length=1.7mm,width=1.4mm]}},
+  dp sig/.style={draw=lsink,line width=0.5pt,-{Stealth[length=1.5mm,width=1.2mm]}},
+  dp ctl/.style={draw=lsblue,line width=0.5pt,dash pattern=on 1.6pt off 1.2pt},
+  dp lbl/.style={font=\sffamily\scriptsize,text=lsgrey,inner sep=0.6pt},
+  dp lblk/.style={font=\sffamily\scriptsize,text=lsink,inner sep=0.6pt},
+]
+% bus width mark: slash at #1, number above (h) or right (v)
+\def\dpw#1#2{\draw[draw=lsnavy,line width=0.4pt] #1 ++(-0.6,-1.1) -- ++(1.2,2.2);
+  \node[dp lbl,anchor=south west] at #1 [xshift=0.3mm,yshift=0.6mm] {#2};}
+\def\dpwv#1#2{\draw[draw=lsnavy,line width=0.4pt] #1 ++(-1.1,-0.6) -- ++(2.2,1.2);
+  \node[dp lbl,anchor=west] at #1 [xshift=1.2mm] {#2};}
+% muxes: vertical (inputs on the left) and horizontal (inputs on top); #1 name, #2 x, #3 y, #4 w, #5 h
+\def\dpvmux#1#2#3#4#5{%
+  \node[minimum width=#4mm,minimum height=#5mm,inner sep=0pt] (#1) at (#2,#3) {};
+  \draw[draw=lsnavy,fill=white,line width=0.6pt,rounded corners=0.8pt] (#1.north west) -- ([yshift=-1.8mm]#1.north east)
+    -- ([yshift=1.8mm]#1.south east) -- (#1.south west) -- cycle;}
+\def\dphmux#1#2#3#4#5{%
+  \node[minimum width=#4mm,minimum height=#5mm,inner sep=0pt] (#1) at (#2,#3) {};
+  \draw[draw=lsnavy,fill=white,line width=0.6pt,rounded corners=0.8pt] (#1.north west) -- (#1.north east)
+    -- ([xshift=-1.8mm]#1.south east) -- ([xshift=1.8mm]#1.south west) -- cycle;}
+% ---------- regions ----------
+\begin{scope}[on background layer]
+\def\dpregion#1#2#3#4#5#6{%
+  \fill[dp region,#1!5] (#2,#3) rectangle (#4,#5);
+  \draw[dp region,#1!35] (#2,#3) rectangle (#4,#5);
+  \node[dp rlabel,text=#1] at (#2+2,#5-1.6) {#6};}
+\dpregion{lsblue}{0}{130}{160}{164}{CONTROL}
+\dpregion{lsteal}{0}{28}{56}{124}{REGISTERS \& ALU}
+\dpregion{lsviolet}{60}{28}{107}{124}{MEMORY}
+\dpregion{lsamber!90!black}{111}{28}{160}{124}{MAC UNIT}
+\dpregion{lsgrey}{0}{0}{160}{24}{I/O}
+\end{scope}
+
+% ---------- control row ----------
+\node[dp ctrl,minimum width=14mm] (stab) at (22,145) {start table\\[-0.5ex]8 entries};
+\dpvmux{pcm}{38.5}{145}{3.5}{13}
+\node[dp ctrl,minimum width=12mm,font=\ttfamily\footnotesize\bfseries] (pc) at (49.5,145) {PC};
+\node[dp ctrl,minimum width=8mm,minimum height=5mm] (inc) at (49.5,136.5) {$+1$};
+\node[dp ctrl,minimum width=20mm] (rom) at (75.5,145) {program ROM\\[-0.5ex]256 $\times$ 16};
+\node[dp ctrl,minimum width=12mm,font=\ttfamily\footnotesize\bfseries] (ir) at (97,145) {IR};
+\node[dp ctrl,minimum width=24mm,minimum height=10mm] (fsm) at (122,145) {decoder + FSM\\[-0.5ex]9 states};
+\node[dp ctrl,minimum width=12mm,font=\ttfamily\footnotesize\bfseries] (cnt) at (152,145) {CNT};
+\draw[dp sig] (1.5,145) -- node[dp lbl,above=0.3mm] {SW15..13} (stab.west);
+\draw[dp bus] (stab.east) -- (pcm.west|-stab.east);
+\dpw{(30.5,145)}{12}
+\draw[dp bus] (pcm.east|-pc.west) -- (pc.west);
+\draw[dp bus] (pc.east) -- (rom.west);
+\dpw{(57.6,145)}{12}
+\draw[dp bus] (62,145) |- (inc.east);
+\fill[lsnavy] (62,145) circle (0.6mm);
+\draw[dp bus] (inc.west) -| (34.6,141.5) -- (pcm.west|-0,141.5);
+\draw[dp bus] (rom.east) -- (ir.west);
+\dpw{(86.9,145)}{16}
+\draw[dp bus] (ir.east) -- (fsm.west);
+\dpw{(106,145)}{16}
+\draw[dp bus] ([xshift=-3mm]ir.north) |- (34.6,158) |- (pcm.west|-0,148.5);
+\node[dp lbl,above=0.3mm] at (67,158) {imm12 (JMP, BZ, BNZ, DJNZ)};
+\dpw{(42,158)}{12}
+\draw[dp bus] ([xshift=2mm]ir.north) |- (152,153.5) -- (cnt.north);
+\node[dp lbl,above=0.3mm] at (123,153.5) {$n$ = IR[7:0], loaded in DECODE};
+\dpw{(145,153.5)}{8}
+\draw[dp sig] (cnt.west) -- node[dp lbl,above=0.3mm] {CNT = 1} (fsm.east);
+\draw[dp sig] (116,134) node[dp lbl,left] {Z, N} -- (116,140);
+% ---------- registers & ALU ----------
+\dpvmux{wb}{18.5}{100}{5}{30}
+\node[dp data,minimum width=16mm,minimum height=23mm] (rf) at (36,100) {};
+\foreach \dpk/\dpn in {0/R0,1/R1,2/R2,3/R3}
+  \node[draw=lsteal,fill=white,line width=0.4pt,minimum width=12mm,minimum height=4.6mm,inner sep=0pt,
+    font=\ttfamily\scriptsize\bfseries,text=lsnavy] at (36,107.3-\dpk*4.9) {\dpn};
+\node[dp sub,anchor=north] at (36,88.3) {};
+% ALU: classic notched shape, inputs on top at x = 31 and 41
+\draw[draw=lsteal,fill=lstealight,line width=0.6pt,line join=round]
+  (26,76) -- (34,76) -- (36,73.5) -- (38,76) -- (46,76) -- (41,64) -- (31,64) -- cycle;
+\node[dp name,font=\sffamily\footnotesize] at (36,68.5) {ALU};
+\coordinate (alu) at (36,64);
+\node[dp blk,draw=lsteal,fill=white,minimum width=10mm,minimum height=5mm,font=\ttfamily\scriptsize\bfseries,text=lsnavy] (flags) at (15,76) {Z\enspace N};
+\node[dp data,minimum width=12mm,font=\ttfamily\footnotesize\bfseries] (t) at (36,52) {T};
+\draw[dp bus] (49,52) node[dp lbl,above left=0.2mm and 0mm] {RQ} -- (t.east);
+% wiring
+\draw[dp bus] (wb.east|-rf.west) -- (rf.west);
+\dpw{(25.5,100)}{8}
+\draw[dp bus] (31,88.5) -- node[dp lbl,left=0.3mm,pos=0.45] {Ra} (31,76);
+\draw[dp bus] (41,88.5) -- node[dp lbl,right=0.3mm,pos=0.45] {Rb} (41,76);
+\draw[dp bus] (alu) -- (t.north);
+\dpwv{(36,60.5)}{8}
+\draw[dp sig] (28.5,70) -| (flags.south);
+\draw[dp bus] (t.west) -| (3,112) -- (wb.west|-0,112);
+\dpw{(12,112)}{8}
+\foreach \dpy/\dpl in {106/XR,100/WR,94/IN,88/imm8} {
+  \draw[dp bus] (11,\dpy) -- (wb.west|-0,\dpy);
+  \node[dp lbl,anchor=east] at (11,\dpy) {\dpl};}
+\draw[dp bus] (36,111.5) -- (36,116);
+\node[dp lbl,anchor=south] at (36,116) {Rs to OUTR};
+% ---------- memory ----------
+\foreach \dpp/\dpm/\dpr/\dpy in {0/X/XR/106,1/W/WR/76} {
+  \node[dp mem,minimum width=8mm,font=\ttfamily\footnotesize\bfseries] (p\dpp) at (69.5,\dpy) {P\dpp};
+  \node[dp mem,minimum width=8mm,minimum height=4.6mm] (inc\dpp) at (69.5,\dpy-8.5) {$+1$};
+  \node[dp mem,minimum width=12mm] (\dpm rom) at (86,\dpy) {\dpm{} ROM\\[-0.5ex]256 $\times$ 8};
+  \node[dp mem,minimum width=8mm,font=\ttfamily\footnotesize\bfseries] (\dpr) at (101,\dpy) {\dpr};
+  \draw[dp bus] (p\dpp.east) -- (\dpm rom.west);
+  \draw[dp bus] (76,\dpy) |- (inc\dpp.east);
+  \fill[lsnavy] (76,\dpy) circle (0.6mm);
+  \draw[dp bus] (inc\dpp.north) -- (p\dpp.south);
+  \draw[dp bus] (\dpm rom.east) -- (\dpr.west);
+  \dpw{(93.7,\dpy)}{8}
+  \draw[dp bus] (69.5,\dpy+8) node[dp lbl,above] {imm12} -- (p\dpp.north);
+  \dpwv{(69.5,\dpy+6.2)}{12}
+  \draw[dp bus] (62.5,\dpy) -- (p\dpp.west);
+  \node[dp lbl,anchor=north] at (86,\dpy-4.2) {address P\dpp[7:0]};}
+% ---------- MAC unit ----------
+\dpvmux{opm}{118}{100}{3.5}{20}
+\node[dp mac,minimum width=22mm,minimum height=9mm] (mul) at (135,91.5) {signed 8 $\times$ 8\\[-0.5ex]DSP48E1};
+\node[dp mac,minimum width=14mm,font=\ttfamily\footnotesize\bfseries] (prod) at (135,80.5) {PROD};
+\node[dp mac,minimum width=12mm,minimum height=5mm] (sx) at (135,71) {sext24};
+\node[dp mac,minimum width=14mm] (add) at (135,61.5) {$+$};
+\dphmux{accm}{135}{52}{13}{5.5}
+\node[dp mac,minimum width=12mm,font=\ttfamily\footnotesize\bfseries] (acc) at (135,42.5) {ACC};
+\node[dp mac,minimum width=13.6mm,minimum height=10mm] (rq) at (152.6,42.5) {{\footnotesize RQ}\\[-0.7ex]shift, ReLU\\[-0.7ex]clamp};
+\node[dp ff] (v1) at (118,80.5) {V1};
+\node[dp ff] (v2) at (118,71) {V2};
+\draw[dp bus] (XR.east) -- (opm.west|-0,106);
+\dpw{(110,106)}{8}
+\draw[dp bus] (WR.east) -| (109,100) -- (opm.west|-0,100);
+\dpw{(112.5,100)}{8}
+\draw[dp bus] (opm.east) -| (mul.north);
+\dpw{(127,100)}{2$\times$8}
+\draw[dp bus] (mul) -- (prod);
+\draw[dp bus] (prod) -- (sx);
+\draw[dp bus] (sx) -- (add);
+\draw[dp bus] (add) -- (accm.north);
+\draw[dp bus] (accm.south) -- (acc);
+\dpwv{(135,85.6)}{16}
+\dpwv{(135,75.6)}{16}
+\dpwv{(135,66.3)}{24}
+\dpwv{(135,56.4)}{24}
+\dpwv{(135,47.3)}{24}
+\draw[dp bus] (acc.east) -- (rq.west);
+\draw[dp bus] (143,42.5) |- (add.east);
+\draw[dp bus] (143,52) -- ([xshift=-0.8mm]accm.east);
+\fill[lsnavy] (143,42.5) circle (0.6mm);
+\fill[lsnavy] (143,52) circle (0.6mm);
+\node[dp lbl,anchor=south west] at (143.4,52.2) {hold};
+\draw[dp bus] (rq.south) -- ++(0,-4) node[dp lbl,below] {to T};
+\dpwv{(152.6,35.6)}{8}
+\draw[dp sig] (v1) -- (v2);
+\draw[dp ctl,dash pattern=on 0.5pt off 1pt,line width=0.6pt,-{Stealth[length=1.3mm,width=1.1mm]}] (v1.east) -- (prod.west);
+\draw[dp ctl,dash pattern=on 0.5pt off 1pt,line width=0.6pt,-{Stealth[length=1.3mm,width=1.1mm]}] (v2.east) -| (125,53.2) -- ([xshift=0.5mm]accm.west|-0,53.2);
+% ---------- the Ra, Rb bus ----------
+\draw[dp bus,-] (rf.east|-0,100) -| (52,36) -- (122,36);
+\draw[dp bus,-] (62.5,36) -- (62.5,106);
+\draw[dp bus] (113,36) |- (opm.west|-0,94);
+\draw[dp bus] (122,36) |- ([xshift=1.3mm]accm.west|-0,50);
+\foreach \dpx in {62.5,113} \fill[lsnavy] (\dpx,36) circle (0.6mm);
+\fill[lsnavy] (62.5,76) circle (0.6mm);
+\node[dp lblk,anchor=south west] at (76,36.3) {Ra, Rb};
+\dpw{(90,36)}{2$\times$8}
+\node[dp lbl,anchor=west] at (63.2,56) {Ra[3:0] \& Rb (MVP)};
+\node[dp lbl,anchor=north west] at (122.4,35.4) {LDA: sext24(Ra \& Rb)};
+% ---------- I/O ----------
+\node[dp io,minimum width=11mm,font=\ttfamily\footnotesize\bfseries] (in) at (18,13) {IN};
+\draw[dp bus] (3,13) node[dp lbl,above right=0.2mm and 0mm] {SW7..0} -- (in.west);
+\draw[dp bus] (in.east) -- ++(8,0) node[dp lbl,right] {to write-back mux};
+\dpw{(26.3,13)}{8}
+\node[dp io,minimum width=12mm,font=\ttfamily\footnotesize\bfseries] (outr) at (72,13) {OUTR};
+\draw[dp bus] (60,13) node[dp lbl,above right=0.2mm and 0mm] {Rs} -- (outr.west);
+\draw[dp bus] (outr.east) -- ++(8,0) node[dp lbl,right] {LED7..0};
+\dpw{(81,13)}{8}
+\node[dp io,minimum width=19mm] (cyc) at (107,16) {cycle counter};
+\dpvmux{view}{127.5}{13}{3.5}{12}
+\node[dp io,minimum width=24mm] (seg) at (147,13) {seven-segment\\[-0.5ex]scanner, 8 digits};
+\draw[dp bus] (cyc.east) -- (view.west|-cyc.east);
+\dpw{(120,16)}{32}
+\draw[dp bus] (118,10) node[dp lbl,left] {PC, IR, ACC, \dots} -- (view.west|-0,10);
+\draw[dp sig] (127.5,3) node[dp lbl,left] {SW10..8} -- (view.south);
+\draw[dp bus] (view.east) -- (seg.west);
+% ---------- control: one dashed line from the decoder/FSM ----------
+\draw[dp ctl] (130,140) -- (130,125.6);
+\draw[dp ctl] (3,125.6) -- (161.2,125.6) -- (161.2,26.5) -- (150,26.5);
+\foreach \dpx in {48,92,148}
+  \draw[dp ctl,-{Stealth[length=1.3mm,width=1.1mm]}] (\dpx,125.6) -- (\dpx,120.5);
+\draw[dp ctl,-{Stealth[length=1.3mm,width=1.1mm]}] (150,26.5) -- (150,21);
+\node[dp lbl,text=lsblue,anchor=south west] at (3,125.9) {enables and selects (every register enable gated by \sig{ce})};
+\end{tikzpicture}

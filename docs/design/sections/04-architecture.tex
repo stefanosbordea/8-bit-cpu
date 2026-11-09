@@ -2,7 +2,7 @@
 
 \Cref{fig:datapath} is the complete datapath. It keeps everything in Stefanos' plan (8-bit data, four registers, 16-bit instructions, 12-bit addresses, two auto-advancing pointers, a 24-bit MAC accumulator, a fetch--decode--execute--write-back FSM) and changes four things: separate memories for inputs and weights, registered memory reads, valid bits that let the MAC unit run as a three-step pipeline, and three new FSM states for streams.
 
-\lsfig[p]{datapath}{The LS datapath. Blue blocks are control, teal blocks registers and ALU, violet blocks memory, amber blocks the MAC unit, grey blocks board I/O. Numbers on the buses are widths in bits. Dashed blue lines are control signals (register enables and multiplexer selects), all registered or decoded from registers; every register enable is gated by the clock enable \sig{ce}.}
+\lsfig[p]{datapath}{The LS datapath. Blue blocks are control, teal blocks registers and ALU, violet blocks memory, amber blocks the MAC unit, grey blocks board I/O. Numbers on the buses are widths in bits. Dotted lines are the stream valid bits. The dashed blue line stands for all register enables and multiplexer selects, and every enable is gated by the clock enable \sig{ce}.}
 
 \subsection{Blocks}
 

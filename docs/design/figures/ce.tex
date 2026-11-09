@@ -12,7 +12,7 @@
   cef arr/.style={draw=lsgrey, line width=0.5pt, -{Stealth[length=1.4mm,width=1.1mm]}},
   cef box/.style={draw=lsgrey!80, fill=white, rounded corners=1pt, font=\sffamily\scriptsize,
     text=lsink, minimum height=4.4mm, inner xsep=1.2pt, inner ysep=0.8pt, align=center},
-  cef chip/.style={rounded corners=0.8pt, minimum width=9.4mm, minimum height=4.4mm, inner sep=0pt,
+  cef chip/.style={rounded corners=0.8pt, minimum width=9.8mm, minimum height=4.4mm, inner sep=0pt,
     font=\ttfamily\footnotesize, text=lsnavy, line width=0.5pt},
   cef cc/.style={cef chip, draw=lsblue, fill=lsbluelight},
   cef dc/.style={cef chip, draw=lsteal, fill=lstealight},
@@ -90,7 +90,7 @@
 \node[cef box, minimum width=16.6mm] (cefop) at (112.4,29.2) {one-pulse};
 \node[cef box, minimum width=16.6mm, minimum height=7mm] (cefcs) at (112.4,21.6)
   {\cefce{} select\\[-0.3ex]\textcolor{lsgrey}{1, pulse, tick}};
-\node[cef note, anchor=east] at (103.4,35.6) {10 ms};
+\node[cef note, anchor=east] at (102.9,35.6) {10 ms};
 \node[cef box, minimum width=12mm, minimum height=7mm] (ceftk) at (95.5,21.6)
   {slow tick\\[-0.3ex]\textcolor{lsgrey}{4 Hz}};
 \node[cef box, minimum width=31.2mm, minimum height=7mm] (cefdp) at (105.1,12.6)
@@ -104,19 +104,19 @@
 
 % gated by ce
 \draw[fill=white, draw=lsblue, line width=0.6pt, rounded corners=2pt] (129,7.6) rectangle (162,52.8);
-\node[cef txt, font=\sffamily\scriptsize\bfseries, text=lsblue, anchor=base west] at (130.5,49.4) {gated by \cefce};
-\node[cef note, anchor=base west] at (130.5,46.4) {only edges with \cefce{} $=$ 1};
+\node[cef txt, font=\sffamily\scriptsize\bfseries, text=lsblue, anchor=base west] at (130.0,49.4) {gated by \cefce};
+\node[cef note, anchor=base west] at (130.0,46.4) {only edges with \cefce{} $=$ 1};
 \foreach \x/\y/\s/\n in {
-    135.1/41.6/cef cc/state, 145.5/41.6/cef cc/PC, 155.9/41.6/cef cc/IR,
-    135.1/36.3/cef cc/CNT, 145.5/36.3/cef cc/V1, 155.9/36.3/cef cc/V2,
-    135.1/31.0/cef dc/R0\textendash R3, 145.5/31.0/cef dc/T, 155.9/31.0/cef dc/{Z, N},
-    135.1/25.7/cef dc/P0, 145.5/25.7/cef dc/P1, 155.9/25.7/cef dc/OUTR,
-    135.1/20.4/cef dc/XR, 145.5/20.4/cef dc/WR, 155.9/20.4/cef dc/PROD,
-    155.9/15.1/cef dc/ACC}
+    134.9/41.6/cef cc/state, 145.5/41.6/cef cc/PC, 156.1/41.6/cef cc/IR,
+    134.9/36.3/cef cc/CNT, 145.5/36.3/cef cc/V1, 156.1/36.3/cef cc/V2,
+    134.9/31.0/cef dc/R0\textendash R3, 145.5/31.0/cef dc/T, 156.1/31.0/cef dc/{Z,\,N},
+    134.9/25.7/cef dc/P0, 145.5/25.7/cef dc/P1, 156.1/25.7/cef dc/OUTR,
+    134.9/20.4/cef dc/XR, 145.5/20.4/cef dc/WR, 156.1/20.4/cef dc/PROD,
+    156.1/15.1/cef dc/ACC}
   \node[\s] at (\x,\y) {\n};
-\node[cef cc, minimum width=19.8mm, font=\sffamily\scriptsize] at (140.3,15.1) {counters};
-\fill[lsbluelight, draw=lsblue, line width=0.5pt] (130.5,9.2) rectangle ++(2.6,2.2);
-\node[cef note, anchor=base west] at (133.8,9.5) {control};
+\node[cef cc, minimum width=20.4mm, font=\sffamily\scriptsize] at (140.2,15.1) {counters};
+\fill[lsbluelight, draw=lsblue, line width=0.5pt] (130.0,9.2) rectangle ++(2.6,2.2);
+\node[cef note, anchor=base west] at (133.3,9.5) {control};
 \fill[lstealight, draw=lsteal, line width=0.5pt] (145.5,9.2) rectangle ++(2.6,2.2);
 \node[cef note, anchor=base west] at (148.8,9.5) {datapath};
 

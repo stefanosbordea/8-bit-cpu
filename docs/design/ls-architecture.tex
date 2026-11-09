@@ -5,7 +5,9 @@
 \usepackage[round,sort&compress]{natbib}
 \usepackage{flafter}            % a float never appears before its place in the text
 \usepackage[section]{placeins}  % ...nor after the end of its section
+\usepackage{xltabular}          % tables that may break across pages
 \input{numbers.tex}
+\renewcommand{\floatpagefraction}{0.6} % lets the full-page datapath figure take a page of its own early
 \renewcommand{\lsdoctitle}{The LS Architecture \textperiodcentered{} design document v0.1}
 
 % \lsfig[placement]{figure file}{caption}
