@@ -24,7 +24,7 @@
 \node[wf in, text=white] at (172,0) {4\textit{n} = 256};
 \node[wf tot] at (326,0) {\cycU};
 % ---- row 2: fetch once, no overlap
-\node[wf title] at (0,-8.0) {\wftag{Step 1}fetch the MAC once (no refetch), no overlap: 2 + 3\textit{n}};
+\node[wf title] at (0,-8.0) {\wftag{Level 2}fetch the MAC once (no refetch), no overlap: 2 + 3\textit{n}};
 \fill[lsgrey!40] (0,-12.5-\wfh) rectangle (44,-12.5+\wfh);
 \fill[lsamber!45] (44,-12.5-\wfh) rectangle (238,-12.5+\wfh);
 \draw[wf seg] (44,-12.5-\wfh) -- (44,-12.5+\wfh);
@@ -34,7 +34,7 @@
 \node[wf save] at (269,-12.5) {\textminus\saveRefetch{} refetch};
 \node[wf tot] at (326,-12.5) {\cycNoOverlap};
 % ---- row 3: STREAM = program S
-\node[wf title] at (0,-20.5) {\wftag{Step 2}overlap address, multiply, accumulate (STREAM): program \textbf{\color{lsamber!75!black}S}};
+\node[wf title] at (0,-20.5) {\wftag{Level 3}overlap address, multiply, accumulate (STREAM): program \textbf{\color{lsamber!75!black}S}};
 \fill[lsgrey!40] (0,-25-\wfh) rectangle (44,-25+\wfh);
 \fill[lsamber] (44,-25-\wfh) rectangle (112,-25+\wfh);
 \draw[wf seg] (44,-25-\wfh) -- (44,-25+\wfh);
