@@ -1,0 +1,70 @@
+% readlatency: LD R1, [P1]+ cycle by cycle -- clk, state, P1, WR, R1 over its four cycles and the next FETCH; WR holds W[q] the cycle after P1 = q, R1 and P1 commit at the end of WRITEBACK
+\begin{tikzpicture}[x=26mm, y=1mm,
+  rl name/.style={font=\ttfamily\footnotesize, text=lsink, anchor=east, inner sep=0pt},
+  rl txt/.style={font=\sffamily\scriptsize, text=lsink, inner sep=0pt},
+  rl val/.style={font=\sffamily\footnotesize, text=lsink, fill=white, inner xsep=1.4pt, inner ysep=0.8pt},
+  rl old/.style={rl val, text=lsgrey},
+  rl note/.style={font=\sffamily\scriptsize, fill=white, inner xsep=1.2pt, inner ysep=0.6pt},
+  rl wave/.style={draw=lsnavy, line width=0.6pt, line join=round},
+  rl edge/.style={draw=lsrule, line width=0.35pt},
+  rl state/.style={draw=white, line width=0.8pt, minimum width=26mm, minimum height=5.4mm,
+    inner sep=0pt, font=\sffamily\scriptsize\bfseries, text=white},
+  rl tip/.style={-{Stealth[length=1.6mm,width=1.2mm]}, line width=0.6pt},
+]
+% x in cycles (cycle k spans k-1..k, rising edges at integers), y in mm
+\def\rlH{2.2}
+\def\rlS{0.021}
+% bus segment on row #1 from edge #2 to edge #3; the ends at 0 and 5 stay open
+\def\rlBus#1#2#3{%
+  \ifnum#2=0
+    \draw[rl wave] (0,{#1+\rlH}) -- ({#3-\rlS},{#1+\rlH}) -- (#3,#1)
+      -- ({#3-\rlS},{#1-\rlH}) -- (0,{#1-\rlH});
+  \else
+    \draw[rl wave] (5,{#1+\rlH}) -- ({#2+\rlS},{#1+\rlH}) -- (#2,#1)
+      -- ({#2+\rlS},{#1-\rlH}) -- (5,{#1-\rlH});
+  \fi}
+
+% ---- hairline at every rising clock edge
+\begin{pgfonlayer}{background}
+  \foreach \k in {0,...,5} \draw[rl edge] (\k,-4.2) -- (\k,-38.2);
+\end{pgfonlayer}
+
+% ---- cycle numbers and signal names
+\node[rl txt, anchor=east, text=lsgrey] at ([xshift=-2.6mm]0,0) {cycle};
+\foreach \c in {1,...,4} \node[rl txt, font=\sffamily\footnotesize] at (\c-0.5,0) {\c};
+\node[rl txt, font=\sffamily\footnotesize, text=lsgrey] at (4.5,0) {5};
+\foreach \y/\n in {-6.4/clk, -12.8/state, -19.2/P1, -29.2/WR, -35.6/R1}
+  \node[rl name] at ([xshift=-2.6mm]0,\y) {\n};
+
+% ---- clk
+\draw[rl wave] (0,{-6.4-\rlH}) \foreach \k in {0,...,4} {
+  -- (\k,{-6.4+\rlH}) -- (\k+0.5,{-6.4+\rlH}) -- (\k+0.5,{-6.4-\rlH}) -- (\k+1,{-6.4-\rlH}) };
+
+% ---- state (cycle 5 belongs to the next instruction)
+\foreach \c/\s/\f in {1/FETCH/lsblue, 2/DECODE/lsblue!65, 3/EXECUTE/lsteal, 4/WRITEBACK/lsteal!65}
+  \node[rl state, fill=\f] at (\c-0.5,-12.8) {\s};
+\node[rl state, minimum width=26mm-1.4pt, minimum height=5.4mm-1.4pt, line width=0.6pt,
+  draw=lsblue!55, fill=lsbluelight, text=lsblue] at (4.5,-12.8) {FETCH};
+
+% ---- P1, WR, R1: each value is named in the cycle it first appears
+\rlBus{-19.2}{0}{4}\rlBus{-19.2}{4}{5}
+\node[rl val] at (0.5,-19.2) {$q$};
+\node[rl val] at (4.5,-19.2) {$q+1$};
+\rlBus{-29.2}{0}{1}\rlBus{-29.2}{1}{5}
+\node[rl old] at (0.5,-29.2) {old};
+\node[rl val] at (1.5,-29.2) {$W[q]$};
+\rlBus{-35.6}{0}{4}\rlBus{-35.6}{4}{5}
+\node[rl old] at (0.5,-35.6) {old};
+\node[rl val] at (4.5,-35.6) {$W[q]$};
+
+% ---- read latency: the address in FETCH, the data from DECODE on
+\draw[rl tip, lsviolet, rounded corners=1mm] (0.5,-21.4) -- (0.5,-24.2) -- (1.5,-24.2) -- (1.5,-27.0);
+\node[rl note, anchor=west, text=lsviolet] at (1.56,-24.05)
+  {address $q$ in FETCH $\rightarrow$ data $W[q]$ from DECODE on};
+
+% ---- commit: R1 and P1 change on the same edge
+\draw[lsteal, line width=0.75pt, dash pattern=on 2.2pt off 1.4pt] (4,-16.2) -- (4,-38.2);
+\draw[rl tip, lsteal] (4,-41.2) -- (4,-38.0);
+\node[rl txt, anchor=north east, text=lsteal] at (5,-41.6)
+  {\texttt{R1} and \texttt{P1} commit at the end of WRITEBACK};
+\end{tikzpicture}

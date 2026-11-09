@@ -1,0 +1,69 @@
+% accwidth: how wide the accumulator must be -- int8 operands, one product, 64 products, the 16-bit bias and the 24-bit ACC as bit bars to scale (1 bit = 4.5 mm), right-aligned at the LSB
+\begin{tikzpicture}[x=1mm,y=1mm,
+  aw val/.style={fill=lsteal!18},
+  aw sgn/.style={fill=lsteal!58},
+  aw room/.style={fill=lsamber!14,path picture={\foreach \awt in {-7,-5.8,...,6}
+      \draw[aw hatch] ([xshift=\awt mm]path picture bounding box.south west) -- ++(8mm,8mm);}},
+  aw roomsgn/.style={aw room,fill=lsamber!48},
+  aw hatch/.style={draw=lsamber!80!black,line width=0.3pt},
+  aw edge/.style={draw=lsteal!70!black,line width=0.6pt},
+  aw tick/.style={draw=lsteal!70!black,line width=0.4pt},
+  aw name/.style={font=\sffamily\footnotesize,text=lsink,anchor=base west,inner sep=0pt},
+  aw bits/.style={font=\sffamily\footnotesize\bfseries,text=lsnavy,anchor=base east,inner sep=0pt},
+  aw note/.style={font=\sffamily\scriptsize,text=lsteal!40!black,anchor=base east,inner sep=0pt},
+  aw head/.style={font=\sffamily\scriptsize,text=lsgrey,anchor=base,inner sep=0pt},
+]
+\def\awU{4.5}\def\awR{137}\def\awH{6}\def\awC{150}
+% \awBar{centre y}{bits}{note}: a signed value, sign bit darker, note right-aligned at the LSB end
+\def\awBar#1#2#3{%
+  \pgfmathsetmacro\awL{\awR-#2*\awU}%
+  \pgfmathsetmacro\awS{\awL+\awU}%
+  \path[aw val] (\awS,#1-\awH/2) rectangle (\awR,#1+\awH/2);
+  \path[aw sgn] (\awL,#1-\awH/2) rectangle (\awS,#1+\awH/2);
+  \pgfmathtruncatemacro\awN{#2-1}%
+  \foreach \awk in {1,...,\awN}
+    \draw[aw tick] ({\awR-\awk*\awU},#1+\awH/2) -- ++(0,-1) ({\awR-\awk*\awU},#1-\awH/2) -- ++(0,1);
+  \draw[aw edge] (\awL,#1-\awH/2) rectangle (\awR,#1+\awH/2);
+  \node[aw note] at (\awR-2,#1-0.8) {#3};}
+% \awRow{centre y}{name}{bits}
+\def\awRow#1#2#3{%
+  \node[aw name] at (0,#1-1) {#2};
+  \node[aw bits] at (\awC,#1-1) {#3};}
+
+% ---- bit header
+\foreach \awb in {0,...,23}
+  \node[aw head] at ({\awR-(\awb+0.5)*\awU},\awH/2+2) {\awb};
+\node[aw head,anchor=base east] at (\awC,\awH/2+2) {bits};
+
+% ---- rows
+\awRow{0}{\textit{x}, \textit{w}: int8}{8}
+\awBar{0}{8}{−128 … 127}
+\awRow{-9.5}{one product \textit{x} $\times$ \textit{w}}{16}
+\awBar{-9.5}{16}{(−128) $\times$ (−128) $=$ +16,384 $=$ 2\textsuperscript{14}\enspace needs bit 15}
+\awRow{-21.5}{64 products}{22}
+\awBar{-21.5}{22}{64 $\times$ 2\textsuperscript{14} $=$ 2\textsuperscript{20}}
+\awRow{-31}{+ 16-bit bias}{16}
+\awBar{-31}{16}{−32,768 … 32,767}
+% ---- sum rule: rows 3-5 read as a column addition, rows 1-2 stand apart
+\draw[draw=lsnavy,line width=0.5pt] (\awR-24*\awU,-36.75) -- (\awR,-36.75);
+% ---- ACC
+\def\awY{-42.5}
+\awRow{\awY}{accumulator \texttt{ACC}}{24}
+\path[aw val] (\awR-22*\awU,\awY-\awH/2) rectangle (\awR,\awY+\awH/2);
+\path[aw room] (\awR-23*\awU,\awY-\awH/2) rectangle (\awR-22*\awU,\awY+\awH/2);
+\path[aw roomsgn] (\awR-24*\awU,\awY-\awH/2) rectangle (\awR-23*\awU,\awY+\awH/2);
+\foreach \awk in {1,...,23}
+  \draw[aw tick] ({\awR-\awk*\awU},\awY+\awH/2) -- ++(0,-1) ({\awR-\awk*\awU},\awY-\awH/2) -- ++(0,1);
+\draw[aw edge] (\awR-24*\awU,\awY-\awH/2) rectangle (\awR,\awY+\awH/2);
+\node[aw note] at (\awR-2,\awY-0.8)
+  {\textit{n} $\le$ 255:\enspace 255 $\times$ 16,384 $+$ 32,767 $=$ 4,210,687 $<$ 8,388,607 $=$ 2\textsuperscript{23} $-$ 1};
+% ---- the 22-bit boundary carried down to ACC
+\draw[draw=lsteal!70!black,line width=0.4pt,dash pattern=on 1.2pt off 1.2pt]
+  (\awR-22*\awU,-21.5-\awH/2) -- (\awR-22*\awU,\awY+\awH/2);
+% ---- direct labels
+\draw[decorate,decoration={brace,mirror,amplitude=1.2mm},draw=lsamber!80!black,line width=0.5pt]
+  (\awR-24*\awU+0.3,\awY-\awH/2-1) -- (\awR-22*\awU-0.3,\awY-\awH/2-1)
+  node[midway,below=1.6mm,font=\sffamily\scriptsize,text=lsamber!60!black,inner sep=0pt] {headroom};
+\draw[->,draw=lsgrey,line width=0.4pt] (\awR-8*\awU-6,0) -- (\awR-8*\awU-0.6,0);
+\node[aw note,text=lsgrey] at (\awR-8*\awU-7,-0.8) {sign bit};
+\end{tikzpicture}%

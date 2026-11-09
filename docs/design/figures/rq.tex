@@ -1,0 +1,79 @@
+% rq: the requantiser RQ (ACC >>> sh, optional ReLU, clamp to int8) with the worked example ACC = -301, sh = 2
+\begin{tikzpicture}[x=1mm, y=1mm,
+  rq stage/.style={draw=lsamber!90!black, fill=white, rounded corners=2pt, line width=0.7pt,
+    minimum height=13mm, inner sep=0pt},
+  rq reg/.style={draw=lsnavy, fill=white, line width=0.7pt, minimum width=17mm, minimum height=10mm,
+    inner sep=0pt},
+  rq title/.style={font=\sffamily\small\bfseries, text=lsnavy, anchor=base, inner sep=0pt},
+  rq sub/.style={font=\sffamily\scriptsize, text=lsgrey, anchor=base, inner sep=0pt},
+  rq bus/.style={->, draw=lsnavy, line width=0.9pt},
+  rq ctl/.style={->, draw=lsblue, line width=0.6pt, dashed},
+  rq cell/.style={fill=lspaper, rounded corners=2pt},
+  rq val/.style={font=\ttfamily\footnotesize, text=lsink, anchor=base, inner sep=0pt},
+  rq note/.style={font=\sffamily\scriptsize, text=lsgrey, anchor=base, inner sep=0pt},
+  rq flow/.style={-{Stealth[length=1.7mm,width=1.25mm]}, draw=lsgrey, line width=0.5pt},
+]
+% a stage of the unit: name, centre x, width (mm), title, two lines; and a register: name, centre x, title, line
+\def\rqstage#1#2#3#4#5#6{%
+  \node[rq stage, minimum width=#3mm] (#1) at (#2,0) {};
+  \node[rq title] at (#2,2.15) {#4};
+  \node[rq sub] at (#2,-1.25) {#5};
+  \node[rq sub] at (#2,-4.45) {#6};}
+\def\rqreg#1#2#3#4{%
+  \node[rq reg] (#1) at (#2,0) {};
+  \node[rq title, font=\ttfamily\small\bfseries] at (#2,0.6) {#3};
+  \node[rq sub] at (#2,-2.9) {#4};}
+% ---- dataflow: ACC -> shift -> ReLU -> clamp -> Rd
+\rqreg{rqacc}{8.5}{ACC}{24-bit}
+\rqstage{rqsh}{42}{30}{\ttfamily >{}>{}> sh}{arithmetic shift}{rounds toward $-\infty$}
+\rqstage{rqrelu}{78}{28}{ReLU}{if relu = 1:}{negative $\to$ 0}
+\rqstage{rqcl}{113}{28}{clamp}{to [\textminus128, 127]}{no wrap-around}
+\rqreg{rqrd}{145.5}{Rd}{int8}
+\begin{scope}[on background layer]
+  \fill[lsamberlight, draw=lsamber!90!black, rounded corners=3pt, line width=0.5pt] (24,-9.5) rectangle (130,9.5);
+\end{scope}
+\draw[rq bus] (rqacc) -- (rqsh);
+\draw[rq bus] (rqsh) -- (rqrelu);
+\draw[rq bus] (rqrelu) -- (rqcl);
+\draw[rq bus] (rqcl) -- (rqrd);
+% bus widths: slash and number
+\foreach \rqx/\rqw in {20.5/24, 59.4/24, 94.4/24, 132.2/8} {
+  \draw[draw=lsnavy, line width=0.5pt] (\rqx-0.7,-1.1) -- (\rqx+0.7,1.1);
+  \node[font=\sffamily\scriptsize, text=lsgrey, anchor=south, inner sep=1pt] at (\rqx,1.2) {\rqw};
+}
+% ---- header line: control inputs from the instruction register, unit name
+\draw[rq ctl] (42,12.6) -- (rqsh.north);
+\draw[rq ctl] (78,12.6) -- (rqrelu.north);
+\node[rq note, text=lsblue] at (42,13.6) {sh = IR[4:0], 0..23};
+\node[rq note, text=lsblue] at (78,13.6) {relu = IR[9]};
+\node[rq note, anchor=base east] at (130,13.6)
+  {\textcolor{lsamber!80!black}{\bfseries RQ} requantiser, combinational};
+% ---- worked example, one cell under each block: baselines of the two value rows
+% (relu = 0 above, relu = 1 below) and of the notes; arrows run at mid-digit height
+\def\rqU{-17.9}\def\rqL{-22.3}\def\rqN{-26.1}
+\def\rqUa{-16.98}\def\rqLa{-21.38}
+\foreach \rqa/\rqb in {0/17, 27/57, 64/92, 99/127, 137/154}
+  \fill[rq cell] (\rqa,-13.2) rectangle (\rqb,-28.7);
+\node[rq val] at (8.5,\rqU) {\textminus301};
+\node[rq val, text=lsgrey] at (8.5,\rqL) {0xFFFED3};
+\node[rq val] at (42,\rqU) {\textminus301 >{}>{}> 2 = \textminus76};
+\node[rq note] at (42,\rqL) {\textcolor{lsrose}{not \textminus75}: truncation};
+\node[rq note] at (42,\rqN) {rounds toward zero};
+\node[rq note, text=lsblue, anchor=base east] at (78.3,\rqU) {relu = 0};
+\node[rq note, text=lsblue, anchor=base east] at (78.3,\rqL) {relu = 1};
+\node[rq val, anchor=base east] at (86.3,\rqU) {\textminus76};
+\node[rq val, anchor=base east] at (86.3,\rqL) {0};
+\node[rq val, anchor=base east] at (115.9,\rqU) {\textminus76};
+\node[rq val, anchor=base east] at (115.9,\rqL) {0};
+\node[rq note] at (113,\rqN) {unchanged};
+\node[rq val] at (145.5,\rqU) {0xB4};
+\node[rq val] at (145.5,\rqL) {0x00};
+\draw[rq flow] (17,\rqUa) -- (27,\rqUa);
+\draw[rq flow] (57,\rqUa) -- (64,\rqUa);
+\draw[rq flow] (59.3,\rqUa) |- (64,\rqLa);
+\fill[lsgrey] (59.3,\rqUa) circle (0.45);
+\foreach \rqy in {\rqUa,\rqLa} {
+  \draw[rq flow] (92,\rqy) -- (99,\rqy);
+  \draw[rq flow] (127,\rqy) -- (137,\rqy);
+}
+\end{tikzpicture}%

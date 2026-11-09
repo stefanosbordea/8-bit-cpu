@@ -1,0 +1,73 @@
+% opcodes: the opcode map -- all 16 opcodes in a 4 x 4 grid (rows op[3:2], columns op[1:0]), coloured by class, MAC #n highlighted
+\begin{tikzpicture}[x=1mm, y=1mm,
+  opc cell/.style={rounded corners=2pt, line width=0.6pt},
+  opc sys/.style={opc cell, draw=lsgrey, fill=lspaper},
+  opc reg/.style={opc cell, draw=lsteal, fill=lstealight},
+  opc mem/.style={opc cell, draw=lsviolet, fill=lsvioletlight},
+  opc mac/.style={opc cell, draw=lsamber!90!black, fill=lsamberlight},
+  opc ls/.style={opc cell, draw=lsamber!55!black, fill=lsamber, line width=1.3pt},
+  opc ctl/.style={opc cell, draw=lsblue, fill=lsbluelight},
+  opc hex/.style={font=\opcTtSize\ttfamily, text=lsgrey, inner sep=0pt, anchor=base west},
+  opc mn/.style={font=\ttfamily\small\bfseries, text=lsnavy, inner sep=0pt, anchor=base},
+  opc ds/.style={font=\sffamily\scriptsize, text=lsink, inner sep=0pt, anchor=base},
+  opc bit/.style={font=\ttfamily\footnotesize\bfseries, text=lsnavy, inner sep=0pt},
+  opc ttl/.style={font=\opcTtSize\ttfamily, text=lsgrey, inner sep=0pt},
+  opc key/.style={minimum width=4.4mm, minimum height=3.2mm, inner sep=0pt, rounded corners=0.8pt, anchor=center},
+  opc keyl/.style={font=\sffamily\scriptsize, text=lsink, inner sep=0pt, text height=1.8mm, text depth=0.5mm,
+    anchor=center},
+]
+% mono text at 8.4 pt is 7 pt after the 0.84 scale of Fira Mono
+\def\opcTtSize{\fontsize{8.4}{9.6}\selectfont}
+\def\opcTt#1{{\opcTtSize\ttfamily#1}}
+% cell width and height, column and row pitch (mm)
+\def\opcW{35.5}\def\opcH{14.6}\def\opcPX{36.9}\def\opcPY{16}
+% \opcCell{row}{col}{hex}{style}{mnemonic}{line 1}{line 2, or empty}
+\def\opcCell#1#2#3#4#5#6#7{%
+  \pgfmathsetmacro\opcx{#2*\opcPX}\pgfmathsetmacro\opcy{-#1*\opcPY}%
+  \draw[#4] (\opcx,\opcy) rectangle ++(\opcW,-\opcH);
+  \node[opc hex] at (\opcx+1.6,\opcy-2.8) {#3};
+  \node[opc mn] at (\opcx+\opcW/2,\opcy-5.9) {#5};
+  \if\relax\detokenize{#7}\relax
+    \node[opc ds] at (\opcx+\opcW/2,\opcy-11.1) {#6};
+  \else
+    \node[opc ds] at (\opcx+\opcW/2,\opcy-9.55) {#6};
+    \node[opc ds] at (\opcx+\opcW/2,\opcy-12.65) {#7};
+  \fi}
+% axes: columns op[1:0], rows op[3:2]
+\foreach \opcb [count=\opci from 0] in {00,01,10,11} {
+  \node[opc bit, anchor=base] at ({\opci*\opcPX+\opcW/2},2.2) {\opcb};
+  \node[opc bit, anchor=east] at (-2.4,{-\opci*\opcPY-\opcH/2}) {\opcb};
+}
+\node[opc ttl, anchor=base] at ({1.5*\opcPX+\opcW/2},6.4) {op[1:0]};
+\node[opc ttl, anchor=south, rotate=90] at (-7.4,{-1.5*\opcPY-\opcH/2}) {op[3:2]};
+% row 00
+\opcCell{0}{0}{0x0}{opc sys}{SYS}{\opcTt{NOP HALT IN OUT}}{}
+\opcCell{0}{1}{0x1}{opc reg}{LDI}{Rd $\leftarrow$ imm8}{}
+\opcCell{0}{2}{0x2}{opc reg}{ALU}{\opcTt{ADD SUB AND OR XOR}}{\opcTt{MOV SHL SHR SAR}}
+\opcCell{0}{3}{0x3}{opc mem}{MVP}{Pp $\leftarrow$ Ra[3:0]\,:\,Rb}{}
+% row 01
+\opcCell{1}{0}{0x4}{opc mem}{LD}{Rd $\leftarrow$ [Pp]\{+\}}{}
+\opcCell{1}{1}{0x5}{opc mem}{ST}{[P0]\{+\} $\leftarrow$ Rs \textit{(optional)}}{}
+\opcCell{1}{2}{0x6}{opc mac}{MUL}{PROD $\leftarrow$ Ra $\times$ Rb}{}
+\opcCell{1}{3}{0x7}{opc mac}{ADDP {\mdseries\color{lsgrey}/} LDA}{ACC $\leftarrow$ ACC $+$ PROD}{ACC $\leftarrow$ Ra\,:\,Rb}
+% row 10: MAC #n, the LS stream instruction
+\opcCell{2}{0}{\textcolor{lsamber!35!black}{0x8}}{opc ls}{MAC \#n}{\textit{n} $=$ 0: classic, 4 cycles}{\textit{n} $\geq$ 1: stream, \textit{n} $+$ 4 cycles}
+\opcCell{2}{1}{0x9}{opc mac}{RQ}{Rd $\leftarrow$ clamp(ACC >{}>{}> sh)}{}
+\opcCell{2}{2}{0xA}{opc mem}{SETP0}{P0 $\leftarrow$ imm12}{}
+\opcCell{2}{3}{0xB}{opc mem}{SETP1}{P1 $\leftarrow$ imm12}{}
+% row 11
+\opcCell{3}{0}{0xC}{opc ctl}{JMP}{PC $\leftarrow$ imm12}{}
+\opcCell{3}{1}{0xD}{opc ctl}{BZ}{branch if Z $=$ 1}{}
+\opcCell{3}{2}{0xE}{opc ctl}{BNZ}{branch if Z $=$ 0}{}
+\opcCell{3}{3}{0xF}{opc ctl}{DJNZ}{R3 $\leftarrow$ R3 $-$ 1}{branch if R3 $\neq$ 0}
+% legend
+\matrix[anchor=north, column sep=1.3mm, inner sep=0pt, ampersand replacement=\&]
+  at ({1.5*\opcPX+\opcW/2},{-3*\opcPY-\opcH-4.2}) {
+  \node[opc sys, opc key]{}; \& \node[opc keyl]{system / I/O}; \&[2.6mm]
+  \node[opc reg, opc key]{}; \& \node[opc keyl]{registers \string& ALU}; \&[2.6mm]
+  \node[opc mem, opc key]{}; \& \node[opc keyl]{pointers \string& memory}; \&[2.6mm]
+  \node[opc mac, opc key]{}; \& \node[opc keyl]{MAC unit}; \&[2.6mm]
+  \node[opc ls, opc key]{}; \& \node[opc keyl]{\opcTt{\bfseries MAC \#n}}; \&[2.6mm]
+  \node[opc ctl, opc key]{}; \& \node[opc keyl]{control flow}; \\
+};
+\end{tikzpicture}%

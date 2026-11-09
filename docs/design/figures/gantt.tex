@@ -1,0 +1,95 @@
+% gantt: project schedule, Mon 9 Nov to Fri 18 Dec 2026 -- Loucas' control modules, Stefanos' datapath modules, joint work, the cross-verification testbenches, our milestones and the course dates
+% Geometry: 1 day = 2.83 mm (40 days = 113.2 mm); label column 48.2 mm; 2 calendar rows of 4.4 mm; 26 rows of 3.3 mm.
+\begin{ganttchart}[
+  time slot format=isodate,
+  x unit=2.83mm, y unit title=4.4mm, y unit chart=3.3mm,
+  canvas/.style={draw=none, fill=none},
+  title/.style={shape=rectangle, inner sep=0pt, outer sep=0pt, draw=none, fill=none},
+  title label node/.append style={inner sep=0pt},
+  title label font=\sffamily\scriptsize\color{lsgrey},
+  title top shift=0.04, title height=0.92,
+  bar/.style={shape=ganttbar, inner sep=0pt, draw=none, fill=lsamber, rounded corners=0.8pt},
+  bar top shift=0.25, bar height=0.5,
+  bar label font=\sffamily\scriptsize\color{lsink},
+  bar label node/.append style={anchor=west, inner sep=0pt, xshift=-46.4mm},
+  group/.style={inner sep=0pt, draw=none, fill=none},
+  group label font=\sffamily\scriptsize\bfseries,
+  group label node/.append style={anchor=west, inner sep=0pt, xshift=-48.2mm, yshift=-0.25mm},
+  milestone/.style={shape=ganttmilestone, inner sep=0pt, draw=none, fill=lsnavy},
+  milestone left shift=-0.01, milestone right shift=0.01,
+  milestone top shift=0.06, milestone height=0.88,
+  milestone label font=\sffamily\scriptsize\color{lsink},
+  milestone label node/.append style={anchor=west, inner sep=0pt, xshift=-46.4mm},
+  lsgantt L/.style={bar/.append style={fill=lsblue}},
+  lsgantt S/.style={bar/.append style={fill=lsteal}},
+  lsgantt v/.style={bar/.append style={fill=#1!32}, bar label font=\sffamily\scriptsize\itshape\color{lsink}},
+  lsgantt ext/.style={milestone/.append style={fill=lsrose}},
+  lsgantt hdr/.style={group label font=\sffamily\scriptsize\bfseries\color{#1}},
+]{2026-11-09}{2026-12-18}
+\def\lsganttms#1#2{\hbox to 44.3mm{#1\hfill\textcolor{lsgrey}{#2}}}% milestone name ... date
+% ---- calendar: months, then weeks (Monday to Sunday)
+\ganttset{title label font=\sffamily\scriptsize\bfseries\color{lsnavy}, title top shift=0, title height=0.8}
+\gantttitle{November 2026}{22}
+\gantttitle{December 2026}{18} \\
+\ganttset{title label font=\sffamily\scriptsize\color{lsgrey}, title top shift=0.04, title height=0.92}
+\gantttitle{9--15 Nov}{7}
+\gantttitle{16--22 Nov}{7}
+\gantttitle{23--29 Nov}{7}
+\gantttitle{30 Nov -- 6 Dec}{7}
+\gantttitle{7--13 Dec}{7}
+\gantttitle{14--18 Dec}{5} \\
+% ---- joint work
+\ganttgroup[lsgantt hdr=lsamber!80!black]{Both}{2026-11-09}{2026-12-17} \\
+\ganttbar{Proposal}{2026-11-09}{2026-11-20} \\
+\ganttbar{Neuron data + two references}{2026-11-21}{2026-11-27} \\
+\ganttbar{Report}{2026-12-01}{2026-12-10} \\
+\ganttbar{Board measurements, Vivado reports}{2026-12-05}{2026-12-09} \\
+\ganttbar{Demo rehearsal}{2026-12-11}{2026-12-17} \\
+% ---- Loucas: the control half
+\ganttgroup[lsgantt hdr=lsblue]{Loucas (control)}{2026-11-14}{2026-12-04} \\
+\ganttbar[lsgantt L]{FSM, decoder, PC, program ROM}{2026-11-14}{2026-11-23} \\
+\ganttbar[lsgantt L]{Run modes, ce, counters}{2026-11-18}{2026-11-24} \\
+\ganttbar[lsgantt L]{STREAM control}{2026-11-25}{2026-12-02} \\
+\ganttbar[lsgantt L]{Display scanner, views}{2026-11-27}{2026-12-04} \\
+\ganttbar[lsgantt v=lsblue]{verifies: tb\_alu, tb\_mul\_rq, tb\_mem}{2026-11-16}{2026-12-04} \\
+% ---- Stefanos: the datapath half
+\ganttgroup[lsgantt hdr=lsteal]{Stefanos (datapath)}{2026-11-14}{2026-12-04} \\
+\ganttbar[lsgantt S]{Registers, ALU, flags}{2026-11-14}{2026-11-22} \\
+\ganttbar[lsgantt S]{Input chain, LEDs, top level + XDC}{2026-11-18}{2026-11-24} \\
+\ganttbar[lsgantt S]{X/W memories, MAC unit, RQ}{2026-11-25}{2026-12-04} \\
+\ganttbar[lsgantt v=lsteal]{verifies: tb\_fsm, tb\_stream, tb\_ce\_pause}{2026-11-16}{2026-12-02} \\
+% ---- milestones: navy = ours, rose = course dates
+\ganttgroup[lsgantt hdr=lsnavy]{Milestones}{2026-11-20}{2026-12-18} \\
+\ganttmilestone[lsgantt ext, name=lsganttPD]{\lsganttms{Proposal due}{Fri 20 Nov}}{2026-11-20} \\
+\ganttmilestone[name=lsganttMa]{\lsganttms{M1 (simulation)}{Tue 24 Nov}}{2026-11-24} \\
+\ganttmilestone[lsgantt ext, name=lsganttPR]{\lsganttms{Progress review}{Fri 27 Nov}}{2026-11-27} \\
+\ganttmilestone[name=lsganttGo]{\lsganttms{STREAM go/no-go}{Wed 2 Dec}}{2026-12-02} \\
+\ganttmilestone[name=lsganttMb]{\lsganttms{M2}{Fri 4 Dec}}{2026-12-04} \\
+\ganttmilestone[name=lsganttMc]{\lsganttms{M3}{Thu 10 Dec}}{2026-12-10} \\
+\ganttmilestone[lsgantt ext, name=lsganttMo]{\lsganttms{Moodle 08:30}{Fri 11 Dec}}{2026-12-11} \\
+\ganttmilestone[lsgantt ext, name=lsganttDe]{\lsganttms{Demo + defence}{Fri 18 Dec}}{2026-12-18}
+% ---- background: weekends, week lines, milestone guides, rules
+\begin{scope}[on background layer, x=\ganttvalueof{x unit}, y=1mm]
+  \def\lsganttT{-8.8}\def\lsganttB{-95.6}% top and bottom of the chart body (26 rows + 1 mm)
+  \foreach \d in {5,12,19,26,33}
+    \fill[lsrule!30] (\d,\lsganttT) rectangle (\d+2,\lsganttB);
+  \foreach \d in {0,7,14,21,28,35}
+    \draw[lsrule, line width=0.4pt] (\d,\lsganttT) -- (\d,\lsganttB);
+  \foreach \n/\c in {PD/lsrose,Ma/lsnavy,PR/lsrose,Go/lsnavy,Mb/lsnavy,Mc/lsnavy,Mo/lsrose,De/lsrose}
+    \draw[\c!45, line width=0.45pt, dash pattern=on 0.8pt off 1.2pt]
+      (lsgantt\n.north) -- (lsgantt\n.north |- 0,\lsganttT);
+  \foreach \y in {-28.6,-48.4,-64.9}
+    \draw[lsrule, line width=0.4pt] (-48.2mm,\y) -- (40,\y);
+  \foreach \y in {\lsganttT,\lsganttB}
+    \draw[lsnavy!55, line width=0.5pt] (-48.2mm,\y) -- (40,\y);
+  \draw[lsnavy!55, line width=0.4pt] (0,-3.9) -- (21.85,-3.9) (22.15,-3.9) -- (40,-3.9);% month spans
+\end{scope}
+% ---- key
+\begin{scope}[lsgantt key/.style={shape=ganttmilestone, inner sep=0pt, outer sep=0pt, minimum width=2.9mm, minimum height=2.9mm},
+  lsgantt keytext/.style={font=\sffamily\scriptsize, text=lsgrey, anchor=west, inner sep=0pt}]
+  \node[lsgantt key, fill=lsnavy] at (-46.75mm,-6.6mm) {};
+  \node[lsgantt keytext] at (-44.7mm,-6.6mm) {\strut our milestone};
+  \node[lsgantt key, fill=lsrose] at (-23.5mm,-6.6mm) {};
+  \node[lsgantt keytext] at (-21.45mm,-6.6mm) {\strut course date};
+\end{scope}
+\end{ganttchart}%

@@ -1,0 +1,105 @@
+% board: Nexys A7-100T I/O map -- slide switches, LEDs, 8-digit display, push buttons and the 100 MHz clock around the FPGA that holds the LS core
+\begin{tikzpicture}[x=1mm,y=1mm,
+  bd txt/.style={font=\sffamily\scriptsize,text=lsink,inner sep=0pt,anchor=base},
+  bd note/.style={bd txt,text=lsgrey},
+  bd brace/.style={decorate,decoration={brace,amplitude=1.2mm},draw=lsgrey,line width=0.5pt},
+  bd sw/.style={draw=lsnavy!80,fill=white,line width=0.5pt,rounded corners=0.6pt},
+  bd knob/.style={fill=lsnavy,rounded corners=0.4pt},
+  bd led/.style={circle,inner sep=0pt,minimum size=2.9mm,line width=0.5pt},
+  bd pill/.style={fill=lsamber,text=white,rounded corners=1.5pt,inner xsep=3pt,inner ysep=1.2pt,
+    font=\sffamily\scriptsize\bfseries},
+]
+\def\bdX#1{81+(7.5-#1)*9.2}% centre x of LED #1 and switch #1
+\pgfmathparse{Hex(\cycS)}\let\bdHex\pgfmathresult
+
+% ---- board ----
+\filldraw[fill=lspaper,draw=lsnavy,line width=0.5pt,rounded corners=3mm] (0.5,0.5) rectangle (161.5,91.5);
+\foreach \bdx/\bdy in {4/4,158/4,4/88,158/88}
+  \filldraw[fill=white,draw=lsrule,line width=0.5pt] (\bdx,\bdy) circle (1.4);
+\node[bd note,font=\sffamily\scriptsize\bfseries,anchor=base east] at (153,86.8) {Nexys A7-100T};
+
+% ---- slide switches SW15..SW0 (drawn as set for S64, view 4: only SW10 up) ----
+\foreach \bdk in {0,...,15} {
+  \filldraw[bd sw] ({\bdX{\bdk}-2.2},11.5) rectangle ({\bdX{\bdk}+2.2},19.9);
+  \ifnum\bdk=10 \fill[bd knob] ({\bdX{\bdk}-1.5},15.9) rectangle ({\bdX{\bdk}+1.5},19.2);
+  \else \fill[bd knob] ({\bdX{\bdk}-1.5},12.2) rectangle ({\bdX{\bdk}+1.5},15.5); \fi
+  \node[bd note] at ({\bdX{\bdk}},21.8) {\bdk};
+}
+\foreach \bdl/\bdr in {15/13,12/11,10/8,7/0}
+  \draw[bd brace,decoration={mirror}] ({\bdX{\bdl}-2.6},10.2) -- ({\bdX{\bdr}+2.6},10.2);
+\node[bd txt]  at ({\bdX{14}},6.3)   {program select};
+\node[bd note] at ({\bdX{14}},3.4)   {read at reset};
+\node[bd txt]  at ({\bdX{11.5}},6.3) {run mode};
+\node[bd txt]  at ({\bdX{9}},6.3)    {display view};
+\node[bd txt]  at ({\bdX{3.5}},6.3)  {IN data};
+\node[bd note] at ({\bdX{3.5}},3.4)  {SW7..6 = image};
+
+% ---- LEDs LED15..LED0 ----
+\foreach \bdk/\bdc/\bdf in {15/lsblue/lsblue!18,14/lsblue!65/lsblue!12,13/lsteal/lsteal!18,
+    12/lsteal!65/lsteal!12,11/lsamber/lsamber!20,10/lsrose!80/lsrose!15}
+  \node[bd led,draw=\bdc,fill=\bdf] at ({\bdX{\bdk}},26.8) {};
+\foreach \bdk in {0,...,9}
+  \node[bd led,draw=lsgrey,fill=white] at ({\bdX{\bdk}},26.8) {};
+\foreach \bdl/\bdr in {15/12,11/10,9/8,7/0}
+  \draw[bd brace] ({\bdX{\bdl}-2.2},29.5) -- ({\bdX{\bdr}+2.2},29.5);
+\node[bd txt,text=lsblue]            at ({\bdX{13.5}},35.2) {FETCH DECODE};
+\node[bd txt,text=lsteal]            at ({\bdX{13.5}},32.3) {EXECUTE WRITEBACK};
+\node[bd txt,text=lsamber!90!black]  at ({\bdX{10.5}},35.2) {STREAM};
+\node[bd txt,text=lsrose]            at ({\bdX{10.5}},32.3) {DRAIN};
+\node[bd txt]                        at ({\bdX{8.5}},32.3)  {V1 V2};
+\node[bd txt]                        at ({\bdX{3.5}},32.3)  {OUTR (the neuron's output byte)};
+
+% ---- 8-digit seven-segment display, showing the cycle counter (view 4) after S64 ----
+\def\bdW{1.7}\def\bdH{3.0}\def\bdT{0.72}\def\bdG{0.2}
+\def\bdHs#1#2{\fill[#2] ({-\bdW+\bdG},#1) -- ({-\bdW+\bdG+\bdT/2},{#1+\bdT/2})
+  -- ({\bdW-\bdG-\bdT/2},{#1+\bdT/2}) -- ({\bdW-\bdG},#1) -- ({\bdW-\bdG-\bdT/2},{#1-\bdT/2})
+  -- ({-\bdW+\bdG+\bdT/2},{#1-\bdT/2}) -- cycle;}
+\def\bdVs#1#2#3{\fill[#3] (#1,{#2+\bdG}) -- ({#1+\bdT/2},{#2+\bdG+\bdT/2})
+  -- ({#1+\bdT/2},{#2+\bdH-\bdG-\bdT/2}) -- (#1,{#2+\bdH-\bdG}) -- ({#1-\bdT/2},{#2+\bdH-\bdG-\bdT/2})
+  -- ({#1-\bdT/2},{#2+\bdG+\bdT/2}) -- cycle;}
+\def\bdSeg#1{\ifnum#1=1 \def\bdc{lsamber}\else\def\bdc{lsink!82!white}\fi}
+\def\bdSegs#1#2#3#4#5#6#7{%
+  \bdSeg{#1}\bdHs{\bdH}{\bdc}\bdSeg{#2}\bdVs{\bdW}{0}{\bdc}\bdSeg{#3}\bdVs{\bdW}{-\bdH}{\bdc}%
+  \bdSeg{#4}\bdHs{-\bdH}{\bdc}\bdSeg{#5}\bdVs{-\bdW}{-\bdH}{\bdc}\bdSeg{#6}\bdVs{-\bdW}{0}{\bdc}%
+  \bdSeg{#7}\bdHs{0}{\bdc}}
+\def\bdDigit#1#2#3{% centre x, centre y, value 0..15; segments a..g
+  \begin{scope}[shift={({#1},{#2})},xslant=0.1]
+    \ifcase#3 \def\bdS{1111110}\or\def\bdS{0110000}\or\def\bdS{1101101}\or\def\bdS{1111001}%
+    \or\def\bdS{0110011}\or\def\bdS{1011011}\or\def\bdS{1011111}\or\def\bdS{1110000}%
+    \or\def\bdS{1111111}\or\def\bdS{1111011}\or\def\bdS{1110111}\or\def\bdS{0011111}%
+    \or\def\bdS{1001110}\or\def\bdS{0111101}\or\def\bdS{1001111}\or\def\bdS{1000111}\fi
+    \expandafter\bdSegs\bdS
+    \fill[lsink!82!white] ({\bdW+0.95},{-\bdH}) circle (0.38);
+  \end{scope}}
+\foreach \bdm in {0,1}
+  \fill[lsink,rounded corners=0.8mm] ({7+\bdm*26.7},74.65) rectangle ++(24.5,10.7);
+\foreach \bdj in {0,...,7} {
+  \pgfmathtruncatemacro\bdv{\bdj<5 ? 0 : (\bdj==5 ? int(\cycS/256) : (\bdj==6 ? mod(int(\cycS/16),16) : mod(\cycS,16)))}
+  \bdDigit{10.6+\bdj*5.5+(\bdj>3)*2.2}{80}{\bdv}
+}
+\node[bd txt]  at (32.6,70.3) {8-digit display: view selected by SW10..8};
+\node[bd note] at (32.6,67.4) {shown: view 4, the cycle counter after S64 (\cycS{} = 0x\bdHex)};
+
+% ---- 100 MHz oscillator into pin E3 ----
+\draw[lsgrey,line width=0.5pt] (60.6,54) -- (66,54);
+\filldraw[fill=white,draw=lsgrey,line width=0.5pt,rounded corners=0.8pt] (54.2,52) rectangle (60.6,56);
+\node[bd txt,anchor=east] at (53.2,54) {100 MHz (E3)};
+
+% ---- FPGA ----
+\fill[lsnavy,rounded corners=1.2mm] (66,49.5) rectangle (96,79.5);
+\draw[lsgrey!70,line width=0.4pt,rounded corners=0.8mm] (67.4,50.9) rectangle (94.6,78.1);
+\fill[lsgrey] (69.4,76) circle (0.7);
+\node[bd txt,text=lsrule] at (81,70.5) {Artix-7};
+\node[bd txt,font=\sffamily\footnotesize\bfseries,text=white] at (81,65.8) {XC7A100T};
+\node[bd pill] at (81,57.5) {LS core};
+
+% ---- push buttons ----
+\foreach \bdx/\bdy/\bdn/\bdf/\bdon in {130/80/BTNU/reset/1,117/67/BTNL/unused/0,130/67/BTNC/{go / step}/1,
+    143/67/BTNR/unused/0,130/54/BTND/unused/0} {
+  \ifnum\bdon=1 \def\bdc{lsnavy}\def\bdt{lsink}\else\def\bdc{lsrule}\def\bdt{lsgrey}\fi
+  \filldraw[fill=white,draw=\bdc,line width=0.5pt,rounded corners=0.8pt] (\bdx-3,\bdy-3) rectangle (\bdx+3,\bdy+3);
+  \fill[\bdc] (\bdx,\bdy) circle (2);
+  \node[bd note] at (\bdx,\bdy-5.6) {\bdn};
+  \node[bd txt,text=\bdt] at (\bdx,\bdy-8.5) {\bdf};
+}
+\end{tikzpicture}%

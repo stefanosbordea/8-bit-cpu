@@ -1,0 +1,59 @@
+% waterfall: where the predicted 2.68x of S over U comes from: U 300 -> fetch once, no overlap 238 (-62 refetch) -> STREAM 112 (-126 overlap)
+\begin{tikzpicture}[x=0.42mm, y=1mm,
+  wf seg/.style={draw=white, line width=0.6pt},
+  wf in/.style={font=\sffamily\scriptsize, inner sep=0pt},
+  wf title/.style={font=\sffamily\scriptsize, text=lsink, anchor=base west, inner sep=0pt},
+  wf ghost/.style={preaction={fill=lsroselight}, pattern=north east lines, pattern color=lsrose!40,
+    draw=lsrose!70, line width=0.4pt},
+  wf save/.style={font=\sffamily\scriptsize\bfseries, text=lsrose!85!black, fill=lsroselight,
+    inner xsep=1.5pt, inner ysep=1pt, rounded corners=1pt},
+  wf tot/.style={font=\sffamily\footnotesize\bfseries, text=lsnavy, anchor=east, inner sep=0pt},
+  wf head/.style={font=\sffamily\scriptsize, text=lsgrey, inner sep=0pt},
+  wf conn/.style={draw=lsgrey, dashed, line width=0.4pt},
+  wf arc/.style={draw=lsgrey, line width=0.5pt, -{Stealth[length=1.4mm,width=1.1mm]}},
+  wf ratio/.style={font=\sffamily\scriptsize\bfseries, text=lsnavy, anchor=west, inner sep=0pt},
+]
+\def\wfh{2.8}% half bar height (mm)
+\def\wftag#1{\makebox[10mm][l]{\bfseries #1}}% row tag, fixed width so the descriptions align
+% ---- row 1: U
+\node[wf title] at (0,4.5) {\wftag{\color{lsblue}U}classic MAC, unrolled: \texttt{MAC} written \textit{n} = 64 times};
+\fill[lsgrey!40] (0,-\wfh) rectangle (44,\wfh);
+\fill[lsblue] (44,-\wfh) rectangle (300,\wfh);
+\draw[wf seg] (44,-\wfh) -- (44,\wfh);
+\node[wf in, text=lsink] at (22,0) {44};
+\node[wf in, text=white] at (172,0) {4\textit{n} = 256};
+\node[wf tot] at (326,0) {\cycU};
+% ---- row 2: fetch once, no overlap
+\node[wf title] at (0,-8.0) {\wftag{Step 1}fetch the MAC once (no refetch), no overlap: 2 + 3\textit{n}};
+\fill[lsgrey!40] (0,-12.5-\wfh) rectangle (44,-12.5+\wfh);
+\fill[lsamber!45] (44,-12.5-\wfh) rectangle (238,-12.5+\wfh);
+\draw[wf seg] (44,-12.5-\wfh) -- (44,-12.5+\wfh);
+\draw[wf ghost] (238,-12.5-\wfh) rectangle (300,-12.5+\wfh);
+\node[wf in, text=lsink] at (22,-12.5) {44};
+\node[wf in, text=lsink] at (141,-12.5) {2 + 3\textit{n} = 194};
+\node[wf save] at (269,-12.5) {\textminus\saveRefetch{} refetch};
+\node[wf tot] at (326,-12.5) {\cycNoOverlap};
+% ---- row 3: STREAM = program S
+\node[wf title] at (0,-20.5) {\wftag{Step 2}overlap address, multiply, accumulate (STREAM): program \textbf{\color{lsamber!75!black}S}};
+\fill[lsgrey!40] (0,-25-\wfh) rectangle (44,-25+\wfh);
+\fill[lsamber] (44,-25-\wfh) rectangle (112,-25+\wfh);
+\draw[wf seg] (44,-25-\wfh) -- (44,-25+\wfh);
+\draw[wf ghost] (112,-25-\wfh) rectangle (238,-25+\wfh);
+\node[wf in, text=lsink] at (22,-25) {44};
+\node[wf in, text=lsink] at (78,-25) {\textit{n} + 4 = 68};
+\node[wf save] at (175,-25) {\textminus\saveOverlap{} overlap};
+\node[wf tot] at (326,-25) {\cycS};
+% ---- waterfall connectors
+\draw[wf conn] (300,-\wfh) -- (300,-12.5+\wfh);
+\draw[wf conn] (238,-12.5-\wfh) -- (238,-25+\wfh);
+% ---- speed-up of each step: ratio of adjacent totals
+\draw[wf arc] (329,-0.9) to[bend left=55] node[wf ratio, xshift=0.8mm] {\ratioRefetch\texttimes} (329,-11.6);
+\draw[wf arc] (329,-13.4) to[bend left=55] node[wf ratio, xshift=0.8mm] {\ratioOverlap\texttimes} (329,-24.1);
+\node[wf head, anchor=base east] at (326,4.5) {cycles};
+% ---- bottom line
+\fill[lsgrey!40] (0,-32.3) rectangle (12,-30.3);
+\node[wf head, anchor=base west] at (15,-32.3)
+  {prologue + epilogue: \ordS{} ordinary instructions \texttimes{} 4 = 44 cycles, the same in every bar};
+\node[font=\sffamily\scriptsize, text=lsnavy, anchor=base east, inner sep=0pt] at (current bounding box.east |- 0,-32.3)
+  {\textbf{\cycU\,/\,\cycS\ = \ratioUS\texttimes} \textcolor{lsgrey}{(predicted)}};
+\end{tikzpicture}

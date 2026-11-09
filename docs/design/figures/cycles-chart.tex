@@ -1,0 +1,65 @@
+% cycles-chart: predicted cycles -- left, the 64-input neuron for programs B, L, U, S; right, cycles against the number of inputs N, with each program's slope
+\begin{tikzpicture}[
+  cch tag/.style={font=\sffamily\footnotesize, inner sep=0pt},
+  cch desc/.style={font=\sffamily\scriptsize, text=lsgrey, anchor=base, inner sep=0pt, yshift=-7.1mm},
+  cch line/.style={line width=1pt, line join=round},
+  /pgfplots/cch ring/.style={only marks, mark=*, mark size=1.9pt, samples at={32,64},
+    mark options={fill=white, draw=#1, line width=0.7pt}},
+]
+\begin{groupplot}[
+  group style={group size=2 by 1, horizontal sep=8mm,
+    yticklabels at=edge left, ylabels at=edge left},
+  scale only axis, height=45mm,
+  ymin=0, ymax=1500, ytick={0,500,1000,1500}, scaled y ticks=false,
+  yticklabel={\pgfmathprintnumber[assume math mode=true,fixed,1000 sep={,}]{\tick}},
+  tick label style={font=\sffamily\scriptsize, text=lsgrey},
+  x tick label style={anchor=base, yshift=-3.3mm},% every x tick label on one baseline
+  label style={font=\sffamily\footnotesize, text=lsink},
+  title style={font=\sffamily\small\bfseries, text=lsnavy, at={(0,1)}, anchor=base west,
+    inner sep=0pt, yshift=3.7mm},
+  axis x line*=bottom, axis y line*=left,
+  x axis line style={draw=lsgrey, line width=0.5pt, -},
+  y axis line style={draw=none},
+  tick style={draw=none},
+  ymajorgrids, grid style={draw=lsrule, line width=0.4pt},
+  clip mode=individual,
+]
+% ---- left: the 64-input neuron
+\nextgroupplot[width=48mm, title={64-input neuron}, ylabel={cycles (predicted)},
+  xmin=0.5, xmax=4.5, xtick={1,2,3,4},
+  x tick label style={font=\sffamily\footnotesize\bfseries},
+  xticklabels={{\color{lsrose}B}, {\color{lsteal}L}, {\color{lsblue}U}, {\color{lsamber!75!black}S}},
+  every node near coord/.append style={font=\sffamily\footnotesize\bfseries, inner sep=0pt, yshift=1.2mm}]
+\addplot[ybar, bar shift=0pt, bar width=8mm, draw=none, fill=lsrose,
+  nodes near coords={\cycB}, every node near coord/.append style={text=lsrose}] coordinates {(1,1328)};
+\addplot[ybar, bar shift=0pt, bar width=8mm, draw=none, fill=lsteal,
+  nodes near coords={\cycL}, every node near coord/.append style={text=lsteal}] coordinates {(2,560)};
+\addplot[ybar, bar shift=0pt, bar width=8mm, draw=none, fill=lsblue,
+  nodes near coords={\cycU}, every node near coord/.append style={text=lsblue}] coordinates {(3,300)};
+\addplot[ybar, bar shift=0pt, bar width=8mm, draw=none, fill=lsamber,
+  nodes near coords={\cycS}, every node near coord/.append style={text=lsamber!75!black}] coordinates {(4,112)};
+\node[cch desc] at (axis cs:1,0) {no MAC};
+\node[cch desc] at (axis cs:2,0) {loop};
+\node[cch desc] at (axis cs:3,0) {unrolled};
+\node[cch desc] at (axis cs:4,0) {stream};
+% ---- right: cycles against N; B is clipped where it leaves the plot (N = 72.6)
+\nextgroupplot[width=87.5mm, title={cycles vs number of inputs \textit{N}}, xlabel={number of inputs \textit{N}},
+  xlabel style={at={(axis description cs:0.5,0)}, anchor=base, yshift=-7.1mm},% on the baseline of the bar descriptions
+  xmin=0, xmax=128, xtick={0,32,...,128},
+  extra x ticks={32,64,96}, extra x tick labels={}, extra x tick style={grid=major},
+  xticklabel={\pgfmathprintnumber[assume math mode=true]{\tick}},
+  domain=0:128, samples=2]
+\addplot[cch line, lsrose] {48+20*x};
+\addplot[cch line, lsteal] {48+8*x};
+\addplot[cch line, lsblue] {44+4*x};
+\addplot[cch line, lsamber] {48+x};
+\addplot[cch ring=lsrose] {48+20*x};
+\addplot[cch ring=lsteal] {48+8*x};
+\addplot[cch ring=lsblue] {44+4*x};
+\addplot[cch ring=lsamber] {48+x};
+\node[cch tag, text=lsamber!75!black, anchor=south east, yshift=1.4mm] at (axis cs:127,175) {\textbf{S}\enspace 1 cycle/input};
+\node[cch tag, text=lsblue, anchor=south east, yshift=1.4mm] at (axis cs:127,552) {\textbf{U}\enspace 4};
+\node[cch tag, text=lsteal, anchor=south east, yshift=1.4mm] at (axis cs:127,1064) {\textbf{L}\enspace 8};
+\node[cch tag, text=lsrose, anchor=west] at (axis cs:72,1400) {\textbf{B}\enspace 20};
+\end{groupplot}
+\end{tikzpicture}

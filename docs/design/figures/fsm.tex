@@ -20,7 +20,7 @@
   \node[stS, fsm] (D1)     at (106,-60) {DRAIN1};
 
   % ---- reset and the quiet states ----
-  \draw[fsmplain] (IDLE.west) ++(-9,0) -- node[fsmlab, above]{reset} (IDLE.west);
+  \draw[fsmplain] (IDLE.west) ++(-12.5,0) -- node[fsmlab, above]{reset} (IDLE.west);
   \draw[fsmplain] (IDLE) -- node[fsmlab, above]{go} (F);
   \draw[fsmplain] (WB) -- node[fsmlab, above]{HALT} (HALTED);
   \node[fsmnote, above=0.5mm of HALTED] {reset only};

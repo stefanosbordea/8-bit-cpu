@@ -1,0 +1,127 @@
+% timing-mac4: MAC #4 cycle by cycle -- clk, state, CNT, P0, XR/WR, V1, V2, PROD, ACC over nine cycles (cycle 9 = next FETCH)
+\begin{tikzpicture}[x=16mm, y=1mm,
+  tmf name/.style={font=\ttfamily\footnotesize, text=lsink, anchor=east, inner sep=0pt},
+  tmf txt/.style={font=\sffamily\scriptsize, text=lsink, inner sep=0pt},
+  tmf val/.style={font=\sffamily\footnotesize, text=lsink, inner xsep=1.4pt, inner ysep=0.8pt},
+  tmf dc/.style={tmf val, text=lsgrey},
+  tmf wave/.style={draw=lsnavy, line width=0.6pt, line join=round},
+  tmf edge/.style={draw=lsrule, line width=0.35pt},
+  tmf hatch/.style={pattern=north east lines, pattern color=lsgrey!45},
+  tmf state/.style={draw=white, line width=0.8pt, minimum width=16mm, minimum height=5.4mm,
+    inner sep=0pt, font=\sffamily\scriptsize\bfseries, text=white},
+]
+% x in cycles (cycle k spans k-1..k, rising edges at integers), y in mm.
+% half height of a waveform, half width of a transition, extent of the column bands
+\def\tmfH{2.2}
+\def\tmfS{0.034}
+\def\tmfTop{2.5}
+\def\tmfBot{-61.2}
+% column backgrounds: STREAM cycles amber, drain cycles rose (no overlaps, so knockouts leave no seam)
+\def\tmfPaint{%
+  \fill[white] (0,\tmfTop) rectangle (2,\tmfBot);
+  \fill[lsamber!11] (2,\tmfTop) rectangle (6,\tmfBot);
+  \fill[lsrose!9] (6,\tmfTop) rectangle (8,\tmfBot);
+  \fill[white] (8,\tmfTop) rectangle (9,\tmfBot);}
+% bus segment on row #1 from edge #2 to edge #3; the ends at 0 and 9 stay open
+\def\tmfBus#1#2#3{%
+  \ifnum#2=0
+    \ifnum#3=9
+      \draw[tmf wave] (0,{#1+\tmfH}) -- (9,{#1+\tmfH}) (0,{#1-\tmfH}) -- (9,{#1-\tmfH});
+    \else
+      \draw[tmf wave] (0,{#1+\tmfH}) -- ({#3-\tmfS},{#1+\tmfH}) -- (#3,#1)
+        -- ({#3-\tmfS},{#1-\tmfH}) -- (0,{#1-\tmfH});
+    \fi
+  \else
+    \ifnum#3=9
+      \draw[tmf wave] (9,{#1+\tmfH}) -- ({#2+\tmfS},{#1+\tmfH}) -- (#2,#1)
+        -- ({#2+\tmfS},{#1-\tmfH}) -- (9,{#1-\tmfH});
+    \else
+      \draw[tmf wave] (#2,#1) -- ({#2+\tmfS},{#1+\tmfH}) -- ({#3-\tmfS},{#1+\tmfH}) -- (#3,#1)
+        -- ({#3-\tmfS},{#1-\tmfH}) -- ({#2+\tmfS},{#1-\tmfH}) -- cycle;
+    \fi
+  \fi}
+% hatch (don't care) inside the bus segment #2..#3 on row #1
+\def\tmfHatch#1#2#3{%
+  \ifnum#2=0 \def\tmfL{0}\else\def\tmfL{\tmfS}\fi
+  \ifnum#3=9 \def\tmfR{0}\else\def\tmfR{\tmfS}\fi
+  \begin{pgfonlayer}{background}
+    \fill[tmf hatch] (#2,#1) -- ({#2+\tmfL},{#1+\tmfH}) -- ({#3-\tmfR},{#1+\tmfH}) -- (#3,#1)
+      -- ({#3-\tmfR},{#1-\tmfH}) -- ({#2+\tmfL},{#1-\tmfH}) -- cycle;
+  \end{pgfonlayer}}
+% value #4 at (#2,#3) in style #1; hairlines and hatching behind it are knocked out over the bus height
+\def\tmfVal#1#2#3#4{%
+  \node[#1] (tmfv) at (#2,#3) {#4};
+  \begin{pgfonlayer}{background}\begin{scope}
+    \clip ([yshift=\tmfH mm]tmfv.west) rectangle ([yshift=-\tmfH mm]tmfv.east);
+    \tmfPaint
+  \end{scope}\end{pgfonlayer}}
+
+% ---- background: bands, a hairline at every rising clock edge, don't-care hatching
+\begin{pgfonlayer}{background}
+  \tmfPaint
+  \foreach \k in {0,...,9} \draw[tmf edge] (\k,-4.2) -- (\k,\tmfBot);
+  \draw[tmf edge] (0,\tmfBot) -- (0,-64.6) (8,\tmfBot) -- (8,-64.6);
+  \fill[tmf hatch] (0,{-32-\tmfH}) rectangle (3,{-32+\tmfH});
+\end{pgfonlayer}
+\tmfHatch{-19.2}{0}{2}\tmfHatch{-19.2}{6}{9}\tmfHatch{-32}{7}{9}\tmfHatch{-51.2}{0}{4}
+
+% ---- cycle numbers and signal names
+\node[tmf txt, anchor=east, text=lsgrey] at ([xshift=-2.6mm]0,0) {cycle};
+\foreach \c in {1,...,8} \node[tmf txt, font=\sffamily\footnotesize] at (\c-0.5,0) {\c};
+\node[tmf txt, font=\sffamily\footnotesize, text=lsgrey] at (8.5,0) {9};
+\foreach \y/\n in {-6.4/clk, -12.8/state, -19.2/CNT, -25.6/P0, -32/{XR, WR},
+    -38.4/V1, -44.8/V2, -51.2/PROD, -57.6/ACC}
+  \node[tmf name] at ([xshift=-2.6mm]0,\y) {\n};
+
+% ---- clk
+\draw[tmf wave] (0,{-6.4-\tmfH}) \foreach \k in {0,...,8} {
+  -- (\k,{-6.4+\tmfH}) -- (\k+0.5,{-6.4+\tmfH}) -- (\k+0.5,{-6.4-\tmfH}) -- (\k+1,{-6.4-\tmfH}) };
+
+% ---- state (cycle 9 belongs to the next instruction)
+\foreach \c/\s/\f in {1/FETCH/lsblue, 2/DECODE/lsblue!65, 3/STREAM/lsamber, 4/STREAM/lsamber,
+    5/STREAM/lsamber, 6/STREAM/lsamber, 7/DRAIN1/lsrose!80, 8/DRAIN2/lsrose!80}
+  \node[tmf state, fill=\f] at (\c-0.5,-12.8) {\s};
+\node[tmf state, minimum width=16mm-1.4pt, minimum height=5.4mm-1.4pt, line width=0.6pt,
+  draw=lsblue!55, fill=lsbluelight, text=lsblue] at (8.5,-12.8) {FETCH};
+
+% ---- CNT
+\foreach \a/\b in {0/2, 2/3, 3/4, 4/5, 5/6, 6/9} {\tmfBus{-19.2}{\a}{\b}}
+\foreach \c/\v in {2.5/4, 3.5/3, 4.5/2, 5.5/1} \node[tmf val] at (\c,-19.2) {$\v$};
+
+% ---- P0
+\foreach \a/\b in {0/3, 3/4, 4/5, 5/6, 6/9} {\tmfBus{-25.6}{\a}{\b}}
+\node[tmf val] at (1.5,-25.6) {$p$};
+\foreach \c/\v in {3.5/1, 4.5/2, 5.5/3, 7.5/4} \node[tmf val] at (\c,-25.6) {$p+\v$};
+
+% ---- XR, WR: x0, w0 is loaded from cycle 1 but valid only from cycle 4 (grey on hatch = not valid)
+\foreach \a/\b in {0/4, 4/5, 5/6, 6/7, 7/9} {\tmfBus{-32}{\a}{\b}}
+\tmfVal{tmf dc, inner xsep=2.4pt}{1.5}{-32}{$x_0, w_0$}
+\foreach \c/\v in {3.5/0, 4.5/1, 5.5/2, 6.5/3} \node[tmf val] at (\c,-32) {$x_\v, w_\v$};
+
+% ---- V1, V2
+\draw[tmf wave] (0,{-38.4-\tmfH}) -- ({3-\tmfS},{-38.4-\tmfH}) -- ({3+\tmfS},{-38.4+\tmfH})
+  -- ({7-\tmfS},{-38.4+\tmfH}) -- ({7+\tmfS},{-38.4-\tmfH}) -- (9,{-38.4-\tmfH});
+\draw[tmf wave] (0,{-44.8-\tmfH}) -- ({4-\tmfS},{-44.8-\tmfH}) -- ({4+\tmfS},{-44.8+\tmfH})
+  -- ({8-\tmfS},{-44.8+\tmfH}) -- ({8+\tmfS},{-44.8-\tmfH}) -- (9,{-44.8-\tmfH});
+
+% ---- PROD
+\foreach \a/\b in {0/4, 4/5, 5/6, 6/7, 7/9} {\tmfBus{-51.2}{\a}{\b}}
+\foreach \c/\v in {4.5/0, 5.5/1, 6.5/2} \node[tmf val] at (\c,-51.2) {$x_\v w_\v$};
+\tmfVal{tmf val}{8}{-51.2}{$x_3 w_3$}
+
+% ---- ACC
+\foreach \a/\b in {0/5, 5/6, 6/7, 7/8, 8/9} {\tmfBus{-57.6}{\a}{\b}}
+\node[tmf val] at (2.5,-57.6) {$b$};
+\foreach \c/\v in {5.5/1, 6.5/2, 7.5/3, 8.5/4} \node[tmf val] at (\c,-57.6) {$\Sigma_\v$};
+
+% ---- length of the instruction, and the key on one baseline
+\draw[lsgrey, line width=0.5pt, {Stealth[length=1.6mm,width=1.2mm]}-{Stealth[length=1.6mm,width=1.2mm]}]
+  (0,-63.6) -- node[tmf txt, fill=white, inner xsep=3pt, inner ysep=1pt] {$n + 4 = 8$ cycles for $n = 4$} (8,-63.6);
+\node[tmf txt, anchor=base west] (tmfkl) at (0,-70)
+  {$x_i = X[p+i]$, \ $w_i = W[q+i]$ \ (\texttt{P1} starts at $q$)};
+\node[tmf txt, anchor=base east] (tmfkr) at (9,-70) {$\Sigma_k = b + x_0w_0 + \dots + x_{k-1}w_{k-1}$};
+\node[tmf txt, anchor=base, xshift=3.8mm] (tmfkm) at ($(tmfkl.base east)!0.5!(tmfkr.base west)$)
+  {not valid / don't care};
+\path[tmf hatch, draw=lsnavy, line width=0.4pt]
+  ([xshift=-1.6mm,yshift=-0.3mm]tmfkm.base west) rectangle ++(-6mm,2.6mm);
+\end{tikzpicture}
