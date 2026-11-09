@@ -38,7 +38,7 @@
 \addplot[fill=lsviolet, draw=none] coordinates
   {(10,7.15) [10] (20,8.15) [20] (100,9.15) [100] (1300,10.15) []};
 \draw[fill=lsvioletlight, draw=lsviolet, line width=0.4pt]
-  (1300,10.15-0.31) rectangle (2600,10.15+0.31);
+  ([yshift=-0.2pt]1300,10.15-0.31) rectangle ([xshift=-0.2pt,yshift=0.2pt]2600,10.15+0.31);
 \node[val] at (2600,10.15) {1,300--2,600};
 % control
 \addplot[fill=lsrose, draw=none] coordinates {(70,12.3) [70]};
@@ -48,7 +48,7 @@
 \node[grp, text=lsteal]  at (0.01,0.15)  {arithmetic};
 \node[grp, text=lsviolet] at (0.01,6.3)  {memory};
 \node[grp, text=lsrose]  at (0.01,11.45) {control};
-\node[grp, text=lsamber!80!black] at (0.01,13.95) {derived};
+\node[grp, text=lsamber!90!black] at (0.01,13.95) {derived};
 % MAC vs instruction
 \draw[lsink, line width=0.4pt] (70,12.3+0.31) -- (70,13.35)
   (0.3,14.8-0.31) -- (0.3,13.05);

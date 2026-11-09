@@ -40,9 +40,9 @@
   \node[fsmlab, above] at (43,-60) {run};
 
   % ---- instruction-step exits ----
-  \draw[fsmstep] (WB) -- node[fsmnote, sloped, above]{instr-step} (IDLE);
+  \draw[fsmstep] (WB) -- node[fsmnote, sloped, above]{INSTR-STEP} (IDLE);
   \draw[fsmstep, rounded corners=2mm] (D2.218) -| (IDLE.south);
-  \node[fsmnote, below] at (16,-66) {instr-step};
+  \node[fsmnote, below] at (16,-66) {INSTR-STEP};
 
   % ---- timing note, centred over the STREAM column ----
   \node[draw=lsrule, fill=lspaper, rounded corners=2pt, align=left, font=\sffamily\scriptsize,

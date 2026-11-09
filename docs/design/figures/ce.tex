@@ -11,18 +11,19 @@
   cef dim/.style={draw=lsgrey, line width=0.45pt},
   cef arr/.style={draw=lsgrey, line width=0.5pt, -{Stealth[length=1.4mm,width=1.1mm]}},
   cef box/.style={draw=lsgrey!80, fill=white, rounded corners=1pt, font=\sffamily\scriptsize,
-    text=lsink, minimum height=4.4mm, inner sep=0.8pt, align=center},
+    text=lsink, minimum height=4.4mm, inner xsep=1.2pt, inner ysep=0.8pt, align=center},
   cef chip/.style={rounded corners=0.8pt, minimum width=9.4mm, minimum height=4.4mm, inner sep=0pt,
     font=\ttfamily\footnotesize, text=lsnavy, line width=0.5pt},
   cef cc/.style={cef chip, draw=lsblue, fill=lsbluelight},
   cef dc/.style={cef chip, draw=lsteal, fill=lstealight},
 ]
-% ================= left: timing sketch (x in mm; clock rising edges at 20 + 2.4k) =================
+\def\cefce{\texttt{ce}}
+% ================= left: timing sketch, not to scale (clock rising edges at x = 20 + 2.4k mm) =================
 \def\cefH{2.2}% half height of a waveform
-\def\cefYc{47.5}\def\cefYr{38.5}\def\cefYd{29.5}\def\cefYe{20.5}\def\cefYs{11.5}% row centres
-% enabled edge: behind everything
-\draw[lsblue!55, line width=0.5pt] (65.6,52.2) -- (65.6,8);
-\node[cef txt, text=lsblue, anchor=base] at (65.6,53.2) {the only enabled edge};
+\def\cefYc{48.2}\def\cefYr{38.5}\def\cefYd{29.5}\def\cefYe{20.5}\def\cefYs{11.5}% row centres
+% the enabled edge, behind everything
+\draw[lsblue!55, line width=0.5pt] (65.6,53) -- (65.6,\cefYs+2.6);
+\node[cef txt, text=lsblue, anchor=base] at (65.6,54) {the only edge with \cefce{} $=$ 1};
 
 % row names
 \foreach \y/\n/\q in {\cefYc/clk/100 MHz, \cefYr/BTNC/raw, \cefYd/BTNC/debounced, \cefYe/ce/CYCLE-STEP} {
@@ -46,7 +47,7 @@
   -- (27.5,\cefYr-\cefH) -- (27.9,\cefYr-\cefH) -- (27.9,\cefYr+\cefH) -- (30.1,\cefYr+\cefH)
   -- (30.1,\cefYr-\cefH) -- (30.4,\cefYr-\cefH) -- (30.4,\cefYr+\cefH) -- (49.4,\cefYr+\cefH);
 \draw[cef wave] (52.8,\cefYr+\cefH) -- (84,\cefYr+\cefH);
-\node[cef note, anchor=base] at (27.2,\cefYr+\cefH+1.2) {contact bounce};
+\node[cef note, anchor=base west] at (18.5,\cefYr+\cefH+1.3) {contact bounce};
 
 % debounced: rises after the clock edge at 60.8
 \draw[cef wave] (18.5,\cefYd-\cefH) -- (49.4,\cefYd-\cefH);
@@ -64,34 +65,37 @@
 \fill[lsblue!65] (66.4,\cefYs+2.6) -- (84,\cefYs+2.6) -- (84,\cefYs-2.6) -- (66.4,\cefYs-2.6) -- (66.1,\cefYs) -- cycle;
 \foreach \x/\s in {33.95/FETCH, 59.3/FETCH, 75.2/DECODE}
   \node[font=\sffamily\scriptsize\bfseries, text=white, inner sep=0pt] at (\x,\cefYs) {\s};
-\node[cef note, anchor=base] at (33.95,4.6) {holds while ce = 0};
+\node[cef note, anchor=base] at (33.95,4.6) {holds while \cefce{} $=$ 0};
 \node[cef note, anchor=base east] at (84,4.6) {one state per press};
 
 % time break, all rows
 \foreach \y/\h in {\cefYc/\cefH, \cefYr/\cefH, \cefYd/\cefH, \cefYe/\cefH, \cefYs/2.6} {
-  \draw[cef brk] (49.9,\y-\h-0.6) -- (50.9,\y+\h+0.6) (51.3,\y-\h-0.6) -- (52.3,\y+\h+0.6);
+  \draw[cef brk] (49.95,\y-\h-0.35) -- (50.85,\y+\h+0.35) (51.35,\y-\h-0.35) -- (52.25,\y+\h+0.35);
 }
 
 % the debounce time and the pulse width
 \draw[cef dim, {Stealth[length=1.4mm,width=1.1mm]}-{Stealth[length=1.4mm,width=1.1mm]}]
   (30.4,34) -- node[cef note, fill=white, inner xsep=1.2pt, inner ysep=0.6pt] {10 ms $=$ $10^6$ clocks} (61.2,34);
-\draw[cef dim] (63.6,23.7) -- (63.6,25.1) (66.0,23.7) -- (66.0,25.1) (63.6,24.4) -- (66.0,24.4);
-\node[cef note, anchor=east] at (62.6,24.4) {one clock, 10 ns};
+\draw[cef dim, densely dotted] (30.4,34.5) -- (30.4,\cefYr-\cefH) (61.2,33.5) -- (61.2,\cefYd+\cefH);
+\draw[cef dim] (63.6,23.4) -- (63.6,25.2) (66.0,23.4) -- (66.0,25.2) (63.6,24.6) -- (66.0,24.6);
+\node[cef note, anchor=west] at (67.0,24.6) {1 clock $=$ 10 ns};
 
 % ================= right: block sketch =================
 % always clocked
-\draw[fill=lspaper, draw=lsgrey!55, line width=0.6pt, rounded corners=2pt] (88,7) rectangle (122.5,54);
-\node[cef txt, font=\sffamily\scriptsize\bfseries, anchor=base west] at (89.5,50.4) {always clocked};
-\node[cef note, anchor=base west] at (89.5,47.4) {every edge};
-\node[cef box, minimum width=16.6mm] (cefsy) at (112.4,42.3) {synchroniser};
-\node[cef box, minimum width=16.6mm] (cefdb) at (112.4,35.7) {debouncer};
-\node[cef box, minimum width=16.6mm] (cefop) at (112.4,29.1) {one-pulse};
-\node[cef box, minimum width=16.6mm] (cefcs) at (112.4,22.5) {ce select};
-\node[cef note, anchor=east] at (103.4,35.7) {10 ms};
-\node[cef box, minimum width=11.6mm] (ceftk) at (95.3,22.5) {slow tick\\[-0.3ex]\textcolor{lsgrey}{4 Hz}};
-\node[cef box, minimum width=31.5mm, minimum height=7.4mm] (cefdp) at (105.25,12.2)
+\draw[fill=lspaper, draw=lsgrey!55, line width=0.6pt, rounded corners=2pt] (88,7.6) rectangle (122.2,52.8);
+\node[cef txt, font=\sffamily\scriptsize\bfseries, anchor=base west] at (89.5,49.4) {always clocked};
+\node[cef note, anchor=base west] at (89.5,46.4) {every clock edge};
+\node[cef box, minimum width=16.6mm] (cefsy) at (112.4,42.0) {synchroniser};
+\node[cef box, minimum width=16.6mm] (cefdb) at (112.4,35.6) {debouncer};
+\node[cef box, minimum width=16.6mm] (cefop) at (112.4,29.2) {one-pulse};
+\node[cef box, minimum width=16.6mm, minimum height=7mm] (cefcs) at (112.4,21.6)
+  {\cefce{} select\\[-0.3ex]\textcolor{lsgrey}{1, pulse, tick}};
+\node[cef note, anchor=east] at (103.4,35.6) {10 ms};
+\node[cef box, minimum width=12mm, minimum height=7mm] (ceftk) at (95.5,21.6)
+  {slow tick\\[-0.3ex]\textcolor{lsgrey}{4 Hz}};
+\node[cef box, minimum width=31.2mm, minimum height=7mm] (cefdp) at (105.1,12.6)
   {display scanner\\[-0.3ex]\textcolor{lsgrey}{digit divider, view mux}};
-\node[cef name, anchor=south] (cefbt) at (112.4,55.4) {BTNC};
+\node[cef name, anchor=base] (cefbt) at (112.4,54) {BTNC};
 \draw[cef arr] (cefbt.south) -- (cefsy.north);
 \draw[cef arr] (cefsy) -- (cefdb);
 \draw[cef arr] (cefdb) -- (cefop);
@@ -99,33 +103,35 @@
 \draw[cef arr] (ceftk) -- (cefcs);
 
 % gated by ce
-\draw[fill=white, draw=lsblue, line width=0.6pt, rounded corners=2pt] (129,7) rectangle (162,54);
-\node[cef txt, font=\sffamily\scriptsize\bfseries, text=lsblue, anchor=base west] at (130.5,50.4) {gated by ce};
-\node[cef note, anchor=base west] at (130.5,47.4) {only when ce $=$ 1};
+\draw[fill=white, draw=lsblue, line width=0.6pt, rounded corners=2pt] (129,7.6) rectangle (162,52.8);
+\node[cef txt, font=\sffamily\scriptsize\bfseries, text=lsblue, anchor=base west] at (130.5,49.4) {gated by \cefce};
+\node[cef note, anchor=base west] at (130.5,46.4) {only edges with \cefce{} $=$ 1};
 \foreach \x/\y/\s/\n in {
-    135.1/42.3/cef cc/state, 145.5/42.3/cef cc/PC, 155.9/42.3/cef cc/IR,
-    135.1/36.8/cef cc/CNT, 145.5/36.8/cef cc/V1, 155.9/36.8/cef cc/V2,
-    135.1/31.3/cef dc/R0\textendash R3, 145.5/31.3/cef dc/T, 155.9/31.3/cef dc/{Z, N},
-    135.1/25.8/cef dc/P0, 145.5/25.8/cef dc/P1, 155.9/25.8/cef dc/OUTR,
-    135.1/20.3/cef dc/XR, 145.5/20.3/cef dc/WR, 155.9/20.3/cef dc/PROD,
-    155.9/14.8/cef dc/ACC}
+    135.1/41.6/cef cc/state, 145.5/41.6/cef cc/PC, 155.9/41.6/cef cc/IR,
+    135.1/36.3/cef cc/CNT, 145.5/36.3/cef cc/V1, 155.9/36.3/cef cc/V2,
+    135.1/31.0/cef dc/R0\textendash R3, 145.5/31.0/cef dc/T, 155.9/31.0/cef dc/{Z, N},
+    135.1/25.7/cef dc/P0, 145.5/25.7/cef dc/P1, 155.9/25.7/cef dc/OUTR,
+    135.1/20.4/cef dc/XR, 145.5/20.4/cef dc/WR, 155.9/20.4/cef dc/PROD,
+    155.9/15.1/cef dc/ACC}
   \node[\s] at (\x,\y) {\n};
-\node[cef cc, minimum width=19.8mm, font=\sffamily\scriptsize] at (140.3,14.8) {counters};
-\fill[lsbluelight, draw=lsblue, line width=0.5pt] (130.5,9.0) rectangle ++(2.6,2.2);
-\node[cef note, anchor=base west] at (133.8,9.3) {control};
-\fill[lstealight, draw=lsteal, line width=0.5pt] (145.5,9.0) rectangle ++(2.6,2.2);
-\node[cef note, anchor=base west] at (148.8,9.3) {datapath};
+\node[cef cc, minimum width=19.8mm, font=\sffamily\scriptsize] at (140.3,15.1) {counters};
+\fill[lsbluelight, draw=lsblue, line width=0.5pt] (130.5,9.2) rectangle ++(2.6,2.2);
+\node[cef note, anchor=base west] at (133.8,9.5) {control};
+\fill[lstealight, draw=lsteal, line width=0.5pt] (145.5,9.2) rectangle ++(2.6,2.2);
+\node[cef note, anchor=base west] at (148.8,9.5) {datapath};
 
 % ce into the gated registers; register values back to the display
-\draw[lsblue, line width=0.9pt, -{Stealth[length=2mm,width=1.5mm]}] (cefcs.east) -- (129,22.5);
-\node[font=\ttfamily\footnotesize\bfseries, text=lsblue, anchor=base] at (125.75,23.6) {ce};
-\draw[cef arr] (129,12.2) -- (cefdp.east);
+\draw[lsblue, line width=0.9pt, -{Stealth[length=2mm,width=1.5mm]}] (cefcs.east) -- (129,21.6);
+\node[font=\ttfamily\footnotesize\bfseries, text=lsblue, anchor=base] at (125.6,22.7) {ce};
+\draw[cef arr] (129,12.6) -- (cefdp.east);
 
-% one clock to both regions
-\draw[lsnavy, line width=0.8pt] (88,2.5) -- (162,2.5);
-\draw[lsnavy, line width=0.6pt, -{Stealth[length=1.6mm,width=1.2mm]}] (96,2.5) -- (96,7);
-\draw[lsnavy, line width=0.6pt, -{Stealth[length=1.6mm,width=1.2mm]}] (145.5,2.5) -- (145.5,7);
-\node[fill=white, inner xsep=1.5pt, inner ysep=0.5pt, font=\sffamily\scriptsize, text=lsnavy] at (125.75,2.5)
+% one clock to both regions, and the rule
+\draw[lsnavy, line width=0.8pt] (98,4.6) -- (152.6,4.6);
+\draw[lsnavy, line width=0.6pt, -{Stealth[length=1.6mm,width=1.2mm]}] (105.1,4.6) -- (105.1,7.6);
+\draw[lsnavy, line width=0.6pt, -{Stealth[length=1.6mm,width=1.2mm]}] (145.5,4.6) -- (145.5,7.6);
+\node[fill=white, inner xsep=1.5pt, inner ysep=0.5pt, font=\sffamily\scriptsize, text=lsnavy] at (125,4.6)
   {\texttt{clk} 100 MHz};
-\node[cef txt, text=lsrose, anchor=base] at (125.75,-2.6) {\textbf{never} a divided or button-driven clock};
+\node[fill=lsroselight, rounded corners=1pt, font=\sffamily\scriptsize, text=lsink, inner xsep=2.2pt, inner ysep=1.1pt]
+  (cefcau) at (125,0.4) {\hspace*{1.3mm}\textcolor{lsrose}{\bfseries never} a divided or button-driven clock};
+\fill[lsrose] (cefcau.south west) rectangle ([xshift=1.05mm]cefcau.north west);
 \end{tikzpicture}%

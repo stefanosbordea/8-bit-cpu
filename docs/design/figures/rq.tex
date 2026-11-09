@@ -1,4 +1,4 @@
-% rq: the requantiser RQ (ACC >>> sh, optional ReLU, clamp to int8) with the worked example ACC = -301, sh = 2
+% rq: the requantiser RQ (ACC >> sh, arithmetic, optional ReLU, clamp to int8) with the worked example ACC = -301, sh = 2
 \begin{tikzpicture}[x=1mm, y=1mm,
   rq stage/.style={draw=lsamber!90!black, fill=white, rounded corners=2pt, line width=0.7pt,
     minimum height=13mm, inner sep=0pt},
@@ -25,7 +25,7 @@
   \node[rq sub] at (#2,-2.9) {#4};}
 % ---- dataflow: ACC -> shift -> ReLU -> clamp -> Rd
 \rqreg{rqacc}{8.5}{ACC}{24-bit}
-\rqstage{rqsh}{42}{30}{\ttfamily >{}>{}> sh}{arithmetic shift}{rounds toward $-\infty$}
+\rqstage{rqsh}{42}{30}{shift}{arithmetic, $\gg sh$}{rounds towards $-\infty$}
 \rqstage{rqrelu}{78}{28}{ReLU}{if relu = 1:}{negative $\to$ 0}
 \rqstage{rqcl}{113}{28}{clamp}{to [\textminus128, 127]}{no wrap-around}
 \rqreg{rqrd}{145.5}{Rd}{int8}
@@ -56,9 +56,9 @@
   \fill[rq cell] (\rqa,-13.2) rectangle (\rqb,-28.7);
 \node[rq val] at (8.5,\rqU) {\textminus301};
 \node[rq val, text=lsgrey] at (8.5,\rqL) {0xFFFED3};
-\node[rq val] at (42,\rqU) {\textminus301 >{}>{}> 2 = \textminus76};
+\node[rq val] at (42,\rqU) {$-301 \gg 2 = -76$};
 \node[rq note] at (42,\rqL) {\textcolor{lsrose}{not \textminus75}: truncation};
-\node[rq note] at (42,\rqN) {rounds toward zero};
+\node[rq note] at (42,\rqN) {rounds towards zero};
 \node[rq note, text=lsblue, anchor=base east] at (78.3,\rqU) {relu = 0};
 \node[rq note, text=lsblue, anchor=base east] at (78.3,\rqL) {relu = 1};
 \node[rq val, anchor=base east] at (86.3,\rqU) {\textminus76};

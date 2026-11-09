@@ -7,18 +7,18 @@ Every testbench is self-checking in the style of the lab templates: it counts mi
 \begin{center}\small
 \begin{tabularx}{\linewidth}{@{}r l L l l@{}}
 \toprule
-\# & Testbench & What it proves & Written by & When \\
+\# & Testbench & What it proves & Written by & When (\cref{sec:schedule}) \\
 \midrule
 1 & \texttt{tb\_alu} & all 65,536 operand pairs for every function, flags included & Loucas & by 20 Nov \\
 2 & \texttt{tb\_mul\_rq} & all 65,536 signed products ($(-128)\times(-128)$ needs bit 15); \insn{RQ} for $sh = 0..23$ at the 24-bit edges, ReLU on and off, negatives rounding down & Loucas & by 20 Nov \\
-3a & \texttt{tb\_fsm} (M1) & every M1 path, one clock per state, RUN, INSTR-STEP parks in \stname{IDLE}, reset from every state & Stefanos & M1 \\
+3a & \texttt{tb\_fsm} (M1) & every M1 path, one clock per state, RUN to \stname{HALTED}, INSTR-STEP parks in \stname{IDLE}, reset from every state & Stefanos & M1 \\
 3b & \texttt{tb\_fsm} (M3) & \stname{STREAM} lasts $n$ clocks; parking after \stname{DRAIN2}; the first CYCLE-STEP press & Stefanos & M3 \\
 4 & \texttt{tb\_instr} & a small program per instruction group, checked after each instruction & both & M1--M2 \\
 5 & \texttt{tb\_mem} & data at $t+1$; held while $\mathrm{ce}=0$; X and W read together & Loucas & M2 \\
 6 & \texttt{tb\_neuron} & S, U, L, B at $N = 64$ and 32 on four images: outputs match both references, counts match the predictions & both & M2--M3 \\
 7 & \texttt{tb\_stream} & $n = 1, 2, 3, 4, 64, 255$; $64 \times (-128)(-128) = 2^{20}$; random vectors; $n+4$ cycles; pointers end at base $+\,n$ & Stefanos & 2 Dec \\
-8 & \texttt{tb\_ce\_pause} & tests 6 and 7 with \sig{ce} dropped for random 1--20 cycle gaps: same \sig{ACC}, same count & Stefanos & with step modes \\
-9 & \texttt{tb\_io} & a bouncing button gives one pulse; one active-low anode at a time; scanning continues while $\mathrm{ce}=0$ & Loucas & M2 \\
+8 & \texttt{tb\_ce\_pause} & tests 6 and 7 with \sig{ce} dropped for random 1--20 cycle gaps: same \sig{ACC}, same count & Stefanos & with CYCLE-STEP \\
+9 & \texttt{tb\_io} & a bouncing button gives one pulse; one active-low anode at a time; scanning continues while $\mathrm{ce}=0$ & both & M2 \\
 \bottomrule
 \end{tabularx}
 \end{center}
@@ -45,10 +45,10 @@ logical instead of arithmetic shift in \insn{RQ} & \texttt{tb\_mul\_rq} \\
 \subsection{Measurement plan}
 
 \begin{enumerate}[leftmargin=1.6em]
-\item \textbf{Freeze predictions first.} Each of us derives every prediction separately; we compare, then freeze them before the board.
-\item \textbf{Baselines on the plain machine.} At M2, before the stream exists, measure U64, L64 and B64 on the board and record the date and build. The final bitstream must reproduce them exactly.
+\item \textbf{Freeze predictions first.} Each of us derives every prediction separately; we compare, then freeze them before the first board measurement.
+\item \textbf{Baselines on the plain machine.} At M2, before the stream is in the bitstream, measure U64, L64 and B64 on the board and record the date and build. The final bitstream must reproduce them exactly.
 \item \textbf{The final bitstream.} Each program once per image (output byte and count); S64 and U64 three times each; everything recorded on a printed sheet next to the predictions.
-\item \textbf{Two lengths.} The $N = 32$ programs give the slopes. One short program in RUN, INSTR-STEP and CYCLE-STEP must give the same count.
+\item \textbf{Two lengths.} The $N = 32$ programs give the slopes of S, U and L; B has no $N = 32$ program on the board, so its slope stays a prediction checked in simulation. One short program in RUN, INSTR-STEP and CYCLE-STEP must give the same count.
 \item \textbf{The hardware cost.} Two Vivado builds of one source: normal, and stream-off (the decoder treats every \insn{MAC \#n} as \insn{MAC}). For both: utilisation per module (LUT, FF, DSP48E1, LUTRAM), worst negative slack at 100\,MHz, and on-chip power. The difference is what the stream costs in hardware.
 \item \textbf{If the stream works only in simulation}, report its XSim counts labelled ``simulation'' next to the board-measured U, L and B.
 \end{enumerate}

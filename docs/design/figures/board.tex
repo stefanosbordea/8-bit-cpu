@@ -14,11 +14,12 @@
 
 % ---- board ----
 \filldraw[fill=lspaper,draw=lsnavy,line width=0.5pt,rounded corners=3mm] (0.5,0.5) rectangle (161.5,91.5);
-\foreach \bdx/\bdy in {4/4,158/4,4/88,158/88}
-  \filldraw[fill=white,draw=lsrule,line width=0.5pt] (\bdx,\bdy) circle (1.4);
-\node[bd note,font=\sffamily\scriptsize\bfseries,anchor=base east] at (153,86.8) {Nexys A7-100T};
+\foreach \bdx/\bdy in {3.8/3.8,158.2/3.8,3.8/88.2,158.2/88.2}
+  \filldraw[fill=white,draw=lsrule,line width=0.5pt] (\bdx,\bdy) circle (1.2);
+\node[bd note,font=\sffamily\scriptsize\bfseries,anchor=base west] at (7,85.2) {Nexys A7-100T};
 
-% ---- slide switches SW15..SW0 (drawn as set for S64, view 4: only SW10 up) ----
+\begin{scope}[yshift=1mm]% lower block lifted so the bottom inset matches the top
+% ---- slide switches SW15..SW0, drawn as set for S64 with view 4 (only SW10 up) ----
 \foreach \bdk in {0,...,15} {
   \filldraw[bd sw] ({\bdX{\bdk}-2.2},11.5) rectangle ({\bdX{\bdk}+2.2},19.9);
   \ifnum\bdk=10 \fill[bd knob] ({\bdX{\bdk}-1.5},15.9) rectangle ({\bdX{\bdk}+1.5},19.2);
@@ -27,12 +28,12 @@
 }
 \foreach \bdl/\bdr in {15/13,12/11,10/8,7/0}
   \draw[bd brace,decoration={mirror}] ({\bdX{\bdl}-2.6},10.2) -- ({\bdX{\bdr}+2.6},10.2);
-\node[bd txt]  at ({\bdX{14}},6.3)   {program select};
-\node[bd note] at ({\bdX{14}},3.4)   {read at reset};
-\node[bd txt]  at ({\bdX{11.5}},6.3) {run mode};
-\node[bd txt]  at ({\bdX{9}},6.3)    {display view};
-\node[bd txt]  at ({\bdX{3.5}},6.3)  {IN data};
-\node[bd note] at ({\bdX{3.5}},3.4)  {SW7..6 = image};
+\node[bd txt]  at ({\bdX{14}},6.0)   {program select};
+\node[bd note] at ({\bdX{14}},3.1)   {read at reset};
+\node[bd txt]  at ({\bdX{11.5}},6.0) {run mode};
+\node[bd txt]  at ({\bdX{9}},6.0)    {display view};
+\node[bd txt]  at ({\bdX{3.5}},6.0)  {IN data};
+\node[bd note] at ({\bdX{3.5}},3.1)  {SW7..6 = image};
 
 % ---- LEDs LED15..LED0 ----
 \foreach \bdk/\bdc/\bdf in {15/lsblue/lsblue!18,14/lsblue!65/lsblue!12,13/lsteal/lsteal!18,
@@ -48,8 +49,9 @@
 \node[bd txt,text=lsrose]            at ({\bdX{10.5}},32.3) {DRAIN};
 \node[bd txt]                        at ({\bdX{8.5}},32.3)  {V1 V2};
 \node[bd txt]                        at ({\bdX{3.5}},32.3)  {OUTR (the neuron's output byte)};
+\end{scope}
 
-% ---- 8-digit seven-segment display, showing the cycle counter (view 4) after S64 ----
+% ---- 8-digit seven-segment display, showing view 4 (cycle counter) after S64 ----
 \def\bdW{1.7}\def\bdH{3.0}\def\bdT{0.72}\def\bdG{0.2}
 \def\bdHs#1#2{\fill[#2] ({-\bdW+\bdG},#1) -- ({-\bdW+\bdG+\bdT/2},{#1+\bdT/2})
   -- ({\bdW-\bdG-\bdT/2},{#1+\bdT/2}) -- ({\bdW-\bdG},#1) -- ({\bdW-\bdG-\bdT/2},{#1-\bdT/2})
@@ -72,34 +74,35 @@
     \fill[lsink!82!white] ({\bdW+0.95},{-\bdH}) circle (0.38);
   \end{scope}}
 \foreach \bdm in {0,1}
-  \fill[lsink,rounded corners=0.8mm] ({7+\bdm*26.7},74.65) rectangle ++(24.5,10.7);
+  \fill[lsink,rounded corners=0.8mm] ({7+\bdm*26.7},68.8) rectangle ++(24.5,10.7);
 \foreach \bdj in {0,...,7} {
   \pgfmathtruncatemacro\bdv{\bdj<5 ? 0 : (\bdj==5 ? int(\cycS/256) : (\bdj==6 ? mod(int(\cycS/16),16) : mod(\cycS,16)))}
-  \bdDigit{10.6+\bdj*5.5+(\bdj>3)*2.2}{80}{\bdv}
+  \bdDigit{10.6+\bdj*5.5+(\bdj>3)*4.7}{74.15}{\bdv}
 }
-\node[bd txt]  at (32.6,70.3) {8-digit display: view selected by SW10..8};
-\node[bd note] at (32.6,67.4) {shown: view 4, the cycle counter after S64 (\cycS{} = 0x\bdHex)};
+\node[bd txt]  at (32.6,64.6) {8-digit display: view selected by SW10..8};
+\node[bd note] at (32.6,61.7) {shown: view 4, S64 takes \pred{\cycS{} = 0x\bdHex} cycles};
 
 % ---- 100 MHz oscillator into pin E3 ----
-\draw[lsgrey,line width=0.5pt] (60.6,54) -- (66,54);
-\filldraw[fill=white,draw=lsgrey,line width=0.5pt,rounded corners=0.8pt] (54.2,52) rectangle (60.6,56);
-\node[bd txt,anchor=east] at (53.2,54) {100 MHz (E3)};
+\draw[lsgrey,line width=0.5pt] (60.6,51.5) -- (66,51.5);
+\filldraw[fill=white,draw=lsgrey,line width=0.5pt,rounded corners=0.8pt] (54.2,49.5) rectangle (60.6,53.5);
+\draw[lsgrey,line width=0.4pt] (55,50.4) -- ++(0.8,0) |- ++(1.2,2.2) |- ++(1.2,-2.2) |- ++(1.2,2.2) |- ++(0.4,-2.2);
+\node[bd txt,anchor=east] at (53.2,51.5) {100 MHz (E3)};
 
 % ---- FPGA ----
 \fill[lsnavy,rounded corners=1.2mm] (66,49.5) rectangle (96,79.5);
 \draw[lsgrey!70,line width=0.4pt,rounded corners=0.8mm] (67.4,50.9) rectangle (94.6,78.1);
 \fill[lsgrey] (69.4,76) circle (0.7);
-\node[bd txt,text=lsrule] at (81,70.5) {Artix-7};
-\node[bd txt,font=\sffamily\footnotesize\bfseries,text=white] at (81,65.8) {XC7A100T};
+\node[bd txt,text=lsrule] at (81,70) {Artix-7};
+\node[bd txt,font=\sffamily\footnotesize\bfseries,text=white] at (81,65.3) {XC7A100T};
 \node[bd pill] at (81,57.5) {LS core};
 
 % ---- push buttons ----
-\foreach \bdx/\bdy/\bdn/\bdf/\bdon in {130/80/BTNU/reset/1,117/67/BTNL/unused/0,130/67/BTNC/{go / step}/1,
-    143/67/BTNR/unused/0,130/54/BTND/unused/0} {
+\foreach \bdx/\bdy/\bdn/\bdf/\bdon in {128.75/78.5/BTNU/reset/1,114.75/64.5/BTNL/unused/0,
+    128.75/64.5/BTNC/{go / step}/1,142.75/64.5/BTNR/unused/0,128.75/50.5/BTND/unused/0} {
   \ifnum\bdon=1 \def\bdc{lsnavy}\def\bdt{lsink}\else\def\bdc{lsrule}\def\bdt{lsgrey}\fi
-  \filldraw[fill=white,draw=\bdc,line width=0.5pt,rounded corners=0.8pt] (\bdx-3,\bdy-3) rectangle (\bdx+3,\bdy+3);
-  \fill[\bdc] (\bdx,\bdy) circle (2);
-  \node[bd note] at (\bdx,\bdy-5.6) {\bdn};
-  \node[bd txt,text=\bdt] at (\bdx,\bdy-8.5) {\bdf};
+  \filldraw[fill=white,draw=\bdc,line width=0.5pt,rounded corners=0.8pt] (\bdx-2.8,\bdy-2.8) rectangle (\bdx+2.8,\bdy+2.8);
+  \fill[\bdc] (\bdx,\bdy) circle (1.9);
+  \node[bd note] at (\bdx,\bdy-5.8) {\bdn};
+  \node[bd txt,text=\bdt] at (\bdx,\bdy-8.7) {\bdf};
 }
 \end{tikzpicture}%

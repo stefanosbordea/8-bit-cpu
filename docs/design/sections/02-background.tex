@@ -32,7 +32,7 @@ The next layer expects int8 inputs, so the 24-bit sum must be scaled down. The \
 \begin{aside}[Signed arithmetic in VHDL]
 The labs used \texttt{unsigned}; the MAC unit is \texttt{signed} from end to end (\texttt{ieee.numeric\_std}).
 \begin{itemize}
-\item A product is as wide as both operands together ($8\times 8 \to 16$); a sum is as wide as its wider operand, so \texttt{resize} \sig{PROD} to 24 bits \emph{before} adding.
+\item A product is as wide as both operands together ($8\times 8 \to 16$). A sum is as wide as its wider operand (\texttt{numeric\_std} sign-extends the narrower one), so \sig{ACC} + \sig{PROD} is 24 bits, but the sum of two 16-bit values is 16 bits and can overflow: \texttt{resize} first when both operands are narrow.
 \item Converting a vector to \texttt{signed} only relabels its bits. Sign extension is a separate \texttt{resize}.
 \item \texttt{shift\_right} is arithmetic on \texttt{signed} and logical on \texttt{unsigned}: \insn{RQ} must shift a signed value.
 \item $-1$ in \sig{ACC} reads \texttt{FFFFFF}; negating $-128$ in 8 bits gives $-128$.

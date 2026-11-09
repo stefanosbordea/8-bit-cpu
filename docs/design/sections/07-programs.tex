@@ -91,7 +91,7 @@ ordinary instructions in 3, classic \insn{MAC} in 4 & \sensOrdThreeS & \sensOrdT
 everything in 3 cycles & \sensAllThreeS & \sensAllThreeU & \sensAllThreeR \\
 \stname{STREAM} entered after \stname{EXECUTE} ($n+5$) & \sensAfterExS & \sensAfterExU & \sensAfterExR \\
 registered program ROM (one more \stname{FETCH} cycle) & \sensRegRomS & \sensRegRomU & \sensRegRomR \\
-repeat without overlap ($2+3n$, rung 2) & \sensNoOverlapS & \sensNoOverlapU & \sensNoOverlapR \\
+repeat without overlap ($2+3n$, level 2) & \sensNoOverlapS & \sensNoOverlapU & \sensNoOverlapR \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -101,8 +101,8 @@ Across reasonable choices the stream stays between about 2.1 and 3.0 times faste
 \begin{caution}[What we will not claim]
 \begin{itemize}
 \item ``fastest'', ``new'' or ``first'', or any speed-up against a CPU without a hardware multiplier;
-\item B/S (\ratioBS$\times$) or L/S (\ratioLS$\times$) as the result, or any product of rungs;
-\item wall-clock time (\cycS{} cycles is 1.12\,\textmu s at 100\,MHz) unless timing is met with $\text{WNS} \ge 0$;
+\item B/S (\ratioBS$\times$) or L/S (\ratioLS$\times$) as the result, or any product of ladder ratios;
+\item wall-clock time (\cycS{} cycles is 1.12\,\textmu s at 100\,MHz) unless timing is met with worst negative slack $\text{WNS} \ge 0$;
 \item energy per program from Vivado's vectorless power estimate, which does not depend on the program;
 \item any prediction in this document as a result before the board shows it.
 \end{itemize}

@@ -26,7 +26,7 @@ Every number below is a prediction from the program listings in the design docum
 | L: classic `MAC` in a loop | 14 | 560 | 8 |
 | B: no MAC instruction | 17 | 1,328 | 20 |
 
-The claim is S against U, the best conventional code for the same CPU: **2.68× (predicted)**, measured on one bitstream.
+The claim is S against U, the best conventional code for the same CPU: **2.68× (predicted)**, to be measured on one bitstream.
 
 ## Repository layout
 
@@ -56,6 +56,6 @@ constraints/     Nexys A7-100T constraints (.xdc)
 | | Designs | Verifies |
 |---|---|---|
 | Loucas | control: FSM and decoder, stream control, PC and program ROM, run modes and clock enable, counters, display | Stefanos' datapath: `tb_alu`, `tb_mul_rq`, `tb_mem`, `tb_io` |
-| Stefanos | datapath: registers, ALU, pointers and memories, MAC unit, requantiser, input chain, LEDs, top level | Loucas' control: `tb_fsm`, `tb_stream`, `tb_ce_pause` |
+| Stefanos | datapath: registers, ALU, pointers and memories, MAC unit, requantiser, input chain, LEDs, top level | Loucas' control: `tb_fsm`, `tb_stream`, `tb_ce_pause`, `tb_io` |
 
 How we work together: [CONTRIBUTING.md](CONTRIBUTING.md).

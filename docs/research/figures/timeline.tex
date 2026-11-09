@@ -1,63 +1,56 @@
-% timeline: prior art behind LS, 1975-2030, in four lanes (DSP, vectors and streams, soft CPUs and ISA extensions, arrays and int8 inference), with LS at 2026
+% timeline: prior art behind LS, 1975-2030, in four lanes (DSP repeat and MAC, vectors and streams, soft CPUs and ISA extensions, arrays and int8 inference), with LS marked at 2026
 \begin{tikzpicture}[x=2.54mm, y=1mm, font=\sffamily\scriptsize, inner sep=0pt, outer sep=0pt,
   declare function={Y(\t)=\t-1975;},
   lane/.style={draw=lsrule, line width=0.5pt},
   ev/.style={circle, fill=#1, draw=white, line width=0.5pt, minimum size=1.9mm},
-  stem/.style={draw=#1, line width=0.4pt},
-  lanelabel/.style={text=lsgrey, align=right, anchor=east},
+  pole/.style={draw=#1, line width=0.4pt},
+  L/.style={anchor=base east, xshift=0.5mm},   % label ends at its dot
+  R/.style={anchor=base west, xshift=-0.5mm},  % label starts at its dot
 ]
 \def\yr#1{\textcolor{lsgrey}{#1}}
-% lanes y: DSP 0, vectors -14, soft -28, arrays -42; axis -51
-\foreach \y/\a/\b in {0/DSP repeat/and MAC, -14/Vectors and/streams, -28/Soft CPUs and/ISA extensions, -42/Arrays and/int8 inference} {
+% lanes at y = 0, -13.5, -27, -40.5; axis at -53.2
+\foreach \y/\a/\b in {0/DSP repeat/and MAC, -13.5/Vectors and/streams,
+    -27/Soft CPUs and/ISA extensions, -40.5/Arrays and/int8 inference} {
   \draw[lane] (0,\y) -- ({Y(2030)},\y);
-  \node[lanelabel] at (-2.2mm,\y) {\a\\\b};
+  \node[text=lsgrey, align=right, anchor=east] at (-2.2mm,\y) {\a\\\b};
 }
 % LS band
-\fill[lsamberlight] ({Y(2026)},4.5) ++(-0.5mm,0) rectangle ++(1mm,-55.5);
-\draw[lsamber, line width=0.5pt] ({Y(2026)},4.5) -- ({Y(2026)},-51);
+\fill[lsamberlight] ({Y(2026)},4.6) ++(-0.5mm,0) rectangle ++(1mm,-57.8);
+\draw[lsamber, line width=0.5pt] ({Y(2026)},4.6) -- ({Y(2026)},-53.2);
 \node[text=lsamber, font=\sffamily\scriptsize\bfseries, anchor=base] at ({Y(2026)},5.4) {LS, 2026};
 % axis
-\draw[lsgrey, line width=0.4pt] (0,-51) -- ({Y(2030)},-51);
-\foreach \t in {1975,1985,...,2025} \draw[lsgrey, line width=0.4pt] ({Y(\t)},-51) -- ++(0,-0.8);
+\draw[lsgrey, line width=0.4pt] (0,-53.2) -- ({Y(2030)},-53.2);
+\foreach \t in {1975,1985,...,2025} \draw[lsgrey, line width=0.4pt] ({Y(\t)},-53.2) -- ++(0,-0.8);
 \foreach \t in {1980,1990,...,2030} {
-  \draw[lsgrey, line width=0.4pt] ({Y(\t)},-51) -- ++(0,-1.3);
-  \node[text=lsgrey, anchor=north] at ({Y(\t)},-53.2) {\t};
+  \draw[lsgrey, line width=0.4pt] ({Y(\t)},-53.2) -- ++(0,-1.3);
+  \node[text=lsgrey, anchor=north] at ({Y(\t)},-55.3) {\t};
 }
-% DSP lane
-\node[ev=lsblue] at ({Y(1982)},0) {};
+% DSP repeat and MAC
+\foreach \t in {1982,1995,2001} \node[ev=lsblue] at ({Y(\t)},0) {};
 \node[anchor=base] at ({Y(1982)},1.5) {TMS32010 \yr{1982}};
-\node[ev=lsblue] at ({Y(1995)},0) {};
-\node[anchor=base] at ({Y(1995)},-3.4) {ADSP-2100 manual \yr{1995}};
-\node[ev=lsblue] at ({Y(2001)},0) {};
-\node[anchor=base] at ({Y(2001)},1.5) {TMS320C54x manuals \yr{2001}};
+\node[L] at ({Y(1995)},-3.4) {ADSP-2100 manual \yr{1995}};
+\node[R] at ({Y(2001)},1.5) {TMS320C54x manuals \yr{2001}};
 % vectors and streams
-\node[ev=lsviolet] at ({Y(1984)},-14) {};
-\node[anchor=base] at ({Y(1984)},-12.5) {Decoupled access/execute \yr{1984}};
-\node[ev=lsviolet] at ({Y(2021)},-14) {};
-\node[anchor=base east, xshift=0.5mm] at ({Y(2021)},-12.5) {Stream semantic registers \yr{2021}};
-\node[ev=lsviolet] at ({Y(2025)},-14) {};
-\node[anchor=base east, xshift=0.5mm] at ({Y(2025)},-17.4) {Snitch loop nests \yr{2025}};
+\foreach \t in {1984,2021,2025} \node[ev=lsviolet] at ({Y(\t)},-13.5) {};
+\node[anchor=base] at ({Y(1984)},-16.9) {Decoupled access/execute \yr{1984}};
+\node[L] at ({Y(2021)},-12) {Stream semantic registers \yr{2021}};
+\draw[pole=lsviolet] ({Y(2025)},-12.5) -- ({Y(2025)},-9.3);
+\node[L, xshift=-0.3mm] at ({Y(2025)},-8.6) {Snitch loop nests \yr{2025}};
 % soft CPUs and ISA extensions
-\node[ev=lsteal] at ({Y(2010)},-28) {};
-\node[anchor=base east, xshift=0.5mm] at ({Y(2010)},-26.5) {J1 \yr{2010}};
-\node[ev=lsteal] at ({Y(2014)},-28) {};
-\node[anchor=base west, xshift=-0.5mm] at ({Y(2014)},-26.5) {KCPSM6 \yr{2014}};
-\node[anchor=base east, xshift=0.5mm] at ({Y(2014)},-31.4) {Octavo \yr{2014}};
-\node[ev=lsteal] at ({Y(2017)},-28) {};
-\node[anchor=base west, xshift=-0.5mm] at ({Y(2017)},-31.4) {RI5CY \yr{2017}};
-\node[ev=lsteal] at ({Y(2021)},-28) {};
-\draw[stem=lsteal] ({Y(2021)},-26.9) -- ({Y(2021)},-24);
-\node[anchor=base east, xshift=0.2mm] at ({Y(2021)},-23.3) {XpulpNN \yr{2021}};
-\node[ev=lsteal] at ({Y(2023)},-28) {};
-\draw[stem=lsteal] ({Y(2023)},-29.1) -- ({Y(2023)},-32);
-\node[anchor=base east, xshift=0.2mm] at ({Y(2023)},-34.6) {CFU Playground \yr{2023}};
+\foreach \t in {2010,2014,2017,2021,2023} \node[ev=lsteal] at ({Y(\t)},-27) {};
+\node[L] at ({Y(2010)},-25.5) {J1 \yr{2010}};
+\draw[pole=lsteal] ({Y(2014)},-26) -- ({Y(2014)},-22.8);
+\node[L] at ({Y(2014)},-22.1) {KCPSM6, Octavo \yr{2014}};
+\node[anchor=base, xshift=1.5mm] at ({Y(2017)},-30.4) {RI5CY \yr{2017}};
+\draw[pole=lsteal] ({Y(2021)},-26) -- ({Y(2021)},-22.8);
+\node[anchor=base] at ({Y(2021)},-22.1) {XpulpNN \yr{2021}};
+\draw[pole=lsteal] ({Y(2023)},-28) -- ({Y(2023)},-31);
+\node[L] at ({Y(2023)},-33.6) {CFU Playground \yr{2023}};
 % arrays and int8 inference
-\node[ev=lsrose] at ({Y(1978)},-42) {};
-\node[anchor=base west, xshift=-0.5mm] at ({Y(1978)},-40.5) {Systolic arrays \yr{1978}};
-\node[ev=lsrose] at ({Y(2017)},-42) {};
-\node[anchor=base east, xshift=0.5mm] at ({Y(2017)},-45.4) {TPU v1 \yr{2017}};
-\node[ev=lsrose] at ({Y(2018)},-42) {};
-\node[anchor=base west, xshift=-0.5mm] at ({Y(2018)},-40.5) {CMSIS-NN \yr{2018}};
-\draw[stem=lsrose] ({Y(2018)},-43.1) -- ({Y(2018)},-46);
-\node[anchor=base east, xshift=0.2mm] at ({Y(2018)},-48.6) {Integer-only inference \yr{2018}};
-\end{tikzpicture}
+\foreach \t in {1978,2017,2018} \node[ev=lsrose] at ({Y(\t)},-40.5) {};
+\node[R] at ({Y(1978)},-39) {Systolic arrays \yr{1978}};
+\node[L] at ({Y(2017)},-43.9) {TPU v1 \yr{2017}};
+\draw[pole=lsrose] ({Y(2018)},-41.5) -- ({Y(2018)},-44.5);
+\node[anchor=north east, xshift=0.5mm, align=right] at ({Y(2018)},-45.38)
+  {CMSIS-NN \yr{2018}\\Integer-only inference \yr{2018}};
+\end{tikzpicture}%

@@ -46,12 +46,12 @@ SW7..0 & R13, U18, T18, R17, R15, M13, L16, J15 & \insn{IN} data; SW7..6 choose 
 \subsection{The demonstration, in three minutes}
 
 \begin{enumerate}[leftmargin=1.6em]
-\item \textbf{Watch a stream happen.} Cycle-step the \insn{MAC \#8} program with views 3 and 2. LED15..12 show \stname{FETCH}, \stname{DECODE}, then LED11 lights for \stname{STREAM}; with each press \sig{CNT} falls and \sig{P0}, \sig{P1} rise by one; \sig{V1} lights one press into the stream and \sig{V2} one press later; two drain presses finish it. The board matches \cref{fig:timing-mac4} press by press.
-\item \textbf{Race the four programs.} Run mode, view 4, reset between runs: the display shows the counts of S64, U64, L64 and B64, and LED7..0 show the same output byte every time.
+\item \textbf{Watch a stream happen.} Cycle-step the \insn{MAC \#8} program with views 3 and 2. LED15..12 show \stname{FETCH}, \stname{DECODE}, then LED11 lights for \stname{STREAM}; with each press \sig{CNT} falls and \sig{P0}, \sig{P1} rise by one; \sig{V1} lights one press into the stream and \sig{V2} one press later; two drain presses finish it. The board matches \cref{fig:timing-mac4} press by press, with eight \stname{STREAM} presses instead of four.
+\item \textbf{Race the four programs.} RUN mode, view 4, reset between runs: the display shows the counts of S64, U64, L64 and B64, and LED7..0 show the same output byte every time.
 \item \textbf{Change the data, not the time.} Flip SW7..6 to another image: the output byte changes, the cycle counts do not.
 \item \textbf{The slope.} S32 and L32: thirty-two fewer inputs save 32 cycles with the stream and 256 with the loop.
 \end{enumerate}
 
 \subsection{Demo data}
 
-A hand-made neuron works better on the board than a trained one: a template detector for one digit, with small positive weights on the digit's strokes and small negative weights around them, drawn on squared paper. Four stored images give clearly different sums. The shift $sh$ is the smallest that brings the largest sum within 127; the bias and ReLU are set so the four output bytes differ and none is \texttt{00} or \texttt{7F} (a saturated value would hide errors). All four outputs are written on the prediction sheet before the board is switched on. A negative check for the requantiser: $\mathrm{ACC} = -301$, $sh = 2$ gives $-76$ (\texttt{B4}) with ReLU off and \texttt{00} with ReLU on.
+A hand-made neuron works better on the board than a trained one: a template detector for one digit, with small positive weights on the digit's strokes and small negative weights around them, drawn on squared paper. Four stored images give clearly different sums. The shift $sh$ is the smallest that brings the largest sum within 127; the bias and ReLU are set so the four output bytes differ and none is \texttt{00} or \texttt{7F} (an output stuck at the ReLU floor or the clamp limit would hide errors). All four outputs are written on the prediction sheet before the board is switched on. A negative check for the requantiser: $\mathrm{ACC} = -301$, $sh = 2$ gives $-76$ (\texttt{B4}) with ReLU off and \texttt{00} with ReLU on.

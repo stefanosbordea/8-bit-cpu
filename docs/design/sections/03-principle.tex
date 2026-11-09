@@ -21,15 +21,15 @@ U is the best a conventional multicycle CPU can do with a MAC instruction: no lo
 
 \subsection{What a stream instruction means}
 
-\insn{MAC \#n} with $n \ge 1$ means: \emph{for $i = 0$ to $n-1$, $\mathrm{ACC} \gets \mathrm{ACC} + X[P0 + i] \cdot W[P1 + i]$; then $P0 \gets P0 + n$ and $P1 \gets P1 + n$.} Its architectural effect is exactly that of $n$ classic \insn{MAC} instructions in a row, so a program can switch between U and S without changing any other instruction, and both must produce the same accumulator and the same output byte. Only the timing differs.
+X and W are the input and weight memories, addressed by \sig{P0} and \sig{P1}. \insn{MAC \#n} with $n \ge 1$ means: \emph{for $i = 0$ to $n-1$, $\mathrm{ACC} \gets \mathrm{ACC} + X[\mathrm{P0} + i] \cdot W[\mathrm{P1} + i]$; then $\mathrm{P0} \gets \mathrm{P0} + n$ and $\mathrm{P1} \gets \mathrm{P1} + n$.} Its architectural effect is exactly that of $n$ classic \insn{MAC} instructions in a row, so a program can switch between U and S without changing any other instruction, and both must produce the same accumulator and the same output byte. Only the timing differs.
 
 \subsection{The overlap, and why it is safe}
 
-\lsfig[t]{spacetime}{\insn{MAC \#6} in space and time. Each element passes through three steps on consecutive clocks: A addresses both operand memories and advances the pointers, M multiplies the pair, C adds the product to \sig{ACC}. In every \stname{STREAM} clock three different elements are in flight, one per step, so the stream retires one MAC per clock after two cycles of fill.}
+\lsfig[t]{spacetime}{\insn{MAC \#6} in space and time. Each element passes through three steps on consecutive clocks: A addresses both operand memories and advances the pointers, M multiplies the pair, C adds the product to \sig{ACC}. After two cycles of fill, every \stname{STREAM} clock has three different elements in flight, one per step, so the stream retires one MAC per clock.}
 
 Each element needs three steps, one clock each (\cref{fig:spacetime}):
 \begin{description}[leftmargin=1.6em,style=nextline,itemsep=0.2em]
-\item[A, address] Present $P0$ and $P1$ to the X and W memories; their read registers capture $x_i$ and $w_i$ at the end of the clock. Advance both pointers.
+\item[A, address] Present \sig{P0} and \sig{P1} to the X and W memories; their read registers capture $x_i$ and $w_i$ at the end of the clock. Advance both pointers.
 \item[M, multiply] Multiply the pair waiting in the read registers into \sig{PROD}.
 \item[C, accumulate] Add \sig{PROD}, sign-extended to 24 bits, into \sig{ACC}.
 \end{description}
@@ -37,7 +37,7 @@ Run one element at a time and \insn{MAC \#n} costs $2 + 3n$ cycles (one fetch, o
 
 A pipelined CPU overlaps instructions too, and it pays for that with forwarding paths, hazard detection, stalls and flushes \citep{harris2013ddca}. The stream needs none of these, for three reasons:
 \begin{itemize}
-\item \textbf{No data hazards.} Element $i+1$ never reads a result of element $i$. The only state the elements share is \sig{ACC}, and only step C touches it, adding one product per clock to its own previous value: a one-cycle loop inside one stage. Step A owns the pointers in the same way.
+\item \textbf{No data hazards.} Element $i+1$ never reads a result of element $i$. The only data the elements share is \sig{ACC}, and only step C touches it, adding one product per clock to its own previous value: a one-cycle loop inside one stage. Step A owns the pointers in the same way.
 \item \textbf{No control hazards.} There is no branch inside a stream. The length is known in \stname{DECODE}, so the FSM counts down and leaves \stname{STREAM} at exactly the right clock.
 \item \textbf{No structural hazards.} Each step has its own hardware: the memories and pointers, the multiplier, the adder. Two operand memories (X for inputs, W for weights) deliver both operands of a MAC in the same clock. With one shared memory port the MAC rate could not exceed one every two cycles, whatever the control did \citep{williams2009roofline,kung1982systolic}.
 \end{itemize}

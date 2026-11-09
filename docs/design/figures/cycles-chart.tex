@@ -53,7 +53,8 @@
 \addplot[cch line, lsteal] {48+8*x};
 \addplot[cch line, lsblue] {44+4*x};
 \addplot[cch line, lsamber] {48+x};
-\addplot[cch ring=lsrose] {48+20*x};
+% rings = programs in the switch table (S64 U64 L64 B64 S32 U32 L32): no B32, so B is ringed at N = 64 only
+\addplot[cch ring=lsrose, samples at={64}] {48+20*x};
 \addplot[cch ring=lsteal] {48+8*x};
 \addplot[cch ring=lsblue] {44+4*x};
 \addplot[cch ring=lsamber] {48+x};

@@ -25,7 +25,7 @@
 \def\opcCell#1#2#3#4#5#6#7{%
   \pgfmathsetmacro\opcx{#2*\opcPX}\pgfmathsetmacro\opcy{-#1*\opcPY}%
   \draw[#4] (\opcx,\opcy) rectangle ++(\opcW,-\opcH);
-  \node[opc hex] at (\opcx+1.6,\opcy-2.8) {#3};
+  \node[opc hex] at (\opcx+1.4,\opcy-3.1) {#3};
   \node[opc mn] at (\opcx+\opcW/2,\opcy-5.9) {#5};
   \if\relax\detokenize{#7}\relax
     \node[opc ds] at (\opcx+\opcW/2,\opcy-11.1) {#6};
@@ -44,15 +44,15 @@
 \opcCell{0}{0}{0x0}{opc sys}{SYS}{\opcTt{NOP HALT IN OUT}}{}
 \opcCell{0}{1}{0x1}{opc reg}{LDI}{Rd $\leftarrow$ imm8}{}
 \opcCell{0}{2}{0x2}{opc reg}{ALU}{\opcTt{ADD SUB AND OR XOR}}{\opcTt{MOV SHL SHR SAR}}
-\opcCell{0}{3}{0x3}{opc mem}{MVP}{Pp $\leftarrow$ Ra[3:0]\,:\,Rb}{}
+\opcCell{0}{3}{0x3}{opc mem}{MVP}{Pp $\leftarrow$ Ra[3:0]\,\&\,Rb}{}
 % row 01
 \opcCell{1}{0}{0x4}{opc mem}{LD}{Rd $\leftarrow$ [Pp]\{+\}}{}
 \opcCell{1}{1}{0x5}{opc mem}{ST}{[P0]\{+\} $\leftarrow$ Rs \textit{(optional)}}{}
 \opcCell{1}{2}{0x6}{opc mac}{MUL}{PROD $\leftarrow$ Ra $\times$ Rb}{}
-\opcCell{1}{3}{0x7}{opc mac}{ADDP {\mdseries\color{lsgrey}/} LDA}{ACC $\leftarrow$ ACC $+$ PROD}{ACC $\leftarrow$ Ra\,:\,Rb}
+\opcCell{1}{3}{0x7}{opc mac}{ADDP {\mdseries\color{lsgrey}/} LDA}{ACC $\leftarrow$ ACC $+$ PROD}{ACC $\leftarrow$ Ra\,\&\,Rb}
 % row 10: MAC #n, the LS stream instruction
 \opcCell{2}{0}{\textcolor{lsamber!35!black}{0x8}}{opc ls}{MAC \#n}{\textit{n} $=$ 0: classic, 4 cycles}{\textit{n} $\geq$ 1: stream, \textit{n} $+$ 4 cycles}
-\opcCell{2}{1}{0x9}{opc mac}{RQ}{Rd $\leftarrow$ clamp(ACC >{}>{}> sh)}{}
+\opcCell{2}{1}{0x9}{opc mac}{RQ}{Rd $\leftarrow$ clamp(ACC $\gg$ sh)}{}
 \opcCell{2}{2}{0xA}{opc mem}{SETP0}{P0 $\leftarrow$ imm12}{}
 \opcCell{2}{3}{0xB}{opc mem}{SETP1}{P1 $\leftarrow$ imm12}{}
 % row 11

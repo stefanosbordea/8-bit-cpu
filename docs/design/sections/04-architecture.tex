@@ -2,7 +2,7 @@
 
 \Cref{fig:datapath} is the complete datapath. It keeps everything in Stefanos' plan (8-bit data, four registers, 16-bit instructions, 12-bit addresses, two auto-advancing pointers, a 24-bit MAC accumulator, a fetch--decode--execute--write-back FSM) and changes four things: separate memories for inputs and weights, registered memory reads, valid bits that let the MAC unit run as a three-step pipeline, and three new FSM states for streams.
 
-\lsfig[p]{datapath}{The LS datapath. Blue blocks are control, teal blocks registers and ALU, violet blocks memory, amber blocks the MAC unit, grey blocks board I/O. Numbers on the buses are widths in bits. Dashed blue lines are control signals, all of them registered or decoded from registers and all gated by the clock enable \sig{ce}.}
+\lsfig[p]{datapath}{The LS datapath. Blue blocks are control, teal blocks registers and ALU, violet blocks memory, amber blocks the MAC unit, grey blocks board I/O. Numbers on the buses are widths in bits. Dashed blue lines are control signals (register enables and multiplexer selects), all registered or decoded from registers; every register enable is gated by the clock enable \sig{ce}.}
 
 \subsection{Blocks}
 
@@ -23,7 +23,7 @@ Multiplier, \sig{PROD} & 8 $\times$ 8 $\to$ 16 & Signed, one DSP48E1 slice; \sig
 \sig{V1}, \sig{V2} & 1 + 1 & Valid bits: \sig{V1} = the read registers hold a stream pair; \sig{V2} = \sig{PROD} holds a stream product. \\
 Adder, \sig{ACC} & 24 bits & $\mathrm{ACC} + \mathrm{sext}_{24}(\mathrm{PROD})$, or a 16-bit bias loaded by \insn{LDA}. \\
 Requantiser & 24 $\to$ 8 & Combinational: arithmetic shift, optional ReLU, saturation (\cref{fig:rq}). \\
-I/O & & \insn{IN} reads SW7..0; \insn{OUT} writes \sig{OUTR} to LED7..0; a view mux feeds the 8-digit display; a 32-bit cycle counter. \\
+I/O & & \insn{IN} reads SW7..0; \insn{OUT} loads \sig{OUTR}, which drives LED7..0; a view mux feeds the 8-digit display; a 32-bit cycle counter. \\
 \bottomrule
 \end{tabularx}
 \end{center}
@@ -48,7 +48,7 @@ All three memories are small enough for LUTs. Block RAM is an optional experimen
 
 \lsfig[t]{readlatency}{\insn{LD R1, [P1]+}. The address is on \sig{P1} from the first cycle; the data is in the read register \sig{WR} from the second. \sig{R1} and \sig{P1} change together at the end of \stname{WRITEBACK}.}
 
-The read registers \sig{XR} and \sig{WR} load $X[\mathrm{P0}]$ and $W[\mathrm{P1}]$ on every enabled clock. Data therefore appears in the cycle \emph{after} its address, which is how FPGA memories behave and what lets the multiplier start a new product every clock without a long combinational path from pointer to multiplier to adder (\cref{fig:readlatency}). For ordinary instructions the latency is invisible: the pointers only change at the end of \stname{WRITEBACK}, so by \stname{EXECUTE} the read registers have long held the right value. Inside a stream it is the reason for the two-cycle fill.
+The read registers \sig{XR} and \sig{WR} load $X[\mathrm{P0}]$ and $W[\mathrm{P1}]$ on every enabled clock. Data therefore appears in the cycle \emph{after} its address, which is how FPGA block RAMs behave and what lets the multiplier start a new product every clock without a long combinational path from pointer to multiplier to adder (\cref{fig:readlatency}). For ordinary instructions the latency is invisible: the pointers only change at the end of \stname{WRITEBACK}, so by \stname{EXECUTE} the read registers have long held the right value. Inside a stream it accounts for one of the two fill cycles.
 
 \begin{caution}[A classic mistake]
 The lecture's RAM example (Code Example 5.7) reads asynchronously. Copied without the read register, data lands in the same cycle as its address and every timing table in this document shifts by one. Add the register, and give it the clock enable (\cref{sec:control}).

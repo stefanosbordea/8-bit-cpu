@@ -14,6 +14,8 @@
   aw head/.style={font=\sffamily\scriptsize,text=lsgrey,anchor=base,inner sep=0pt},
 ]
 \def\awU{4.5}\def\awR{137}\def\awH{6}\def\awC{150}
+% \awsup{exponent}: a 7 pt superscript, so no text falls below 7 pt
+\def\awsup#1{\raisebox{0.62ex}{\fontsize{7}{7}\selectfont #1}}
 % \awBar{centre y}{bits}{note}: a signed value, sign bit darker, note right-aligned at the LSB end
 \def\awBar#1#2#3{%
   \pgfmathsetmacro\awL{\awR-#2*\awU}%
@@ -37,13 +39,13 @@
 
 % ---- rows
 \awRow{0}{\textit{x}, \textit{w}: int8}{8}
-\awBar{0}{8}{−128 … 127}
+\awBar{0}{8}{$-$128 … 127}
 \awRow{-9.5}{one product \textit{x} $\times$ \textit{w}}{16}
-\awBar{-9.5}{16}{(−128) $\times$ (−128) $=$ +16,384 $=$ 2\textsuperscript{14}\enspace needs bit 15}
+\awBar{-9.5}{16}{($-$128) $\times$ ($-$128) $=$ $+$16,384 $=$ 2\awsup{14}\enspace needs bit 15}
 \awRow{-21.5}{64 products}{22}
-\awBar{-21.5}{22}{64 $\times$ 2\textsuperscript{14} $=$ 2\textsuperscript{20}}
-\awRow{-31}{+ 16-bit bias}{16}
-\awBar{-31}{16}{−32,768 … 32,767}
+\awBar{-21.5}{22}{64 $\times$ 2\awsup{14} $=$ 2\awsup{20}}
+\awRow{-31}{$+$ 16-bit bias}{16}
+\awBar{-31}{16}{$-$32,768 … 32,767}
 % ---- sum rule: rows 3-5 read as a column addition, rows 1-2 stand apart
 \draw[draw=lsnavy,line width=0.5pt] (\awR-24*\awU,-36.75) -- (\awR,-36.75);
 % ---- ACC
@@ -56,7 +58,7 @@
   \draw[aw tick] ({\awR-\awk*\awU},\awY+\awH/2) -- ++(0,-1) ({\awR-\awk*\awU},\awY-\awH/2) -- ++(0,1);
 \draw[aw edge] (\awR-24*\awU,\awY-\awH/2) rectangle (\awR,\awY+\awH/2);
 \node[aw note] at (\awR-2,\awY-0.8)
-  {\textit{n} $\le$ 255:\enspace 255 $\times$ 16,384 $+$ 32,767 $=$ 4,210,687 $<$ 8,388,607 $=$ 2\textsuperscript{23} $-$ 1};
+  {\textit{n} $\le$ 255:\enspace 255 $\times$ 16,384 $+$ 32,767 $=$ 4,210,687 $<$ 8,388,607 $=$ 2\awsup{23} $-$ 1};
 % ---- the 22-bit boundary carried down to ACC
 \draw[draw=lsteal!70!black,line width=0.4pt,dash pattern=on 1.2pt off 1.2pt]
   (\awR-22*\awU,-21.5-\awH/2) -- (\awR-22*\awU,\awY+\awH/2);

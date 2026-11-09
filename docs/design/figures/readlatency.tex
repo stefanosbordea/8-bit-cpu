@@ -2,7 +2,8 @@
 \begin{tikzpicture}[x=26mm, y=1mm,
   rl name/.style={font=\ttfamily\footnotesize, text=lsink, anchor=east, inner sep=0pt},
   rl txt/.style={font=\sffamily\scriptsize, text=lsink, inner sep=0pt},
-  rl val/.style={font=\sffamily\footnotesize, text=lsink, fill=white, inner xsep=1.4pt, inner ysep=0.8pt},
+  rl val/.style={font=\sffamily\footnotesize, text=lsink, fill=white, inner xsep=1.4pt, inner ysep=0.8pt,
+    text height=6.6pt, text depth=1.4pt},% one baseline for every value, so a lone q does not ride high
   rl old/.style={rl val, text=lsgrey},
   rl note/.style={font=\sffamily\scriptsize, fill=white, inner xsep=1.2pt, inner ysep=0.6pt},
   rl wave/.style={draw=lsnavy, line width=0.6pt, line join=round},
@@ -24,9 +25,12 @@
       -- ({#2+\rlS},{#1-\rlH}) -- (5,{#1-\rlH});
   \fi}
 
-% ---- hairline at every rising clock edge
+% ---- hairline at every rising clock edge; at edge 4 the commit marker takes over below the state row,
+%      behind the waveforms so the P1 and R1 crossings stay crisp
 \begin{pgfonlayer}{background}
-  \foreach \k in {0,...,5} \draw[rl edge] (\k,-4.2) -- (\k,-38.2);
+  \foreach \k in {0,...,3,5} \draw[rl edge] (\k,-4.2) -- (\k,-38.2);
+  \draw[rl edge] (4,-4.2) -- (4,-15.5);
+  \draw[lsteal, line width=0.75pt, dash pattern=on 2.2pt off 1.4pt] (4,-15.5) -- (4,-38.2);
 \end{pgfonlayer}
 
 % ---- cycle numbers and signal names
@@ -62,8 +66,7 @@
 \node[rl note, anchor=west, text=lsviolet] at (1.56,-24.05)
   {address $q$ in FETCH $\rightarrow$ data $W[q]$ from DECODE on};
 
-% ---- commit: R1 and P1 change on the same edge
-\draw[lsteal, line width=0.75pt, dash pattern=on 2.2pt off 1.4pt] (4,-16.2) -- (4,-38.2);
+% ---- commit: R1 and P1 change on the same edge (the dashed marker is drawn with the hairlines)
 \draw[rl tip, lsteal] (4,-41.2) -- (4,-38.0);
 \node[rl txt, anchor=north east, text=lsteal] at (5,-41.6)
   {\texttt{R1} and \texttt{P1} commit at the end of WRITEBACK};

@@ -9,9 +9,9 @@
 ]
   % stations, evenly spaced; odd stations carry their description close to the line, even ones lower
   \foreach \i in {1,...,6} \coordinate (s\i) at ({15+26.7*(\i-1)},0);
-  \fill[lsamberlight] (s1) circle (3.4);
   \foreach \i in {1,3,5} \draw[rm stem] (s\i) -- ++(0,-6);
   \foreach \i in {2,4,6} \draw[rm stem] (s\i) -- ++(0,-18);
+  \fill[lsamberlight] (s1) circle (3.4); % halo of the finished station, drawn over its stem
   % the line, fading out beyond the last station
   \draw[rm line] (s1) -- (s6);
   \shade[left color=lsamber,right color=white] ($(s6)+(0,-0.5)$) rectangle ++(12.5,1);
@@ -30,5 +30,5 @@
   \node[rm desc] at ($(s3)+(0,-7)$) {64-32-10 network on 8\texttimes8 digits:\\about 3,800 cycles vs about 20,400};
   \node[rm desc] at ($(s4)+(0,-19)$) {\textit{K}-lane vector MAC under\\the same STREAM state};
   \node[rm desc] at ($(s5)+(0,-7)$) {Stefanos' TPU-style\\co-processor};
-  \node[rm desc] at ($(s6)+(0,-19)$) {UART program loader,\\VGA view};
+  \node[rm desc] at ($(s6)+(0,-19)$) {USB-UART loader,\\VGA view};
 \end{tikzpicture}%

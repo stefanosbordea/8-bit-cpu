@@ -10,7 +10,7 @@ The course core is the first station of a longer line (\cref{fig:roadmap}). Stef
 \[
 32 \times (28 + 68) + 10 \times (28 + 36) + 120 \approx 3{,}800 \text{ cycles}
 \]
-including an argmax of about 120 cycles, against about 20,400 with the classic MAC in a loop: roughly 38\,\textmu s per digit at 100\,MHz (derived). The weights need a 4K\,$\times$\,8 W memory, one block RAM; the hidden layer's outputs need \insn{ST}.
+including an argmax of about 120 cycles: roughly 38\,\textmu s per digit at 100\,MHz (derived), against about 20,400 cycles with the classic MAC in a loop. The weights need a 4K\,$\times$\,8 W memory, one block RAM; the hidden layer's outputs need \insn{ST}.
 
 \paragraph{Fewer cycles per stream} Overlap the drain of one stream with the fetch of the next instruction; fetch the bias from the weight stream; fuse requantise-and-store. Each shortens the fixed 48 cycles around a stream, which matters once streams are short.
 

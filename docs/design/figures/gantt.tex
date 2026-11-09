@@ -15,7 +15,7 @@
   group/.style={inner sep=0pt, draw=none, fill=none},
   group label font=\sffamily\scriptsize\bfseries,
   group label node/.append style={anchor=west, inner sep=0pt, xshift=-48.2mm, yshift=-0.25mm},
-  milestone/.style={shape=ganttmilestone, inner sep=0pt, draw=none, fill=lsnavy},
+  milestone/.style={shape=ganttmilestone, inner sep=0pt, outer sep=0pt, draw=none, fill=lsnavy},
   milestone left shift=-0.01, milestone right shift=0.01,
   milestone top shift=0.06, milestone height=0.88,
   milestone label font=\sffamily\scriptsize\color{lsink},
@@ -48,7 +48,7 @@
 % ---- Loucas: the control half
 \ganttgroup[lsgantt hdr=lsblue]{Loucas (control)}{2026-11-14}{2026-12-04} \\
 \ganttbar[lsgantt L]{FSM, decoder, PC, program ROM}{2026-11-14}{2026-11-23} \\
-\ganttbar[lsgantt L]{Run modes, ce, counters}{2026-11-18}{2026-11-24} \\
+\ganttbar[lsgantt L]{Run modes, \texttt{ce}, counters}{2026-11-18}{2026-11-24} \\
 \ganttbar[lsgantt L]{STREAM control}{2026-11-25}{2026-12-02} \\
 \ganttbar[lsgantt L]{Display scanner, views}{2026-11-27}{2026-12-04} \\
 \ganttbar[lsgantt v=lsblue]{verifies: tb\_alu, tb\_mul\_rq, tb\_mem}{2026-11-16}{2026-12-04} \\
