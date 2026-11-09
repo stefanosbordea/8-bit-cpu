@@ -10,18 +10,18 @@ This review asked which execution model makes an 8-bit FPGA CPU structurally eff
 \paragraph{Sources} Metadata came from Crossref, arXiv, Semantic Scholar, OpenAlex, DataCite, Europe PMC, CiNii and Open Library; texts and numbers from publisher and proceedings sites (including the publisher's companion site for the online Section 4.5 of Patterson \& Hennessy, 2021), vendor portals, author repositories, the GitHub API and Wayback Machine snapshots. dblp, IEEE Xplore full text, the ACM Digital Library and ScienceDirect were blocked; Google Scholar was not queried.
 
 {\small\setlength{\tabcolsep}{4pt}
-\begin{xltabular}{\linewidth}{@{}LL@{}}
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash\hsize=0.415\hsize}X>{\raggedright\arraybackslash\hsize=1.585\hsize}X@{}}
 \toprule \textsf{\bfseries Cluster} & \textsf{\bfseries Condensed queries} \\ \midrule\endfirsthead
 \toprule \textsf{\bfseries Cluster} & \textsf{\bfseries Condensed queries} \\ \midrule\endhead
 \bottomrule\endlastfoot
-Minimal soft CPUs & J1 Forth CPU EuroForth 2010; KCPSM6 PicoBlaze 7-series; SERV, PicoRV32, VexRiscv area and Fmax; FazyRV datapath width; soft-core custom instruction int8 MAC TinyML Artix-7 2024–2025 \\
+Minimal soft CPUs & J1 Forth CPU EuroForth 2010; KCPSM6 PicoBlaze 7-series; SERV, PicoRV32, VexRiscv area and Fmax; FazyRV datapath width; soft-core custom instruction int8 MAC TinyML Artix-7 2024–2025 \\*
 ISA extensions & RISC-V DSP extensions (Gautschi); XpulpNN; PULP-NN; CMSIS-NN; RISC-V P extension status; Zvqdotq; integrated matrix extension; Armv8.1-M low-overhead branch \\
 DSP mechanisms & TMS320C54x RPT, RPTZ, MAC; ADSP-2100 DO UNTIL; zero-overhead loop controller; overhead-free FPGA soft processor; stream semantic registers; hardware loop RISC-V 2024–2025 \\
 Execution models & transport-triggered soft cores; BrainTTA; decoupled access/execute HLS 2023–2026; Manchester dataflow; tagged-token dataflow; Pipestitch; triggered instructions FPGA; TRIPS evaluation; EDGE soft processor; ELI-512; stack computers \\
 Accelerators & TPU v1; DianNao; Eyeriss; Stripes; Pragmatic; Loom; Bit Fusion; UNPU; BISMO; binarized networks; XNOR-Net; FINN; precision-scalable MAC benchmark; bit-serial 2024 HPCA/MICRO \\
 FPGA fabric & UG479, UG473, DS180, DS181 (−1 grade); WP486 INT8; Double MAC DSP48E1; compute-in-BRAM (CCB, CoMeFa, BRAMAC, M4BRAM); PiCaSO; IMAGine; direct BRAM-DSP paths \\
 Quantization & integer-arithmetic-only inference; LiteRT quantization specification; accumulator-aware quantization (A2Q, A2Q+, AXE); accumulator-constrained processors; dyadic quantization; power-of-two thresholds \\
-TinyML benchmarks & MLPerf Tiny v1.3; MLPerf Power; TinyML benchmarking challenges; UCI optical digits; MNIST; Ethos-U55; hls4ml and FINN on Arty A7-100T; TinyML progress survey \\
+TinyML benchmarks & MLPerf Tiny v1.3; MLPerf Power; TinyML benchmarking challenges; UCI optical digits; MNIST; Ethos-U55; hls4ml and FINN on Arty A7-100T; TinyML progress survey \\*
 Follow-up check (9 Nov 2026): 8-bit cores and KB-sized ML & 8-bit microcontroller hardware MAC and wide accumulator; AVR or 8051 ISA extension with MAC; compiling KB-sized ML models to microcontrollers; CORE-V-MCU on Nexys A7; MAXQ transport-triggered microcontroller \\
 \end{xltabular}}
 
@@ -31,6 +31,7 @@ Follow-up check (9 Nov 2026): 8-bit cores and KB-sized ML & 8-bit microcontrolle
 
 \section{Framing theory: why the workload decides the architecture}
 
+\Needspace{16\baselineskip}
 \subsection{The iron law of performance}
 
 Execution time is instructions × cycles per instruction (CPI) × clock period. Harris and Harris (2021, Sections 7.3–7.5) work it through for 100 billion instructions:
@@ -40,21 +41,21 @@ Execution time is instructions × cycles per instruction (CPI) × clock period. 
 \toprule \textsf{\bfseries Design} & \textsf{\bfseries CPI} & \textsf{\bfseries Clock period} & \textsf{\bfseries Time} & \textsf{\bfseries Speed vs single-cycle} \\ \midrule\endfirsthead
 \toprule \textsf{\bfseries Design} & \textsf{\bfseries CPI} & \textsf{\bfseries Clock period} & \textsf{\bfseries Time} & \textsf{\bfseries Speed vs single-cycle} \\ \midrule\endhead
 \bottomrule\endlastfoot
-Single-cycle & 1 & 750 ps & 75 s & 1 \\
-Multicycle (FSM) & 4.12 & 375 ps & 155 s & 0.5 \\
+Single-cycle & 1 & 750 ps & 75 s & 1 \\*
+Multicycle (FSM) & 4.12 & 375 ps & 155 s & 0.5 \\*
 Pipelined & 1.23 & 350 ps & 43 s & 1.7 \\
 \end{xltabular}}
 
 Patterson and Hennessy (2021, Section 4.5) assume that a multicycle clock cycle holds at most one memory access, one register-file access or one ALU operation (p. 282.e1); their example gives CPI 4.10 for a SPECINT2006 mix (p. 282.e12), against 4.12 for the SPECINT2000 mix in Harris and Harris. A multicycle FSM saves hardware, not time. For LS the same arithmetic predicts each program of the design document (spec v0.1), which keeps the overview's four FSM cycles per instruction and adds a fused decrement-and-branch (\texttt{DJNZ}) and post-increment loads:
 
 {\footnotesize\setlength{\tabcolsep}{4pt}
-\begin{xltabular}{\linewidth}{@{}LLLLL@{}}
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash\hsize=1.006\hsize}X>{\raggedright\arraybackslash\hsize=1.762\hsize}X>{\raggedright\arraybackslash\hsize=0.744\hsize}X>{\raggedright\arraybackslash\hsize=0.744\hsize}X>{\raggedright\arraybackslash\hsize=0.744\hsize}X@{}}
 \toprule \textsf{\bfseries Rung} & \textsf{\bfseries Inner loop, per MAC} & \textsf{\bfseries Instructions per MAC} & \textsf{\bfseries Predicted cycles per MAC} & \textsf{\bfseries 64-input neuron, whole program (N = 32)} \\ \midrule\endfirsthead
 \toprule \textsf{\bfseries Rung} & \textsf{\bfseries Inner loop, per MAC} & \textsf{\bfseries Instructions per MAC} & \textsf{\bfseries Predicted cycles per MAC} & \textsf{\bfseries 64-input neuron, whole program (N = 32)} \\ \midrule\endhead
 \bottomrule\endlastfoot
-B: no MAC instruction & \texttt{LD}, \texttt{LD}, \texttt{MUL}, \texttt{ADDP}, \texttt{DJNZ} & 5 & 20 & 1,328 (688) \\
+B: no MAC instruction & \texttt{LD}, \texttt{LD}, \texttt{MUL}, \texttt{ADDP}, \texttt{DJNZ} & 5 & 20 & 1,328 (688) \\*
 L: MAC in a loop & \texttt{MAC}, \texttt{DJNZ} (the MAC advances both pointers) & 2 & 8 & 560 (304) \\
-U: MAC unrolled & \texttt{MAC} written 64 times & 1 & 4 & 300 (172) \\
+U: MAC unrolled & \texttt{MAC} written 64 times & 1 & 4 & 300 (172) \\*
 S: hardware repeat & \texttt{MAC \#64}: the FSM fetches and decodes once, then streams & 0 in steady state & 1 & 112 (80) \\
 \end{xltabular}}
 
@@ -66,20 +67,21 @@ Attainable throughput is the lesser of peak compute and memory bandwidth × oper
 
 For LS (derived): each MAC needs a weight byte and an input byte. At batch size one each weight is used once, but each input feeds every neuron of the layer, 32 times in a 64-32-10 network, so L lanes sharing one broadcast input byte need L weight bytes plus one input byte per cycle. A RAMB36 port can be 36 bits wide (four data bytes) in true dual-port mode or 72 bits in simple dual-port mode, each port with its own width (Xilinx, 2019), and the XC7A100T has 135 RAMB36 (Xilinx, 2020). One weight port can feed four lanes while the other stays byte-wide, so the one-MAC-per-cycle bound comes from the design's byte-wide operand memories, not from the fabric. It fits an 8-bit instruction set, one accumulator and a December demo of one neuron, which has no second output to share an input with; lanes are the structural next step for the digit network (Section 7).
 
+\Needspace{16\baselineskip}
 \subsection{Data-movement and instruction energy}
 
 Horowitz's (2014) 45 nm figures put arithmetic at the bottom of the energy bill:
 
 {\small\setlength{\tabcolsep}{4pt}
-\begin{xltabular}{\linewidth}{@{}LL@{}}
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash\hsize=1.222\hsize}X>{\raggedright\arraybackslash\hsize=0.778\hsize}X@{}}
 \toprule \textsf{\bfseries Operation (45 nm, 0.9 V)} & \textsf{\bfseries Energy} \\ \midrule\endfirsthead
 \toprule \textsf{\bfseries Operation (45 nm, 0.9 V)} & \textsf{\bfseries Energy} \\ \midrule\endhead
 \bottomrule\endlastfoot
-8-bit integer add / 32-bit integer add & 0.03 pJ / 0.1 pJ \\
+8-bit integer add / 32-bit integer add & 0.03 pJ / 0.1 pJ \\*
 8-bit integer multiply / 32-bit integer multiply & 0.2 pJ / 3.1 pJ \\
 32-bit floating-point multiply & 3.7 pJ \\
 64-bit cache read: 8 KB / 32 KB / 1 MB & 10 / 20 / 100 pJ \\
-DRAM access & 1.3–2.6 nJ \\
+DRAM access & 1.3–2.6 nJ \\*
 One instruction on a simple in-order processor & about 70 pJ (instruction cache 25 pJ, register file 6 pJ) \\
 \end{xltabular}}
 
@@ -98,21 +100,22 @@ Hennessy and Patterson (2019) chart processor performance growth slowing to an �
 
 \section{Thematic review}
 
+\Needspace{16\baselineskip}
 \subsection{Minimal soft CPUs}
 
 {\footnotesize\setlength{\tabcolsep}{4pt}
-\begin{xltabular}{\linewidth}{@{}LLLLL@{}}
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash\hsize=0.898\hsize}X>{\raggedright\arraybackslash\hsize=1.138\hsize}X>{\raggedright\arraybackslash\hsize=1.064\hsize}X>{\raggedright\arraybackslash\hsize=0.767\hsize}X>{\raggedright\arraybackslash\hsize=1.134\hsize}X@{}}
 \toprule \textsf{\bfseries Core} & \textsf{\bfseries Style} & \textsf{\bfseries Area} & \textsf{\bfseries Clock} & \textsf{\bfseries Cycles} \\ \midrule\endfirsthead
 \toprule \textsf{\bfseries Core} & \textsf{\bfseries Style} & \textsf{\bfseries Area} & \textsf{\bfseries Clock} & \textsf{\bfseries Cycles} \\ \midrule\endhead
 \bottomrule\endlastfoot
-SERV (Kindgren, 2018) & Bit-serial RV32I & 125 LUT, 164 FF on Artix-7 (register file excluded) & not stated & 32 per one-stage instruction, plus fetch \\
+SERV (Kindgren, 2018) & Bit-serial RV32I & 125 LUT, 164 FF on Artix-7 (register file excluded) & not stated & 32 per one-stage instruction, plus fetch \\*
 FazyRV (Kissich \& Baunach, 2024) & RV32I, 1–8-bit chunks & example SoC in 77 slices (7-series) & not extracted & addition: 32 cycles at 1 bit, 4 at 8 bits \\
 KCPSM6 (Chapman, 2014) & 8-bit, 18-bit instructions & 26 slices + 1 BRAM (Spartan-6) & 238 MHz Kintex-7 (−3); no Artix-7 row & 2 for every instruction; no multiply \\
 PicoRV32 (Wolf, 2015) & Multicycle state machine & 761–2,019 LUT (Kintex-7, synthesis only) & 416–454 MHz Kintex/Virtex-7 & about 4 on average; MUL 40 \\
 VexRiscv (Papon, 2017) & 2–5+ stage pipeline & 504–1,418 LUT (Artix-7, fastest grade) & 243–216 MHz & 0.52–1.21 DMIPS/MHz \\
 GRVI (Gray, 2016) & Hand-mapped RV32I & 320 LUT & 375 MHz Kintex UltraScale & CPI estimated 1.3–1.6 \\
 FemtoRV32 (Levy \& Koch, 2020) & Teaching state machine & 980–1,180 LUT with SoC (iCE40) & 80 MHz (iCE40) & mostly 2–3 \\
-J1 (Bowman, 2010) & 16-bit dual stack; one dual-port RAM for code and data & not reported & 80 MHz (Spartan-3E) & frequent Forth words 1; about 100 ANS Forth MIPS \\
+J1 (Bowman, 2010) & 16-bit dual stack; one dual-port RAM for code and data & not reported & 80 MHz (Spartan-3E) & frequent Forth words 1; about 100 ANS Forth MIPS \\*
 RI5CY (Gautschi et al., 2017) & 4-stage RV32 with two hardware-loop levels, post-increment, SIMD dot product; open RTL & extensions +6.6 kGE & 65/28 nm ASIC only & +37\% average from loops and post-increment \\
 \end{xltabular}}
 
@@ -126,14 +129,15 @@ CFU Playground pairs a VexRiscv with a custom function unit (CFU) on small FPGA 
 The planned FSM is the textbook machine, so the efficiency claim cannot rest on it. CFU Playground shows where the structural gain comes from: cycles per MAC fell below one when the loop and the operand fetch left the instruction stream. Use the textbook multicycle CPU as the internal baseline and KCPSM6 as the external one, and report core and system resources separately.
 
 \end{forls}
+\Needspace{16\baselineskip}
 \subsection{ISA extensions for quantized neural networks}
 
 {\small\setlength{\tabcolsep}{4pt}
-\begin{xltabular}{\linewidth}{@{}LLL@{}}
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash\hsize=1.188\hsize}X>{\raggedright\arraybackslash\hsize=1.148\hsize}X>{\raggedright\arraybackslash\hsize=0.664\hsize}X@{}}
 \toprule \textsf{\bfseries Mechanism and baseline (same core without it unless stated)} & \textsf{\bfseries Measured effect} & \textsf{\bfseries Source} \\ \midrule\endfirsthead
 \toprule \textsf{\bfseries Mechanism and baseline (same core without it unless stated)} & \textsf{\bfseries Measured effect} & \textsf{\bfseries Source} \\ \midrule\endhead
 \bottomrule\endlastfoot
-Hardware loops + post-increment, compiler C & +37\% average; convolutions up to +41\% & Gautschi et al. (2017) \\
+Hardware loops + post-increment, compiler C & +37\% average; convolutions up to +41\% & Gautschi et al. (2017) \\*
 Post-increment alone & up to +20\% with regular access & Gautschi et al. (2017) \\
 Adding SIMD dot-product built-ins & 3.5× average, up to 13.2× on data-intensive kernels & Gautschi et al. (2017) \\
 int8 kernel library with sdotp4 vs plain RV32IMC & 8.8× (INT-8 convolution, one core); 3.69× at INT-4 & Garofalo, Rusci, et al. (2020) \\
@@ -142,7 +146,7 @@ Operand load fused into the MAC, vs PULP-NN kernel & OPEF 0.57 → 0.80–0.94; 
 Custom 4-way MAC, then whole loop in the unit (Arty A7-35T, MobileNetV2 1×1 convolutions) & 9.8×, then 26× (< 1 cycle per MAC), cumulative & Prakash et al. (2023) \\
 Packed SIMD vs the same core's RV32IM (post-implementation simulation) & up to 7× on matrix multiplication, 5.96× on LeNet-5 & Ali et al. (2025) \\
 Vector unit vs a cacheless MicroBlaze (modelled) & 25–33× on dot products, 1.4–1.9× on 2-D convolution, blamed on scalar pointer management & Al Assir et al. (2021) \\
-Removing an unused FPU from a vector lane & most of a 43.3\% lane-area saving & Dupuis et al. (2023) \\
+Removing an unused FPU from a vector lane & most of a 43.3\% lane-area saving & Dupuis et al. (2023) \\*
 256-byte result buffer next to the arithmetic & vector-register-file power −53.5\% for under 3\% area & Perotti et al. (2024) \\
 \end{xltabular}}
 
@@ -156,19 +160,20 @@ With those mechanisms in place, loads become the limit. XpulpNN's MAC operation 
 The plan has two of the three mechanisms, auto-advancing pointers and a wide-accumulator MAC, but no hardware loop. Packed int8 SIMD needs 32-bit registers; independent MAC lanes fed from a wide weight port do not (Section 3.2). The accumulator belongs in the MAC unit, not in R0–R3. Baselines need a hardware multiplier: on the Fomu board, CFU Playground's cumulative keyword-spotting speed-up had already reached 15.35× at the step that replaced the iterative multiply (Prakash et al., 2023), so a baseline without one inflates every later gain.
 
 \end{forls}
+\Needspace{16\baselineskip}
 \subsection{DSP mechanisms}
 
 {\small\setlength{\tabcolsep}{4pt}
-\begin{xltabular}{\linewidth}{@{}LLL@{}}
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash\hsize=0.713\hsize}X>{\raggedright\arraybackslash\hsize=1.229\hsize}X>{\raggedright\arraybackslash\hsize=1.058\hsize}X@{}}
 \toprule \textsf{\bfseries System} & \textsf{\bfseries Mechanism} & \textsf{\bfseries Cycle budget} \\ \midrule\endfirsthead
 \toprule \textsf{\bfseries System} & \textsf{\bfseries Mechanism} & \textsf{\bfseries Cycle budget} \\ \midrule\endhead
 \bottomrule\endlastfoot
-TMS320C54x (Texas Instruments, 2001a, 2001b) & \texttt{MAC *AR5+, *AR6+} reads two operands and post-increments both pointers; RPTZ clears the accumulator and repeats the next instruction & MAC 1 cycle; RPTZ 2; RPT \#K 1; block repeat 4 (2 delayed); N-term dot product N + 2 (derived) \\
+TMS320C54x (Texas Instruments, 2001a, 2001b) & \texttt{MAC *AR5+, *AR6+} reads two operands and post-increments both pointers; RPTZ clears the accumulator and repeats the next instruction & MAC 1 cycle; RPTZ 2; RPT \#K 1; block repeat 4 (2 delayed); N-term dot product N + 2 (derived) \\*
 ADSP-2100 (Analog Devices, 1995) & One instruction does the MAC and fetches the next two operands from data and program memory; DO UNTIL loop & FIR listing: N − 1 + 5 + 2 cycles, i.e. N + 6 (derived) \\
 ZOLC (Kavvadias \& Nikolaidis, 2008) & Zero-overhead loop controller for a RISC or ASIP & MAC loop 10 → 6 cycles; 298–4,428 gates \\
 Octavo (LaForest et al., 2014) & Address-offset and branch-trigger modules in an FPGA soft CPU & 1.07–1.92× across benchmarks; 8-tap FIR 1.16× looping, 1.09× unrolled; Fmax × 0.939 \\
 Stream semantic registers (Schuiki et al., 2021) & Registers mapped to address-generator streams, plus hardware loop & dot-product utilization 17\% → 100\% (analytic); +11\% core area \\
-Flex-V (Nadalini et al., 2023) & MAC fused with load; 2-D address generator with stride, rollback, skip & int8: 26.9 MAC/cycle on 8 cores (XpulpNN 26.1, RI5CY 16.6) \\
+Flex-V (Nadalini et al., 2023) & MAC fused with load; 2-D address generator with stride, rollback, skip & int8: 26.9 MAC/cycle on 8 cores (XpulpNN 26.1, RI5CY 16.6) \\*
 Snitch with loop nests (Colagrande et al., 2025) & Nested zero-overhead loops, conflict-free memory & FPU utilization 85\% → 96.1–99.4\%; < 3\% area \\
 \end{xltabular}}
 
@@ -187,14 +192,15 @@ The planned MAC with auto-advancing pointers follows the C54x and ADSP-2100 patt
 A 24-bit accumulator over 16-bit products keeps the DSPs' eight guard bits. A hardware repeat conflicts with one-instruction-per-press step mode only if the repeat hides inside one instruction; Section 7 makes the repeat count part of the FSM state, so one press advances one MAC.
 
 \end{forls}
+\Needspace{16\baselineskip}
 \subsection{Alternative execution models}
 
-{\small\setlength{\tabcolsep}{4pt}
-\begin{xltabular}{\linewidth}{@{}LLLL@{}}
+{\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash\hsize=0.474\hsize}X>{\raggedright\arraybackslash\hsize=0.836\hsize}X>{\raggedright\arraybackslash\hsize=1.759\hsize}X>{\raggedright\arraybackslash\hsize=0.931\hsize}X@{}}
 \toprule \textsf{\bfseries Model} & \textsf{\bfseries Evidence} & \textsf{\bfseries Key numbers} & \textsf{\bfseries Costs reported} \\ \midrule\endfirsthead
 \toprule \textsf{\bfseries Model} & \textsf{\bfseries Evidence} & \textsf{\bfseries Key numbers} & \textsf{\bfseries Costs reported} \\ \midrule\endhead
 \bottomrule\endlastfoot
-Transport-triggered (TTA) & Jääskeläinen et al. (2018), 32-bit cores on Zynq Z7020 & single-issue: 956 LUT at 216 MHz vs MicroBlaze-3 715 LUT at 169 MHz, register file 24 vs 128 LUT, 15–173\% faster than MicroBlaze-5; dual-issue: 67\% of a VLIW's resources, up to 88\% faster & in that design: 43-bit instructions, 265-LUT interconnect, programs 21–49\% larger than VLIW, cycles not lower on every program \\
+Transport-triggered (TTA) & Jääskeläinen et al. (2018), 32-bit cores on Zynq Z7020 & single-issue: 956 LUT at 216 MHz vs MicroBlaze-3 715 LUT at 169 MHz, register file 24 vs 128 LUT, 15–173\% faster than MicroBlaze-5; dual-issue: 67\% of a VLIW's resources, up to 88\% faster & in that design: 43-bit instructions, 265-LUT interconnect, programs 21–49\% larger than VLIW, cycles not lower on every program \\*
 TTA for NN inference & Molendijk et al. (2023), 22 nm & 2.47 TOPS/W at 8 bits, 28.6 binary & ASIC; abstract only \\
 VLIW & Fisher (1983); Jääskeläinen et al. (2018) & 4-read, 2-write register file 638 LUT vs 44 LUT for a 1-read, 1-write TTA file & instruction width \\
 Decoupled access/execute (DAE) & Smith (1984) & 1.1–2.1×, average 1.58, on 14 Livermore loops (simulation) & needs latency to hide \\
@@ -202,7 +208,7 @@ DAE in HLS & Metz \& Själander (2026) & decoupling alone 1.58–40.57× vs Viti
 Tagged-token dataflow & Gurd et al. (1985); Arvind \& Nikhil (1990) & 1–2 MIPS; duplicate instructions 25\% of those executed; associative matching & matching bottleneck \\
 Ordered dataflow & Serafin et al. (2023) & 3.49× over RipTide at 1.10× area (threaded apps) & ASIC fabric \\
 Triggered instructions & Parashar et al. (2013) & 2.0× vs program-counter spatial baseline; 8× area-normalized vs a general-purpose processor & no small FPGA implementation among verified sources \\
-EDGE & Gebhart et al. (2009); Gray \& Smith (2018) & moves \textasciitilde{}20\% of instructions; code \textasciitilde{}11× Alpha; 32-entry scheduler 150–340 LUT & code size \\
+EDGE & Gebhart et al. (2009); Gray \& Smith (2018) & moves \textasciitilde{}20\% of instructions; code \textasciitilde{}11× Alpha; 32-entry scheduler 150–340 LUT & code size \\*
 Stack & Koopman (1989); Bowman (2010) & 32-deep stack suffices; J1 code about 62\% smaller than the equivalent C code on a MicroBlaze-type core & J1 implementation: no multiplier, one dual-port RAM shared by code and data \\
 \end{xltabular}}
 
@@ -214,20 +220,21 @@ This review's own synthesis, not a finding of any single source, is that static 
 The plan already routes data memory straight into the MAC (LS project overview, Section 4.1), so operands bypass R0–R3 without calling the design a TTA. With one-cycle BRAM a decoupled access unit has no latency to hide, so a DAE label would only rename the design of Section 4.3. Either label earns its place only with a distinct mechanism, such as a move-based instruction set or a real access/execute queue, whose benefit is measured. Report dataflow and EDGE as considered and set aside for the costs above.
 
 \end{forls}
+\Needspace{16\baselineskip}
 \subsection{Neural-network accelerators: systolic, bit-serial, binary}
 
-{\small\setlength{\tabcolsep}{4pt}
-\begin{xltabular}{\linewidth}{@{}LLLL@{}}
+{\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash\hsize=1.043\hsize}X>{\raggedright\arraybackslash\hsize=1.113\hsize}X>{\raggedright\arraybackslash\hsize=1.131\hsize}X>{\raggedright\arraybackslash\hsize=0.713\hsize}X@{}}
 \toprule \textsf{\bfseries Design} & \textsf{\bfseries Principle} & \textsf{\bfseries Reported gain} & \textsf{\bfseries Baseline} \\ \midrule\endfirsthead
 \toprule \textsf{\bfseries Design} & \textsf{\bfseries Principle} & \textsf{\bfseries Reported gain} & \textsf{\bfseries Baseline} \\ \midrule\endhead
 \bottomrule\endlastfoot
-Stripes (Judd et al., 2016) & bit-serial activations & 1.92× average (ideal 16/p) & 16-bit DaDianNao \\
+Stripes (Judd et al., 2016) & bit-serial activations & 1.92× average (ideal 16/p) & 16-bit DaDianNao \\*
 Pragmatic (Albericio et al., 2017) & skip zero bits of activations & 4.31×; 2.25× & 16-bit; 8-bit DaDianNao \\
 Loom (Sharify et al., 2018) & serial weights and activations & 3.19× & 16-bit bit-parallel \\
 Bit Fusion (Sharma et al., 2018) & fusable 2-bit multiplier bricks & 3.9× vs Eyeriss; 16× parallelism at 1–2 bits, 1× at 8 bits & Eyeriss, Stripes \\
 UNPU (Lee et al., 2019) & lookup-table bit-serial weights & energy −27.2\% at 8 bits, −53.6\% at 1 bit & fixed-point MAC array \\
 BISMO (Umuroglu et al., 2018) & AND-popcount overlay on PYNQ-Z1 & 6.5 binary TOPS, about 0.1 TOPS at int8 (derived) & none \\
-Mix-GEMM (Fornt et al., 2025) & packed operands in the CPU multiplier & up to 44×; 6.7 GOP/s at 8×8 bits vs 15.8 at 2×2 & unextended core \\
+Mix-GEMM (Fornt et al., 2025) & packed operands in the CPU multiplier & up to 44×; 6.7 GOP/s at 8×8 bits vs 15.8 at 2×2 & unextended core \\*
 BitWave (Shi et al., 2024) & bit-column-serial with bit sparsity & up to 13.25× & sparsity-aware accelerators \\
 \end{xltabular}}
 
@@ -241,18 +248,19 @@ BitWave (Shi et al., 2024) & bit-column-serial with bit sparsity & up to 13.25×
 Operand delivery is the limit, as Kung's bound predicts, and a single bit-serial MAC is a poor choice beside a hard 8-bit multiplier at 100 MHz. Binary weights would save storage, not cycles; full binarization is a cheap optional mode whose accuracy cost must be measured.
 
 \end{forls}
+\Needspace{16\baselineskip}
 \subsection{FPGA fabric and compute-in-BRAM}
 
 {\small\setlength{\tabcolsep}{4pt}
-\begin{xltabular}{\linewidth}{@{}LLL@{}}
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash\hsize=0.526\hsize}X>{\raggedright\arraybackslash\hsize=1.900\hsize}X>{\raggedright\arraybackslash\hsize=0.574\hsize}X@{}}
 \toprule \textsf{\bfseries XC7A100T fact} & \textsf{\bfseries Value} & \textsf{\bfseries Source} \\ \midrule\endfirsthead
 \toprule \textsf{\bfseries XC7A100T fact} & \textsf{\bfseries Value} & \textsf{\bfseries Source} \\ \midrule\endhead
 \bottomrule\endlastfoot
-Slices / LUT6 / flip-flops & 15,850 / 63,400 / 126,800 (four LUTs, eight FFs per slice) & Xilinx (2020) \\
+Slices / LUT6 / flip-flops & 15,850 / 63,400 / 126,800 (four LUTs, eight FFs per slice) & Xilinx (2020) \\*
 DSP48E1 slices & 240, in 3 columns of 80 & Xilinx (2020, 2018) \\
 Block RAM & 135 RAMB36 (4,860 Kb), 4 columns of 40 & Xilinx (2020, 2019) \\
 DSP48E1 datapath & 25-bit pre-adder, 25×18 multiplier, 48-bit accumulator; 2×24 or 4×12 SIMD only with the multiplier off & Xilinx (2018) \\
-Block RAM ports & two independent synchronous ports; RAMB36 port widths x1–x36 in true dual-port mode, x72 in simple dual-port; each port sets its own width; optional output register adds one cycle & Xilinx (2019) \\
+Block RAM ports & two independent synchronous ports; RAMB36 port widths x1–x36 in true dual-port mode, x72 in simple dual-port; each port sets its own width; optional output register adds one cycle & Xilinx (2019) \\*
 −1 grade limits & DSP fully pipelined 464.25 MHz, without MREG/ADREG 190.69 MHz; BRAM 388.20 MHz; BRAM clock-to-out 2.46 ns (0.89 ns registered) & Advanced Micro Devices (2024) \\
 \end{xltabular}}
 
@@ -262,16 +270,16 @@ Block RAM ports & two independent synchronous ports; RAMB36 port widths x1–x36
 
 \paragraph{Compute-in-BRAM} Most of this work models changes to Intel-like fabrics; only the overlays run on commodity silicon, and a 2025 review maps the field (Arora, 2025).
 
-{\small\setlength{\tabcolsep}{4pt}
-\begin{xltabular}{\linewidth}{@{}LLLL@{}}
+{\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash\hsize=0.873\hsize}X>{\raggedright\arraybackslash\hsize=0.966\hsize}X>{\raggedright\arraybackslash\hsize=1.647\hsize}X>{\raggedright\arraybackslash\hsize=0.513\hsize}X@{}}
 \toprule \textsf{\bfseries Design} & \textsf{\bfseries Idea} & \textsf{\bfseries Key numbers} & \textsf{\bfseries Runs on unmodified FPGAs?} \\ \midrule\endfirsthead
 \toprule \textsf{\bfseries Design} & \textsf{\bfseries Idea} & \textsf{\bfseries Key numbers} & \textsf{\bfseries Runs on unmodified FPGAs?} \\ \midrule\endhead
 \bottomrule\endlastfoot
-CCB (Wang et al., 2021) & BRAM bitlines as bit-serial SIMD lanes & Stratix 10 peak MAC throughput 1.6–2.3× for 1.8\% more die area & no (modelled) \\
+CCB (Wang et al., 2021) & BRAM bitlines as bit-serial SIMD lanes & Stratix 10 peak MAC throughput 1.6–2.3× for 1.8\% more die area & no (modelled) \\*
 CoMeFa (Arora et al., 2022) & operand pairs read through both ports & 2.5× geomean; BRAM clock 735 → 588 MHz & no (modelled) \\
 BRAMAC (Y. Chen \& Abdelfattah, 2023) & MAC-oriented compute-in-BRAM & reports that an 8-bit MAC takes 113 cycles in CCB and CoMeFa, offset by 160 lanes per BRAM, unsigned-only & no (modelled) \\
 M4BRAM (Y. Chen et al., 2023) & mixed-precision matrix multiply in BRAM & keeps one port free for the DSPs & no (modelled) \\
-PiCaSO (Kabir et al., 2023) & bit-serial units beside unmodified BRAMs & 540 MHz on Virtex-7; custom compute-in-BRAM fabrics “are not currently available” & yes, as an overlay \\
+PiCaSO (Kabir et al., 2023) & bit-serial units beside unmodified BRAMs & 540 MHz on Virtex-7; custom compute-in-BRAM fabrics “are not currently available” & yes, as an overlay \\*
 IMAGine (Kabir et al., 2024) & GEMV overlay & 64K bit-serial MACs at 737 MHz, at most 0.33 TOPS at 8 bits & yes, as an overlay \\
 \end{xltabular}}
 
@@ -317,19 +325,20 @@ Jacob et al. (2018) require round-to-nearest shifts and show that breaking ties 
 The P register reaches only the X and Z multiplexers, never the multiplier inputs (Xilinx, 2018, Tables 2-7 and 2-9), so REQUANT routes the accumulator through the fabric into a multiplier port: in the MAC's own DSP, at the cost of extra cycles and a cleared accumulator, or in a second DSP48E1, one more of 240 (derived). Either way it takes several cycles, about 8 with registered DSP stages and one FSM instruction (derived), counted in Section 7's end-to-end estimate. If round(2\textsuperscript{17}·M0) reaches 2\textsuperscript{17}, the compiler halves it and decrements n. Spec v0.1 starts with the simpler power-of-two scheme of CMSIS-NN (Lai et al., 2018): one four-cycle \texttt{RQ} instruction that shifts, applies ReLU and saturates, enough for the hand-made demo neuron; the LiteRT-style REQUANT above is the upgrade for trained networks.
 
 \end{forls}
+\Needspace{16\baselineskip}
 \subsection{TinyML benchmarks and datasets}
 
 {\small\setlength{\tabcolsep}{4pt}
-\begin{xltabular}{\linewidth}{@{}LLL@{}}
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash\hsize=0.991\hsize}X>{\raggedright\arraybackslash\hsize=1.143\hsize}X>{\raggedright\arraybackslash\hsize=0.866\hsize}X@{}}
 \toprule \textsf{\bfseries Workload or budget} & \textsf{\bfseries Size} & \textsf{\bfseries Source} \\ \midrule\endfirsthead
 \toprule \textsf{\bfseries Workload or budget} & \textsf{\bfseries Size} & \textsf{\bfseries Source} \\ \midrule\endhead
 \bottomrule\endlastfoot
-Smallest MLPerf Tiny workload (anomaly-detection autoencoder) & about 265k MACs & Tschand et al. (2025) \\
+Smallest MLPerf Tiny workload (anomaly-detection autoencoder) & about 265k MACs & Tschand et al. (2025) \\*
 Keyword spotting on a microcontroller & 80–500 KB memory, 6–80 million operations per second & Skillman \& Edsö (2020) \\
 Typical MCU & under 256 kB SRAM; STM32F746 has 320 KB SRAM at 216 MHz & Lin et al. (2023) \\
 MNIST linear classifier & 7,850 parameters, 12.0\% error & LeCun et al. (1998) \\
 UCI digits, 64-10 linear model & 640 MACs, 650 parameters (derived) & Alpaydin \& Kaynak (1998) \\
-UCI digits, 64-32-10 MLP & 2,368 MACs, 2,410 parameters (derived) & Alpaydin \& Kaynak (1998) \\
+UCI digits, 64-32-10 MLP & 2,368 MACs, 2,410 parameters (derived) & Alpaydin \& Kaynak (1998) \\*
 LS data memory & 4,096 addresses & LS project overview (internal document) \\
 \end{xltabular}}
 
@@ -341,32 +350,34 @@ LS data memory & 4,096 addresses & LS project overview (internal document) \\
 LS sits one to two orders of magnitude below “tiny” (derived), so it cannot run MLPerf Tiny. It can adopt the method: a quality target declared in advance, and a timed window opened and closed by the program. The MNIST linear classifier does not fit in 4,096 bytes as int8, which justifies the UCI digits. Results set beside spatial FPGA designs should be normalized by resources.
 
 \end{forls}
+\Needspace{16\baselineskip}
 \subsection{Across the clusters}
 
-{\small\setlength{\tabcolsep}{4pt}
-\begin{xltabular}{\linewidth}{@{}LLLL@{}}
+{\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash\hsize=0.440\hsize}X>{\raggedright\arraybackslash\hsize=1.475\hsize}X>{\raggedright\arraybackslash\hsize=1.556\hsize}X>{\raggedright\arraybackslash\hsize=0.529\hsize}X@{}}
 \toprule \textsf{\bfseries Theme} & \textsf{\bfseries Convergent evidence} & \textsf{\bfseries Contradictions and caveats} & \textsf{\bfseries Gap} \\ \midrule\endfirsthead
 \toprule \textsf{\bfseries Theme} & \textsf{\bfseries Convergent evidence} & \textsf{\bfseries Contradictions and caveats} & \textsf{\bfseries Gap} \\ \midrule\endhead
 \bottomrule\endlastfoot
-The bottleneck is operand delivery and control & energy tables (Horowitz, 2014; Y.-H. Chen et al., 2016); I/O bound (Kung, 1982); CFU ablation (Prakash et al., 2023); OPEF (Garofalo et al., 2021); Arrow's convolution result (Al Assir et al., 2021) & headline speed-ups track the baseline: 55× per operator vs 3× end to end on the Arty board (Prakash et al., 2023); 16-bit baselines in bit-serial work (Judd et al., 2016); most speed-up comes from parallelism, not overhead removal (Dally et al., 2020) & no verified measurement at 8-bit FPGA scale \\
+The bottleneck is operand delivery and control & energy tables (Horowitz, 2014; Y.-H. Chen et al., 2016); I/O bound (Kung, 1982); CFU ablation (Prakash et al., 2023); OPEF (Garofalo et al., 2021); Arrow's convolution result (Al Assir et al., 2021) & headline speed-ups track the baseline: 55× per operator vs 3× end to end on the Arty board (Prakash et al., 2023); 16-bit baselines in bit-serial work (Judd et al., 2016); most speed-up comes from parallelism, not overhead removal (Dally et al., 2020) & no verified measurement at 8-bit FPGA scale \\*
 Loops, post-increment and dual fetch & DSP manuals (Texas Instruments, 2001b; Analog Devices, 1995); ZOLC (Kavvadias \& Nikolaidis, 2008); Octavo (LaForest et al., 2014); Arm (Yiu, 2019); Gautschi et al. (2017); Schuiki et al. (2021); Nadalini et al. (2023) & gains range from 1.07× on an FPGA (LaForest et al., 2014) to 5× analytic (Schuiki et al., 2021); eight RISC-V papers share a senior author and that group's cores and baselines (Section 4.2); the FPGA soft cores in Section 4.1 lack hardware loops, but the open RI5CY RTL has them (Gautschi et al., 2017) & no verified FPGA measurement of an open core with these mechanisms \\
 Wide accumulator & 8 guard bits in DSPs (Texas Instruments, 2001a; Analog Devices, 1995); 32-bit accumulators for 16-bit products (Jouppi et al., 2017; RISC-V International, 2025); worst-case bound (de Bruin et al., 2020) and trained bounds (Colbert et al., 2023) & the simple formula is one bit short at −128 (de Bruin et al., 2020) & bias lies outside the bounds \\
 Precision scaling & gains concentrate at 4 bits or fewer (Albericio et al., 2017; Lee et al., 2019; Ibrahim et al., 2022) & single bit-serial units rank worst while shared-register arrays do well (Ibrahim et al., 2022); the ASIC frequency results do not transfer to FPGAs & no single-MAC FPGA CPU evidence \\
-Static scheduling & TTA (Jääskeläinen et al., 2018); DAE (Smith, 1984) & TTA costs come from one 32-bit design; DAE's large HLS gains are latency hiding (Metz \& Själander, 2026) & 8-bit cases not assessed (leads in Section 9) \\
+Static scheduling & TTA (Jääskeläinen et al., 2018); DAE (Smith, 1984) & TTA costs come from one 32-bit design; DAE's large HLS gains are latency hiding (Metz \& Själander, 2026) & 8-bit cases not assessed (leads in Section 9) \\*
 Benchmark method & MLPerf Tiny and Power methods (MLCommons, 2025; Tschand et al., 2025) & MLPerf Power's 20 mJ autoencoder figure conflicts with its own Fig. 7 & no benchmark at 8×8-digit scale \\
 \end{xltabular}}
 
+\begin{landscape}
+\Needspace{16\baselineskip}
 \section{Comparison matrix}
 
 Tiers: {[}PR{]} peer-reviewed, {[}BK{]} book, {[}VD{]} vendor document, {[}PP{]} preprint, {[}G{]} other gray source. “Derived” marks numbers computed here.
 
-\begin{landscape}
 {\footnotesize\setlength{\tabcolsep}{4pt}
-\begin{xltabular}{\linewidth}{@{}LlLLLLL@{}}
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash\hsize=1.319\hsize}Xl>{\raggedright\arraybackslash\hsize=0.632\hsize}X>{\raggedright\arraybackslash\hsize=1.004\hsize}X>{\raggedright\arraybackslash\hsize=1.520\hsize}X>{\raggedright\arraybackslash\hsize=0.679\hsize}X>{\raggedright\arraybackslash\hsize=0.847\hsize}X@{}}
 \toprule \textsf{\bfseries System} & \textsf{\bfseries Year} & \textsf{\bfseries Platform} & \textsf{\bfseries Principle} & \textsf{\bfseries MACs per cycle or speed-up (baseline)} & \textsf{\bfseries Resources} & \textsf{\bfseries Relevance to LS} \\ \midrule\endfirsthead
 \toprule \textsf{\bfseries System} & \textsf{\bfseries Year} & \textsf{\bfseries Platform} & \textsf{\bfseries Principle} & \textsf{\bfseries MACs per cycle or speed-up (baseline)} & \textsf{\bfseries Resources} & \textsf{\bfseries Relevance to LS} \\ \midrule\endhead
 \bottomrule\endlastfoot
-Textbook multicycle {[}BK{]} (Harris \& Harris, 2021; Patterson \& Hennessy, 2021) & 2021 & Model & FSM, one operation per step & CPI 4.12 (SPECINT2000 mix) / 4.10 (SPECINT2006 mix); 0.5× (single-cycle) & fewer datapath units & Baseline the plan matches \\
+Textbook multicycle {[}BK{]} (Harris \& Harris, 2021; Patterson \& Hennessy, 2021) & 2021 & Model & FSM, one operation per step & CPI 4.12 (SPECINT2000 mix) / 4.10 (SPECINT2006 mix); 0.5× (single-cycle) & fewer datapath units & Baseline the plan matches \\*
 KCPSM6 {[}VD{]} (Chapman, 2014) & 2014 & Xilinx 7-series & 8-bit, fixed two-cycle instructions & CPI 2; no multiply & 26 slices + 1 BRAM & 8-bit reference; external same-board point \\
 SERV {[}G{]} (Kindgren, 2018) & 2018 & Artix-7 & Bit-serial RV32I & 32 cycles per one-stage instruction & 125 LUT, 164 FF (no register file) & Area floor, serial cost \\
 FazyRV {[}PR{]} (Kissich \& Baunach, 2024) & 2024 & 7-series, iCE40 & 1–8-bit chunked datapath & addition 32 → 4 cycles (1 → 8 bits) & SoC in 77 slices & Width-vs-CPI knob \\
@@ -405,26 +416,27 @@ FINN SFC {[}PR{]} (Umuroglu et al., 2017) & 2017 & ZC706 & Binary dataflow + thr
 Double MAC {[}PR{]} (Nguyen et al., 2017) & 2017 & Virtex-7 & Two int8 MACs per DSP48E1 & 2 MACs per DSP per cycle; 14–84\% network gain & 0.5 DSP + 11 LUT + 12 FF per MAC & Packing on the LS DSP \\
 BRAMAC {[}PR{]} (Y. Chen \& Abdelfattah, 2023) & 2023 & Arria-10 model & Compute-in-BRAM & 1.9× peak at 8 bits & +6.8\% core area & Not buildable on Artix-7 \\
 PiCaSO {[}PR{]} (Kabir et al., 2023) & 2023 & Virtex-7, Alveo U55 & Bit-serial units beside BRAM & 540 MHz on Virtex-7 & none stated & Buildable PIM overlay \\
-hls4ml / FINN {[}PP{]} (Borras et al., 2022) & 2022 & Arty A7-100T (xc7a100t-1) & Spatial dataflow & KWS 0.033 ms, 53.7 µJ; AD 0.045 ms & 67\% LUT (KWS); 86\% DSP (AD) & Same die, fixed function \\
+hls4ml / FINN {[}PP{]} (Borras et al., 2022) & 2022 & Arty A7-100T (xc7a100t-1) & Spatial dataflow & KWS 0.033 ms, 53.7 µJ; AD 0.045 ms & 67\% LUT (KWS); 86\% DSP (AD) & Same die, fixed function \\*
 Ethos-U55 {[}VD{]} (Skillman \& Edsö, 2020) & 2020 & MCU NPU & Command stream + MAC engine & 32–256 MAC/cycle; 50× with Cortex-M55 (Cortex-M7) & none stated & Commercial comparator \\
 \end{xltabular}}
 \end{landscape}
 
+\Needspace{16\baselineskip}
 \section{Closest comparators and what is uncommon at LS scale}
 
 {\small\setlength{\tabcolsep}{4pt}
-\begin{xltabular}{\linewidth}{@{}LLL@{}}
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash\hsize=0.705\hsize}X>{\raggedright\arraybackslash\hsize=1.131\hsize}X>{\raggedright\arraybackslash\hsize=1.164\hsize}X@{}}
 \toprule \textsf{\bfseries Comparator} & \textsf{\bfseries Shared with LS} & \textsf{\bfseries Different from LS} \\ \midrule\endfirsthead
 \toprule \textsf{\bfseries Comparator} & \textsf{\bfseries Shared with LS} & \textsf{\bfseries Different from LS} \\ \midrule\endhead
 \bottomrule\endlastfoot
-CFU Playground (Prakash et al., 2023) & int8 MAC unit beside a soft CPU, board-measured, step-by-step ablation & Arty A7-35T (MNV2) and Fomu iCE40UP5k (KWS); 32-bit VexRiscv; unit reached through custom instructions; operands from DDR3 or SPI flash, not streamed from on-chip BRAM \\
+CFU Playground (Prakash et al., 2023) & int8 MAC unit beside a soft CPU, board-measured, step-by-step ablation & Arty A7-35T (MNV2) and Fomu iCE40UP5k (KWS); 32-bit VexRiscv; unit reached through custom instructions; operands from DDR3 or SPI flash, not streamed from on-chip BRAM \\*
 KCPSM6 (Chapman, 2014) & 8-bit soft CPU on 7-series, fixed CPI, can run on the same board & no multiply or MAC \\
 RI5CY (Gautschi et al., 2017) & hardware loops, post-increment and dot product in one open core & 32-bit; ASIC results only in the verified sources \\
 Flex-RV (Ozer et al., 2024) & tiny CPU with MAC, bias + ReLU and requantize instructions & flexible ASIC, 4-bit model, no speed-up reported \\
 Arrow (Al Assir et al., 2021) & Artix-7 at 100 MHz, dot products & vector co-processor on MicroBlaze, modelled cycles \\
 Octavo (LaForest et al., 2014) & FPGA soft CPU with address and loop overhead removed in hardware & 36-bit, multithreaded, Stratix IV \\
 TTA soft core (Jääskeläinen et al., 2018) & sub-1,000-LUT soft core with a measured resource table & 32-bit, CHStone benchmarks, dedicated compiler \\
-P-CORE (Ali et al., 2025) & soft core, int8, digit recognition (LeNet-5) & 32-bit packed SIMD, simulated \\
+P-CORE (Ali et al., 2025) & soft core, int8, digit recognition (LeNet-5) & 32-bit packed SIMD, simulated \\*
 Borras et al. (2022) & same XC7A100T −1 die & fixed-function dataflow using most of the chip \\
 \end{xltabular}}
 
@@ -447,54 +459,92 @@ The follow-up check found more candidate prior art outside the verified set (Sec
 
 \paragraph{What would be original for a student project} The combination and its measurement: an 8-bit soft core on Artix-7 that streams int8 operands from two operand memories into a DSP48E1 MAC under a hardware repeat, with an int8 requantize, measured on one bitstream against the best conventional code for the same core (optionally also against KCPSM6), and bit-exact against an integer reference model. This reproduces known mechanisms at a smaller scale, a legitimate contribution rather than a new architectural idea. Input-broadcast lanes for the digit network, Double MAC packing and an in-ISA binary mode with threshold activation would be measured extras.
 
+\Needspace{16\baselineskip}
 \section{Implications for the LS design decisions}
 
 \paragraph{Structural score} Each candidate, as it would be built for LS, against the criterion of Section 3.5:
 
 {\footnotesize\setlength{\tabcolsep}{4pt}
-\begin{xltabular}{\linewidth}{@{}LLLLL@{}}
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash\hsize=1.342\hsize}X>{\raggedright\arraybackslash\hsize=0.473\hsize}X>{\raggedright\arraybackslash\hsize=0.887\hsize}X>{\raggedright\arraybackslash\hsize=0.473\hsize}X>{\raggedright\arraybackslash\hsize=1.825\hsize}X@{}}
 \toprule \textsf{\bfseries Candidate} & \textsf{\bfseries S1: no fetch or decode per MAC} & \textsf{\bfseries S2: operands every cycle} & \textsf{\bfseries S3: sum stays in MAC unit} & \textsf{\bfseries Note} \\ \midrule\endfirsthead
 \toprule \textsf{\bfseries Candidate} & \textsf{\bfseries S1: no fetch or decode per MAC} & \textsf{\bfseries S2: operands every cycle} & \textsf{\bfseries S3: sum stays in MAC unit} & \textsf{\bfseries Note} \\ \midrule\endhead
 \bottomrule\endlastfoot
-1. Multi-cycle register machine + MAC (rungs L and U) & no & no & yes & 4 cycles per MAC unrolled, 8 in a loop; the multiplier idles at least 3 cycles in 4 (derived) \\
+1. Multi-cycle register machine + MAC (rungs L and U) & no & no & yes & 4 cycles per MAC unrolled, 8 in a loop; the multiplier idles at least 3 cycles in 4 (derived) \\*
 2. Hardware repeat + address generators + two operand memories (rung S, \texttt{MAC \#n}) & yes & yes & yes & one MAC per cycle after setup \\
 3. Transport-triggered & no & yes, with two load units & yes & one move instruction per cycle even when software-pipelined; adding a hardware loop turns it into option 2 \\
 4. Decoupled access/execute & no & yes & yes & the execute stream still issues one MAC per element unless looped in hardware \\
 5. Single-cycle dual-stack, same memory and MAC as option 2 & no & yes & yes & J1 as published fails S2 and S3: one shared RAM, no multiplier (Bowman, 2010) \\
 6. Input-broadcast MAC lanes (L = 2–4) under a hardware repeat & yes & yes, with an x18 or x36 weight port or one BRAM per lane & yes & packed SIMD in 8-bit registers would fail S2 and S3 \\
-7. Bit-serial MAC & depends on control & yes (bits per cycle), but only 1/8 int8 MAC per cycle per unit & yes & eight serial units are needed to match one DSP (derived) \\
+7. Bit-serial MAC & depends on control & yes (bits per cycle), but only 1/8 int8 MAC per cycle per unit & yes & eight serial units are needed to match one DSP (derived) \\*
 8. Tiny CPU + small systolic array & yes & only with one weight byte per processing element per cycle & yes if output-stationary & at batch 1 it behaves like broadcast lanes (Section 3.2) \\
 \end{xltabular}}
 
-\begin{landscape}
-{\footnotesize\setlength{\tabcolsep}{4pt}
-\begin{xltabular}{\linewidth}{@{}LLLLL@{}}
-\toprule \textsf{\bfseries Candidate} & \textsf{\bfseries What the literature says it buys} & \textsf{\bfseries Main risks at LS scale} & \textsf{\bfseries Fair measurement} & \textsf{\bfseries Verdict} \\ \midrule\endfirsthead
-\toprule \textsf{\bfseries Candidate} & \textsf{\bfseries What the literature says it buys} & \textsf{\bfseries Main risks at LS scale} & \textsf{\bfseries Fair measurement} & \textsf{\bfseries Verdict} \\ \midrule\endhead
+{\small\setlength{\tabcolsep}{4pt}
+\begin{xltabular}{\linewidth}{@{}>{\sffamily\footnotesize\color{lsgrey}\raggedright\arraybackslash}p{25mm}L@{}}
+\toprule\endfirsthead
+\toprule\endhead
 \bottomrule\endlastfoot
-1. Multi-cycle register machine + MAC (current plan) & Smallest control, easiest verification; fewer datapath components (Patterson \& Hennessy, 2021; Harris \& Harris, 2021) & CPI 4; 4 cycles per MAC unrolled, 8 in a loop, 20 without a MAC instruction (derived; Section 3.1); fails S1 & Rungs B, L and U, same multiplier & Keep for control and as the baseline \\
-2. DSP-style zero-overhead loops + address generators + dual-port BRAM streaming & N + 2 cycles per dot product on the C54x (derived from Texas Instruments, 2001b); +37\% average, up to +41\%, from loops and post-increment on one core (Gautschi et al., 2017); 1.07–1.92× on an FPGA soft CPU, but only 1.16× looping and 1.09× unrolled on its FIR (LaForest et al., 2014, Table I) & 1–2 BRAM read-latency cycles (Xilinx, 2019); one-cycle BRAM-to-MAC path 7.94 of 10 ns (derived); Fmax cost (LaForest et al., 2014); DSP-style hardware is “difficult for compilers to use effectively” (Eyre \& Bier, 2000), mitigated because the LS compiler only emits a few fixed dot-product templates (setup, repeat-MAC, requantize, store); step mode (resolved below) & Rung S against rungs U, L and B on one bitstream (optionally KCPSM6); cycles per MAC, utilization, post-route resources, WNS and Vivado power with the repeat on and off & Recommended core for Part 1 (adopted as \texttt{MAC \#n} in spec v0.1) \\
-3. Transport-triggered & In one 32-bit study: register-file savings, 15–173\% faster than MicroBlaze-5, and a dual-issue TTA at 67\% of a VLIW's resources running up to 88\% faster (Jääskeläinen et al., 2018); in current use for NN inference (Molendijk et al., 2023) & Costs reported for that design: 43-bit instructions, a 265-LUT interconnect, programs 21–49\% larger than VLIW, a dedicated compiler (Jääskeläinen et al., 2018); fails S1 without a hardware loop & Same function units against an operation-triggered baseline, resource table in Jääskeläinen et al.'s format & Not a separate design for LS: the plan's data-memory-to-MAC path already moves operands straight into the MAC \\
-4. Decoupled access/execute & Dot-product addresses never depend on data, so decoupling is complete (Smith, 1984) & Little latency to hide with 1-cycle BRAM; large HLS gains come from a 100-cycle memory (Metz \& Själander, 2026); deadlock risk if the streams interact (Smith, 1984) & Cycles per inner-loop iteration, baseline vs decoupled, as in Smith's Table I & Same hardware as option 2 at this latency; name it only if a real queue is built and its benefit measured \\
-5. Single-cycle dual-stack machine (J1-like) & CPI about 1 on BRAM, dense code, tiny decode (Bowman, 2010; Koopman, 1989) & J1's missing multiplier and shared code/data RAM are costs of that implementation (Bowman, 2010); with the same Harvard memory and MAC as option 2 the inner loop is the same streaming MAC, so the model changes code density and decode, not MAC throughput (derived); non-refereed source, no LUT counts & Cycles per MAC and code size against option 2 with the same memory and MAC & Good control core; no inner-loop advantage \\
-6. SIMD lanes, built as input-broadcast MAC lanes (L = 2–4) & Packed SIMD is standard on 32-bit cores (RISC-V International, 2025, 2026a), with 4.8× (fully connected) to about 7× (MatMul) in P-CORE (Ali et al., 2025); most speed-up comes from parallelism (Dally et al., 2020); each input feeds every neuron, so L lanes need L weight bytes plus one input byte per cycle (Section 3.2) & DSP48E1 SIMD cannot multiply (Xilinx, 2018), so each lane is a DSP, or half of one with Double MAC if the shared operand is unsigned (Nguyen et al., 2017); L accumulators and a REQUANT per lane; the compiler must interleave weights; no gain for the single demo neuron & Digit network end to end, roughly 1,300–1,500 cycles for L = 4 against about 3,800 for L = 1 (derived, below); DSPs, LUTs and BRAMs per sustained MAC & Measured Part 2 step on top of option 2 \\
-7. Bit-serial precision-scalable MAC (incl. binary XNOR-popcount) & Small units (Kindgren, 2018); gains at 4 bits or fewer (Lee et al., 2019; Sharma et al., 2018); 8 binary MACs per byte-wide XNOR-popcount (derived); threshold activation (Umuroglu et al., 2017) & ASIC findings on single bit-serial units and clock frequency (as reported by Ibrahim et al., 2022) do not transfer to an FPGA; int8 needs eight serial units per DSP48E1 equivalent (derived); 2.25× at 8 bits (Albericio et al., 2017); data-dependent cycle counts; small binary networks lose accuracy (Umuroglu et al., 2017) & LUTs and FFs per sustained MAC against DSPs per MAC; accuracy on the UCI test set & At most an optional binary mode \\
-8. Tiny CPU + small systolic array & Operand reuse beyond 1 MAC per cycle (Kung, 1982; Jouppi et al., 2017); DSP cascades, 16 of 240 DSPs for 4×4 (Xilinx, 2018) & At batch 1 each weight is used once, so 16 processing elements need 16 weight bytes per cycle: two RAMB36 at 72 bits or four at 36 bits (derived from Xilinx, 2019); so fed, a 4×4 array acts like 16 broadcast lanes, and its second dimension pays off only with batch or convolution reuse (derived); common in student projects (LS project overview, Section 8); schedule risk & Sustained vs peak MACs per cycle and reads per MAC (Y.-H. Chen et al., 2017), against option 6 at equal BRAM bandwidth & Part 2 extension \\
+\multicolumn{2}{@{}l@{}}{\sffamily\bfseries\color{lsnavy}1.\enspace Multi-cycle register machine + MAC (current plan)}\\*[2pt]
+Buys & Smallest control, easiest verification; fewer datapath components (Patterson \& Hennessy, 2021; Harris \& Harris, 2021) \\*
+Risks at LS scale & CPI 4; 4 cycles per MAC unrolled, 8 in a loop, 20 without a MAC instruction (derived; Section 3.1); fails S1 \\*
+Fair measurement & Rungs B, L and U, same multiplier \\*
+Verdict & \textbf{Keep for control and as the baseline} \\
+\midrule
+\multicolumn{2}{@{}l@{}}{\sffamily\bfseries\color{lsnavy}2.\enspace DSP-style zero-overhead loops + address generators + dual-port BRAM streaming}\\*[2pt]
+Buys & N + 2 cycles per dot product on the C54x (derived from Texas Instruments, 2001b); +37\% average, up to +41\%, from loops and post-increment on one core (Gautschi et al., 2017); 1.07–1.92× on an FPGA soft CPU, but only 1.16× looping and 1.09× unrolled on its FIR (LaForest et al., 2014, Table I) \\*
+Risks at LS scale & 1–2 BRAM read-latency cycles (Xilinx, 2019); one-cycle BRAM-to-MAC path 7.94 of 10 ns (derived); Fmax cost (LaForest et al., 2014); DSP-style hardware is “difficult for compilers to use effectively” (Eyre \& Bier, 2000), mitigated because the LS compiler only emits a few fixed dot-product templates (setup, repeat-MAC, requantize, store); step mode (resolved below) \\*
+Fair measurement & Rung S against rungs U, L and B on one bitstream (optionally KCPSM6); cycles per MAC, utilization, post-route resources, WNS and Vivado power with the repeat on and off \\*
+Verdict & \textbf{Recommended core for Part 1 (adopted as \texttt{MAC \#n} in spec v0.1)} \\
+\midrule
+\multicolumn{2}{@{}l@{}}{\sffamily\bfseries\color{lsnavy}3.\enspace Transport-triggered}\\*[2pt]
+Buys & In one 32-bit study: register-file savings, 15–173\% faster than MicroBlaze-5, and a dual-issue TTA at 67\% of a VLIW's resources running up to 88\% faster (Jääskeläinen et al., 2018); in current use for NN inference (Molendijk et al., 2023) \\*
+Risks at LS scale & Costs reported for that design: 43-bit instructions, a 265-LUT interconnect, programs 21–49\% larger than VLIW, a dedicated compiler (Jääskeläinen et al., 2018); fails S1 without a hardware loop \\*
+Fair measurement & Same function units against an operation-triggered baseline, resource table in Jääskeläinen et al.'s format \\*
+Verdict & \textbf{Not a separate design for LS: the plan's data-memory-to-MAC path already moves operands straight into the MAC} \\
+\midrule
+\multicolumn{2}{@{}l@{}}{\sffamily\bfseries\color{lsnavy}4.\enspace Decoupled access/execute}\\*[2pt]
+Buys & Dot-product addresses never depend on data, so decoupling is complete (Smith, 1984) \\*
+Risks at LS scale & Little latency to hide with 1-cycle BRAM; large HLS gains come from a 100-cycle memory (Metz \& Själander, 2026); deadlock risk if the streams interact (Smith, 1984) \\*
+Fair measurement & Cycles per inner-loop iteration, baseline vs decoupled, as in Smith's Table I \\*
+Verdict & \textbf{Same hardware as option 2 at this latency; name it only if a real queue is built and its benefit measured} \\
+\midrule
+\multicolumn{2}{@{}l@{}}{\sffamily\bfseries\color{lsnavy}5.\enspace Single-cycle dual-stack machine (J1-like)}\\*[2pt]
+Buys & CPI about 1 on BRAM, dense code, tiny decode (Bowman, 2010; Koopman, 1989) \\*
+Risks at LS scale & J1's missing multiplier and shared code/data RAM are costs of that implementation (Bowman, 2010); with the same Harvard memory and MAC as option 2 the inner loop is the same streaming MAC, so the model changes code density and decode, not MAC throughput (derived); non-refereed source, no LUT counts \\*
+Fair measurement & Cycles per MAC and code size against option 2 with the same memory and MAC \\*
+Verdict & \textbf{Good control core; no inner-loop advantage} \\
+\midrule
+\multicolumn{2}{@{}l@{}}{\sffamily\bfseries\color{lsnavy}6.\enspace SIMD lanes, built as input-broadcast MAC lanes (L = 2–4)}\\*[2pt]
+Buys & Packed SIMD is standard on 32-bit cores (RISC-V International, 2025, 2026a), with 4.8× (fully connected) to about 7× (MatMul) in P-CORE (Ali et al., 2025); most speed-up comes from parallelism (Dally et al., 2020); each input feeds every neuron, so L lanes need L weight bytes plus one input byte per cycle (Section 3.2) \\*
+Risks at LS scale & DSP48E1 SIMD cannot multiply (Xilinx, 2018), so each lane is a DSP, or half of one with Double MAC if the shared operand is unsigned (Nguyen et al., 2017); L accumulators and a REQUANT per lane; the compiler must interleave weights; no gain for the single demo neuron \\*
+Fair measurement & Digit network end to end, roughly 1,300–1,500 cycles for L = 4 against about 3,800 for L = 1 (derived, below); DSPs, LUTs and BRAMs per sustained MAC \\*
+Verdict & \textbf{Measured Part 2 step on top of option 2} \\
+\midrule
+\multicolumn{2}{@{}l@{}}{\sffamily\bfseries\color{lsnavy}7.\enspace Bit-serial precision-scalable MAC (incl. binary XNOR-popcount)}\\*[2pt]
+Buys & Small units (Kindgren, 2018); gains at 4 bits or fewer (Lee et al., 2019; Sharma et al., 2018); 8 binary MACs per byte-wide XNOR-popcount (derived); threshold activation (Umuroglu et al., 2017) \\*
+Risks at LS scale & ASIC findings on single bit-serial units and clock frequency (as reported by Ibrahim et al., 2022) do not transfer to an FPGA; int8 needs eight serial units per DSP48E1 equivalent (derived); 2.25× at 8 bits (Albericio et al., 2017); data-dependent cycle counts; small binary networks lose accuracy (Umuroglu et al., 2017) \\*
+Fair measurement & LUTs and FFs per sustained MAC against DSPs per MAC; accuracy on the UCI test set \\*
+Verdict & \textbf{At most an optional binary mode} \\
+\midrule
+\multicolumn{2}{@{}l@{}}{\sffamily\bfseries\color{lsnavy}8.\enspace Tiny CPU + small systolic array}\\*[2pt]
+Buys & Operand reuse beyond 1 MAC per cycle (Kung, 1982; Jouppi et al., 2017); DSP cascades, 16 of 240 DSPs for 4×4 (Xilinx, 2018) \\*
+Risks at LS scale & At batch 1 each weight is used once, so 16 processing elements need 16 weight bytes per cycle: two RAMB36 at 72 bits or four at 36 bits (derived from Xilinx, 2019); so fed, a 4×4 array acts like 16 broadcast lanes, and its second dimension pays off only with batch or convolution reuse (derived); common in student projects (LS project overview, Section 8); schedule risk \\*
+Fair measurement & Sustained vs peak MACs per cycle and reads per MAC (Y.-H. Chen et al., 2017), against option 6 at equal BRAM bandwidth \\*
+Verdict & \textbf{Part 2 extension} \\
 \end{xltabular}}
-\end{landscape}
 
 \paragraph{The one measured claim} On the Nexys A7-100T at 100 MHz, report cycles per int8 MAC and total cycles for a dot product, read from an on-chip cycle counter that the program starts and stops; utilization is MACs divided by cycles (Schuiki et al., 2021). On a deterministic core these counts are fixed by the RTL, so state them before measuring, confirm them in simulation, and use the board for what simulation cannot give: post-route resources, timing and Vivado's power estimate per mechanism. The target claim: \texttt{MAC \#n} sustains one cycle per int8 MAC, against 4 for the best conventional code (an unrolled classic MAC), 8 for a MAC loop and 20 without a MAC instruction; for the 64-input neuron, 112 cycles against 300 (2.68×, predicted), at a stated cost in LUTs, flip-flops, DSPs and slack.
 
 {\small\setlength{\tabcolsep}{4pt}
-\begin{xltabular}{\linewidth}{@{}LLL@{}}
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash\hsize=0.425\hsize}X>{\raggedright\arraybackslash\hsize=1.461\hsize}X>{\raggedright\arraybackslash\hsize=1.115\hsize}X@{}}
 \toprule \textsf{\bfseries Step} & \textsf{\bfseries What to do} & \textsf{\bfseries Prediction or rule} \\ \midrule\endfirsthead
 \toprule \textsf{\bfseries Step} & \textsf{\bfseries What to do} & \textsf{\bfseries Prediction or rule} \\ \midrule\endhead
 \bottomrule\endlastfoot
-Predictions first & Publish the rung table (Section 3.1) before any run; this follows Gautschi et al.'s (2017) same-core method and avoids model-only cycle counts (Al Assir et al., 2021; Ali et al., 2025) & B 1,328, L 560, U 300 and S 112 cycles for 64 inputs (derived from the spec v0.1 listings) \\
+Predictions first & Publish the rung table (Section 3.1) before any run; this follows Gautschi et al.'s (2017) same-core method and avoids model-only cycle counts (Al Assir et al., 2021; Ali et al., 2025) & B 1,328, L 560, U 300 and S 112 cycles for 64 inputs (derived from the spec v0.1 listings) \\*
 Optional external point on the same board & KCPSM6 (Chapman, 2014) driving the same DSP48E1 MAC as an I/O peripheral; KCPSM6 is Xilinx copyright material whose user guide carries a proprietary notice, so record its source and the licence terms supplied with the download in the attribution section, as the course brief requires for code the team did not write & about 16 cycles per MAC: eight two-cycle instructions (two operand reads, two port writes, two pointer updates, a decrement, a branch; derived) \\
 One bitstream, two builds & Run all four programs on one bitstream, so only the code differs; build a second bitstream with the repeat disabled in the decoder; report LUT, FF, DSP and BRAM use, worst negative slack at speed grade −1, and Vivado's report\_power for both & power is a Vivado estimate with its activity source stated (vectorless defaults, or testbench switching activity), and so is any energy per MAC derived from it; “measured” is kept for meter readings; the course brief requires the figures Vivado actually gave \\
 Two lengths & N = 32 and 64 (optionally 4 and 16), with inputs preloaded in memory, not read from the switches & the slope gives the cost per input with the fixed cost removed \\
-End-to-end per UCI digit & 64-32-10 network including requantization and argmax: about 32 × (64 + 4 + o) + 10 × (32 + 4 + o) + A cycles, with o ≈ 28 for per-neuron set-up, requantization and store (about seven instructions) and A ≈ 120 for the argmax & \texttt{MAC \#n} about 3,800 cycles; the MAC loop about 20,400; four input-broadcast lanes roughly 1,300–1,500, about 2.5–3× rather than 4×, because set-up, requantization, argmax and the 10-neuron output layer (10 of 12 lane slots used) stay partly serial (all derived) \\
+End-to-end per UCI digit & 64-32-10 network including requantization and argmax: about 32 × (64 + 4 + o) + 10 × (32 + 4 + o) + A cycles, with o ≈ 28 for per-neuron set-up, requantization and store (about seven instructions) and A ≈ 120 for the argmax & \texttt{MAC \#n} about 3,800 cycles; the MAC loop about 20,400; four input-broadcast lanes roughly 1,300–1,500, about 2.5–3× rather than 4×, because set-up, requantization, argmax and the 10-neuron output layer (10 of 12 lane slots used) stay partly serial (all derived) \\*
 Secondary result & Bit-exact agreement with an integer reference model of the int8 pipeline on the 1,797 UCI test images, with accuracy against float & quality target declared beforehand \\
 \end{xltabular}}
 
@@ -502,14 +552,15 @@ The gap between per-kernel and end-to-end gains is the pattern CFU Playground re
 
 \paragraph{Step mode} Make the repeat count part of the control FSM: the repeat instruction enters a streaming state that loops on itself while the count is non-zero, and in step mode each button press advances that state by one MAC. One press is then one MAC iteration, the repeat appears as states in the FSM diagram, and the “finite state machine at its core” that the course brief requires stays visible.
 
+\Needspace{16\baselineskip}
 \section{Must-cite shortlist for the report}
 
 {\small\setlength{\tabcolsep}{4pt}
-\begin{xltabular}{\linewidth}{@{}LL@{}}
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash\hsize=0.513\hsize}X>{\raggedright\arraybackslash\hsize=1.487\hsize}X@{}}
 \toprule \textsf{\bfseries Reference} & \textsf{\bfseries Where to cite it in the report} \\ \midrule\endfirsthead
 \toprule \textsf{\bfseries Reference} & \textsf{\bfseries Where to cite it in the report} \\ \midrule\endhead
 \bottomrule\endlastfoot
-Hennessy \& Patterson (2019) & Introduction: why domain-specific hardware and low-precision integers \\
+Hennessy \& Patterson (2019) & Introduction: why domain-specific hardware and low-precision integers \\*
 Dally et al. (2020) & Design rationale: instruction overhead, parallelism as the source of speed-up, the FPGA efficiency penalty \\
 Horowitz (2014) & Motivation: energy of an int8 MAC against instruction fetch and memory access \\
 Williams et al. (2009) & Analysis: the bandwidth bound behind one MAC per cycle and the lane option \\
@@ -522,7 +573,7 @@ Chapman (2014) & Evaluation (optional): KCPSM6 as the 8-bit external same-board 
 Prakash et al. (2023) & Related work and threats to validity: closest FPGA ML soft-CPU work and its baseline effects \\
 Jacob et al. (2018) & Quantization: the integer-only requantization formula and rounding rule \\
 de Bruin et al. (2020) & Datapath sizing: the worst-case accumulator bound, with the −128 correction, behind the 24 bits \\
-Xilinx (2018) & Implementation: DSP48E1 multiplier, accumulator paths and rounding \\
+Xilinx (2018) & Implementation: DSP48E1 multiplier, accumulator paths and rounding \\*
 Xilinx (2019) & Implementation: dual-port BRAM, port widths and read latency \\
 \end{xltabular}}
 
@@ -534,17 +585,17 @@ Xilinx (2019) & Implementation: dual-port BRAM, port widths and read latency \\
 \end{itemize}
 
 {\small\setlength{\tabcolsep}{4pt}
-\begin{xltabular}{\linewidth}{@{}LLL@{}}
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash\hsize=0.715\hsize}X>{\raggedright\arraybackslash\hsize=1.316\hsize}X>{\raggedright\arraybackslash\hsize=0.969\hsize}X@{}}
 \toprule \textsf{\bfseries Lead} & \textsf{\bfseries What it appears to be} & \textsf{\bfseries Where to start} \\ \midrule\endfirsthead
 \toprule \textsf{\bfseries Lead} & \textsf{\bfseries What it appears to be} & \textsf{\bfseries Where to start} \\ \midrule\endhead
 \bottomrule\endlastfoot
-8-bit AVR-based RISC processor for elliptic-curve cryptography (MICRO workshops, 2012) & ISA extension on an 8-bit datapath & \url{https://doi.org/10.1109/MICROW.2012.20} \\
+8-bit AVR-based RISC processor for elliptic-curve cryptography (MICRO workshops, 2012) & ISA extension on an 8-bit datapath & \url{https://doi.org/10.1109/MICROW.2012.20} \\*
 SeeDot (PLDI 2019) & compiler from trained KB-sized models to fixed-point code for microcontrollers, including the Arduino Uno, and low-end FPGAs & \url{https://doi.org/10.1145/3314221.3314597} \\
 PSoC 1 (Cypress/Infineon); C8051F12x (Silicon Labs) & 8-bit microcontrollers reported to include hardware MAC blocks & the vendors' official datasheets \\
 MAXQ family & described by its vendor as transport-triggered, with 16-bit instructions and 8-bit parts & \url{https://wcm-cce.cldnet.analog.com/media/en/technical-documentation/user-guides/maxq-family-users-guide.pdf} \\
 CV32E40P in the CORE-V-MCU & open RI5CY descendant; the documentation lists the Nexys A7 (XC7A100T) as a target; check in its manual and RTL whether the PULP extensions are enabled and verified & \url{https://core-v-mcu-documentation.readthedocs.io/en/stable/doc-src/overview.html} \\
 Precision-scalable MAC benchmark (IEEE JETCAS, 2019) & the earlier benchmark cited here only through Ibrahim et al. & \url{https://doi.org/10.1109/JETCAS.2019.2950386} \\
-arXiv:2511.21232 (2025) & RISC-V custom unit for depthwise separable convolution on an Artix-7 & arXiv \\
+arXiv:2511.21232 (2025) & RISC-V custom unit for depthwise separable convolution on an Artix-7 & arXiv \\*
 MLPerf Tiny, NeurIPS 2021 Datasets and Benchmarks & proceedings version, whose printed author list differs from the arXiv version & \url{https://datasets-benchmarks-proceedings.neurips.cc/paper/2021/hash/da4fb5c6e93e74d3df8527599fa62642-Abstract-round1.html} \\
 \end{xltabular}}
 
