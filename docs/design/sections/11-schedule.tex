@@ -1,0 +1,60 @@
+\section{Schedule}\label{sec:schedule}
+
+\lsfig[t]{gantt}{The plan from today to the demonstration. Blue bars are Loucas' modules, teal bars Stefanos', amber bars joint work; lighter bars are the testbenches each of us writes for the other's half. Diamonds are our milestones and the course deadlines.}
+
+\subsection{Milestones}
+
+\begin{center}\small
+\begin{tabularx}{\linewidth}{@{}l l L@{}}
+\toprule
+Date & Milestone & Done when \\
+\midrule
+Fri 20 Nov & Proposal & submitted with the principle, the I/O, three milestones and the work split \\
+Tue 24 Nov & \textbf{M1}: a CPU that runs & in simulation: FSM, \sig{PC}, \sig{IR}, program ROM, \sig{R0}--\sig{R3}, \insn{LDI}, ALU, \insn{OUT}, \insn{JMP}, \insn{DJNZ}, \insn{HALT}, RUN and INSTR-STEP; \texttt{tb\_alu}, \texttt{tb\_fsm} (M1) and \texttt{tb\_instr} pass; state on LED15..12 \\
+Fri 27 Nov & Progress review & M1 shown, on the board if time allows \\
+Wed 2 Dec & Stream go/no-go & \texttt{tb\_stream} passes with constant X/W tables; otherwise fall back to rung 2 \\
+Fri 4 Dec & \textbf{M2}: the neuron & memories, MAC unit and \insn{RQ}; L64 and U64 pass \texttt{tb\_neuron} at their predicted counts; baselines measured on the board \\
+Thu 10 Dec & \textbf{M3}: final & stream on the board, all measurements, both Vivado builds, report complete \\
+Fri 11 Dec & Submission & Moodle closes at 08:30 \\
+Fri 18 Dec & Demo and defence & three-minute demo (\cref{sec:board}); both of us answer on the whole design \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+The labs teach the skills just in time: state machines in Lab 10 (20 Nov), counters and the 8-digit display in Lab 11 (27 Nov), memories, utilisation and power in Lab 12 (4 Dec). Memories are needed before Lab 12, so we read ahead on them in the last week of November. The report is written as we go: specification, ISA, FSM and I/O after M1; datapath, memory and verification after M2. The last week only adds measurements, resources, power and discussion.
+
+\subsection{If we fall behind}
+
+The course floor is never cut: a working CPU with the classic \insn{MAC}, program L64 on the board, the cycle counter, INSTR-STEP, the LEDs and a display. The stream sits above that floor in rungs, and each trigger below costs one thing, not the project.
+
+\begin{center}\small
+\begin{tabularx}{\linewidth}{@{}l L@{}}
+\toprule
+Trigger & What we cut \\
+\midrule
+27 Nov: M1 not on the board & SLOW mode, the instruction counter, the $N = 32$ programs \\
+2 Dec: \texttt{tb\_stream} fails & overlapped \stname{STREAM}; keep rung 2, repeat without overlap \\
+2 Dec: L64 fails \texttt{tb\_neuron} & B64 and three of the four images (the image-select prologue stays, so no count changes) \\
+8-digit driver late & show the low 16 bits of the cycle counter on LED15..0 (the largest prediction, \cycB, fits) \\
+7 Dec: board time short & block RAM experiment, \insn{ST}, CYCLE-STEP (\texttt{tb\_ce\_pause} stays while any step mode exists) \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection{Risks}
+
+\begin{center}\small
+\begin{tabularx}{\linewidth}{@{}l L L@{}}
+\toprule
+Risk & What can go wrong & Mitigation \\
+\midrule
+Schedule & the 20--27 Nov crunch (proposal, Lab Report 3, the CSEN 203 project); limited board time & milestones checkable in simulation; printed test sheets so a board session takes 20 minutes \\
+Read latency & data used in its own address cycle; a registered program ROM; a block RAM output register & ``data the cycle after its address''; \cref{fig:readlatency}; \texttt{tb\_mem}; asynchronous program ROM \\
+Clock enables & a divided or button clock; an ungated read register; a gated input chain & one 100\,MHz clock; the \sig{ce} table; \texttt{tb\_ce\_pause} \\
+Stream control & exit one cycle early or late; the operand select in \stname{DRAIN1} & \sig{CNT} loaded in \stname{DECODE}, exit at 1; \texttt{tb\_stream} for $n = 1..4$ \\
+Signed arithmetic & unsigned multiply; extension from the wrong bit; logical shift in \insn{RQ} & \texttt{signed} throughout; exhaustive \texttt{tb\_mul\_rq} \\
+Board I/O & bounce, metastability, missed presses; ghosting on the display & synchronisers on every switch and button; 10\,ms debounce; one-clock pulses; blanking \\
+Vivado & power-up state; memories or the multiplier inferred differently; timing at 100\,MHz & reset after programming; read the synthesis log from the first M2 build; if $\text{WNS} < 0$, add a state and predict again \\
+\bottomrule
+\end{tabularx}
+\end{center}

@@ -1,0 +1,40 @@
+\section{A neuron is a dot product}\label{sec:background}
+
+\lsfig[t]{neuron}{One neuron of an image classifier. The 64 pixels of an 8\,$\times$\,8 image and 64 learned weights are multiplied pairwise and summed into a 24-bit accumulator together with a bias $b$. The requantiser turns the sum back into one int8 value, the input of the next layer.}
+
+\Cref{fig:neuron} is the whole computation. For inputs $x_0, \dots, x_{63}$, weights $w_0, \dots, w_{63}$ and a bias $b$, the neuron computes
+\begin{equation}
+\mathrm{ACC} = b + \sum_{i=0}^{63} x_i\, w_i, \qquad y = \operatorname{clamp}_{[-128,\,127]}\bigl(\operatorname{relu}(\mathrm{ACC} \gg sh)\bigr).
+\label{eq:neuron}
+\end{equation}
+A network is many such neurons in layers; the outputs $y$ of one layer are the inputs $x$ of the next. Training, which finds the weights, happens once on a laptop. Inference, which uses them, is \cref{eq:neuron} over and over, and it is what the LS core runs.
+
+\subsection{Why 8-bit integers}
+
+Trained weights are real numbers such as $0.7314$. Inference works almost as well when every weight and every activation is replaced by an 8-bit integer and a shared scale factor \citep{jacob2018quantization}. Arm's CMSIS-NN kernels for microcontrollers use the same scheme as ours: int8 values, a wide accumulator, and a power-of-two rescale implemented as an arithmetic shift \citep{lai2018cmsisnn}. An int8 multiply is a single DSP48E1 slice on our FPGA \citep{xilinx2018ug479}, and an int8 value fits our 8-bit registers and memories.
+
+\subsection{How wide the accumulator must be}
+
+\lsfig[t]{accwidth}{Bit growth through the neuron. A product of two int8 values needs 16 bits because $(-128)\times(-128) = +2^{14}$ does not fit in 15. Sixty-four worst-case products need 22 bits. The 24-bit accumulator leaves headroom for the bias and for any single \insn{MAC \#n} up to $n = 255$.}
+
+Multiplication doubles the width: two 8-bit signed numbers give a 16-bit signed product. The extreme case is $(-128)\times(-128) = +16{,}384 = 2^{14}$, one more than the largest 15-bit signed value, so the product register \sig{PROD} must be 16 bits and the sign extension to the accumulator must copy bit 15, not bit 14. Summing $N$ products adds $\lceil\log_2 N\rceil$ bits: 64 worst-case products reach $2^{20}$ and need 22 bits. The accumulator \sig{ACC} has 24 (\cref{fig:accwidth}). One \insn{MAC \#n} with $n \le 255$ plus a 16-bit bias cannot overflow it:
+\[
+255 \times 16{,}384 + 32{,}767 = 4{,}210{,}687 \;<\; 2^{23} - 1 = 8{,}388{,}607 .
+\]
+Several \insn{MAC \#n} instructions chained into one accumulator can overflow; the spec documents that limit rather than detecting it (an overflow flag is an open decision, \cref{sec:isa}).
+
+\subsection{Requantisation: back to 8 bits}
+
+\lsfig[t]{rq}{The requantiser, a combinational block in the MAC unit. The arithmetic shift rounds towards minus infinity, which is why $-301 \gg 2 = -76$ and not $-75$.}
+
+The next layer expects int8 inputs, so the 24-bit sum must be scaled down. The \insn{RQ} instruction shifts \sig{ACC} right by $sh$ bits, keeping the sign (an arithmetic shift, a division by $2^{sh}$ that rounds towards $-\infty$), optionally applies ReLU (negative values become 0), and saturates the result to $[-128, 127]$ (\cref{fig:rq}). With $sh$ chosen per layer, this is the power-of-two requantisation of CMSIS-NN \citep{lai2018cmsisnn}. Integer-only inference in general uses a fixed-point multiplier before the shift and a zero point \citep{jacob2018quantization}; we keep the simpler scheme and list round-to-nearest as an open decision.
+
+\begin{aside}[Signed arithmetic in VHDL]
+The labs used \texttt{unsigned}; the MAC unit is \texttt{signed} from end to end (\texttt{ieee.numeric\_std}).
+\begin{itemize}
+\item A product is as wide as both operands together ($8\times 8 \to 16$); a sum is as wide as its wider operand, so \texttt{resize} \sig{PROD} to 24 bits \emph{before} adding.
+\item Converting a vector to \texttt{signed} only relabels its bits. Sign extension is a separate \texttt{resize}.
+\item \texttt{shift\_right} is arithmetic on \texttt{signed} and logical on \texttt{unsigned}: \insn{RQ} must shift a signed value.
+\item $-1$ in \sig{ACC} reads \texttt{FFFFFF}; negating $-128$ in 8 bits gives $-128$.
+\end{itemize}
+\end{aside}

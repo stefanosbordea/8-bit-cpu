@@ -1,0 +1,20 @@
+\begin{titlepage}
+\thispagestyle{empty}
+\newgeometry{top=20mm,bottom=22mm,left=24mm,right=24mm}
+{\sffamily\small\color{lsgrey}CSEN 203L Digital Systems Lab \textperiodcentered{} AUB Mediterraneo\hfill Design document \textperiodcentered{} spec v0.1\par}
+\vspace{16mm}
+\begin{center}\input{figures/title-art.tex}\end{center}
+\vspace{12mm}
+{\sffamily\fontsize{40}{44}\selectfont\bfseries\color{lsnavy}The LS Architecture\par}
+\vspace{5mm}
+{\sffamily\LARGE\color{lsamber}A streaming 8-bit CPU for int8 neural inference\par}
+\vspace{11mm}
+{\Large Loucas Louka\quad\textperiodcentered\quad Stefanos Bordea\par}
+\vspace{2.5mm}
+{\color{lsgrey}Nexys A7-100T (Artix-7 XC7A100T) \textperiodcentered{} VHDL \textperiodcentered{} 9 November 2026\par}
+\vfill
+\begin{tcolorbox}[lsbase,breakable=false,colback=lspaper,borderline west={3pt}{0pt}{lsamber}]
+\small\textbf{In one paragraph.} A neuron is a dot product: 64 multiply-accumulates (MACs) for an 8\,$\times$\,8 image. On a classic multicycle CPU every MAC is an instruction, and every instruction pays for fetch, decode, execute and write-back, so the multiplier works one cycle in four. The LS Architecture removes that cost by construction. One instruction, \insn{MAC \#n}, names a whole stream of $n$ MACs. After one fetch and one decode the control FSM stays in a single \stname{STREAM} state while the datapath overlaps addressing, multiplying and accumulating across consecutive elements. The elements of a dot product meet only in the accumulator, so the overlap needs no forwarding, no stalls and no hazard logic. The core retires one MAC per clock, the ceiling for one multiplier, from a \wdS-word program. On one bitstream we will measure a 64-input int8 neuron against the strongest conventional code for the same machine, an unrolled classic MAC: \pred{\cycS} cycles against \pred{\cycU}, a predicted \pred{\ratioUS$\times$}, read from a cycle counter on the board's display.
+\end{tcolorbox}
+\restoregeometry
+\end{titlepage}

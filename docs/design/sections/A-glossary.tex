@@ -1,0 +1,28 @@
+\section{Glossary}\label{sec:glossary}
+
+\begin{center}\small
+\begin{tabularx}{\linewidth}{@{}l L@{}}
+\toprule
+Term & Meaning \\
+\midrule
+\sig{ACC} & the 24-bit signed accumulator of the MAC unit \\
+BRAM & block RAM: the FPGA's dedicated 36\,Kb memories, read through a register \\
+\sig{ce} & clock enable: a register loads only on clock edges where $\mathrm{ce} = 1$ \\
+CPI & cycles per instruction \\
+DSP48E1 & the Artix-7 multiply-accumulate slice; one performs our 8\,$\times$\,8 multiply \\
+int8 & an 8-bit signed integer, $-128$ to $127$ \\
+LUTRAM & small memories built from look-up tables (distributed RAM), read combinationally \\
+MAC & multiply-accumulate: $\mathrm{ACC} \gets \mathrm{ACC} + a \cdot b$ \\
+$n_{1/2}$ & half-performance length: the stream length at which half the peak rate is reached \\
+one-hot & a state encoding with one flip-flop per state \\
+ReLU & rectified linear unit: negative values become 0 \\
+RQ & requantise: arithmetic shift of the 24-bit sum, optional ReLU, saturation to int8 \\
+RTN & register-transfer notation, e.g.\ $\mathrm{P0} \gets \mathrm{P0} + 1$ \\
+$\mathrm{sext}_{24}$ & sign extension to 24 bits: copy the top bit into every new bit \\
+\stname{STREAM} & the FSM state that runs one element of \insn{MAC \#n} per clock \\
+\sig{V1}, \sig{V2} & valid bits of the two pipeline steps after addressing \\
+WNS & worst negative slack: zero or more means the design meets its clock period \\
+XSim, nvc & Vivado's VHDL simulator; a free VHDL simulator for laptops \\
+\bottomrule
+\end{tabularx}
+\end{center}

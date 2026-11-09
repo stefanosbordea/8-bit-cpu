@@ -1,0 +1,104 @@
+% formats: the six 16-bit instruction formats R, I, M, Q, A, N as bit fields under one shared bit header, with the instructions that use each
+\begin{tikzpicture}[x=1mm,y=1mm,
+  fm op/.style={fill=lsnavy!28},     fm op l/.style={text=lsnavy},
+  fm reg/.style={fill=lsteal!22},    fm reg l/.style={text=lsteal!70!black},
+  fm fn/.style={fill=lsblue!24},     fm fn l/.style={text=lsblue!80!black},
+  fm imm/.style={fill=lsamber!25},   fm imm l/.style={text=lsamber!45!black},
+  fm zero l/.style={},
+  fm zero/.style={fill=white,path picture={%
+      \foreach \fmt in {-8,-6.5,...,62}
+        \draw[fm hatch] ([xshift=\fmt mm]path picture bounding box.south west) -- ++(10mm,10mm);}},
+  fm hatch/.style={draw=lsgrey!30,line width=0.3pt},
+  fm edge/.style={draw=lsnavy!85,line width=0.6pt},
+  fm tick/.style={draw=lsnavy!45,line width=0.4pt},
+  fm name/.style={font=\ttfamily\scriptsize,text=lsink,inner sep=0pt,anchor=base},
+  fm bit0/.style={font=\ttfamily\scriptsize,text=lsgrey,inner xsep=0.9pt,inner ysep=0.9pt,fill=white,anchor=base,
+    rounded corners=0.8pt},
+  fm pill/.style={fill=lsnavy,text=white,rounded corners=1.5pt,minimum width=6mm,minimum height=5.6mm,
+    inner sep=0pt,text height=6.5pt,text depth=0pt,font=\sffamily\small\bfseries},
+  fm use/.style={font=\ttfamily\scriptsize,text=lsgrey,inner sep=0pt,anchor=base west},
+  fm head/.style={font=\sffamily\scriptsize,text=lsgrey,inner sep=0pt,anchor=base},
+  fm key/.style={fm edge,minimum width=5.6mm,minimum height=3.6mm,inner sep=0pt,anchor=center},
+  fm keyl/.style={font=\sffamily\scriptsize,text=lsink,inner sep=0pt,text height=1.8mm,text depth=0.5mm,
+    anchor=center},
+]
+\def\fmW{7.5}\def\fmH{7}\def\fmX{9.5}\def\fmUx{133.5}
+% \fmF{top y}{high bit}{low bit}{style}{label}: one field
+\def\fmF#1#2#3#4#5{%
+  \pgfmathsetmacro\fmL{\fmX+(15-#2)*\fmW}%
+  \pgfmathsetmacro\fmR{\fmX+(16-#3)*\fmW}%
+  \path[#4] (\fmL,#1) rectangle (\fmR,#1-\fmH);
+  \pgfmathtruncatemacro\fmN{#2-#3}%
+  \ifnum\fmN>0
+    \foreach \fmk in {1,...,\fmN}
+      \draw[fm tick] ({\fmL+\fmk*\fmW},#1) -- ++(0,-1) ({\fmL+\fmk*\fmW},#1-\fmH) -- ++(0,1);
+  \fi
+  \draw[fm edge] (\fmL,#1) rectangle (\fmR,#1-\fmH);
+  \node[fm name,#4 l] at ({(\fmL+\fmR)/2},#1-\fmH/2-0.75) {#5};}
+% \fmZ{top y}{high bit}{low bit}: a reserved field, one 0 per bit
+\def\fmZ#1#2#3{%
+  \fmF{#1}{#2}{#3}{fm zero}{}%
+  \foreach \fmb in {#3,...,#2}
+    \node[fm bit0] at ({\fmX+(15.5-\fmb)*\fmW},#1-\fmH/2-0.75) {0};}
+% \fmRow{top y}{format letter}{used by}{second line or empty}: pill on the left, users on the right
+\def\fmRow#1#2#3#4{%
+  \node[fm pill] at (3,#1-\fmH/2) {#2};
+  \if\relax\detokenize{#4}\relax
+    \node[fm use] at (\fmUx,#1-\fmH/2-0.83) {#3};
+  \else
+    \node[fm use] at (\fmUx,#1-\fmH/2+0.85) {#3};
+    \node[fm use] at (\fmUx,#1-\fmH/2-2.5) {#4};
+  \fi}
+
+% ---- shared bit header
+\foreach \fmb in {0,...,15}
+  \node[fm head] at ({\fmX+(15.5-\fmb)*\fmW},1.4) {\fmb};
+\node[fm head] at (3,1.4) {format};
+\node[fm head,anchor=base west] at (\fmUx,1.4) {used by};
+
+% ---- R
+\fmRow{0}{R}{SYS, ALU, MVP,}{MUL, ADDP, LDA}
+\fmF{0}{15}{12}{fm op}{op}
+\fmF{0}{11}{10}{fm reg}{r1}
+\fmF{0}{9}{8}{fm reg}{r2}
+\fmZ{0}{7}{4}
+\fmF{0}{3}{0}{fm fn}{fn}
+% ---- I
+\fmRow{-10}{I}{LDI}{}
+\fmF{-10}{15}{12}{fm op}{op}
+\fmF{-10}{11}{10}{fm reg}{Rd}
+\fmZ{-10}{9}{8}
+\fmF{-10}{7}{0}{fm imm}{imm8}
+% ---- M
+\fmRow{-20}{M}{LD, ST}{}
+\fmF{-20}{15}{12}{fm op}{op}
+\fmF{-20}{11}{10}{fm reg}{Rd/Rs}
+\fmF{-20}{9}{9}{fm fn}{p}
+\fmF{-20}{8}{8}{fm fn}{+}
+\fmZ{-20}{7}{0}
+% ---- Q
+\fmRow{-30}{Q}{RQ}{}
+\fmF{-30}{15}{12}{fm op}{op}
+\fmF{-30}{11}{10}{fm reg}{Rd}
+\fmF{-30}{9}{9}{fm fn}{relu}
+\fmZ{-30}{8}{5}
+\fmF{-30}{4}{0}{fm imm}{sh}
+% ---- A
+\fmRow{-40}{A}{SETP0, SETP1, JMP,}{BZ, BNZ, DJNZ}
+\fmF{-40}{15}{12}{fm op}{op}
+\fmF{-40}{11}{0}{fm imm}{imm12}
+% ---- N
+\fmRow{-50}{N}{MAC \#n}{}
+\fmF{-50}{15}{12}{fm op}{op}
+\fmZ{-50}{11}{8}
+\fmF{-50}{7}{0}{fm imm}{n}
+
+% ---- colour key
+\matrix[anchor=north,column sep=1.6mm,inner sep=0pt,ampersand replacement=\&] at (79,-61) {
+  \node[fm key,fm op]{}; \& \node[fm keyl]{opcode}; \&[5mm]
+  \node[fm key,fm reg]{}; \& \node[fm keyl]{register}; \&[5mm]
+  \node[fm key,fm fn]{}; \& \node[fm keyl]{function, mode bit}; \&[5mm]
+  \node[fm key,fm imm]{}; \& \node[fm keyl]{immediate, count}; \&[5mm]
+  \node[fm key,fm zero]{}; \& \node[fm keyl]{reserved, always 0}; \\
+};
+\end{tikzpicture}%

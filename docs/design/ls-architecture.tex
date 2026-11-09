@@ -1,0 +1,37 @@
+% The LS Architecture: design document (spec v0.1).
+% Build: ../build.sh design   (tectonic; see docs/README.md)
+\documentclass[11pt]{article}
+\usepackage{ls-style}
+\usepackage[round,sort&compress]{natbib}
+\usepackage{flafter}            % a float never appears before its place in the text
+\usepackage[section]{placeins}  % ...nor after the end of its section
+\input{numbers.tex}
+\renewcommand{\lsdoctitle}{The LS Architecture \textperiodcentered{} design document v0.1}
+
+% \lsfig[placement]{figure file}{caption}
+\newcommand{\lsfig}[3][tbp]{\begin{figure}[#1]\centering\IfFileExists{figures/#2.tex}{\input{figures/#2.tex}}{\fbox{\parbox{0.6\linewidth}{\centering\sffamily figure \texttt{#2} pending}}}\caption{#3}\label{fig:#2}\end{figure}}
+
+\begin{document}
+\input{sections/00-title}
+\pagenumbering{roman}
+\lstoc
+\clearpage
+\pagenumbering{arabic}
+\input{sections/01-idea}
+\input{sections/02-background}
+\input{sections/03-principle}
+\input{sections/04-architecture}
+\input{sections/05-isa}
+\input{sections/06-control}
+\input{sections/07-programs}
+\input{sections/08-board}
+\input{sections/09-verification}
+\input{sections/10-team}
+\input{sections/11-schedule}
+\input{sections/12-future}
+\input{sections/13-related}
+\bibliographystyle{plainnat}
+\bibliography{references}
+\appendix
+\input{sections/A-glossary}
+\end{document}

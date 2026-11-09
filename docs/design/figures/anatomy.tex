@@ -1,0 +1,91 @@
+% anatomy: where the cycles go -- the same 24 clock cycles in programs B, L, U and S, with every multiplier-busy cycle dotted
+\begin{tikzpicture}[x=1mm,y=1mm,
+  an cell/.style={draw=none,minimum width=4.2mm,minimum height=4.2mm,inner sep=0pt,
+    rounded corners=0.4pt,font=\sffamily\scriptsize\bfseries,text=white},
+  an hair/.style={line width=0.4pt,draw=lsgrey!60},
+  an mn/.style={font=\ttfamily\footnotesize,text=lsink,fill=white,inner xsep=1.2pt,inner ysep=0pt},
+  an name/.style={font=\sffamily\normalsize\bfseries,text=lsnavy,anchor=base west,inner sep=0pt},
+  an desc/.style={font=\sffamily\scriptsize,text=lsgrey,anchor=base west,inner sep=0pt},
+  an txt/.style={font=\sffamily\scriptsize,text=lsink,inner sep=0pt},
+  an num/.style={font=\sffamily\LARGE\bfseries,text=lsnavy,anchor=base east,inner sep=0pt},
+]
+\def\anP{4.7}% cycle pitch
+\def\anX{27.3}% left edge of cycle 1
+\def\anR{148.85}% right edge of the result numerals
+\def\anC#1{\anX+(#1-0.5)*\anP}% centre of cycle #1
+\def\anB{0}\def\anL{-13}\def\anU{-26}\def\anS{-39}% row centres
+% bracket with a mnemonic over cycles #2..#3 of the row at y = #1
+\def\anBracket#1#2#3#4{%
+  \draw[an hair] ({\anX+(#2-1)*\anP+0.5},#1+3.1) -- ++(0,0.8)
+    -- ({\anX+(#3)*\anP-0.5},#1+3.9) -- ++(0,-0.8);
+  \node[an mn] at ({\anC{(#2+#3)/2}},#1+3.9) {#4};}
+% one 4-cycle instruction starting at cycle #2
+\def\anInsn#1#2#3{%
+  \node[cF,an cell] at ({\anC{#2}},#1) {F};
+  \node[cD,an cell] at ({\anC{#2+1}},#1) {D};
+  \node[cE,an cell] at ({\anC{#2+2}},#1) {E};
+  \node[cW,an cell] at ({\anC{#2+3}},#1) {W};
+  \anBracket{#1}{#2}{#2+3}{#3}}
+\def\anDot#1#2{\fill[lsamber] ({\anC{#2}},#1-3.5) circle (0.6mm);}
+\def\anTrack#1{\draw[line width=0.4pt,draw=lsrule] ({\anC{1}},#1-3.5) -- ({\anC{24}},#1-3.5);}
+\def\anLabel#1#2#3{%
+  \node[an name] at (0,#1+1.4) {#2};
+  \node[an desc] at (0,#1-2.1) {#3};}
+\def\anResult#1#2#3{%
+  \node[an num] at (\anR,#1-2.1) {#2};
+  \node[an desc] at (\anR+1.2,#1+0.9) {#3};
+  \node[an desc] at (\anR+1.2,#1-2.1) {per input};}
+\def\anSw#1{\textcolor{#1}{\rule[-0.4mm]{2.6mm}{2.6mm}}}
+
+% cycle ruler
+\draw[an hair] ({\anX+0.25},7) -- ({\anX+24*\anP-0.25},7);
+\foreach \anK in {1,...,24} \draw[an hair] ({\anC{\anK}},7) -- ++(0,0.6);
+\foreach \anK in {1,4,8,12,16,20,24} {
+  \draw[an hair] ({\anC{\anK}},7) -- ++(0,1.0);
+  \node[an txt,text=lsgrey,anchor=base] at ({\anC{\anK}},8.6) {\anK};}
+\node[an desc] at (0,8.6) {clock cycle};
+
+% B: no MAC instruction
+\anLabel{\anB}{B}{no MAC instruction}
+\foreach \anK/\anM in {1/LD,5/LD,9/MUL,13/ADDP,17/DJNZ,21/LD} {\anInsn{\anB}{\anK}{\anM}}
+\anTrack{\anB}
+\anDot{\anB}{11}
+\anResult{\anB}{20}{cycles}
+
+% L: MAC + DJNZ loop
+\anLabel{\anL}{L}{MAC + DJNZ loop}
+\foreach \anK/\anM in {1/MAC,5/DJNZ,9/MAC,13/DJNZ,17/MAC,21/DJNZ} {\anInsn{\anL}{\anK}{\anM}}
+\anTrack{\anL}
+\foreach \anK in {3,11,19} {\anDot{\anL}{\anK}}
+\anResult{\anL}{8}{cycles}
+
+% U: classic MAC, unrolled
+\anLabel{\anU}{U}{classic MAC, unrolled}
+\foreach \anK in {1,5,...,21} {\anInsn{\anU}{\anK}{MAC}}
+\anTrack{\anU}
+\foreach \anK in {3,7,...,23} {\anDot{\anU}{\anK}}
+\anResult{\anU}{4}{cycles}
+
+% S: LS stream, one MAC #n = F, D, n STREAM, DRAIN1, DRAIN2 (n = 20 fills the window)
+\anLabel{\anS}{\textcolor{lsamber}{S}}{LS stream: \texttt{MAC \#n}}
+\node[cF,an cell] at ({\anC{1}},\anS) {F};
+\node[cD,an cell] at ({\anC{2}},\anS) {D};
+\foreach \anK in {3,...,22} \node[cS,an cell] at ({\anC{\anK}},\anS) {};
+\node[cR,an cell] at ({\anC{23}},\anS) {D1};
+\node[cR,an cell] at ({\anC{24}},\anS) {D2};
+\anBracket{\anS}{1}{24}{MAC \#n}
+\anTrack{\anS}
+\foreach \anK in {4,...,23} {\anDot{\anS}{\anK}}
+\draw[decorate,decoration={brace,mirror,amplitude=1.2mm},draw=lsamber,line width=0.5pt]
+  ({\anX+2*\anP+0.25},\anS-5) -- ({\anX+22*\anP-0.25},\anS-5);
+\node[an txt,anchor=north] at ({\anC{12.5}},\anS-6.9) {\textit{n} multiply-accumulates, one per clock};
+\anResult{\anS}{\textcolor{lsamber}{1}}{cycle}
+
+% legend
+\node[an txt,anchor=north] at ({\anC{12.5}},\anS-12) {%
+  \anSw{lsblue}\,\anSw{lsblue!65}\ control (fetch, decode)\qquad
+  \anSw{lsteal}\,\anSw{lsteal!65}\ execute / write-back\qquad
+  \anSw{lsamber}\ STREAM\qquad
+  \anSw{lsrose!80}\ drain\qquad
+  \tikz[baseline=-0.6ex]{\draw[line width=0.4pt,draw=lsrule] (-1.8mm,0) -- (1.8mm,0); \fill[lsamber] (0,0) circle (0.6mm);}\ multiplier busy};
+\end{tikzpicture}%

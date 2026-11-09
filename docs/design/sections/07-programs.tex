@@ -1,0 +1,109 @@
+\section{Programs and predictions}\label{sec:programs}
+
+Every predicted number in this document comes from the four programs below and the cycle rules of \cref{sec:control}. They were assembled and run on a cycle-accurate model of the spec, with all four images, random data, worst-case operands and random clock-enable pauses; every run produced the exact integer dot product and the same output byte as a plain reference.
+
+\subsection{The listings}
+
+All four programs share a prologue that selects the image, points \sig{P0} at it and \sig{P1} at the weights, and loads the 16-bit bias into \sig{ACC}, and an epilogue that requantises, outputs and halts:
+
+\begin{lstlisting}
+        IN    R0            ; R0 <- SW7..0 (SW7..6 = image number)
+        LDI   R1, 0xC0
+        AND   R0, R1        ; R0 <- image * 64
+        MVP   P0, R1, R0    ; P0 <- R1[3:0] & R0 = image * 64
+        SETP1 WBASE         ; P1 <- address of w0
+        LDI   R2, BHI
+        LDI   R3, BLO
+        LDA   R2, R3        ; ACC <- sext24(bias)
+        ; ---- body: one of S, U, L, B ----
+        RQ    R0, SH, RELU  ; R0 <- clamp(relu(ACC >>> SH))
+        OUT   R0            ; LED7..0 <- R0
+        HALT
+\end{lstlisting}
+
+The bodies:
+
+\begin{minipage}[t]{0.47\linewidth}
+\textbf{S}, the LS stream:
+\begin{lstlisting}
+        MAC   #64
+\end{lstlisting}
+\textbf{U}, classic MAC unrolled:
+\begin{lstlisting}
+        MAC                 ; 1
+        MAC                 ; 2
+        ...                 ; 64 in all
+\end{lstlisting}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.49\linewidth}
+\textbf{L}, classic MAC in a loop:
+\begin{lstlisting}
+        LDI   R3, 64
+loop:   MAC
+        DJNZ  loop
+\end{lstlisting}
+\textbf{B}, no MAC instruction:
+\begin{lstlisting}
+        LDI   R3, 64
+loop:   LD    R0, [P0]+
+        LD    R1, [P1]+
+        MUL   R0, R1
+        ADDP
+        DJNZ  loop
+\end{lstlisting}
+\end{minipage}
+
+\subsection{Predicted counts}
+
+\begin{center}\small
+\begin{tabular}{@{}l l r r r r l@{}}
+\toprule
+& Program & Words & Instructions run & $N = 64$ & $N = 32$ & Cycles \\
+\midrule
+S & LS stream & \wdS & \insS & \pred{\cycS} & \pred{\cycSth} & $48 + N$ \\
+U & classic MAC, unrolled & \wdU & \insU & \pred{\cycU} & \pred{\cycUth} & $44 + 4N$ \\
+L & classic MAC, loop & \wdL & \insL & \pred{\cycL} & \pred{\cycLth} & $48 + 8N$ \\
+B & no MAC & \wdB & \insB & \pred{\cycB} & \pred{\cycBth} & $48 + 20N$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\lsfig[t]{cycles-chart}{Predicted cycle counts. Left: the 64-input neuron. Right: how each program grows with the number of inputs $N$; the slopes are the cycles each additional input costs. Marks at $N = 32$ and $N = 64$ are the two lengths we will measure.}
+
+The second length, $N = 32$, turns two measurements into a slope: $(\cycS - \cycSth)/32 = 1$ cycle per input for S, against 4 for U, 8 for L and 20 for B (\cref{fig:cycles-chart}). The slope is the per-element cost with the fixed set-up removed, so it is the cleanest single number for what the stream changes. U at $N=32$ is only \wdUth{} words, so U's slope is measured too.
+
+\begin{prediction}[The headline, and only the headline]
+S against U on one bitstream: \pred{\cycS} against \pred{\cycU} cycles, \pred{\ratioUS$\times$}; slope 1 against 4 cycles per input. Decomposed: \pred{\ratioRefetch$\times$} from fetching once, \pred{\ratioOverlap$\times$} from the overlap (\cref{fig:waterfall}). Ceiling: \insn{MAC \#64} reaches \pred{\utilMac\,\%} of one MAC per clock, the program \pred{\utilProg\,\%}.
+\end{prediction}
+
+\subsection{How the ratio depends on our choices}
+
+Uniform four-cycle instructions make counts easy to predict and check, but they are a design choice, and the ratio moves if we change it. Predicted S and U for other choices:
+
+\begin{center}\small
+\begin{tabular}{@{}l r r r@{}}
+\toprule
+Design choice & S & U & U/S \\
+\midrule
+every instruction 4 cycles (this spec) & \sensBaseS & \sensBaseU & \sensBaseR \\
+classic \insn{MAC} in 3 cycles, the rest in 4 & \sensMacThreeS & \sensMacThreeU & \sensMacThreeR \\
+ordinary instructions in 3, classic \insn{MAC} in 4 & \sensOrdThreeS & \sensOrdThreeU & \sensOrdThreeR \\
+everything in 3 cycles & \sensAllThreeS & \sensAllThreeU & \sensAllThreeR \\
+\stname{STREAM} entered after \stname{EXECUTE} ($n+5$) & \sensAfterExS & \sensAfterExU & \sensAfterExR \\
+registered program ROM (one more \stname{FETCH} cycle) & \sensRegRomS & \sensRegRomU & \sensRegRomR \\
+repeat without overlap ($2+3n$, rung 2) & \sensNoOverlapS & \sensNoOverlapU & \sensNoOverlapR \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Across reasonable choices the stream stays between about 2.1 and 3.0 times faster than the best conventional code, and its slope stays at one cycle per input. If timing closure forces an extra state, we predict again before measuring; we never adjust a measured number to fit a prediction.
+
+\begin{caution}[What we will not claim]
+\begin{itemize}
+\item ``fastest'', ``new'' or ``first'', or any speed-up against a CPU without a hardware multiplier;
+\item B/S (\ratioBS$\times$) or L/S (\ratioLS$\times$) as the result, or any product of rungs;
+\item wall-clock time (\cycS{} cycles is 1.12\,\textmu s at 100\,MHz) unless timing is met with $\text{WNS} \ge 0$;
+\item energy per program from Vivado's vectorless power estimate, which does not depend on the program;
+\item any prediction in this document as a result before the board shows it.
+\end{itemize}
+\end{caution}

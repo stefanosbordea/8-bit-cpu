@@ -1,0 +1,74 @@
+% neuron: one neuron as a dot product: an 8x8 int8 input digit times an 8x8 int8 weight template, summed into the 24-bit ACC, requantised to one int8 output
+\begin{tikzpicture}[x=1mm, y=1mm,
+  nrn cell/.style={draw=lsrule, line width=0.3pt},
+  nrn frame/.style={draw=lsnavy!80, line width=0.6pt},
+  nrn flow/.style={->, draw=lsnavy, line width=0.8pt},
+  nrn name/.style={font=\sffamily\small, text=lsink, align=center, inner sep=1pt},
+  nrn note/.style={font=\sffamily\scriptsize, text=lsgrey, align=center, inner sep=1pt},
+  nrn pick/.style={draw=lsamber!90!black, line width=1.1pt},
+]
+\def\nrnc{4.2}   % cell size (mm)
+\def\nrnwx{43.6} % left edge of the weight grid (mm)
+% ---- input x: pixel intensity 0..16, row 0 at the top
+\foreach \nrnrow [count=\nrnr from 0] in {
+  {0,5,14,16,16,16,15,4},
+  {0,1,4,5,6,13,14,1},
+  {0,0,0,0,5,16,7,0},
+  {0,0,0,2,14,12,0,0},
+  {0,0,0,9,16,4,0,0},
+  {0,0,3,16,9,0,0,0},
+  {0,0,9,15,2,0,0,0},
+  {0,0,12,10,0,0,0,0}}{
+  \foreach \nrnv [count=\nrnq from 0] in \nrnrow {
+    \pgfmathtruncatemacro\nrnp{\nrnv*100/16}
+    \filldraw[nrn cell, fill=lsink!\nrnp] (\nrnq*\nrnc, -\nrnr*\nrnc) rectangle ++(\nrnc, -\nrnc);
+  }
+}
+\draw[nrn frame] (0,0) rectangle (8*\nrnc, -8*\nrnc);
+% ---- weights w: percent of full scale, teal positive, rose negative
+\foreach \nrnrow [count=\nrnr from 0] in {
+  {-10, 30, 65, 75, 80, 80, 70, 20},
+  {-25, 10, 25, 30, 35, 65, 75, 10},
+  {-50,-35,-20,-10, 35, 80, 40,-25},
+  {-70,-55,-25, 20, 75, 55,-10,-45},
+  {-75,-50,  5, 60, 75, 10,-45,-60},
+  {-60,-20, 35, 80, 40,-30,-60,-70},
+  {-35,  5, 55, 75, 10,-40,-65,-60},
+  {-15, 20, 60, 50,-10,-40,-50,-40}}{
+  \foreach \nrnv [count=\nrnq from 0] in \nrnrow {
+    \pgfmathtruncatemacro\nrna{abs(\nrnv)}
+    \ifnum\nrnv<0 \colorlet{nrnfill}{lsrose!\nrna}\else\colorlet{nrnfill}{lsteal!\nrna}\fi
+    \filldraw[nrn cell, fill=nrnfill] (\nrnwx+\nrnq*\nrnc, -\nrnr*\nrnc) rectangle ++(\nrnc, -\nrnc);
+  }
+}
+\draw[nrn frame] (\nrnwx,0) rectangle ++(8*\nrnc, -8*\nrnc);
+% ---- element i of each grid
+\draw[nrn pick] (4*\nrnc,0) rectangle ++(\nrnc,-\nrnc);
+\draw[nrn pick] (\nrnwx+4*\nrnc,0) rectangle ++(\nrnc,-\nrnc);
+\draw[lsamber!90!black, line width=0.6pt] (4.5*\nrnc,0) -- ++(0,2.5)
+  node[anchor=south, inner sep=1pt, text=lsamber!90!black] {$x_i$};
+\draw[lsamber!90!black, line width=0.6pt] (\nrnwx+4.5*\nrnc,0) -- ++(0,2.5)
+  node[anchor=south, inner sep=1pt, text=lsamber!90!black] {$w_i$};
+% ---- labels under the grids, colour key for w
+\node[nrn name, anchor=north] at (4*\nrnc, -8*\nrnc-2) {input $x$: 64 values, int8};
+\node[nrn name, anchor=north] (nrnWl) at (\nrnwx+4*\nrnc, -8*\nrnc-2) {weights $w$: 64 values, int8};
+\shade[left color=lsrose, right color=lsteal, middle color=white]
+  ([xshift=-8mm, yshift=-1.6mm]nrnWl.south) rectangle ++(16,-1.8);
+\draw[lsrule, line width=0.3pt] ([xshift=-8mm, yshift=-1.6mm]nrnWl.south) rectangle ++(16,-1.8);
+\node[nrn note, anchor=east] at ([xshift=-9mm, yshift=-2.5mm]nrnWl.south) {\textminus128};
+\node[nrn note, anchor=west] at ([xshift=9mm, yshift=-2.5mm]nrnWl.south) {+127};
+% ---- multiply, accumulate, requantise
+\node[font=\LARGE, text=lsnavy] at ({(8*\nrnc+\nrnwx)/2}, -4*\nrnc) {$\times$};
+\node[circle, draw=lsamber!90!black, fill=lsamberlight, line width=0.8pt, minimum size=13.5mm,
+  inner sep=0pt, font=\Large, text=lsnavy] (nrnS) at (\nrnwx+8*\nrnc+18.75, -4*\nrnc) {$\Sigma$};
+\draw[nrn flow] (\nrnwx+8*\nrnc+1.5, -4*\nrnc) -- (nrnS);
+\node[anchor=south, align=center, inner sep=1pt] at ([yshift=1.5mm]nrnS.north)
+  {$\mathrm{ACC} = b + \sum_{i=0}^{63} x_i\, w_i$\\{\scriptsize\color{lsgrey}24-bit accumulator}};
+\node[nrn note, anchor=north, text=lsamber!90!black] at ([yshift=-1.5mm]nrnS.south) {64 multiply-accumulates};
+\node[blk, right=10.5mm of nrnS, minimum height=10mm] (nrnR)
+  {\textbf{RQ}\\[-0.2ex]{\scriptsize shift, ReLU, clamp}};
+\node[io, right=10.5mm of nrnR, minimum width=10mm, minimum height=10mm] (nrnY)
+  {$y$\\[-0.2ex]{\scriptsize int8}};
+\draw[nrn flow] (nrnS) -- (nrnR);
+\draw[nrn flow] (nrnR) -- (nrnY);
+\end{tikzpicture}

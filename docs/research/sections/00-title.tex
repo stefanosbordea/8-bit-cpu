@@ -1,0 +1,29 @@
+\begin{titlepage}
+\thispagestyle{empty}
+\newgeometry{top=20mm,bottom=22mm,left=24mm,right=24mm}
+{\sffamily\small\color{lsgrey}CSEN 203L Digital Systems Lab \textperiodcentered{} AUB Mediterraneo\hfill Literature review \textperiodcentered{} November 2026\par}
+\vspace{14mm}
+\begin{center}\IfFileExists{figures/timeline.tex}{\input{figures/timeline.tex}}{}\end{center}
+\vspace{10mm}
+{\sffamily\fontsize{34}{38}\selectfont\bfseries\color{lsnavy}The LS Architecture\par}
+\vspace{2mm}
+{\sffamily\fontsize{24}{28}\selectfont\color{lsnavy}State of the art\par}
+\vspace{5mm}
+{\sffamily\Large\color{lsamber}Small processors, int8 multiply-accumulate,\\ and what it takes to keep one multiplier busy\par}
+\vspace{9mm}
+{\Large Loucas Louka\quad\textperiodcentered\quad Stefanos Bordea\par}
+\vspace{2.5mm}
+{\color{lsgrey}105 verified references \textperiodcentered{} searches and verification 8--9 November 2026\par}
+\vfill
+\begin{tcolorbox}[lsbase,breakable=false,colback=lspaper,borderline west={3pt}{0pt}{lsamber}]
+\small\textbf{Findings in brief.}
+\begin{enumerate}[leftmargin=1.4em,itemsep=0.1em]
+\item The multiplier is cheap. An int8 dot product is paid for in instruction fetch and decode, operand delivery and loop control (Horowitz, 2014; Dally et al., 2020).
+\item The remedy is the DSP recipe: a single-cycle MAC into a wide accumulator, two operand reads per cycle, post-incrementing address generators and zero-overhead loops. DSPs have had it since the 1980s; RISC-V and Arm microcontroller extensions have repeated it since 2017.
+\item Bit-serial, compute-in-BRAM, dataflow and EDGE designs carry overheads that do not pay off for one neuron on an FPGA with 240 hard DSP slices.
+\item The LS design adopts the hardware repeat as \texttt{MAC \#n}. It passes the review's three-part structural test, and the predicted 64-input neuron takes 112 cycles against 300 for the best conventional code on the same core.
+\item No mechanism is claimed as new. What is uncommon is the combination at 8-bit scale and its honest measurement on the board.
+\end{enumerate}
+\end{tcolorbox}
+\restoregeometry
+\end{titlepage}

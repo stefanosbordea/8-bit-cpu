@@ -1,0 +1,55 @@
+\section{The LS principle}\label{sec:principle}
+
+\subsection{Four ways to compute a dot product}
+
+The time a program takes is \emph{instructions executed} $\times$ \emph{cycles per instruction} $\times$ \emph{clock period} \citep{patterson2021cod,harris2013ddca}. The clock is fixed at 100\,MHz, so only the first two factors can move. On one CPU, with one bitstream, there are four ways to write the 64-input neuron, and each removes one kind of overhead from the one before:
+
+\begin{center}\small
+\begin{tabularx}{\linewidth}{@{}l l L r@{}}
+\toprule
+& Program & Inner loop & Cycles per input \\
+\midrule
+B & no MAC instruction & \insn{LD}, \insn{LD}, \insn{MUL}, \insn{ADDP}, \insn{DJNZ}: five instructions of 4 cycles & 20 \\
+L & classic MAC in a loop & \insn{MAC}, \insn{DJNZ}: the MAC fuses load, multiply, add and pointer steps & 8 \\
+U & classic MAC, unrolled & \insn{MAC} written 64 times: no loop control at all & 4 \\
+S & LS stream & \insn{MAC \#64}: one instruction for the whole stream & 1 \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+U is the best a conventional multicycle CPU can do with a MAC instruction: no loop, one instruction per element, four cycles each. It is therefore the fair baseline for the LS claim. B and L are rungs of the ladder that show where the first factors of speed come from (fusing the operation, removing the loop); they are measured, but we never present B/S or L/S as the result.
+
+\subsection{What a stream instruction means}
+
+\insn{MAC \#n} with $n \ge 1$ means: \emph{for $i = 0$ to $n-1$, $\mathrm{ACC} \gets \mathrm{ACC} + X[P0 + i] \cdot W[P1 + i]$; then $P0 \gets P0 + n$ and $P1 \gets P1 + n$.} Its architectural effect is exactly that of $n$ classic \insn{MAC} instructions in a row, so a program can switch between U and S without changing any other instruction, and both must produce the same accumulator and the same output byte. Only the timing differs.
+
+\subsection{The overlap, and why it is safe}
+
+\lsfig[t]{spacetime}{\insn{MAC \#6} in space and time. Each element passes through three steps on consecutive clocks: A addresses both operand memories and advances the pointers, M multiplies the pair, C adds the product to \sig{ACC}. In every \stname{STREAM} clock three different elements are in flight, one per step, so the stream retires one MAC per clock after two cycles of fill.}
+
+Each element needs three steps, one clock each (\cref{fig:spacetime}):
+\begin{description}[leftmargin=1.6em,style=nextline,itemsep=0.2em]
+\item[A, address] Present $P0$ and $P1$ to the X and W memories; their read registers capture $x_i$ and $w_i$ at the end of the clock. Advance both pointers.
+\item[M, multiply] Multiply the pair waiting in the read registers into \sig{PROD}.
+\item[C, accumulate] Add \sig{PROD}, sign-extended to 24 bits, into \sig{ACC}.
+\end{description}
+Run one element at a time and \insn{MAC \#n} costs $2 + 3n$ cycles (one fetch, one decode, three steps per element). Overlap the steps of consecutive elements and it costs $n + 4$: after two cycles of fill every clock completes one element, and two drain cycles finish the last two.
+
+A pipelined CPU overlaps instructions too, and it pays for that with forwarding paths, hazard detection, stalls and flushes \citep{harris2013ddca}. The stream needs none of these, for three reasons:
+\begin{itemize}
+\item \textbf{No data hazards.} Element $i+1$ never reads a result of element $i$. The only state the elements share is \sig{ACC}, and only step C touches it, adding one product per clock to its own previous value: a one-cycle loop inside one stage. Step A owns the pointers in the same way.
+\item \textbf{No control hazards.} There is no branch inside a stream. The length is known in \stname{DECODE}, so the FSM counts down and leaves \stname{STREAM} at exactly the right clock.
+\item \textbf{No structural hazards.} Each step has its own hardware: the memories and pointers, the multiplier, the adder. Two operand memories (X for inputs, W for weights) deliver both operands of a MAC in the same clock. With one shared memory port the MAC rate could not exceed one every two cycles, whatever the control did \citep{williams2009roofline,kung1982systolic}.
+\end{itemize}
+
+\subsection{Where the speed-up comes from}
+
+\lsfig[t]{waterfall}{Decomposing the predicted speed-up of S over U. Fetching the MAC once instead of 64 times saves little on its own; overlapping the three steps saves most. Both programs share the same 44 cycles of set-up and output.}
+
+\Cref{fig:waterfall} splits U\,$\to$\,S into its two causes. Fetching the instruction once but still running elements one at a time ($2 + 3n$ cycles for the stream) takes the program from \pred{\cycU} to \pred{\cycNoOverlap} cycles, \pred{\ratioRefetch$\times$}. Overlapping the three steps takes it on to \pred{\cycS}, a further \pred{\ratioOverlap$\times$}. Not refetching is what makes the overlap possible; the overlap is what saves the time.
+
+Two more numbers describe the stream itself. Its \emph{ceiling} is one MAC per clock, because the core has one multiplier: \insn{MAC \#64} does 64 MACs in 68 cycles, \pred{\utilMac\,\%} of the ceiling, and the whole S program keeps the multiplier busy \pred{\utilProg\,\%} of the time. Its \emph{half-performance length}, the stream length at which it reaches half of its peak rate, is $n_{1/2} = 4$: since $n/(n+4) = 1/2$ at $n = 4$, even short streams pay off.
+
+\begin{aside}[Why not simply pipeline the CPU?]
+A five-stage pipelined CPU with a single-cycle MAC would also approach one MAC per clock, but only on program U: 75 instruction words, 75 fetches and decodes, and a hazard unit, forwarding paths and branch flushing to keep the pipeline correct. The LS core keeps the simple multicycle FSM that the course teaches, fetches and decodes 12 instructions, and gets the same per-element throughput exactly where the work is. The control cost is paid where it is small, once per stream.
+\end{aside}

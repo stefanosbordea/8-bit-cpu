@@ -1,0 +1,59 @@
+\section{Architecture}\label{sec:arch}
+
+\Cref{fig:datapath} is the complete datapath. It keeps everything in Stefanos' plan (8-bit data, four registers, 16-bit instructions, 12-bit addresses, two auto-advancing pointers, a 24-bit MAC accumulator, a fetch--decode--execute--write-back FSM) and changes four things: separate memories for inputs and weights, registered memory reads, valid bits that let the MAC unit run as a three-step pipeline, and three new FSM states for streams.
+
+\lsfig[p]{datapath}{The LS datapath. Blue blocks are control, teal blocks registers and ALU, violet blocks memory, amber blocks the MAC unit, grey blocks board I/O. Numbers on the buses are widths in bits. Dashed blue lines are control signals, all of them registered or decoded from registers and all gated by the clock enable \sig{ce}.}
+
+\subsection{Blocks}
+
+\begin{center}\small
+\begin{tabularx}{\linewidth}{@{}l l L@{}}
+\toprule
+Block & Size & Role \\
+\midrule
+\sig{PC}, \sig{IR} & 12, 16 bits & Program counter and instruction register; \sig{IR} loads at the end of \stname{FETCH}. \\
+Program ROM & 256 $\times$ 16 & LUT ROM with asynchronous read. An 8-entry start-address table, indexed by SW15..13 at reset, selects one of eight programs. \\
+FSM, decoder & 9 states & \Cref{sec:control}. \sig{CNT} (8 bits) counts the stream down. \\
+\sig{R0}--\sig{R3} & 4 $\times$ 8 & General registers. \sig{R3} is also the loop counter of \insn{DJNZ}. \\
+ALU, \sig{T}, \sig{Z}, \sig{N} & 8 bits & Add, subtract, logic, move, shifts by one; result register \sig{T}; zero and negative flags. \\
+\sig{P0}, \sig{P1} & 2 $\times$ 12 & Pointers into X and W, each with a $+1$ incrementer. \\
+X memory & 256 $\times$ 8 & Inputs: four stored 8\,$\times$\,8 images of 64 bytes. Address \sig{P0}[7:0]. Read register \sig{XR}. \\
+W memory & 256 $\times$ 8 & Weights from address 0. Address \sig{P1}[7:0]. Read register \sig{WR}. \\
+Multiplier, \sig{PROD} & 8 $\times$ 8 $\to$ 16 & Signed, one DSP48E1 slice; \sig{PROD} is registered. An operand mux selects (\sig{XR}, \sig{WR}) or two registers. \\
+\sig{V1}, \sig{V2} & 1 + 1 & Valid bits: \sig{V1} = the read registers hold a stream pair; \sig{V2} = \sig{PROD} holds a stream product. \\
+Adder, \sig{ACC} & 24 bits & $\mathrm{ACC} + \mathrm{sext}_{24}(\mathrm{PROD})$, or a 16-bit bias loaded by \insn{LDA}. \\
+Requantiser & 24 $\to$ 8 & Combinational: arithmetic shift, optional ReLU, saturation (\cref{fig:rq}). \\
+I/O & & \insn{IN} reads SW7..0; \insn{OUT} writes \sig{OUTR} to LED7..0; a view mux feeds the 8-digit display; a 32-bit cycle counter. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection{Memory map}
+
+\begin{center}\small
+\begin{tabular}{@{}l l l l@{}}
+\toprule
+Memory & Addressed by & Contents & Written by \\
+\midrule
+Program ROM & \sig{PC}[7:0] & 8 programs, about 200 of 256 words used & VHDL constant \\
+X (inputs) & \sig{P0}[7:0] & image $k$ at \texttt{0x00}, \texttt{0x40}, \texttt{0x80}, \texttt{0xC0} ($k$ = SW7..6) & VHDL constant (\insn{ST} optional) \\
+W (weights) & \sig{P1}[7:0] & $w_0 \dots w_{63}$ at \texttt{0x00}--\texttt{0x3F} & VHDL constant \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+All three memories are small enough for LUTs. Block RAM is an optional experiment after Lab 12; it would add a second read cycle if its output register were enabled, and every cycle count would have to be predicted again.
+
+\subsection{Reads arrive one cycle after their address}
+
+\lsfig[t]{readlatency}{\insn{LD R1, [P1]+}. The address is on \sig{P1} from the first cycle; the data is in the read register \sig{WR} from the second. \sig{R1} and \sig{P1} change together at the end of \stname{WRITEBACK}.}
+
+The read registers \sig{XR} and \sig{WR} load $X[\mathrm{P0}]$ and $W[\mathrm{P1}]$ on every enabled clock. Data therefore appears in the cycle \emph{after} its address, which is how FPGA memories behave and what lets the multiplier start a new product every clock without a long combinational path from pointer to multiplier to adder (\cref{fig:readlatency}). For ordinary instructions the latency is invisible: the pointers only change at the end of \stname{WRITEBACK}, so by \stname{EXECUTE} the read registers have long held the right value. Inside a stream it is the reason for the two-cycle fill.
+
+\begin{caution}[A classic mistake]
+The lecture's RAM example (Code Example 5.7) reads asynchronously. Copied without the read register, data lands in the same cycle as its address and every timing table in this document shifts by one. Add the register, and give it the clock enable (\cref{sec:control}).
+\end{caution}
+
+\subsection{Size}
+
+A planning estimate, not a result: 500 to 800 LUTs, 250 to 350 flip-flops, one DSP48E1 and no block RAM, on a device with 63,400 LUTs, 126,800 flip-flops and 240 DSP slices \citep{xilinx2020ds180}. The stream logic itself (\sig{CNT}, \sig{V1}, \sig{V2}, three states and their enables) should cost about ten flip-flops and a few tens of LUTs. A second build with streaming switched off in the decoder will measure that cost exactly (\cref{sec:verify}).

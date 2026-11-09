@@ -1,0 +1,29 @@
+\section{The idea}\label{sec:idea}
+
+A neural network spends almost all of its time doing one thing: multiplying inputs by weights and adding up the products. One neuron with 64 inputs is 64 multiply-accumulates, $\mathrm{ACC} \gets \mathrm{ACC} + x_i w_i$, followed by one rescaling step. Everything else is bookkeeping.
+
+On a small, ordinary CPU the bookkeeping costs most of the time. Stefanos' plan for this project (\url{docs/project-overview.md}) already gives the CPU a \insn{MAC} instruction that multiplies, accumulates and advances two pointers in one go. That is the right start, and every serious DSP since the 1980s has one \citep{eyre2000evolution}. But a multicycle CPU still runs every instruction through \stname{FETCH}, \stname{DECODE}, \stname{EXECUTE} and \stname{WRITEBACK}. A \insn{MAC} is four clock cycles, of which the multiplier is busy for one. Three quarters of the machine's time goes into reading and interpreting the same instruction 64 times. Horowitz quantified the same imbalance for energy: in a simple processor, the arithmetic of one instruction is a tiny fraction of what it costs to fetch and control it \citep{horowitz2014energy,dally2020domain}.
+
+\begin{keyidea}[The LS principle]
+\textbf{Pay for control once per stream, not once per operation.} One instruction describes a whole stream of identical operations. The control unit decodes it once, then gets out of the way while the datapath runs the stream at one element per clock.
+\end{keyidea}
+
+\Cref{fig:anatomy} shows the difference on the same machine. Each row is the same 24-cycle window. In the top three rows, programs built from ordinary instructions spend most of their cycles on control; the amber dots mark the cycles in which the multiplier does useful work. In the bottom row, one \insn{MAC \#n} instruction keeps the multiplier busy on every clock.
+
+\lsfig[t]{anatomy}{Where the cycles go. The same 24 clock cycles on the same CPU, for four ways of computing a dot product (\cref{sec:programs}). Blue cells are control (fetch, decode); teal cells execute or write back; amber cells are the \stname{STREAM} state; rose cells drain the last products. An amber dot marks a multiply that contributes to the result. B, L and U pay for a fetch and a decode on every element; S pays once.}
+
+\paragraph{The mechanism} \insn{MAC \#64} is fetched and decoded once. The control FSM then enters \stname{STREAM}, a state that loops on itself 64 times. In each \stname{STREAM} clock three things happen at once, each to a different element: the next pair $(x_{i+2}, w_{i+2})$ is addressed in the two operand memories, the previous pair $(x_{i+1}, w_{i+1})$ is multiplied, and the product before that, $x_i w_i$, is added to the accumulator. Element $i+1$ never needs element $i$'s result: they only meet inside the accumulator, which adds exactly one product per clock. So the overlap needs none of the forwarding paths, stall logic or flushes that a pipelined CPU needs (\cref{sec:principle}). Two drain cycles finish the last products. \insn{MAC \#n} takes $n + 4$ cycles.
+
+\begin{prediction}[The claim we will measure]
+One bitstream, one 64-input int8 neuron (bias, 64 MACs, requantise with ReLU, output), the same result byte from every program:
+\begin{itemize}
+\item \textbf{S}, the LS stream program: \pred{\cycS} cycles, \wdS{} instruction words.
+\item \textbf{U}, the strongest conventional program for the same CPU, 64 unrolled classic MACs: \pred{\cycU} cycles, \wdU{} words.
+\item U\,/\,S = \pred{\ratioUS$\times$}, and the cost of one more input falls from 4 cycles to 1.
+\end{itemize}
+Every number in this document is a prediction derived from the program listings and the cycle rules of the spec. It becomes a result only when the cycle counter on the board shows it.
+\end{prediction}
+
+\paragraph{What is new and what is not} Repeating one instruction without refetching it is old: Texas Instruments' TMS320 DSPs could repeat ``a single instruction \ldots{} up to 256 times'', and ``instructions that are normally multicycle are pipelined when using the repeat feature, and effectively become single-cycle instructions'' \citep{ti1990tms320c25}. The Harris RTX 2010 stack processor had ``streamed'' MAC instructions \citep{harris_rtx}, vector machines have had a vector length register since the Cray-1 \citep{russell1978cray}, and modern RISC-V cores add hardware loops and stream registers \citep{gautschi2017near,schuiki2021ssr}. We do not claim the mechanism. Our contribution is a clean form of it on an 8-bit core that two students can build and explain completely, and an honest measurement of what it buys on one bitstream, against the best code the same machine can run without it. \Cref{sec:related} and the companion state-of-the-art review place the design in its literature.
+
+\paragraph{How to read this document} \Cref{sec:background,sec:principle} explain the arithmetic and the principle. \Cref{sec:arch,sec:isa,sec:control} are the specification the VHDL is written from: datapath, instruction set and control. \Cref{sec:programs} derives every predicted number from real program listings. \Cref{sec:board,sec:verify} cover the board, the demo, the testbenches and the measurements. \Cref{sec:team,sec:schedule} split the work between us and plan it against the course dates. \Cref{sec:future} is where the architecture goes after the course.

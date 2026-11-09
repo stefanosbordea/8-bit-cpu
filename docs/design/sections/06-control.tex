@@ -1,0 +1,121 @@
+\section{Control}\label{sec:control}
+
+\subsection{The state machine}
+
+\lsfig[t]{fsm}{The control FSM. Ordinary instructions take the blue loop, four states of one clock each. \insn{MAC \#n} leaves \stname{DECODE} for \stname{STREAM}, which repeats until the counter reaches 1, then drains for two clocks. Dashed edges are taken only in instruction-step mode.}
+
+The FSM has nine states (\cref{fig:fsm}): Stefanos' four instruction states, \stname{IDLE} and \stname{HALTED} for the run modes, and \stname{STREAM}, \stname{DRAIN1} and \stname{DRAIN2} for streams.
+
+\begin{center}\small
+\begin{tabularx}{\linewidth}{@{}l L >{\raggedright\arraybackslash}p{0.29\linewidth}@{}}
+\toprule
+State & Actions (at the closing clock edge) & Next state \\
+\midrule
+\stname{IDLE} & none; not counted. During reset \sig{PC} loads the start address of the selected program. & \stname{FETCH} on \emph{go} \\
+\stname{FETCH} & $\mathrm{IR} \gets \mathrm{PROG}[\mathrm{PC}]$; $\mathrm{PC} \gets \mathrm{PC}+1$ & \stname{DECODE} \\
+\stname{DECODE} & decode \sig{IR}; for \insn{MAC \#n} with $n \ge 1$: $\mathrm{CNT} \gets n$ & \stname{STREAM} for \insn{MAC \#n}, else \stname{EXECUTE} \\
+\stname{EXECUTE} & ALU result into \sig{T}; \insn{MUL} or \insn{MAC} product into \sig{PROD}; \insn{RQ} into \sig{T}; branch condition & \stname{WRITEBACK} \\
+\stname{WRITEBACK} & the instruction's commits (\cref{sec:isa}) & \stname{HALTED} on \insn{HALT}; \stname{IDLE} in instr-step; else \stname{FETCH} \\
+\stname{STREAM} & $\mathrm{P0} \gets \mathrm{P0}+1$; $\mathrm{P1} \gets \mathrm{P1}+1$; $\mathrm{CNT} \gets \mathrm{CNT}-1$ & stay while $\mathrm{CNT} \ne 1$, then \stname{DRAIN1} \\
+\stname{DRAIN1}, \stname{DRAIN2} & nothing new is issued; the last pair is multiplied, then added & \stname{DRAIN2}; then \stname{FETCH} (\stname{IDLE} in instr-step) \\
+\stname{HALTED} & frozen, counters too & reset only \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+Every instruction takes four cycles, branches taken or not and \insn{HALT} included; \insn{MAC \#n} takes $n+4$. This uniform timing makes every program's cycle count independent of its data, which is what lets us predict counts exactly and check them on the board.
+
+\subsection{The stream contract}
+
+The two halves of the core meet in \stname{STREAM}: the control half sequences it, the datapath half computes it. This is the exact interface between them.
+
+\begin{contract}[The STREAM contract]
+\begin{itemize}
+\item $\mathrm{V1} \gets (\mathrm{state} = \text{STREAM})$ and $\mathrm{V2} \gets \mathrm{V1}$, on every enabled clock.
+\item \sig{PROD} loads $\mathrm{XR} \times \mathrm{WR}$ when $\mathrm{V1} = 1$ (and in \stname{EXECUTE} of \insn{MUL} or \insn{MAC}).
+\item \sig{ACC} adds $\mathrm{sext}_{24}(\mathrm{PROD})$ when $\mathrm{V2} = 1$ (and in \stname{WRITEBACK} of \insn{ADDP} or \insn{MAC}).
+\item The multiplier's operand select follows \sig{V1}, \emph{not} ``state = \stname{STREAM}'', so the last pair is still multiplied in \stname{DRAIN1}.
+\item \sig{CNT} is loaded in \stname{DECODE}; \stname{STREAM} exits when $\mathrm{CNT} = 1$; both pointers advance on every \stname{STREAM} clock.
+\item $n = 0$ decodes as the classic \insn{MAC}.
+\end{itemize}
+\end{contract}
+
+\lsfig[t]{timing-mac4}{\insn{MAC \#4}, cycle by cycle. Values are those held \emph{during} each cycle, which is what the board shows while cycle-stepping. The read registers already hold $x_0, w_0$ in cycles 1--3, but \sig{V1} is 0 there, so nothing is multiplied until cycle 4. \sig{ACC} lags the pointers by two clocks and holds the full sum when the next instruction is fetched.}
+
+\Cref{fig:timing-mac4} is the contract in action for $n=4$, starting from $\mathrm{ACC} = b$ and $\mathrm{P0} = p$:
+
+\begin{center}\small
+\begin{tabular}{@{}r l c l l c c l l@{}}
+\toprule
+Cycle & State & CNT & P0 & XR, WR & V1 & V2 & PROD & ACC \\
+\midrule
+1 & \stname{FETCH} & -- & $p$ & (not valid) & 0 & 0 & -- & $b$ \\
+2 & \stname{DECODE} & -- & $p$ & (not valid) & 0 & 0 & -- & $b$ \\
+3 & \stname{STREAM} & 4 & $p$ & (not valid) & 0 & 0 & -- & $b$ \\
+4 & \stname{STREAM} & 3 & $p+1$ & $x_0, w_0$ & 1 & 0 & -- & $b$ \\
+5 & \stname{STREAM} & 2 & $p+2$ & $x_1, w_1$ & 1 & 1 & $x_0 w_0$ & $b$ \\
+6 & \stname{STREAM} & 1 & $p+3$ & $x_2, w_2$ & 1 & 1 & $x_1 w_1$ & $b + x_0w_0$ \\
+7 & \stname{DRAIN1} & -- & $p+4$ & $x_3, w_3$ & 1 & 1 & $x_2 w_2$ & $b + x_0w_0 + x_1w_1$ \\
+8 & \stname{DRAIN2} & -- & $p+4$ & -- & 0 & 1 & $x_3 w_3$ & $b + \dots + x_2w_2$ \\
+9 & \stname{FETCH} & -- & $p+4$ & -- & 0 & 0 & $x_3 w_3$ & $b + \dots + x_3w_3$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The table was checked on a cycle-accurate model of this spec with $x = 1,2,3,4$ and $w = 5,6,7,8$: \sig{PROD} takes the values 5, 12, 21, 32 and \sig{ACC} ends at 70. Both pointers end at $p+4$, exactly as after four classic \insn{MAC}s. For the defence, derive the $n = 1$ and $n = 2$ tables from the contract yourself: for $n = 1$ the only product is formed in \stname{DRAIN1}, which is why the operand select must follow \sig{V1}.
+
+\subsection{One clock, many enables}
+
+\lsfig[t]{ce}{The whole design runs on the 100\,MHz board clock. Step modes do not slow the clock down; they pulse the clock enable \sig{ce}, and every CPU register loads only on clocks where $\mathrm{ce} = 1$. The input chain and the display keep running on every clock.}
+
+The step modes need the CPU to advance one state per button press, yet the design must have exactly one clock. The rule is: \emph{one 100\,MHz clock everywhere; \sig{ce} is an enable, never a divided or button-driven clock} (\cref{fig:ce}).
+
+\begin{center}\small
+\begin{tabularx}{\linewidth}{@{}L L@{}}
+\toprule
+Gated by \sig{ce} & Always running \\
+\midrule
+state register, \sig{PC}, \sig{IR}, \sig{R0}--\sig{R3}, \sig{T}, \sig{Z}, \sig{N}, \sig{P0}, \sig{P1}, \sig{CNT}, \sig{XR}, \sig{WR}, \sig{V1}, \sig{V2}, \sig{PROD}, \sig{ACC}, \sig{OUTR}, cycle and instruction counters, X writes (if \insn{ST} exists) &
+synchronisers, debouncer and one-pulse; the slow tick; the logic that chooses \sig{ce}; display scanner, digit divider and view mux \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+Gating the input chain would deadlock cycle-step, where \sig{ce} itself comes from the button; gating the scanner would freeze the display. Forgetting to gate a register is subtler:
+
+\begin{caution}[The bug that only appears when stepping]
+If the read registers ignore \sig{ce}, nothing goes wrong in run mode, where $\mathrm{ce} = 1$ on every clock. In a step mode, a pause inside \stname{STREAM} lets \sig{XR} and \sig{WR} reload from pointers that have already moved on: one pair is lost and another is counted twice. On the cycle-accurate model with random pauses, ungated read registers gave a wrong \sig{ACC} for program S in \ungatedS{} of 50 runs and for program U in \ungatedU{} of 50, because a classic \insn{MAC} moves its pointers only in \stname{WRITEBACK}. Testbench \texttt{tb\_ce\_pause} must catch this bug.
+\end{caution}
+
+\subsection{Run modes and the cycle counter}
+
+Two switches select the run mode; one press of BTNC acts on it.
+
+\begin{center}\small
+\begin{tabularx}{\linewidth}{@{}l l L@{}}
+\toprule
+Mode (SW12..11) & \sig{ce} & One press of BTNC \\
+\midrule
+RUN & 1 & leaves \stname{IDLE} and runs to \stname{HALTED} \\
+INSTR-STEP & 1 & runs exactly one instruction (\insn{MAC \#64} included), waits in \stname{IDLE}, never restarts by itself \\
+CYCLE-STEP & the press pulse & first press: \stname{IDLE} $\to$ \stname{FETCH}; then one state per press \\
+SLOW (optional) & a 4\,Hz tick & starts the program; then one state per tick \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+Change the mode switches only in \stname{IDLE} or \stname{HALTED}, or reset afterwards. The 32-bit cycle counter adds one on every enabled clock outside \stname{IDLE} and \stname{HALTED}, so RUN, INSTR-STEP and CYCLE-STEP give the same count for the same program: a free self-check of the control logic. It is cleared by reset, frozen in \stname{HALTED}, and shown on the display.
+
+\begin{aside}[Moore or Mealy? (a defence question)]
+In the terms of the course text \citep{harris2013ddca}, a Moore machine's outputs depend on its state only, a Mealy machine's on its state and inputs. The LS controller's outputs in \stname{EXECUTE} and \stname{WRITEBACK} depend on the state \emph{and} on the opcode in \sig{IR}, so if \sig{IR} is an input, the controller is a Mealy machine. Every one of its inputs (\sig{IR}, \sig{CNT}, \sig{Z}, \sig{N}, \sig{V1}, \sig{V2}) is itself a register, so its outputs change only after clock edges and cannot glitch from a button. The alternative, used by the multicycle MIPS controller in the course text, is to split \stname{EXECUTE} and \stname{WRITEBACK} into one state per instruction class and make the controller a pure Moore machine. Pick one view and be ready to defend it.
+\end{aside}
+
+\subsection{Build in three rungs}
+
+The stream is built in three steps, each of which works on its own:
+\begin{enumerate}[label=\textbf{\arabic*.},leftmargin=1.6em]
+\item \textbf{Classic \insn{MAC} only.} The baseline machine: programs U, L and B run and are measured.
+\item \textbf{Repeat without overlap.} \insn{MAC \#n} loops address, multiply and accumulate states without refetching: $2+3n$ cycles, S = \pred{\cycNoOverlap}.
+\item \textbf{Overlapped \stname{STREAM}.} The contract above: $n+4$ cycles, S = \pred{\cycS}.
+\end{enumerate}
+Rung 2 is a safe fallback if rung 3 is late; the go/no-go date is Wednesday 2 December (\cref{sec:schedule}).

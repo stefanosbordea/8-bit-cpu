@@ -1,0 +1,34 @@
+% title-art: one instruction (MAC #64) opens into a stream of 64 multiply-accumulates that flows into the accumulator, while the operand streams x_i and w_i converge on it
+\begin{tikzpicture}[x=1mm,y=1mm]
+  % ---- operand streams x_i (teal, above) and w_i (violet, below): they sweep in and fade as the
+  %      stream consumes them (drawn as 64 short pieces so that the tint can change along the curve)
+  \foreach \sgn/\clr in {1/lsteal,-1/lsviolet} {
+    \foreach \seg [evaluate=\seg as \ta using \seg/64, evaluate=\seg as \tb using (\seg+1)/64,
+                   evaluate=\seg as \tint using {100*min(1,\tb/0.3)*min(1,(1-\tb)/0.4)}] in {0,...,63} {
+      \path (0,35*\sgn) .. controls (45,13*\sgn) and (85,5.4*\sgn) .. (129,5.4*\sgn)
+        coordinate[pos=\ta] (ta-a) coordinate[pos=\tb] (ta-b);
+      \draw[\clr!\tint,line width=0.6pt,line cap=round] (ta-a) -- (ta-b);
+    }
+  }
+  \path (0,35) .. controls (45,13) and (85,5.4) .. (129,5.4)
+    node[pos=0.27,above=1.6mm,inner sep=0pt,text=lsteal,font=\normalsize] {$x_i$};
+  \path (0,-35) .. controls (45,-13) and (85,-5.4) .. (129,-5.4)
+    node[pos=0.27,below=1.6mm,inner sep=0pt,text=lsviolet,font=\normalsize] {$w_i$};
+  % ---- the instruction
+  \node[fill=lsnavy,rounded corners=2pt,minimum width=25mm,minimum height=10.5mm,
+        text=white,font=\ttfamily\large] at (12.5,0) {MAC \textcolor{lsamber}{\#64}};
+  \draw[lsamber,line width=0.9pt] (25,0) -- (30.4,0);
+  % ---- the stream: 64 multiply-accumulates in two rows of 32; it opens out of the instruction
+  %      and its tint deepens from lsamber!20 to lsamber on the way to the accumulator
+  \foreach \col [evaluate=\col as \tint using 20+80*\col/31, evaluate=\col as \xx using 31.2+3.05*\col,
+                 evaluate=\col as \grow using {min(1,(\col+1)/6)}] in {0,...,31} {
+    \pgfmathsetmacro\sz{0.8+1.8*\grow}
+    \pgfmathsetmacro\gp{0.25*\grow}
+    \fill[lsamber!\tint,rounded corners=0.45pt] (\xx+1.3-\sz/2,\gp) rectangle ++(\sz,\sz);
+    \fill[lsamber!\tint,rounded corners=0.45pt] (\xx+1.3-\sz/2,-\gp) rectangle ++(\sz,-\sz);
+  }
+  % ---- the accumulator
+  \draw[lsamber,line width=0.9pt,->] (129.6,0) -- (139.4,0);
+  \node[circle,draw=lsnavy,line width=0.8pt,fill=lsamber!8,minimum size=18mm,inner sep=0pt,
+        text=lsnavy,font=\sffamily\fontsize{24}{24}\selectfont] at (148.6,0) {Σ};
+\end{tikzpicture}%

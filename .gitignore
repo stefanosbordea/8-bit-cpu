@@ -44,3 +44,13 @@ desktop.ini
 .vscode/
 *.swp
 *~
+
+# ===== LaTeX (tectonic leaves none of these, other engines do) =====
+*.aux
+*.bbl
+*.blg
+*.toc
+*.out
+*.fls
+*.fdb_latexmk
+*.synctex.gz

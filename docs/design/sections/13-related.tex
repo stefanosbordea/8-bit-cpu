@@ -1,0 +1,20 @@
+\section{Related work and our position}\label{sec:related}
+
+The companion document \emph{The LS Architecture: state of the art} surveys the literature in depth. This table is the short version: each idea the LS core uses, where it comes from, and what we do differently.
+
+\begin{center}\small
+\begin{tabularx}{\linewidth}{@{}l L L@{}}
+\toprule
+Idea & Prior art & The LS core \\
+\midrule
+Repeat one instruction without refetching it & TMS320 ``repeat feature'' with \insn{RPT}/\insn{RPTK} and \insn{MAC}, up to 256 times \citep{ti1990tms320c25}; RTX 2010 ``streamed'' MACs \citep{harris_rtx} & the count lives inside the instruction (\insn{MAC \#n}) instead of a separate repeat prefix \\
+A vector length set per operation & Cray-1 vector length register \citep{russell1978cray} & a scalar 8-bit core; the stream length is the vector length \\
+Zero-overhead loops and address generators & DSP processors \citep{eyre2000evolution}; RI5CY hardware loops and post-increment loads \citep{gautschi2017near} & no loop at all inside a stream; two pointers advance in hardware \\
+Streams fed straight to the arithmetic & stream semantic registers \citep{schuiki2021ssr} & the operand memories are read directly by the stream, with no register file in between \\
+int8 MAC with a wide accumulator, power-of-two requantisation & CMSIS-NN \citep{lai2018cmsisnn}; integer-only inference \citep{jacob2018quantization}; custom int8 instructions on soft CPUs \citep{prakash2023cfu} & the same arithmetic on an 8-bit core with a 24-bit accumulator \\
+Many MACs per clock & systolic arrays \citep{kung1982systolic}; the TPU \citep{jouppi2017tpu} & one MAC per clock now; $K$ lanes and an array are later stations (\cref{sec:future}) \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+None of these ideas is ours. What the LS project contributes is a version of the streaming idea small enough to build in five weeks and explain completely; a measurement on one bitstream against the strongest code the same machine can run without it, with the speed-up split into its causes; and a design that grows into more lanes and a co-processor under the same control state. The ambition is to understand one mechanism completely and measure it honestly, then build on it.

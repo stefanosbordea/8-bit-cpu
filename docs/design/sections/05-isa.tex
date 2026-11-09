@@ -1,0 +1,70 @@
+\section{Instruction set}\label{sec:isa}
+
+Every instruction is 16 bits with a 4-bit opcode in bits 15..12, and all 16 opcodes are used. Six formats share that opcode field (\cref{fig:formats}); \cref{fig:opcodes} maps the opcodes.
+
+\lsfig[t]{formats}{The six instruction formats. Register fields are 2 bits (\sig{R0}--\sig{R3}); \texttt{p} selects pointer \sig{P0} or \sig{P1}; \texttt{+} requests a post-increment; \texttt{sh} is the requantiser shift; \texttt{n} is the stream length of \insn{MAC \#n}.}
+
+\lsfig[t]{opcodes}{The opcode map. \insn{MAC \#n} at \texttt{0x8} is the stream instruction: $n = 0$ is the classic single MAC, $n \ge 1$ streams.}
+
+\subsection{Instructions}
+
+Registers, flags, \sig{ACC}, pointers, \sig{OUTR} and taken branches change only at the end of \stname{WRITEBACK}, except during a stream. EX and WB below mean the closing clock edge of \stname{EXECUTE} and \stname{WRITEBACK}.
+
+\begin{center}\small
+\begin{tabularx}{\linewidth}{@{}l l L r@{}}
+\toprule
+Op & Instruction & Operation & Cycles \\
+\midrule
+\texttt{0} & \insn{NOP}, \insn{HALT}, \insn{IN Rd}, \insn{OUT Rs} & \insn{IN}: $\mathrm{Rd} \gets \mathrm{SW7..0}$; \insn{OUT}: $\mathrm{OUTR} \gets \mathrm{Rs}$; \insn{HALT}: go to \stname{HALTED} & 4 \\
+\texttt{1} & \insn{LDI Rd, imm8} & $\mathrm{Rd} \gets \mathrm{imm8}$ & 4 \\
+\texttt{2} & \insn{ADD SUB AND OR XOR MOV SHL SHR SAR} & EX: $\mathrm{T} \gets \mathrm{Rd}\ \mathit{op}\ \mathrm{Rs}$; WB: $\mathrm{Rd} \gets \mathrm{T}$, $\mathrm{Z} \gets (\mathrm{T}=0)$, $\mathrm{N} \gets \mathrm{T}[7]$. Shifts move \sig{Rd} by one bit. & 4 \\
+\texttt{3} & \insn{MVP Pp, Ra, Rb} & $\mathrm{Pp} \gets \mathrm{Ra}[3{:}0] \,\&\, \mathrm{Rb}$ (a 12-bit address from two registers) & 4 \\
+\texttt{4} & \insn{LD Rd, [Pp]\{+\}} & WB: $\mathrm{Rd} \gets$ \sig{XR} (for \sig{P0}) or \sig{WR} (for \sig{P1}); if +, $\mathrm{Pp} \gets \mathrm{Pp}+1$ & 4 \\
+\texttt{5} & \insn{ST Rs, [P0]\{+\}} (optional) & WB: $X[\mathrm{P0}] \gets \mathrm{Rs}$; if +, $\mathrm{P0} \gets \mathrm{P0}+1$ (X becomes a RAM) & 4 \\
+\texttt{6} & \insn{MUL Ra, Rb} & EX: $\mathrm{PROD} \gets \mathrm{Ra} \times \mathrm{Rb}$, signed & 4 \\
+\texttt{7} & \insn{ADDP} / \insn{LDA Ra, Rb} & WB: $\mathrm{ACC} \gets \mathrm{ACC} + \mathrm{sext}_{24}(\mathrm{PROD})$ / $\mathrm{ACC} \gets \mathrm{sext}_{24}(\mathrm{Ra}\,\&\,\mathrm{Rb})$ & 4 \\
+\texttt{8} & \insn{MAC} ($n = 0$) & EX: $\mathrm{PROD} \gets \mathrm{XR} \times \mathrm{WR}$; WB: $\mathrm{ACC} \gets \mathrm{ACC} + \mathrm{sext}_{24}(\mathrm{PROD})$, $\mathrm{P0} \gets \mathrm{P0}+1$, $\mathrm{P1} \gets \mathrm{P1}+1$ & 4 \\
+\texttt{8} & \insn{MAC \#n} ($1 \le n \le 255$) & $n$ times, one per clock: $\mathrm{ACC} \gets \mathrm{ACC} + X[\mathrm{P0}] \cdot W[\mathrm{P1}]$, $\mathrm{P0} \gets \mathrm{P0}+1$, $\mathrm{P1} \gets \mathrm{P1}+1$ & $n+4$ \\
+\texttt{9} & \insn{RQ Rd, sh, relu} & EX: $t = \mathrm{ACC} \gg sh$; if relu and $t<0$ then $t=0$; $\mathrm{T} \gets \operatorname{clamp}(t,-128,127)$; WB: $\mathrm{Rd} \gets \mathrm{T}$ & 4 \\
+\texttt{A}, \texttt{B} & \insn{SETP0}, \insn{SETP1 imm12} & $\mathrm{P0}$ or $\mathrm{P1} \gets \mathrm{imm12}$ & 4 \\
+\texttt{C} & \insn{JMP imm12} & $\mathrm{PC} \gets \mathrm{imm12}$ & 4 \\
+\texttt{D}, \texttt{E} & \insn{BZ}, \insn{BNZ imm12} & if $\mathrm{Z}=1$ (\insn{BZ}) or $\mathrm{Z}=0$ (\insn{BNZ}): $\mathrm{PC} \gets \mathrm{imm12}$ & 4 \\
+\texttt{F} & \insn{DJNZ imm12} & EX: $\mathrm{T} \gets \mathrm{R3}-1$; WB: $\mathrm{R3} \gets \mathrm{T}$; if $\mathrm{T} \ne 0$: $\mathrm{PC} \gets \mathrm{imm12}$; flags unchanged & 4 \\
+\bottomrule
+\end{tabularx}
+\end{center}
+Here $\&$ joins bit fields, $\mathrm{sext}_{24}$ copies the sign bit up to 24 bits, and $\gg$ is an arithmetic right shift that rounds down ($-1 \gg 1 = -1$). Function codes: \insn{SYS} \texttt{fn} = 0 \insn{NOP}, 1 \insn{HALT}, 2 \insn{IN}, 3 \insn{OUT}; \insn{ALU} \texttt{fn} = 0 \insn{ADD}, 1 \insn{SUB}, 2 \insn{AND}, 3 \insn{OR}, 4 \insn{XOR}, 5 \insn{MOV}, 6 \insn{SHL}, 7 \insn{SHR}, 8 \insn{SAR}; opcode \texttt{7} \texttt{fn} = 0 \insn{ADDP}, 1 \insn{LDA}.
+
+\subsection{Encoding examples}
+
+\begin{center}\small
+\begin{tabular}{@{}l l l l@{}}
+\toprule
+Instruction & Format & Binary & Hex \\
+\midrule
+\insn{MAC \#64} & N & \texttt{1000 0000 0100 0000} & \texttt{8040} \\
+\insn{MAC} & N & \texttt{1000 0000 0000 0000} & \texttt{8000} \\
+\insn{LDI R1, 0xC0} & I & \texttt{0001 0100 1100 0000} & \texttt{14C0} \\
+\insn{AND R0, R1} & R & \texttt{0010 0001 0000 0010} & \texttt{2102} \\
+\insn{MVP P0, R1, R0} & R & \texttt{0011 0100 0000 0000} & \texttt{3400} \\
+\insn{LD R1, [P1]+} & M & \texttt{0100 0111 0000 0000} & \texttt{4700} \\
+\insn{LDA R2, R3} & R & \texttt{0111 1011 0000 0001} & \texttt{7B01} \\
+\insn{RQ R0, 2, relu} & Q & \texttt{1001 0010 0000 0010} & \texttt{9202} \\
+\insn{DJNZ 0x009} & A & \texttt{1111 0000 0000 1001} & \texttt{F009} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{aside}[Check the spec without an answer key]
+Each of us encodes the same five instructions from \cref{fig:formats}, then the other decodes them blind. Every disagreement is an ambiguity in the spec, and it is cheaper to find it on paper than in a waveform.
+\end{aside}
+
+\begin{openq}[Open decisions (spec v0.2)]
+\begin{itemize}
+\item \textbf{RQ rounding}: round down (now) or round to nearest (add $2^{sh-1}$ before shifting)? The two neuron references must match whichever we choose.
+\item \textbf{Overflow}: a sticky overflow flag on \sig{ACC}, or the documented limit of \cref{sec:background}?
+\item \textbf{\insn{ST}}: needed for multi-layer networks (\cref{sec:future}), not for the course demo.
+\item \textbf{Branch on N}: an argmax over ten outputs wants \insn{BN}; there is no free opcode, so two instructions would have to share one.
+\item \textbf{\insn{MAC \#1}}: streams in 5 cycles against 4 for \insn{MAC}. Decode it as classic, or simply never write it.
+\end{itemize}
+\end{openq}

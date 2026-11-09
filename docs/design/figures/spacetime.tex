@@ -1,0 +1,58 @@
+% spacetime: MAC #6 in space and time: FSM state per cycle, the A/M/C staircase of elements 0-5, cycle 6 highlighted
+\begin{tikzpicture}[x=14.2mm, y=1mm,
+  sp state/.style={draw=white, line width=0.8pt, minimum width=14.2mm, minimum height=6.4mm,
+    inner sep=0pt, font=\sffamily\scriptsize\bfseries, text=white},
+  sp cell/.style={rounded corners=1.5pt, minimum width=11.4mm, minimum height=5.6mm, inner sep=0pt,
+    line width=0.6pt, font=\sffamily\footnotesize\bfseries},
+  sp A/.style={sp cell, draw=lsviolet, fill=lsviolet!20, text=lsviolet!80!black},
+  sp M/.style={sp cell, draw=lsteal, fill=lsteal!20, text=lsteal!80!black},
+  sp C/.style={sp cell, draw=lsamber!90!black, fill=lsamber!26, text=lsamber!55!black},
+  sp key/.style={minimum width=6mm, minimum height=4.6mm},
+  sp lbl/.style={font=\sffamily\scriptsize, text=lsink, anchor=east, inner sep=0pt},
+  sp txt/.style={font=\sffamily\scriptsize, text=lsink, inner sep=0pt},
+]
+% cycle 6 highlight, behind everything
+\fill[lspaper, draw=lsgrey!70, line width=0.5pt, rounded corners=3pt] (5,4.8) rectangle (6,-55.8);
+
+% FSM state of each cycle
+\foreach \c/\s/\f in {1/FETCH/lsblue, 2/DECODE/lsblue!65, 3/STREAM/lsamber, 4/STREAM/lsamber,
+    5/STREAM/lsamber, 6/STREAM/lsamber, 7/STREAM/lsamber, 8/STREAM/lsamber,
+    9/DRAIN1/lsrose!80, 10/DRAIN2/lsrose!80}
+  \node[sp state, fill=\f] at (\c-0.5,0) {\s};
+\node[sp lbl] at ([xshift=-2.2mm]0,0) {FSM state};
+
+% element i: A in cycle 3+i, M in cycle 4+i, C in cycle 5+i
+\foreach \i in {0,...,5} {
+  \pgfmathsetmacro\y{-9.8-6.9*\i}
+  \node[sp lbl] at ([xshift=-2.2mm]0,\y) {element \i};
+  \node[sp A] at (\i+2.5,\y) {A};
+  \node[sp M] at (\i+3.5,\y) {M};
+  \node[sp C] at (\i+4.5,\y) {C};
+}
+
+% time axis: ticks are clock edges, numbers are cycles
+\draw[lsgrey, line width=0.5pt] (0,-50) -- (10,-50);
+\foreach \c in {0,...,10} \draw[lsgrey, line width=0.5pt] (\c,-50) -- ++(0,-1.2);
+\foreach \c in {1,...,10} \node[sp txt, anchor=base] at (\c-0.5,-54.2) {\ifnum\c=6 \bfseries\fi\c};
+\node[sp lbl, anchor=base east] at ([xshift=-2.2mm]0,-54.2) {cycle};
+
+% length of the instruction
+\draw[lsrule, line width=0.4pt] (0,-51.8) -- (0,-60) (10,-51.8) -- (10,-60);
+\draw[lsgrey, line width=0.5pt, {Stealth[length=1.6mm,width=1.2mm]}-{Stealth[length=1.6mm,width=1.2mm]}]
+  (0,-58.6) -- node[sp txt, fill=white, inner xsep=3pt, inner ysep=1pt] {$n + 4 = 10$ cycles for $n = 6$} (10,-58.6);
+
+% callout for the highlighted cycle
+\node[sp txt, anchor=north west, align=left] (sp-call) at ([xshift=4mm]6,-8.5)
+  {\textbf{cycle 6:} three elements in flight,\\ each in a different step;\\ none waits for another};
+\draw[lsgrey!70, line width=0.5pt] (6,-9.8) -- ([xshift=-2pt]sp-call.west |- 0,-9.8);
+
+% key, spread over the width of the axis, on one baseline
+\node[sp txt, anchor=base west] (sp-tA) at ([xshift=7.8mm]0,-66.6)
+  {address \texttt{X[P0]}, \texttt{W[P1]}; pointers $+1$};
+\node[sp A, sp key, anchor=east, xshift=-1.8mm] at (sp-tA.west |- 0,-65.85) {A};
+\node[sp txt, anchor=base east] (sp-tC) at (10,-66.6) {accumulate \texttt{ACC} $\gets$ \texttt{ACC} $+$ \texttt{PROD}};
+\node[sp C, sp key, anchor=east, xshift=-1.8mm] (sp-kC) at (sp-tC.west |- 0,-65.85) {C};
+\coordinate (sp-mid) at ($(sp-tA.east)!0.5!(sp-kC.west)$);
+\node[sp txt, anchor=base, xshift=3.9mm] (sp-tM) at (sp-mid |- 0,-66.6) {multiply \texttt{PROD} $\gets$ \texttt{XR} $\times$ \texttt{WR}};
+\node[sp M, sp key, anchor=east, xshift=-1.8mm] at (sp-tM.west |- 0,-65.85) {M};
+\end{tikzpicture}

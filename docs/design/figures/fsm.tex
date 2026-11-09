@@ -1,0 +1,51 @@
+% fsm: control FSM state diagram -- nine states, the classic four-state loop and the STREAM lane
+\begin{tikzpicture}[x=1mm, y=1mm,
+    fsm/.style={minimum size=19.5mm},
+    fsmlab/.style={font=\sffamily\scriptsize, text=lsink, inner xsep=2.5pt, inner ysep=1.5pt},
+    fsmnote/.style={font=\sffamily\scriptsize, text=lsgrey, inner sep=1.5pt},
+    fsmclassic/.style={->, draw=lsblue},
+    fsmstream/.style={->, draw=lsamber!90!black},
+    fsmplain/.style={->, draw=lsgrey},
+    fsmstep/.style={->, draw=lsgrey, dashed, line width=0.45pt},
+  ]
+  % ---- states: classic loop above the FETCH-DECODE axis, STREAM lane below ----
+  \node[stQ, fsm] (HALTED) at (0,0)     {HALTED};
+  \node[st,  fsm] (WB)     at (32,0)    {WRITEBACK};
+  \node[st,  fsm] (EX)     at (64,0)    {EXECUTE};
+  \node[stQ, fsm] (IDLE)   at (0,-30)   {IDLE};
+  \node[st,  fsm] (F)      at (32,-30)  {FETCH};
+  \node[st,  fsm] (D)      at (64,-30)  {DECODE};
+  \node[stS, fsm] (S)      at (106,-30) {STREAM};
+  \node[stS, fsm] (D2)     at (64,-60)  {DRAIN2};
+  \node[stS, fsm] (D1)     at (106,-60) {DRAIN1};
+
+  % ---- reset and the quiet states ----
+  \draw[fsmplain] (IDLE.west) ++(-9,0) -- node[fsmlab, above]{reset} (IDLE.west);
+  \draw[fsmplain] (IDLE) -- node[fsmlab, above]{go} (F);
+  \draw[fsmplain] (WB) -- node[fsmlab, above]{HALT} (HALTED);
+  \node[fsmnote, above=0.5mm of HALTED] {reset only};
+
+  % ---- classic loop ----
+  \draw[fsmclassic] (F) -- (D);
+  \draw[fsmclassic] (D) -- node[fsmlab, left]{otherwise} (EX);
+  \draw[fsmclassic] (EX) -- (WB);
+  \draw[fsmclassic] (WB) -- node[fsmlab, right]{run} (F);
+
+  % ---- STREAM lane ----
+  \draw[fsmstream] (D) -- node[fsmlab, above]{MAC \#\textit{n}, \textit{n} $\geq$ 1} (S);
+  \draw[fsmstream] (S.24) .. controls +(24:12) and +(-24:12) .. node[fsmlab, right]{CNT $\neq$ 1} (S.-24);
+  \draw[fsmstream] (S) -- node[fsmlab, right]{CNT $=$ 1} (D1);
+  \draw[fsmstream] (D1) -- (D2);
+  \draw[fsmstream, rounded corners=2mm] (D2.west) -| (F.south);
+  \node[fsmlab, above] at (43,-60) {run};
+
+  % ---- instruction-step exits ----
+  \draw[fsmstep] (WB) -- node[fsmnote, sloped, above]{instr-step} (IDLE);
+  \draw[fsmstep, rounded corners=2mm] (D2.218) -| (IDLE.south);
+  \node[fsmnote, below] at (16,-66) {instr-step};
+
+  % ---- timing note, centred over the STREAM column ----
+  \node[draw=lsrule, fill=lspaper, rounded corners=2pt, align=left, font=\sffamily\scriptsize,
+        text=lsink, inner sep=3pt, anchor=north] at (106,9.75)
+       {every state lasts one enabled clock\\ MAC \#\textit{n} $=$ \textit{n} $+$ 4 cycles};
+\end{tikzpicture}

@@ -1,0 +1,178 @@
+% ls-style.sty: shared look for every LS Architecture document.
+% Build with tectonic (XeTeX): fonts, palette, boxes, TikZ styles, listings.
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{ls-style}[2026/11/09 LS Architecture document style]
+
+% ---------- page and fonts ----------
+\RequirePackage[a4paper,top=24mm,bottom=26mm,left=24mm,right=24mm,headsep=8mm,footskip=12mm]{geometry}
+\RequirePackage{fontspec}
+\RequirePackage{unicode-math}
+\RequirePackage{libertinus}
+\setmonofont{FiraMono}[Scale=0.84,Extension=.otf,UprightFont=*-Regular,BoldFont=*-Bold]
+\RequirePackage{microtype}
+\linespread{1.06}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em plus 0.15em}
+\frenchspacing
+\setlength{\emergencystretch}{2.5em}
+
+% ---------- palette ----------
+\RequirePackage{xcolor}
+\definecolor{lsink}{HTML}{1C2430}     % body text
+\definecolor{lsnavy}{HTML}{1B2A41}    % titles, frames
+\definecolor{lsblue}{HTML}{2F5D8A}    % control path
+\definecolor{lsteal}{HTML}{1F7A6D}    % datapath
+\definecolor{lsamber}{HTML}{D98E04}   % STREAM: the LS signature colour
+\definecolor{lsrose}{HTML}{B23A48}    % overhead, warnings
+\definecolor{lsviolet}{HTML}{6A4C93}  % memory
+\definecolor{lsgrey}{HTML}{6B7280}    % secondary text
+\definecolor{lsrule}{HTML}{C9CED6}    % hairlines
+\definecolor{lspaper}{HTML}{F6F4EF}   % box backgrounds
+\colorlet{lsamberlight}{lsamber!14}
+\colorlet{lsbluelight}{lsblue!10}
+\colorlet{lstealight}{lsteal!10}
+\colorlet{lsroselight}{lsrose!10}
+\colorlet{lsvioletlight}{lsviolet!10}
+\color{lsink}
+
+% ---------- tables, lists, captions ----------
+\RequirePackage{booktabs,tabularx,array,multirow,colortbl}
+\RequirePackage{makecell}
+\renewcommand{\arraystretch}{1.18}
+\arrayrulecolor{lsnavy!70}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X}
+\RequirePackage{enumitem}
+\setlist{itemsep=0.15em,topsep=0.25em,leftmargin=1.3em}
+\setlist[itemize]{label={\color{lsamber}\textbullet}}
+\RequirePackage[font=small,labelfont={bf,color=lsnavy},textfont={color=lsink},
+  labelsep=period,skip=6pt,justification=raggedright,singlelinecheck=false]{caption}
+\RequirePackage{subcaption}
+\RequirePackage{float}
+\RequirePackage{multicol}
+\setcounter{topnumber}{3}\setcounter{totalnumber}{4}
+\renewcommand{\topfraction}{0.85}\renewcommand{\textfraction}{0.12}\renewcommand{\floatpagefraction}{0.75}
+\RequirePackage{siunitx}
+\sisetup{group-separator={,},group-minimum-digits=4}
+
+% ---------- headings ----------
+\RequirePackage{titlesec}
+\titleformat{\section}{\sffamily\Large\bfseries\color{lsnavy}}
+  {\makebox[1.6em][l]{\color{lsamber}\thesection}}{0.4em}{}
+\titleformat{\subsection}{\sffamily\large\bfseries\color{lsnavy}}
+  {\makebox[2.2em][l]{\color{lsamber}\thesubsection}}{0.3em}{}
+\titleformat{\subsubsection}{\sffamily\normalsize\bfseries\color{lsnavy}}{}{0em}{}
+\titleformat{\paragraph}[runin]{\sffamily\bfseries\color{lsnavy}}{}{0em}{}[.]
+\titlespacing*{\section}{0pt}{1.6em}{0.7em}
+\titlespacing*{\subsection}{0pt}{1.2em}{0.4em}
+\titlespacing*{\subsubsection}{0pt}{0.9em}{0.25em}
+\titlespacing*{\paragraph}{0pt}{0.6em}{0.6em}
+
+% ---------- header and footer ----------
+\RequirePackage{fancyhdr}
+\newcommand{\lsdoctitle}{The LS Architecture}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyhead[L]{\sffamily\footnotesize\color{lsgrey}\lsdoctitle}
+\fancyhead[R]{\sffamily\footnotesize\color{lsgrey}\nouppercase{\leftmark}}
+\fancyfoot[L]{\sffamily\footnotesize\color{lsgrey}Loucas Louka \textperiodcentered{} Stefanos Bordea}
+\fancyfoot[R]{\sffamily\footnotesize\color{lsnavy}\bfseries\thepage}
+\renewcommand{\sectionmark}[1]{\markboth{#1}{}}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[R]{\sffamily\footnotesize\color{lsnavy}\bfseries\thepage}}
+
+% ---------- TikZ, plots, timing, bit fields ----------
+\RequirePackage{tikz}
+\usetikzlibrary{automata,positioning,arrows.meta,calc,fit,backgrounds,
+  shapes.geometric,shapes.misc,shapes.multipart,decorations.pathreplacing,
+  matrix,patterns,shadows,quotes}
+\RequirePackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepgfplotslibrary{groupplots}
+\RequirePackage{tikz-timing}
+\RequirePackage{bytefield}
+\RequirePackage{pgfgantt}
+
+\tikzset{
+  >={Stealth[length=2.2mm,width=1.6mm]},
+  every picture/.style={line width=0.6pt,font=\sffamily\small},
+  % generic blocks
+  blk/.style={draw=lsnavy,rounded corners=2pt,fill=white,align=center,
+    minimum height=8mm,minimum width=16mm,inner sep=3pt},
+  ctrl/.style={blk,draw=lsblue,fill=lsbluelight},
+  data/.style={blk,draw=lsteal,fill=lstealight},
+  mem/.style={blk,draw=lsviolet,fill=lsvioletlight},
+  strm/.style={blk,draw=lsamber!90!black,fill=lsamberlight},
+  io/.style={blk,draw=lsgrey,fill=lspaper},
+  regbox/.style={draw=lsnavy,fill=white,minimum height=6mm,minimum width=12mm,
+    inner sep=2pt,font=\ttfamily\small},
+  mux/.style={draw=lsnavy,fill=white,trapezium,trapezium angle=70,shape border rotate=270,
+    minimum height=12mm,minimum width=5mm,inner sep=1pt,font=\sffamily\scriptsize},
+  bus/.style={line width=1.4pt,draw=lsnavy},
+  sig/.style={line width=0.6pt,draw=lsink},
+  csig/.style={line width=0.5pt,draw=lsblue,dashed},
+  lbl/.style={font=\sffamily\scriptsize,color=lsgrey},
+  % FSM states
+  st/.style={state,draw=lsblue,fill=lsbluelight,minimum size=13mm,font=\sffamily\scriptsize\bfseries,
+    text=lsnavy,inner sep=1pt},
+  stS/.style={st,draw=lsamber!90!black,fill=lsamberlight},
+  stQ/.style={st,draw=lsgrey,fill=lspaper},
+  % cycle-strip cells
+  cyc/.style={draw=white,line width=0.8pt,minimum width=5.2mm,minimum height=5.2mm,inner sep=0pt,
+    font=\sffamily\tiny\bfseries,text=white},
+  cF/.style={cyc,fill=lsblue},
+  cD/.style={cyc,fill=lsblue!65},
+  cE/.style={cyc,fill=lsteal},
+  cW/.style={cyc,fill=lsteal!65},
+  cS/.style={cyc,fill=lsamber},
+  cR/.style={cyc,fill=lsrose!80},
+  cI/.style={cyc,fill=lsrule,text=lsink},
+}
+\tikzset{timing/d/background/.style={fill=white}}
+
+% ---------- callout boxes ----------
+\RequirePackage[most]{tcolorbox}
+\tcbset{lsbase/.style={enhanced,breakable,boxrule=0pt,arc=2pt,left=10pt,right=10pt,top=7pt,bottom=7pt,
+  fonttitle=\sffamily\bfseries\small,coltitle=lsnavy,attach title to upper={\par\smallskip},
+  before skip=0.9em,after skip=0.9em}}
+\newtcolorbox{keyidea}[1][Key idea]{lsbase,colback=lsamberlight,borderline west={3pt}{0pt}{lsamber},title={#1}}
+\newtcolorbox{prediction}[1][Prediction]{lsbase,colback=lsbluelight,borderline west={3pt}{0pt}{lsblue},title={#1}}
+\newtcolorbox{contract}[1][Contract]{lsbase,colback=lstealight,borderline west={3pt}{0pt}{lsteal},title={#1}}
+\newtcolorbox{caution}[1][Watch out]{lsbase,colback=lsroselight,borderline west={3pt}{0pt}{lsrose},title={#1}}
+\newtcolorbox{aside}[1][Note]{lsbase,colback=lspaper,borderline west={3pt}{0pt}{lsgrey},title={#1}}
+\newtcolorbox{openq}[1][Open decisions]{lsbase,colback=white,boxrule=0.6pt,colframe=lsrose,
+  borderline west={3pt}{0pt}{lsrose},title={#1}}
+
+% ---------- code listings: LS assembly ----------
+\RequirePackage{listings}
+\lstdefinelanguage{lsasm}{
+  morekeywords={NOP,HALT,IN,OUT,LDI,ADD,SUB,AND,OR,XOR,MOV,SHL,SHR,SAR,MVP,LD,ST,MUL,ADDP,LDA,
+    MAC,RQ,SETP0,SETP1,JMP,BZ,BNZ,DJNZ},
+  morekeywords=[2]{R0,R1,R2,R3,P0,P1,RELU,NORELU},
+  sensitive=true, morecomment=[l]{;}}
+\lstset{language=lsasm,basicstyle=\ttfamily\small,columns=fullflexible,keepspaces=true,
+  keywordstyle=\color{lsblue}\bfseries,keywordstyle=[2]\color{lsteal},
+  commentstyle=\color{lsgrey}\itshape,numbers=left,numberstyle=\tiny\color{lsgrey},
+  numbersep=8pt,xleftmargin=18pt,frame=none,backgroundcolor=\color{lspaper},
+  aboveskip=0.6em,belowskip=0.6em,showstringspaces=false,
+  literate={<-}{{$\leftarrow$}}2 {->}{{$\rightarrow$}}2}
+
+% ---------- cross references ----------
+\RequirePackage[hidelinks,unicode,pdfusetitle,bookmarksnumbered]{hyperref}
+\hypersetup{colorlinks=true,linkcolor=lsblue,urlcolor=lsteal,citecolor=lsteal}
+\RequirePackage[capitalise,noabbrev]{cleveref}
+
+% ---------- contents in two columns ----------
+\newcommand{\lstoc}{{\hypersetup{linkcolor=lsink}\section*{Contents}\markboth{Contents}{}\begin{multicols}{2}\small\makeatletter\@starttoc{toc}\makeatother\end{multicols}}}
+
+% ---------- small helpers ----------
+\RequirePackage{xspace}
+\newcommand{\LS}{\textsf{LS}\xspace}
+\newcommand{\insn}[1]{\texttt{\color{lsblue}#1}}       % an instruction mnemonic
+\newcommand{\sig}[1]{\texttt{#1}}                      % a signal or register
+\newcommand{\stname}[1]{\textsf{\bfseries\small #1}}   % an FSM state
+\newcommand{\pred}[1]{\textcolor{lsblue}{#1}}          % a predicted number
+\newcommand{\tagpill}[2][lsamber]{\tikz[baseline=(t.base)]\node[fill=#1,text=white,rounded corners=1.5pt,
+  inner xsep=3pt,inner ysep=1.2pt,font=\sffamily\scriptsize\bfseries](t){#2};}
+\endinput

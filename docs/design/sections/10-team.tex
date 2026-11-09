@@ -1,0 +1,66 @@
+\section{Who builds what}\label{sec:team}
+
+We both write VHDL, and we both have to explain every part of the design at the defence. The split below gives each of us one half of the core to design and the other half to verify, so each of us ends up knowing both halves: one from the inside, one from its specification.
+
+\subsection{Modules}
+
+\begin{center}\small
+\begin{tabularx}{\linewidth}{@{}L l l l@{}}
+\toprule
+Module & Designed by & Verified by & Needed for \\
+\midrule
+\multicolumn{4}{@{}l}{\textcolor{lsblue}{\textsf{\bfseries Control half}}} \\
+FSM and instruction decoder & Loucas & Stefanos (\texttt{tb\_fsm}) & M1 \\
+\sig{PC}, start-address table, program ROM, branches & Loucas & Stefanos (\texttt{tb\_instr}) & M1 \\
+Run modes and \sig{ce} logic & Loucas & Stefanos (\texttt{tb\_fsm}, \texttt{tb\_ce\_pause}) & M1 \\
+Stream control: \stname{STREAM}, \sig{CNT}, \sig{V1}, \sig{V2}, enables & Loucas & Stefanos (\texttt{tb\_stream}) & M2--M3 \\
+Cycle and instruction counters & Loucas & Stefanos & M1 \\
+Display scanner and view mux & Loucas & Stefanos & M2 \\
+\addlinespace
+\multicolumn{4}{@{}l}{\textcolor{lsteal}{\textsf{\bfseries Datapath half}}} \\
+Register file and write-back mux & Stefanos & Loucas (\texttt{tb\_instr}) & M1 \\
+ALU, \sig{T} and flags & Stefanos & Loucas (\texttt{tb\_alu}) & M1 \\
+Input chain: synchroniser, debouncer, one-pulse & Stefanos & Loucas (\texttt{tb\_io}) & M1 \\
+LEDs, top level and constraints file & Stefanos & Loucas & M1 \\
+Pointers, X and W memories, read registers & Stefanos & Loucas (\texttt{tb\_mem}) & M2 \\
+Multiplier, \sig{PROD}, adder, \sig{ACC} & Stefanos & Loucas (\texttt{tb\_mul\_rq}) & M2 \\
+Requantiser & Stefanos & Loucas (\texttt{tb\_mul\_rq}) & M2 \\
+\addlinespace
+\multicolumn{4}{@{}l}{\textcolor{lsamber!90!black}{\textsf{\bfseries Together}}} \\
+Programs, demo data, \texttt{tb\_neuron} & both & both & M2 \\
+Neuron reference model & one each, independently & compared & M2 \\
+Report, measurements, demo & both & both & M3 \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection{Rules that keep two people honest}
+
+\begin{itemize}
+\item \textbf{Nobody verifies their own module.} The verifier writes the testbench from the spec tables of this document, not from the designer's code. If the spec is ambiguous, the testbench will expose it.
+\item \textbf{One owner for the stream.} The stream control is designed end to end by one person (states, \sig{CNT}, \sig{V1}, \sig{V2}, the \sig{PROD} and \sig{ACC} enables, the pointer increments) and tested by the other (\texttt{tb\_stream}, \texttt{tb\_ce\_pause}). The contract of \cref{sec:control} is the interface between them.
+\item \textbf{Two references.} Each of us writes an independent neuron reference (a spreadsheet or a short program). Their outputs must agree before they become the expected values of \texttt{tb\_neuron}.
+\item \textbf{Small commits, reviewed.} Each module goes in through a pull request that the other person reads before merging.
+\item \textbf{A dated log.} Who designed, wrote and verified what, kept as we go. The contribution statement at the end is then a copy, not a reconstruction.
+\end{itemize}
+
+\subsection{Learning the whole design}
+
+Every week, a 15-minute teach-back: each of us explains the newest block of our half to the other, at the whiteboard, without notes. At the rehearsal before the defence each of us presents the \emph{other's} half. We are ready when both of us can answer these without notes:
+
+\begin{enumerate}[leftmargin=1.8em,itemsep=0.1em]
+\item \insn{LD}, cycle by cycle: when does the data appear, and why?
+\item Why does \insn{MAC \#n} take $n+4$ cycles, and why does \sig{ACC} lag the pointers by two?
+\item What breaks if a read register ignores \sig{ce}, and in which run modes?
+\item Why is \sig{PROD} 16 bits, and how many worst-case products fit in 24 bits?
+\item \insn{RQ} of $-301$ with $sh = 2$ and no ReLU: why $-76$ and not $-75$?
+\item Is the controller a Moore or a Mealy machine?
+\item Why clock enables and not a slower clock?
+\item Why two flip-flops before the debouncer?
+\item How do eight digits share one set of segment pins?
+\item How much of $\cycU - \cycS$ comes from not refetching, and how much from the overlap?
+\item A pipelined CPU also does one MAC per clock. What does the LS core save?
+\item What do WNS, LUT, FF and DSP figures mean, and why is the power estimate the same for every program?
+\item What happens at power-up, before the first reset?
+\item Which earlier machines repeated a MAC without refetching it, and what is different here?
+\end{enumerate}

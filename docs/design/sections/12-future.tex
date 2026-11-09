@@ -1,0 +1,21 @@
+\section{Beyond the course}\label{sec:future}
+
+\lsfig[t]{roadmap}{Where the LS Architecture goes after December. Each station is measured against the one before it with the same cycle counter.}
+
+The course core is the first station of a longer line (\cref{fig:roadmap}). Stefanos' plan already names the destination: a compiler that turns a small trained model into a program for our CPU, handwritten digit recognition on the board, and a hardware accelerator. CFU Playground walks a similar path with custom int8 instructions on a 32-bit soft CPU \citep{prakash2023cfu}; the LS principle lets us walk it without giving up the simple 8-bit core.
+
+\paragraph{Toolchain} An assembler and an instruction-set simulator first: labels, encodings, a memory initialisation file for the ROMs, and a cycle prediction for every program. The simulator becomes the golden model for every later testbench.
+
+\paragraph{Digits} A 64-32-10 network on the 8\,$\times$\,8 handwritten digits of the UCI optical digits data \citep{alpaydin1998optdigits}: 64 inputs, 32 hidden neurons, 10 outputs, 2,368 weights. Each neuron is one \insn{MAC \#n} plus about seven instructions of set-up, requantisation and store, so the whole network is about
+\[
+32 \times (28 + 68) + 10 \times (28 + 36) + 120 \approx 3{,}800 \text{ cycles}
+\]
+including an argmax of about 120 cycles, against about 20,400 with the classic MAC in a loop: roughly 38\,\textmu s per digit at 100\,MHz (derived). The weights need a 4K\,$\times$\,8 W memory, one block RAM; the hidden layer's outputs need \insn{ST}.
+
+\paragraph{Fewer cycles per stream} Overlap the drain of one stream with the fetch of the next instruction; fetch the bias from the weight stream; fuse requantise-and-store. Each shortens the fixed 48 cycles around a stream, which matters once streams are short.
+
+\paragraph{LS-K: more lanes under the same state} The stream state does not care how much work happens per clock. Widen X and W to $K$ bytes and put $K$ multipliers under the same \stname{STREAM} state, and the same 12-word program runs $K$ times faster on long vectors, with the same FSM. The FPGA has 240 DSP slices.
+
+\paragraph{A systolic co-processor} Stefanos' accelerator plan, a small grid of multiply-accumulate cells in the style of the TPU \citep{kung1982systolic,jouppi2017tpu}, becomes a co-processor that the LS core feeds with streams. A one-cell build of the array, compared with the streamed MAC on the same counter, keeps the comparison honest.
+
+\paragraph{Stand-alone} A USB-UART loader for programs and weights (the FPGA receives on C4 and transmits on D4) and a VGA view of the image and the answer.
