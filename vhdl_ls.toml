@@ -1,0 +1,5 @@
+   [libraries]
+   xil_defaultlib.files = [
+     "src/**/*.vhd",
+     "tb/**/*.vhd",
+   ]
