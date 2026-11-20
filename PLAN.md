@@ -57,4 +57,5 @@ Status marks: [ ] open, [~] running, [x] done. Details and numbers are in LOG.md
 - [x] The eight programs of the finished level-0 CPU in the model's simulator: 32 of 32 runs agree (`docs/L0_CROSSCHECK.md`, `tools/l0_crosscheck.py`)
 - [x] What the model program uses and what the CPU still needs, with the numbers for the documents and their sources (`docs/CPU_ALIGNMENT.md`, `tools/cpu_alignment.py`)
 - [x] Level-1 conformance programs with expected cycles, OUT byte, UART bytes and final state (`export/conformance/`, `tools/l1_conformance.py`)
+- [x] The exported files in a VHDL simulator: behavioural VHDL model of level 1 (`export/vhdl_reference/ReferenceL1.vhd`) under nvc gives the bytes and cycles of the Python simulator for the ten conformance programs and for all 401 requests (`docs/VHDL_REFERENCE.md`, `tools/vhdl_reference.py`)
 - Not part of this plan, by the CPU's owners: the level-1 VHDL, the model program in VHDL simulation against `export/board_uart/`, the board

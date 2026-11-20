@@ -11,6 +11,7 @@ fit 450 KB of block RAM. Every number in `REPORT.md` is read from a file that a 
 | `docs/SPEC.md` | the machine (level L1) and the integer arithmetic, binding for all code |
 | `docs/HARDWARE_CHANGES.md` | what the CPU needs, and optional speed-ups with their cost |
 | `docs/CPU_ALIGNMENT.md`, `docs/L0_CROSSCHECK.md` | the finished course CPU against the model: its eight programs in the model's simulator, what the model program uses, what the CPU still needs |
+| `export/vhdl_reference/`, `docs/VHDL_REFERENCE.md` | the level-1 instruction set as a behavioural VHDL model; under nvc it runs the exported model program and sends the same bytes in the same cycles as the Python simulator, for all 401 requests |
 | `export/conformance/` | ten small programs for the level-1 instructions with the results the extended CPU must show |
 | `docs/VHDL_CHECK.md` | an earlier check of the first six hand-written VHDL modules (before the CPU was finished) |
 | `docs/FILTER.md`, `docs/COST_TABLE.md`, `docs/TIER_B.md` | syntax filter, cycle counts of the generated program, the DDR2 model |
