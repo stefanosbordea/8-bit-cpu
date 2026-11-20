@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/kixem/Desktop/LS Architecture/ls-llm/lsllm/export/__main__.py", line 29, in <module>
+    for line in export(args.model_dir, args.out_dir, args.prompt.replace("\\n", "\n"), args.tokens, not args.no_filter, args.temperature,
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kixem/Desktop/LS Architecture/ls-llm/lsllm/export/__init__.py", line 64, in export
+    b = build(spec, arrays, tf, ids, syntax_filter, temperature, lists, uart_prompt)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kixem/Desktop/LS Architecture/ls-llm/lsllm/export/tables.py", line 51, in build
+    b = gen.build(spec, arrays, prompt=True, tf=tf, syntax_filter=syntax_filter, temperature=temperature,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kixem/Desktop/LS Architecture/ls-llm/lsllm/ls/gen.py", line 743, in build
+    raise ValueError("the data memory would need %d bytes, the machine has 2^19" % top)
+ValueError: the data memory would need 1405952 bytes, the machine has 2^19

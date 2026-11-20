@@ -23,7 +23,8 @@
 - **The exact repair of the board model costs general ability**: about 0.01 to 0.02 nats of loss on general text
   (section 3). The board model as a whole is worse on general text than the benchmark model (its capacity holds
   the request programs); it is never scored on the benchmarks.
-- **Tier B is less trained than Tier A** (3,000 steps) and its speed is extrapolated; see below.
+- **Tier B is less trained than Tier A** (9,000 steps against 33,000) and its speed is extrapolated; see below. Its lower
+  validation loss did not show as a higher greedy score on the custom set: the differences there are one or two tasks.
 - **The long runs for a rented GPU were prepared, not run**: `notebooks/train_on_colab.ipynb` with its bundle
   (`tools/make_colab_bundle.py`). Everything reported was trained on the laptop (Apple M1, 8 GB).
 - **The generated training functions are not guaranteed to be right.** The first batch was checked only for running;

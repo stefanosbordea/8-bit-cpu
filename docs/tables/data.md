@@ -41,8 +41,9 @@ docstring) count one tenth (D-train-2). The mix was chosen on the practice sets 
 on the test sets.
 
 **Training of the final Tier A model** (D-train-3, D-qat-7): 30,000 steps of 64 windows of 256 tokens, then 3,000 steps
-with a term that keeps the residual stream inside the range that int8 can hold, then 3,000 steps of quantization-aware
-training. The earlier model (10,000 steps) is kept in the tables because the weight-editing sessions and the board model
+with a term that keeps the residual stream inside the range that int8 can hold, then quantization-aware training in two
+stages of 3,000 steps with 4 logit codes per nat. Tier B: 3,000 steps, then 6,000 more with the same range term, then
+3,000 steps of quantization-aware training. The earlier model (10,000 steps) is kept in the tables because the weight-editing sessions and the board model
 started from it.
 
 **Tokenizer.** SentencePiece BPE with 512 tokens, trained on the Tier A text. Line structure is carried by tokens:

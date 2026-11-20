@@ -27,7 +27,8 @@ Status marks: [ ] open, [~] running, [x] done. Details and numbers are in LOG.md
 - [x] Earlier Tier A model: float `runs/f/A2` (10,000 steps), int8 `runs/qat/A2q`
 - [x] Final Tier A model: long run `runs/f/A3` (30,000 steps), stream-range fine-tune `runs/f/A3r`, int8 `runs/qat/A3rq` (D-qat-7)
 - [x] Tier B float and int8 (`runs/f/B1`, `runs/qat/B1q`, 3,000 steps)
-- [ ] Not run: longer re-training of the three best shapes of the search; a window of 128 at full training length; the Tier B continuation `f/B2` (stopped, line commented out in `runs/jobs2.txt`); a second QAT stage and finer logit codes for the final Tier A model
+- [x] Tier A int8 from finer logit codes and a second QAT stage (`runs/qat/A3ru2`); Tier B trained on for 6,000 steps (`runs/f/B2`, `runs/qat/B2q`); D-train-4
+- [ ] Not run: longer re-training of the three best shapes of the search; a window of 128 at full training length
 
 ## Phase 5: integer reference, decoding, editing
 - [x] Bit-exact integer reference; equal to the QAT forward pass and to the generated LS program

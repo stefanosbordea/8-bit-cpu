@@ -3,8 +3,9 @@
   {
    "label": "Tier A",
    "float": "runs/f/A3r/ckpt.pt",
-   "int": "runs/qat/A3rq",
-   "folder": "tier_a"
+   "int": "runs/qat/A3ru2",
+   "folder": "tier_a",
+   "steps_total": 33000
   },
   {
    "label": "Tier A, earlier model (10,000 steps; the editing sessions used it)",
@@ -20,9 +21,10 @@
   },
   {
    "label": "Tier B",
-   "float": "runs/f/B1/ckpt.pt",
-   "int": "runs/qat/B1q",
-   "folder": "tier_b"
+   "float": "runs/f/B2/ckpt.pt",
+   "int": "runs/qat/B2q",
+   "folder": "tier_b",
+   "steps_total": 9000
   }
  ],
  "comparators": [
