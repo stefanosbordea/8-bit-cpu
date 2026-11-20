@@ -1,0 +1,25 @@
+{
+ "what": "LUT reads table 2 at the value of the register and sets Z and N; BZ and BNZ follow the flags",
+ "program_words": 14,
+ "data_bytes": 1024,
+ "switches": 0,
+ "rx_bytes": [],
+ "cycles": 48,
+ "out": "0x0D",
+ "tx_bytes": [],
+ "registers": [
+  "0x00",
+  "0x0D",
+  "0x69",
+  "0x11"
+ ],
+ "pointers": [
+  "0x00000",
+  "0x00000",
+  "0x00000"
+ ],
+ "len": 0,
+ "acc": 0,
+ "zero_flag": 0,
+ "negative_flag": 0
+}

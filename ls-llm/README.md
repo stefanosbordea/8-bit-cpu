@@ -10,7 +10,9 @@ fit 450 KB of block RAM. Every number in `REPORT.md` is read from a file that a 
 | `DECISIONS.md` | every choice with its reason and numbers |
 | `docs/SPEC.md` | the machine (level L1) and the integer arithmetic, binding for all code |
 | `docs/HARDWARE_CHANGES.md` | what the CPU needs, and optional speed-ups with their cost |
-| `docs/VHDL_CHECK.md` | the hand-written VHDL modules compared with the software model of the CPU |
+| `docs/CPU_ALIGNMENT.md`, `docs/L0_CROSSCHECK.md` | the finished course CPU against the model: its eight programs in the model's simulator, what the model program uses, what the CPU still needs |
+| `export/conformance/` | ten small programs for the level-1 instructions with the results the extended CPU must show |
+| `docs/VHDL_CHECK.md` | an earlier check of the first six hand-written VHDL modules (before the CPU was finished) |
 | `docs/FILTER.md`, `docs/COST_TABLE.md`, `docs/TIER_B.md` | syntax filter, cycle counts of the generated program, the DDR2 model |
 | `EDITS.md` | every weight edit of the editing sessions |
 | `RESEARCH.md`, `research/` | what is known, with sources |
@@ -34,6 +36,10 @@ PYTHONPATH=. .venv/bin/python tools/board_ask.py artifacts/board "make me a bubb
 PYTHONPATH=. .venv/bin/python tools/board_ask.py artifacts/board "heap sort" --port /dev/tty.usbserial-XXXX
 PYTHONPATH=. .venv/bin/python tools/ask.py artifacts/board "factorial"
 ```
+Without the board, `tools/board_emulator.py artifacts/board` prints the name of a serial device that answers like the board
+(the simulator behind a pseudo-terminal); give that name to `--port`. `tools/board_verify.py artifacts/board --port DEVICE`
+sends every request of the suite, checks the answers and measures tokens per second on the PC.
+
 `artifacts/board` is the board model (int8, 350,880 parameters). The first line lists the requests it knows, the second
 runs the generated LS program in the cycle-exact simulator, the third talks to the board over the USB-UART (needs the
 `RX` instruction and `pyserial`), the fourth uses the integer reference on the laptop. The PC turns the sentence into a

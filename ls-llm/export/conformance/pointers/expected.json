@@ -1,0 +1,25 @@
+{
+ "what": "MVP, MVH and CPP build a 20-bit address; ST through P0 and LD through P2 meet at the same byte",
+ "program_words": 13,
+ "data_bytes": 8192,
+ "switches": 0,
+ "rx_bytes": [],
+ "cycles": 52,
+ "out": "0x5C",
+ "tx_bytes": [],
+ "registers": [
+  "0x5C",
+  "0x34",
+  "0x01",
+  "0x5C"
+ ],
+ "pointers": [
+  "0x01A35",
+  "0x34A35",
+  "0x01A35"
+ ],
+ "len": 0,
+ "acc": 0,
+ "zero_flag": 0,
+ "negative_flag": 0
+}

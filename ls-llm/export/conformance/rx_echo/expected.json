@@ -1,0 +1,31 @@
+{
+ "what": "RX takes two bytes from the PC (0x12, 0x34); the program sends the first and their sum",
+ "program_words": 7,
+ "data_bytes": 256,
+ "switches": 0,
+ "rx_bytes": [
+  "0x12",
+  "0x34"
+ ],
+ "cycles": 28,
+ "out": "0x46",
+ "tx_bytes": [
+  "0x12",
+  "0x46"
+ ],
+ "registers": [
+  "0x46",
+  "0x34",
+  "0x00",
+  "0x00"
+ ],
+ "pointers": [
+  "0x00000",
+  "0x00000",
+  "0x00000"
+ ],
+ "len": 0,
+ "acc": 0,
+ "zero_flag": 0,
+ "negative_flag": 0
+}

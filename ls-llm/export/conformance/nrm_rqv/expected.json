@@ -1,0 +1,25 @@
+{
+ "what": "NRM counts the significant bits of ACC; RQV shifts by a register",
+ "program_words": 21,
+ "data_bytes": 256,
+ "switches": 0,
+ "rx_bytes": [],
+ "cycles": 84,
+ "out": "0xA6",
+ "tx_bytes": [],
+ "registers": [
+  "0x00",
+  "0xA6",
+  "0x0F",
+  "0x18"
+ ],
+ "pointers": [
+  "0x00000",
+  "0x00000",
+  "0x00000"
+ ],
+ "len": 0,
+ "acc": -23131,
+ "zero_flag": 0,
+ "negative_flag": 1
+}

@@ -117,11 +117,13 @@ def summary(spec, facts, latest, strata_of):
     f = facts[0]
     c = f["cfg"]
     lines = []
-    lines.append("- **Model (Tier A).** %s int8 parameters: %d layers, width %d, %d query heads sharing %d key/value head%s, %s feed-forward of %d, "
-                 "512 tokens, context %d%s. Its complete data memory image is %s bytes (%d of the 135 block RAMs), the program %s words." % (
-                     num(f["params"]), c.n_layers, c.dim, c.n_heads, c.n_kv_heads, "" if c.n_kv_heads == 1 else "s", "ReLU" if c.ffn == "relu" else "SwiGLU",
-                     c.hidden_dim, c.max_seq_len, ", attention window %d" % c.window if c.window else "", num(f["memory"]), -(-f["memory"] // 4096),
-                     num(f.get("words", 0))))
+    gains = c.dim * (2 * c.n_layers + 1)
+    lines.append("- **Model (Tier A).** %s trained parameters, all carried by int8 values (%s int8 matrix entries; the %d gains of the norms are folded "
+                 "into matrices and tables): %d layers, width %d, %d query heads sharing %d key/value head%s, %s feed-forward of %d, "
+                 "512 tokens, context %d%s. Its complete data memory image is %s bytes (%d of the 135 block RAMs, plus one for the program), the program %s words." % (
+                     num(f["params"]), num(f["params"] - gains), gains, c.n_layers, c.dim, c.n_heads, c.n_kv_heads, "" if c.n_kv_heads == 1 else "s",
+                     "ReLU" if c.ffn == "relu" else "SwiGLU", c.hidden_dim, c.max_seq_len, ", attention window %d" % c.window if c.window else "",
+                     num(f["memory"]), -(-f["memory"] // 4096), num(f.get("words", 0))))
     if f["cycles"]:
         lines.append("- **Speed (level L1, 100 MHz, greedy with the syntax filter).** %s / %s / %s cycles per token = **%s / %s / %s tokens per second** at "
                      "context 16 / 64 / 256. The stream instruction makes the same program %s / %s / %s times faster than one classic 4-cycle `MAC` per product." % (

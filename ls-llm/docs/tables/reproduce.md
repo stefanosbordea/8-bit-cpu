@@ -29,7 +29,12 @@ cd "/Users/kixem/Desktop/LS Architecture/ls-llm"
 PYTHONPATH=. .venv/bin/python tools/board_verify.py runs/qat/NAMEp --json results/board_NAMEp.json
 PYTHONPATH=. .venv/bin/python tools/board_ask.py runs/qat/NAMEp --list
 PYTHONPATH=. .venv/bin/python tools/board_ask.py runs/qat/NAMEp "make me a bubble sort program" "binary search trees" --simulate
+PYTHONPATH=. .venv/bin/python tools/board_emulator.py runs/qat/NAMEp
+PYTHONPATH=. .venv/bin/python tools/board_verify.py runs/qat/NAMEp --port /dev/tty.usbserial-XXXX --json results/board_measured.json
 ```
+
+The emulator prints the name of a serial device that answers like the board (the simulator behind a pseudo-terminal), for
+rehearsing the laptop side. With `--port` the verification runs on the real board and measures the time of every answer on the PC.
 
 `MODEL_DIR` and `DATA_DIR` are the folders named in `runs/final.json` (the integer model and its tokenizer folder).
 Training commands with all arguments are in `runs/jobs2.txt` and in the `result.json` of every run; longer runs for a

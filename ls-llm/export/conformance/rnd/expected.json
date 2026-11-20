@@ -1,0 +1,30 @@
+{
+ "what": "RND gives the next byte of the 32-bit LFSR (switches at 0); four bytes go out and are combined",
+ "program_words": 13,
+ "data_bytes": 256,
+ "switches": 0,
+ "rx_bytes": [],
+ "cycles": 52,
+ "out": "0xF3",
+ "tx_bytes": [
+  "0x83",
+  "0x31",
+  "0x6E",
+  "0x2F"
+ ],
+ "registers": [
+  "0xF3",
+  "0x31",
+  "0x6E",
+  "0x2F"
+ ],
+ "pointers": [
+  "0x00000",
+  "0x00000",
+  "0x00000"
+ ],
+ "len": 0,
+ "acc": 0,
+ "zero_flag": 0,
+ "negative_flag": 1
+}

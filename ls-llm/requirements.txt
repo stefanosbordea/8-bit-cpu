@@ -6,3 +6,4 @@ matplotlib==3.11.2
 pytest==9.2.0
 # only for the public comparison models (lsllm/baselines/public.py); their test module is skipped without it:
 # transformers==5.23.0 tokenizers==0.23.3 safetensors==0.8.0 huggingface-hub==2.4.0
+pyserial==3.5

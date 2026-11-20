@@ -50,3 +50,9 @@ Status marks: [ ] open, [~] running, [x] done. Details and numbers are in LOG.md
 ## Phase 8: export and report
 - [x] Memory images (hex, coe), VHDL package, memory map, program outline, test vectors, UART format and PC scripts
 - [x] Final exports of the board model, `artifacts/`, REPORT.md regenerated from the final files
+
+## Phase 9: alignment with the CPU (the CPU itself is built by its owners, not here)
+- [x] The eight programs of the finished level-0 CPU in the model's simulator: 32 of 32 runs agree (`docs/L0_CROSSCHECK.md`, `tools/l0_crosscheck.py`)
+- [x] What the model program uses and what the CPU still needs, with the numbers for the documents and their sources (`docs/CPU_ALIGNMENT.md`, `tools/cpu_alignment.py`)
+- [x] Level-1 conformance programs with expected cycles, OUT byte, UART bytes and final state (`export/conformance/`, `tools/l1_conformance.py`)
+- [ ] By the CPU's owners: the level-1 VHDL; then the model program in VHDL simulation against `export/board_uart/`, then the board

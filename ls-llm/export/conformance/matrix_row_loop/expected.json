@@ -1,0 +1,25 @@
+{
+ "what": "The kernel of the model in small: 4 rows of 8 weights times one input row, each result stored through P2, then summed",
+ "program_words": 24,
+ "data_bytes": 16384,
+ "switches": 0,
+ "rx_bytes": [],
+ "cycles": 236,
+ "out": "0x5E",
+ "tx_bytes": [],
+ "registers": [
+  "0x00",
+  "0x5E",
+  "0x00",
+  "0x00"
+ ],
+ "pointers": [
+  "0x00048",
+  "0x01020",
+  "0x02004"
+ ],
+ "len": 0,
+ "acc": -1936,
+ "zero_flag": 0,
+ "negative_flag": 0
+}
