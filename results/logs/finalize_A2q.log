@@ -1,0 +1,13 @@
+02:07:50 queued the quantization-aware training; waiting for runs/qat/A2q/result.json
+02:19:30 integer model: done: integer val 2.2543 nats/token = 1.5027 bits/byte at step 3000 (float 2.2212); QAT forward and integer reference identical: True
+02:19:30 run: .venv/bin/python -m lsllm.intref.compare --float runs/f/A2/ckpt.pt --int runs/qat/A2q --data data/tok/f512v2
+02:19:38 run: .venv/bin/python -m lsllm.intref.overflow runs/qat/A2q --data data/tok/f512v2 --windows 32
+02:19:42 benchmarks: torch runs/f/A2/ckpt.pt test
+02:19:42 benchmarks: torch runs/f/A2/ckpt.pt practice
+02:19:42 benchmarks: int runs/qat/A2q test
+02:19:42 benchmarks: int runs/qat/A2q practice
+03:17:45 benchmarks finished
+03:17:45 run: .venv/bin/python -m lsllm.export runs/qat/A2q export/A2q --tokens 8 --temperature 0.8
+03:17:50 export: exit code 0
+03:17:50 run: .venv/bin/python tools/speed_report.py runs/qat/A2q
+03:17:51 finalize done

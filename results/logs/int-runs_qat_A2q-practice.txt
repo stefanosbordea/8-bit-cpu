@@ -1,0 +1,65 @@
+A2q on custom practice: 200 tasks x 1 samples in 43.4 s
+  pass@1     0.0050
+  pass@10    -
+  syntax_ok  0.9000
+  runs_ok    0.4050
+  empty      0.0000
+  outcomes   pass 1, wrong 80, error 99, timeout 0, syntax 20
+  recorded in results/results.jsonl, samples in results/samples/20261114-022025_A2q_custom_practice.jsonl.gz
+A2q on custom practice: 200 tasks x 10 samples in 218.0 s
+  pass@1     0.0105
+  pass@10    0.0400
+  syntax_ok  0.8215
+  runs_ok    0.3255
+  empty      0.0000
+  outcomes   pass 21, wrong 630, error 992, timeout 0, syntax 357
+  recorded in results/results.jsonl, samples in results/samples/20261114-022404_A2q_custom_practice.jsonl.gz
+A2q on mbpp practice: 464 tasks x 1 samples in 69.7 s
+  pass@1     0.0043
+  pass@10    -
+  syntax_ok  0.7500
+  runs_ok    0.3664
+  empty      0.0000
+  outcomes   pass 2, wrong 168, error 178, timeout 0, syntax 116
+  recorded in results/results.jsonl, samples in results/samples/20261114-022514_A2q_mbpp_practice.jsonl.gz
+A2q on mbpp practice: 464 tasks x 10 samples in 1085.7 s
+  pass@1     0.0009
+  pass@10    0.0065
+  syntax_ok  0.5834
+  runs_ok    0.1530
+  empty      0.0000
+  outcomes   pass 4, wrong 706, error 1997, timeout 0, syntax 1933
+  recorded in results/results.jsonl, samples in results/samples/20261114-024321_A2q_mbpp_practice.jsonl.gz
+A2q+filter on custom practice: 200 tasks x 1 samples in 198.0 s
+  pass@1     0.0050
+  pass@10    -
+  syntax_ok  0.9400
+  runs_ok    0.4250
+  empty      0.0000
+  outcomes   pass 1, wrong 84, error 103, timeout 0, syntax 12
+  recorded in results/results.jsonl, samples in results/samples/20261114-024641_A2q_filter_custom_practice.jsonl.gz
+A2q+filter on custom practice: 200 tasks x 10 samples in 389.5 s
+  pass@1     0.0105
+  pass@10    0.0400
+  syntax_ok  0.8765
+  runs_ok    0.3345
+  empty      0.0000
+  outcomes   pass 21, wrong 648, error 1084, timeout 0, syntax 247
+  recorded in results/results.jsonl, samples in results/samples/20261114-025312_A2q_filter_custom_practice.jsonl.gz
+A2q+filter on mbpp practice: 464 tasks x 1 samples in 89.0 s
+  pass@1     0.0043
+  pass@10    -
+  syntax_ok  0.8254
+  runs_ok    0.3944
+  empty      0.0000
+  outcomes   pass 2, wrong 181, error 200, timeout 0, syntax 81
+  recorded in results/results.jsonl, samples in results/samples/20261114-025442_A2q_filter_mbpp_practice.jsonl.gz
+A2q+filter on mbpp practice: 464 tasks x 10 samples in 553.8 s
+  pass@1     0.0009
+  pass@10    0.0065
+  syntax_ok  0.6623
+  runs_ok    0.1679
+  empty      0.0000
+  outcomes   pass 4, wrong 775, error 2294, timeout 0, syntax 1567
+  recorded in results/results.jsonl, samples in results/samples/20261114-030356_A2q_filter_mbpp_practice.jsonl.gz
+done

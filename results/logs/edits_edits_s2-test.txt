@@ -1,0 +1,26 @@
+A2q+filter on custom test: 200 tasks x 1 samples in 19.1 s
+  pass@1     0.0400
+  pass@10    -
+  syntax_ok  0.9150
+  runs_ok    0.4750
+  empty      0.0000
+  outcomes   pass 8, wrong 87, error 88, timeout 0, syntax 17
+  recorded in results/results.jsonl, samples in results/samples/20261114-033400_A2q_filter_custom_test.jsonl.gz
+A2q+filter on mbpp test: 500 tasks x 1 samples in 46.6 s
+  pass@1     0.0000
+  pass@10    -
+  syntax_ok  0.8700
+  runs_ok    0.3880
+  empty      0.0000
+  outcomes   pass 0, wrong 194, error 241, timeout 0, syntax 65
+  recorded in results/results.jsonl, samples in results/samples/20261114-033447_A2q_filter_mbpp_test.jsonl.gz
+A2q+filter on humaneval test: 164 tasks x 1 samples in 31.1 s
+  pass@1     0.0000
+  pass@10    -
+  syntax_ok  0.7439
+  runs_ok    0.2378
+  empty      0.0000
+  outcomes   pass 0, wrong 39, error 83, timeout 0, syntax 42
+  105 prompts were truncated by the completer
+  recorded in results/results.jsonl, samples in results/samples/20261114-033518_A2q_filter_humaneval_test.jsonl.gz
+done

@@ -1,0 +1,10 @@
+## Cycles per token and tokens per second
+
+| token of the complete program | cycles @16 | cycles @64 | cycles @256 | tokens/s @16 | tokens/s @64 | tokens/s @256 |
+|---|---|---|---|---|---|---|
+| generated token, greedy | 488,708 | 542,852 | 759,428 | 204.6 | 184.2 | 131.7 |
+| + syntax filter | 495,456 | 549,600 | 766,176 | 201.8 | 182.0 | 130.5 |
+| + sampling | 503,056 | 557,200 | 773,776 | 198.8 | 179.5 | 129.2 |
+| + syntax filter + sampling | 509,804 | 563,948 | 780,524 | 196.2 | 177.3 | 128.1 |
+| prompt token (prefill skip), filter on | 380,336 | 434,480 | 651,056 | 262.9 | 230.2 | 153.6 |
+wrote docs/SPEED.md and docs/HARDWARE_CHANGES.md

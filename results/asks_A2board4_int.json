@@ -1,0 +1,2298 @@
+[
+ {
+  "id": "asks/bubble_sort",
+  "request": "bubble sort",
+  "prompt": "def bubble_sort(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "array):\n    n = len(array)\n    for i in range(n):\n        for j in range(0, n - i - 1):\n            if array[j] > array[j + 1]:\n                array[j], array[j + 1] = (array[j + 1], array[j])\n    return array"
+ },
+ {
+  "id": "asks/insertion_sort",
+  "request": "insertion sort",
+  "prompt": "def insertion_sort(",
+  "outcome": "error",
+  "detail": "error: TypeError(\"insertion_sort() missing 3 required positional arguments: 'max_num_in', 'target', and 'auxiliary'\")",
+  "completion": "arr, max_num_in, target, auxiliary):\n    for i, item in enumerate(arr):\n        if item == target:\n            return i\n    return -1"
+ },
+ {
+  "id": "asks/selection_sort",
+  "request": "selection sort",
+  "prompt": "def selection_sort(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "arr):\n    sorted_arr = []\n    def find_min_index(arr):\n        if not arr:\n            raise ValueError('array is empty')\n        min_index = 0\n        for i, item in enumerate(arr):\n            if item <= arr[min_index]:\n                min_index = i\n        return min_index\n    for _ in range(len(arr)):\n        index = find_min_index(arr)\n        sorted_arr.append(arr.pop(index))\n    return sorted_arr"
+ },
+ {
+  "id": "asks/merge_sort",
+  "request": "merge sort",
+  "prompt": "def merge_sort(",
+  "outcome": "error",
+  "detail": "error: TypeError(\"merge_sort() missing 1 required positional argument: 'max_num'\")",
+  "completion": "array: list[int], max_num: list[int]) -> int:\n    max_num = array[0]\n    gap = len(array) - 1\n    for index, number in enumerate(array):\n        if number == 0 and number == t:\n            return False\n        answer = number * fails + 1\n        return answer"
+ },
+ {
+  "id": "asks/quick_sort",
+  "request": "quick sort",
+  "prompt": "def quick_sort(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "array):\n    if len(array) < 2:\n        return array\n    else:\n        pivot = array[0]\n        less = [i for i in array[1:] if i <= pivot]\n        greater = [i for i in array[1:] if i > pivot]\n        return quick_sort(less) + [pivot] + quick_sort(greater)"
+ },
+ {
+  "id": "asks/shell_sort",
+  "request": "shell sort",
+  "prompt": "def shell_sort(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "array: list[int]) -> list[int]:\n    n = len(array)\n    gap = n // 2\n    while gap > 0:\n        y_index = gap\n        while y_index < n:\n            y = array[y_index]\n            x_index = y_index - gap\n            while x_index >= 0 and y < array[x_index]:\n                array[x_index + gap] = array[x_index]\n                x_index -= gap\n            array[x_index + gap] = y\n            y_index += 1\n        gap //= 2\n    return array"
+ },
+ {
+  "id": "asks/heap_sort",
+  "request": "heap sort",
+  "prompt": "def heap_sort(",
+  "outcome": "error",
+  "detail": "error: NameError(\"name 'x' is not defined\")",
+  "completion": "array: list[int]) -> list[list[int]]:\n    result: list[list[int]] = [[]]\n    for number in array:\n        result = array[list(x)]\n        result = [list(x) for x in array]\n        result = []\n        for i in range(n):\n            for j in range(0, n - i - 1):\n                if array[j] > array[j + 1]:\n                    array[j], array[j + 1] = (array[j + 1], array[j])\n        return array"
+ },
+ {
+  "id": "asks/counting_sort",
+  "request": "counting sort",
+  "prompt": "def counting_sort(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "arr, max_num_in_array=None):\n    if not arr:\n        return arr\n    if max_num_in_array is None:\n        max_num_in_array = max(arr)\n    counts = [0] * (max_num_in_array + 1)\n    for num in arr:\n        counts[num] += 1\n    i = 0\n    for num, count in enumerate(counts):\n        for _ in range(count):\n            arr[i] = num\n            i += 1\n    return arr"
+ },
+ {
+  "id": "asks/linear_search",
+  "request": "linear search",
+  "prompt": "def linear_search(",
+  "outcome": "syntax",
+  "detail": "",
+  "completion": "array, target):\n    return array[target][target] + ary[target - target][target] + ary[target - target] + ary[target][target] + ary[target][target] + ary[target][target]: target[target][target][target][target][target][target][target][target][target][target][target][target] = target"
+ },
+ {
+  "id": "asks/binary_search",
+  "request": "binary search",
+  "prompt": "def binary_search(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "sorted_array, target):\n    low = 0\n    high = len(sorted_array) - 1\n    while low <= high:\n        mid = (low + high) // 2\n        if target == sorted_array[mid]:\n            return mid\n        elif target < sorted_array[mid]:\n            high = mid - 1\n        elif target > sorted_array[mid]:\n            low = mid + 1\n    return -1"
+ },
+ {
+  "id": "asks/gcd",
+  "request": "gcd",
+  "prompt": "def gcd(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "a, b):\n    if b == 0:\n        return a\n    return gcd(b, a % b)"
+ },
+ {
+  "id": "asks/lcm",
+  "request": "lcm",
+  "prompt": "def lcm(",
+  "outcome": "error",
+  "detail": "error: NameError(\"name 'num' is not defined\")",
+  "completion": "num1: float, ndigits: int=2) -> float:\n    return round(float(num) * 3.0 * ((num - 1) / 5) * 10)"
+ },
+ {
+  "id": "asks/is_prime",
+  "request": "is prime",
+  "prompt": "def is_prime(",
+  "outcome": "error",
+  "detail": "error: NameError(\"name 'factorial' is not defined\")",
+  "completion": "number: int) -> bool:\n    if number < 0:\n        raise ValueError('prime')\n    result = number * factorial(number - root.left)\n    return result"
+ },
+ {
+  "id": "asks/sieve_of_eratosthenes",
+  "request": "sieve of eratosthenes",
+  "prompt": "def sieve_of_eratosthenes(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "n):\n    primes = [True] * (n + 1)\n    p = 2\n    while p * p <= n:\n        if primes[p]:\n            for i in range(p * 2, n + 1, p):\n                primes[i] = False\n        p += 1\n    primes = [element for element in range(2, n + 1) if primes[element]]\n    return primes"
+ },
+ {
+  "id": "asks/prime_factors",
+  "request": "prime factors",
+  "prompt": "def prime_factors(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "n):\n    factors = []\n    while n % 2 == 0:\n        factors.append(2)\n        n //= 2\n    i = 3\n    while i * i <= n:\n        while n % i == 0:\n            factors.append(i)\n            n //= i\n        i += 2\n    if n > 2:\n        factors.append(n)\n    return factors"
+ },
+ {
+  "id": "asks/factorial",
+  "request": "factorial",
+  "prompt": "def factorial(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "number):\n    if number == 0 or number == 1:\n        return 1\n    answer = number * factorial(number - 1)\n    return answer"
+ },
+ {
+  "id": "asks/fibonacci",
+  "request": "fibonacci",
+  "prompt": "def fibonacci(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "n):\n    if n == 1:\n        return 1\n    elif n == 0:\n        return 0\n    else:\n        return fibonacci(n - 1) + fibonacci(n - 2)"
+ },
+ {
+  "id": "asks/fibonacci_sequence",
+  "request": "fibonacci sequence",
+  "prompt": "def fibonacci_sequence(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "n):\n    if n == 0:\n        return []\n    elif n == 1:\n        return [0]\n    else:\n        fib = [0, 1]\n        while len(fib) < n:\n            fib.append(fib[-1] + fib[-2])\n        return fib"
+ },
+ {
+  "id": "asks/power",
+  "request": "power",
+  "prompt": "def power(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "a, b):\n    return a ** b"
+ },
+ {
+  "id": "asks/sum_of_digits",
+  "request": "sum of digits",
+  "prompt": "def sum_of_digits(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "n: int) -> int:\n    n = abs(n)\n    res = 0\n    while n > 0:\n        res += n % 10\n        n //= 10\n    return res"
+ },
+ {
+  "id": "asks/count_digits",
+  "request": "count digits",
+  "prompt": "def count_digits(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "n: int) -> int:\n    if not isinstance(n, int):\n        raise TypeError('Input must be an integer')\n    digits = 0\n    n = abs(n)\n    while True:\n        n = n // 10\n        digits += 1\n        if n == 0:\n            break\n    return digits"
+ },
+ {
+  "id": "asks/decimal_binary",
+  "request": "decimal to binary",
+  "prompt": "def decimal_binary(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "decimal: int) -> str:\n    decimal = int(decimal)\n    if decimal in (0, 1):\n        return str(decimal)\n    div, mod = divmod(decimal, 2)\n    return decimal_binary(div) + str(mod)"
+ },
+ {
+  "id": "asks/binary_decimal",
+  "request": "binary to decimal",
+  "prompt": "def binary_decimal(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "x):\n    return int(x, 2)"
+ },
+ {
+  "id": "asks/is_perfect_number",
+  "request": "is perfect number",
+  "prompt": "def is_perfect_number(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "n):\n    if n < 2:\n        return False\n    total = 1\n    for i in range(2, int(n ** 0.5) + 1):\n        if n % i == 0:\n            total += i\n            if i != n // i:\n                total += n // i\n    return total == n"
+ },
+ {
+  "id": "asks/is_armstrong_number",
+  "request": "is armstrong number",
+  "prompt": "def is_armstrong_number(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "number):\n    return sum((pow(int(digit), len(str(number))) for digit in str(number))) == number"
+ },
+ {
+  "id": "asks/is_even",
+  "request": "is even",
+  "prompt": "def is_even(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "n):\n    return n % 2 == 0"
+ },
+ {
+  "id": "asks/is_power_of_two",
+  "request": "is power of two",
+  "prompt": "def is_power_of_two(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "number: int) -> bool:\n    return number > 0 and (not number & number - 1)"
+ },
+ {
+  "id": "asks/is_perfect_square",
+  "request": "is perfect square",
+  "prompt": "def is_perfect_square(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "num):\n    i = 0\n    while i * i < num:\n        i += 1\n    if i * i == num:\n        return True\n    else:\n        return False"
+ },
+ {
+  "id": "asks/divisors",
+  "request": "divisors",
+  "prompt": "def divisors(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "number):\n    if not isinstance(number, int):\n        raise TypeError('Incorrect number type provided. Only integers are accepted.')\n    divisors = []\n    for i in range(1, number + 1):\n        if number % i == 0:\n            divisors.append(i)\n    return divisors"
+ },
+ {
+  "id": "asks/int_roman",
+  "request": "int to roman",
+  "prompt": "def int_roman(",
+  "outcome": "wrong",
+  "detail": "8 of 8 tests failed",
+  "completion": "num):\n    if num:\n        return 0\n    return num + num"
+ },
+ {
+  "id": "asks/roman_int",
+  "request": "roman to int",
+  "prompt": "def roman_int(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "text: str) -> int:\n    if not text:\n        return 0\n    number = 0\n    roman_values = {'M': 1000, 'D': 500, 'C': 100, 'L': 50, 'X': 10, 'V': 5, 'I': 1}\n    for index in range(len(text) - 1):\n        if roman_values[text[index]] < roman_values[text[index + 1]]:\n            number -= roman_values[text[index]]\n        else:\n            number += roman_values[text[index]]\n    return number + roman_values[text[-1]]"
+ },
+ {
+  "id": "asks/binomial_coefficient",
+  "request": "binomial coefficient",
+  "prompt": "def binomial_coefficient(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "n: int, k: int) -> int:\n    result = 1\n    k = min(k, n - k)\n    for i in range(k):\n        result *= n - i\n        result //= i + 1\n    return result"
+ },
+ {
+  "id": "asks/count_set_bits",
+  "request": "count set bits",
+  "prompt": "def count_set_bits(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "number: int) -> int:\n    if number < 0:\n        raise ValueError('the value of input must not be negative')\n    result = 0\n    while number:\n        if number % 2 == 1:\n            result += 1\n        number >>= 1\n    return result"
+ },
+ {
+  "id": "asks/sum_of_squares",
+  "request": "sum of squares",
+  "prompt": "def sum_of_squares(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "number):\n    numerator = number * (number + 1) * (2 * number + 1)\n    return numerator / 6"
+ },
+ {
+  "id": "asks/digital_root",
+  "request": "digital root",
+  "prompt": "def digital_root(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "number: int) -> int:\n    number = abs(number)\n    while number >= 10:\n        number = sum((int(digit) for digit in str(number)))\n    return number"
+ },
+ {
+  "id": "asks/reverse_number",
+  "request": "reverse number",
+  "prompt": "def reverse_number(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "number):\n    reversed_nums = 0\n    while number > 0:\n        reversed_nums *= 10\n        reversed_nums += number % 10\n        number //= 10\n    return reversed_nums"
+ },
+ {
+  "id": "asks/reverse_string",
+  "request": "reverse string",
+  "prompt": "def reverse_string(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "string):\n    return string[::-1]"
+ },
+ {
+  "id": "asks/is_palindrome",
+  "request": "is palindrome",
+  "prompt": "def is_palindrome(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "string: str) -> bool:\n    return string == string[::-1]"
+ },
+ {
+  "id": "asks/is_anagram",
+  "request": "is anagram",
+  "prompt": "def is_anagram(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "s: str, t: str) -> bool:\n    freq_s: dict[str, int] = {}\n    freq_t: dict[str, int] = {}\n    for char in s:\n        freq_s[char] = freq_s.get(char, 0) + 1\n    for char in t:\n        freq_t[char] = freq_t.get(char, 0) + 1\n    return freq_s == freq_t"
+ },
+ {
+  "id": "asks/count_vowels",
+  "request": "count vowels",
+  "prompt": "def count_vowels(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "s: str) -> int:\n    if not isinstance(s, str):\n        raise TypeError('Input must be a string')\n    vowels = 'aeiouAEIOU'\n    return sum((1 for char in s if char in vowels))"
+ },
+ {
+  "id": "asks/count_words",
+  "request": "count words",
+  "prompt": "def count_words(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "s):\n    return len(s.split())"
+ },
+ {
+  "id": "asks/word_frequency",
+  "request": "word frequency",
+  "prompt": "def word_frequency(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "s):\n    return {word: s.count(word) for word in s.split()}"
+ },
+ {
+  "id": "asks/char_frequency",
+  "request": "char frequency",
+  "prompt": "def char_frequency(",
+  "outcome": "wrong",
+  "detail": "4 of 4 tests failed",
+  "completion": "s):\n    return s[::-1]"
+ },
+ {
+  "id": "asks/capitalize",
+  "request": "capitalize",
+  "prompt": "def capitalize(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "string):\n    if not string:\n        return string\n    if len(string) == 1:\n        return string.upper()\n    return string[0].upper() + string[1:].lower()"
+ },
+ {
+  "id": "asks/caesar_cipher",
+  "request": "caesar cipher",
+  "prompt": "def caesar_cipher(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "text: str, shift: int) -> str:\n    result = ''\n    for char in text:\n        code = ord(char)\n        if 64 < code < 91:\n            code = (code - 65 + shift) % 26 + 65\n        if 96 < code < 123:\n            code = (code - 97 + shift) % 26 + 97\n        result = result + chr(code)\n    return result"
+ },
+ {
+  "id": "asks/run_length_encoding",
+  "request": "run length encoding",
+  "prompt": "def run_length_encoding(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "data: str) -> str:\n    if not data:\n        return ''\n    encoded: str = ''\n    prev_char: str = ''\n    count: int = 1\n    for char in data:\n        if char != prev_char:\n            if prev_char:\n                encoded += str(count) + prev_char\n            count = 1\n            prev_char = char\n        else:\n            count += 1\n    return encoded + str(count) + prev_char"
+ },
+ {
+  "id": "asks/is_pangram",
+  "request": "is pangram",
+  "prompt": "def is_pangram(",
+  "outcome": "error",
+  "detail": "error: NameError(\"name 'characters_without' is not defined\")",
+  "completion": "string):\n    characters_without ()"
+ },
+ {
+  "id": "asks/is_isogram",
+  "request": "is isogram",
+  "prompt": "def is_isogram(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "string):\n    characters_lower = [char.lower() for char in string if char.isalpha()]\n    return len(set(characters_lower)) == len(characters_lower)"
+ },
+ {
+  "id": "asks/remove_vowels",
+  "request": "remove vowels",
+  "prompt": "def remove_vowels(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "s):\n    return ''.join((c for c in s if c not in 'aeiouAEIOU'))"
+ },
+ {
+  "id": "asks/reverse_words",
+  "request": "reverse words",
+  "prompt": "def reverse_words(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "sentence: str) -> str:\n    return ' '.join(sentence.split()[::-1])"
+ },
+ {
+  "id": "asks/longest_word",
+  "request": "longest word",
+  "prompt": "def longest_word(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "sentence: str) -> str:\n    words = sentence.split()\n    return max(words, key=len) if words else ''"
+ },
+ {
+  "id": "asks/hamming_distance",
+  "request": "hamming distance",
+  "prompt": "def hamming_distance(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "X, Y):\n    return sum((x != y for x, y in zip(X, Y)))"
+ },
+ {
+  "id": "asks/edit_distance",
+  "request": "edit distance",
+  "prompt": "def edit_distance(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "x, y):\n    n = len(x)\n    m = len(y)\n    A = [[i + j for j in range(m + 1)] for i in range(n + 1)]\n    for i in range(n):\n        for j in range(m):\n            A[i + 1][j + 1] = min(A[i][j + 1] + 1, A[i + 1][j] + 1, A[i][j] + int(x[i] != y[j]))\n    return A[n][m]"
+ },
+ {
+  "id": "asks/camel_snake",
+  "request": "camel to snake",
+  "prompt": "def camel_snake(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "camel):\n    if not camel:\n        return camel\n    return ''.join(('_' + x if 'A' <= x <= 'Z' else x for x in camel)).lower()[camel[0].isupper():]"
+ },
+ {
+  "id": "asks/longest_common_prefix",
+  "request": "longest common prefix",
+  "prompt": "def longest_common_prefix(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "m):\n    if not m:\n        return ''\n    s1 = min(m)\n    s2 = max(m)\n    for i, c in enumerate(s1):\n        if c != s2[i]:\n            return s1[:i]\n    return s1"
+ },
+ {
+  "id": "asks/balanced_parentheses",
+  "request": "balanced parentheses",
+  "prompt": "def balanced_parentheses(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "input_string):\n    counterparts = {')': '(', '}': '{', ']': '['}\n    stack = []\n    for char in input_string:\n        if char in counterparts.values():\n            stack.append(char)\n        elif char in counterparts:\n            if not stack:\n                return False\n            if stack.pop() != counterparts[char]:\n                return False\n    return not stack"
+ },
+ {
+  "id": "asks/find_max",
+  "request": "find max",
+  "prompt": "def find_max(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "nums: list[int | float]) -> int | float:\n    if len(nums) == 0:\n        raise ValueError('find_max() arg is an empty sequence')\n    max_num = nums[0]\n    for x in nums:\n        if x > max_num:\n            max_num = x\n    return max_num"
+ },
+ {
+  "id": "asks/find_min",
+  "request": "find min",
+  "prompt": "def find_min(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "nums: list[int | float]) -> int | float:\n    if len(nums) == 0:\n        raise ValueError('find_min() arg is an empty sequence')\n    min_num = nums[0]\n    for num in nums:\n        min_num = min(min_num, num)\n    return min_num"
+ },
+ {
+  "id": "asks/sum_list",
+  "request": "sum list",
+  "prompt": "def sum_list(",
+  "outcome": "syntax",
+  "detail": "",
+  "completion": "lst):\n    return sum(lst) for lst, lst in zip(** 2 for lst in lst if l.is_s()), lst in zip(lst for l in lst if lst > lst and lst % 2 == 0, lst else [lst + 1])"
+ },
+ {
+  "id": "asks/average",
+  "request": "average",
+  "prompt": "def average(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "iterator):\n    count = 0\n    total = 0\n    for num in iterator:\n        count += 1\n        total += num\n    return float(total) / count"
+ },
+ {
+  "id": "asks/median",
+  "request": "median",
+  "prompt": "def median(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "iterable, sort=True):\n    s = sorted(iterable) if sort is True else list(iterable)\n    n = len(s)\n    if n == 0:\n        raise ValueError('median() arg is an empty sequence')\n    if n % 2 == 0:\n        return float(s[n // 2 - 1] + s[n // 2]) / 2\n    return s[n // 2]"
+ },
+ {
+  "id": "asks/mode",
+  "request": "mode",
+  "prompt": "def mode(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "seq):\n    return max(seq, key=seq.count)"
+ },
+ {
+  "id": "asks/remove_duplicates",
+  "request": "remove duplicates",
+  "prompt": "def remove_duplicates(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "items):\n    return list(dict.fromkeys(items))"
+ },
+ {
+  "id": "asks/flatten",
+  "request": "flatten",
+  "prompt": "def flatten(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "seqs):\n    return sum(seqs, [])"
+ },
+ {
+  "id": "asks/rotate_list",
+  "request": "rotate list",
+  "prompt": "def rotate_list(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "arr, k, right=True):\n    n = len(arr)\n    right %= n\n    if right:\n        k = n - k\n    return arr[k:] + arr[:k]"
+ },
+ {
+  "id": "asks/chunk_list",
+  "request": "chunk list",
+  "prompt": "def chunk_list(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "items, size):\n    size = max(1, size)\n    return [items[i:i + size] for i in range(0, len(items), size)]"
+ },
+ {
+  "id": "asks/merge_sorted_lists",
+  "request": "merge sorted lists",
+  "prompt": "def merge_sorted_lists(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "a, b):\n    c = []\n    while len(a) != 0 and len(b) != 0:\n        if a[0] < b[0]:\n            c.append(a[0])\n            a.remove(a[0])\n        else:\n            c.append(b[0])\n            b.remove(b[0])\n    if len(a) == 0:\n        c += b\n    else:\n        c += a\n    return c"
+ },
+ {
+  "id": "asks/two_sum",
+  "request": "two sum",
+  "prompt": "def two_sum(",
+  "outcome": "syntax",
+  "detail": "",
+  "completion": "length):\n    if length == 0:\n        return []\n    temp_in_arf_val = 0\n    for index, number in enumerate(temp_in_arf_val):\n        for i, item in enumerate(temp_in_arf_val):\n            temp_in_arf_val = []\n            for i, item in enumerate(temp_in_arf_val):\n                temp_in_arf_val = []\n                for i, item in enumerate(temp_in_arf_val):\n                    temp_in_arf_val = temp_in_arf_val\n                    for i, item in enumerate(temp_in_arf_val):\n                        if not temp_in_arf_val:\n                            res = temp_in_arf_val\n                            if temp_in_arf_val:\n                                res = temp_in_arf_val\n                                if res "
+ },
+ {
+  "id": "asks/transpose",
+  "request": "transpose",
+  "prompt": "def transpose(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "matrix: list[list[int]]) -> list[list[int]]:\n    matrix[:] = [list(x) for x in zip(*matrix)]\n    return matrix"
+ },
+ {
+  "id": "asks/matrix_multiply",
+  "request": "matrix multiply",
+  "prompt": "def matrix_multiply(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "m1, m2):\n    mm = [[0.0 for _ in range(len(m2[0]))] for _ in range(len(m1))]\n    for i in range(len(m1)):\n        for j in range(len(m2[0])):\n            for k in range(len(m2)):\n                mm[i][j] += float(m1[i][k] * m2[k][j])\n    return mm"
+ },
+ {
+  "id": "asks/dot_product",
+  "request": "dot product",
+  "prompt": "def dot_product(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "x, y):\n    return sum((_x * _y for _x, _y in zip(x, y)))"
+ },
+ {
+  "id": "asks/is_sorted",
+  "request": "is sorted",
+  "prompt": "def is_sorted(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "a):\n    n = len(a)\n    for i in range(0, n - 1):\n        if a[i] > a[i + 1]:\n            return False\n    return True"
+ },
+ {
+  "id": "asks/second_largest",
+  "request": "second largest",
+  "prompt": "def second_largest(",
+  "outcome": "error",
+  "detail": "error: UnboundLocalError(\"cannot access local variable 'i' where it is not associated with a value\")",
+  "completion": "lst):\n    lst[i] = set()\n    largest = []\n    for i in range(len(lst)):\n        largest.append(lst)\n    return largest"
+ },
+ {
+  "id": "asks/reverse_list",
+  "request": "reverse list",
+  "prompt": "def reverse_list(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "list):\n    return list[::-1]"
+ },
+ {
+  "id": "asks/cumulative_sum",
+  "request": "cumulative sum",
+  "prompt": "def cumulative_sum(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "ls: [int]) -> [int]:\n    n = len(ls)\n    total = 0\n    sums = [0] * n\n    for i in range(n):\n        total += ls[i]\n        sums[i] = total\n    return sums"
+ },
+ {
+  "id": "asks/max_subarray_sum",
+  "request": "max subarray sum",
+  "prompt": "def max_subarray_sum(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "array: list[int]) -> int:\n    max_so_far = max_now = array[0]\n    for i in range(1, len(array)):\n        max_now = max(array[i], max_now + array[i])\n        max_so_far = max(max_so_far, max_now)\n    return max_so_far"
+ },
+ {
+  "id": "asks/intersection",
+  "request": "intersection",
+  "prompt": "def intersection(",
+  "outcome": "error",
+  "detail": "error: TypeError(\"'bool' object is not iterable\")",
+  "completion": "a, b):\n    return len(a) == 0"
+ },
+ {
+  "id": "asks/permutations",
+  "request": "permutations",
+  "prompt": "def permutations(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "lst):\n    if len(lst) == 0:\n        return []\n    if len(lst) == 1:\n        return [lst]\n    l = []\n    for i in range(len(lst)):\n        m = lst[i]\n        rem_lst = lst[:i] + lst[i + 1:]\n        for p in permutations(rem_lst):\n            l.append([m] + p)\n    return l"
+ },
+ {
+  "id": "asks/power_set",
+  "request": "power set",
+  "prompt": "def power_set(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "nums: list[int]) -> list[list[int]]:\n    result: list[list[int]] = [[]]\n    for number in sorted(nums):\n        result += [item + [number] for item in result]\n    return result"
+ },
+ {
+  "id": "asks/identity_matrix",
+  "request": "identity matrix",
+  "prompt": "def identity_matrix(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "n: int) -> list[list[int]]:\n    return [[int(row == column) for column in range(n)] for row in range(n)]"
+ },
+ {
+  "id": "asks/missing_number",
+  "request": "missing number",
+  "prompt": "def missing_number(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "nums: list[int]) -> int:\n    missing = 0\n    for index, number in enumerate(nums):\n        missing ^= number\n        missing ^= index + 1\n    return missing"
+ },
+ {
+  "id": "asks/count_occurrences",
+  "request": "count occurrences",
+  "prompt": "def count_occurrences(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "a, b):\n    count = 0\n    for i in a:\n        if i is b or i == b:\n            count += 1\n    return count"
+ },
+ {
+  "id": "asks/matrix_addition",
+  "request": "matrix addition",
+  "prompt": "def matrix_addition(",
+  "outcome": "syntax",
+  "detail": "",
+  "completion": "matrix_a: list[list[int]]) -> list[list[int]]:\n    matrix_are_sequence[list(x) for x in zip(*matrix_are_sequence)]"
+ },
+ {
+  "id": "asks/find_duplicates",
+  "request": "find duplicates",
+  "prompt": "def find_duplicates(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "l: list) -> set:\n    return set([x for x in l if l.count(x) > 1])"
+ },
+ {
+  "id": "asks/reverse_linked_list",
+  "request": "reverse linked list",
+  "prompt": "def reverse_linked_list(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "ll):\n    prev_node = None\n    while ll is not None:\n        current = ll\n        ll = ll.next\n        current.next = prev_node\n        prev_node = current\n    return prev_node"
+ },
+ {
+  "id": "asks/tree_height",
+  "request": "tree height",
+  "prompt": "def tree_height(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "root):\n    if root is None:\n        return 0\n    else:\n        return 1 + max(tree_height(root.left), tree_height(root.right))"
+ },
+ {
+  "id": "asks/inorder_traversal",
+  "request": "inorder traversal",
+  "prompt": "def inorder_traversal(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "root, res=None):\n    if root is None:\n        return []\n    if res is None:\n        res = []\n    inorder_traversal(root.left, res)\n    res.append(root.val)\n    inorder_traversal(root.right, res)\n    return res"
+ },
+ {
+  "id": "asks/bst_search",
+  "request": "bst search",
+  "prompt": "def bst_search(",
+  "outcome": "error",
+  "detail": "error: TypeError('bst_search() takes 1 positional argument but 2 were given')",
+  "completion": "root):\n    while root:\n        root = root.right\n    root = root.right"
+ },
+ {
+  "id": "asks/bst_insert",
+  "request": "bst insert",
+  "prompt": "def bst_insert(",
+  "outcome": "error",
+  "detail": "error: AttributeError(\"'NoneType' object has no attribute 'left'\")",
+  "completion": "count, b):\n    while count is not None:\n        count = 0\n        total = 0\n        for index, number in enumerate(counts):\n            total += 1\n        return total"
+ },
+ {
+  "id": "asks/is_bst",
+  "request": "is bst",
+  "prompt": "def is_bst(",
+  "outcome": "syntax",
+  "detail": "",
+  "completion": "year(year): The greater than the this beries this breaking the this the this breaker default of the this breaking this breaking this breaking this breaking or than this default is an this ') and year is not None and (not this not None and this not None and this not None and this not None and this not this not None and this not this not than ear.') and (this not this not this not None and this not this not this not this not than this None) or this None:\n    return this not this 0"
+ },
+ {
+  "id": "asks/count_nodes",
+  "request": "count nodes",
+  "prompt": "def count_nodes(",
+  "outcome": "error",
+  "detail": "error: NameError(\"name 'factorial' is not defined\")",
+  "completion": "number):\n    if number == 0 or number == 1:\n        return 1\n    answer = number * factorial(number - 1)\n    return answer"
+ },
+ {
+  "id": "asks/stack_push",
+  "request": "stack push",
+  "prompt": "def stack_push(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "stack, item):\n    stack.append(item)"
+ },
+ {
+  "id": "asks/stack_pop",
+  "request": "stack pop",
+  "prompt": "def stack_pop(",
+  "outcome": "wrong",
+  "detail": "3 of 3 tests failed",
+  "completion": "stack):\n    stack.append(stack)"
+ },
+ {
+  "id": "asks/enqueue",
+  "request": "enqueue",
+  "prompt": "def enqueue(",
+  "outcome": "wrong",
+  "detail": "3 of 3 tests failed",
+  "completion": "arr, max_num_in_array=None):\n    if not arr:\n        return arr\n    if max_num_in_array is None:\n        max_num_in_array = max(arr)\n    counts = [0] * (max_num_in_array + 1)\n    for num in arr:\n        counts[num] += 1\n    i = 0\n    for num, count in enumerate(counts):\n        for _ in range(count):\n            arr[i] = num\n            i += 1\n    return arr"
+ },
+ {
+  "id": "asks/dequeue",
+  "request": "dequeue",
+  "prompt": "def dequeue(",
+  "outcome": "wrong",
+  "detail": "3 of 3 tests failed",
+  "completion": "iterable, sort=True):\n    sorted_arr = []\n    def find_min_index(arr):\n        if not arr:\n            raise ValueError('array is empty')\n        min_index = 0\n        for iterable in sorted_arr:\n            if iterable[0] == sorted_arr[1]:\n                min_index = iterable[1][iterable]\n        return min_index"
+ },
+ {
+  "id": "asks/fizzbuzz",
+  "request": "fizzbuzz",
+  "prompt": "def fizzbuzz(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "number: int) -> list[int | str]:\n    if number < 1:\n        raise ValueError('n cannot be less than one')\n    if number is None:\n        raise TypeError('n cannot be None')\n    result: list[int | str] = []\n    for value in range(1, number + 1):\n        if value % 3 == 0 and value % 5 == 0:\n            result.append('FizzBuzz')\n        elif value % 3 == 0:\n            result.append('Fizz')\n        elif value % 5 == 0:\n            result.append('Buzz')\n        else:\n            result.append(value)\n    return result"
+ },
+ {
+  "id": "asks/is_leap_year",
+  "request": "is leap year",
+  "prompt": "def is_leap_year(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "year):\n    return year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)"
+ },
+ {
+  "id": "asks/celsius_fahrenheit",
+  "request": "celsius to fahrenheit",
+  "prompt": "def celsius_fahrenheit(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "celsius: float, ndigits: int=2) -> float:\n    return round(float(celsius) * 9 / 5 + 32, ndigits)"
+ },
+ {
+  "id": "asks/fahrenheit_celsius",
+  "request": "fahrenheit to celsius",
+  "prompt": "def fahrenheit_celsius(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "fahrenheit: float, ndigits: int=2) -> float:\n    return round((float(fahrenheit) - 32) * 5 / 9, ndigits)"
+ },
+ {
+  "id": "asks/collatz_sequence",
+  "request": "collatz sequence",
+  "prompt": "def collatz_sequence(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "n: int) -> list[int]:\n    sequence = [n]\n    while n > 1:\n        n = 3 * n + 1 if n % 2 != 0 else int(n / 2)\n        sequence.append(n)\n    return sequence"
+ },
+ {
+  "id": "asks/pascal_triangle",
+  "request": "pascal triangle",
+  "prompt": "def pascal_triangle(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "row_count, previous_row=[1]):\n    if row_count < 0:\n        raise ValueError('number of pascal_triangle is negative')\n    elif row_count == 0:\n        return []\n    temp_row = previous_row + [0]\n    new_row = list(map(sum, zip(temp_row, temp_row[::-1])))\n    return [previous_row] + pascal_triangle(row_count - 1, new_row)"
+ },
+ {
+  "id": "asks/tower_of_hanoi",
+  "request": "tower of hanoi",
+  "prompt": "def tower_of_hanoi(",
+  "outcome": "error",
+  "detail": "error: SyntaxError(\"duplicate argument 'source' in function definition\")",
+  "completion": "n, source, source, target, auxiliary):\n    if n == 0:\n        return []\n    moves = tower_of_hanoi(n - 1, source, auxiliary, target)\n    moves.append((source, target))\n    moves.extend(tower_of_hanoi(n - 1, auxiliary, target, source))\n    return moves"
+ },
+ {
+  "id": "asks/n_queens",
+  "request": "n queens",
+  "prompt": "def n_queens(",
+  "outcome": "syntax",
+  "detail": "",
+  "completion": "l: int) -> int:\n    res = [1, 1]\n    for _ in range(1, l):\n        res += i + 1\n    return [] + s[l + 1] for l in l: [[,]] for l in l: [] for l in lst if l.isdigit() and l.startswith('-') is not None:']]) == ''])]))) == '': '['}[{'.']': '['], '}:{'{': ', '}': '{', ']': '['}\n    res = []\n    for char in res.values():\n        res.append(char)\n        res.append(char)\n    else:\n        res.append(char)\n        res.append(char)\n    return res.sub('[^\\"
+ },
+ {
+  "id": "asks/climb_stairs",
+  "request": "climb stairs",
+  "prompt": "def climb_stairs(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "steps: int) -> int:\n    arr = [1, 1]\n    for _ in range(1, steps):\n        arr.append(arr[-1] + arr[-2])\n    return arr[-1]"
+ },
+ {
+  "id": "asks/euclidean_distance",
+  "request": "euclidean distance",
+  "prompt": "def euclidean_distance(",
+  "outcome": "error",
+  "detail": "error: UnboundLocalError(\"cannot access local variable 'i' where it is not associated with a value\")",
+  "completion": "p1, primes):\n    primes[i] = 0\n    for i in range(p + 1):\n        primes[i] = False"
+ },
+ {
+  "id": "asks/manhattan_distance",
+  "request": "manhattan distance",
+  "prompt": "def manhattan_distance(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "X, Y):\n    return sum([abs(x - y) for x, y in zip(X, Y)])"
+ },
+ {
+  "id": "asks/longest_common_subsequence",
+  "request": "longest common subsequence",
+  "prompt": "def longest_common_subsequence(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "s1, s2):\n    cols = len(s1) + 1\n    rows = len(s2) + 1\n    t = [[0 for i in range(cols)] for i in range(rows)]\n    max_length = 0\n    for i in range(1, rows):\n        for j in range(1, cols):\n            if s2[i - 1] == s1[j - 1]:\n                t[i][j] = 1 + t[i - 1][j - 1]\n            else:\n                t[i][j] = max(t[i - 1][j], t[i][j - 1])\n            max_length = max(max_length, t[i][j])\n    return max_length"
+ },
+ {
+  "id": "asks/bfs",
+  "request": "bfs",
+  "prompt": "def bfs(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "graph, start):\n    visited = set()\n    queue = [start]\n    result = []\n    while queue:\n        node = queue.pop(0)\n        if node not in visited:\n            visited.add(node)\n            result.append(node)\n            queue.extend(graph[node])\n    return result"
+ },
+ {
+  "id": "asks/clamp",
+  "request": "clamp",
+  "prompt": "def clamp(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "num: int, min_value: int, max_value: int) -> int:\n    return max(min(num, max_value), min_value)"
+ },
+ {
+  "id": "asks/sign",
+  "request": "sign",
+  "prompt": "def sign(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "num: float) -> int:\n    if num < 0:\n        return -1\n    return 1 if num else 0"
+ },
+ {
+  "id": "asks/absolute_value",
+  "request": "absolute value",
+  "prompt": "def absolute_value(",
+  "outcome": "error",
+  "detail": "error: TypeError(\"'int' object is not iterable\")",
+  "completion": "num: list[int]) -> int:\n    missing = 0\n    for index, number in enumerate(num):\n        missing ^= number\n        missing ^= index + 1\n    return missing"
+ },
+ {
+  "id": "asks/gnome_sort",
+  "request": "gnome sort",
+  "prompt": "def gnome_sort(",
+  "outcome": "error",
+  "detail": "error: SyntaxError(\"duplicate argument 'k' in function definition\")",
+  "completion": "arr, k, k, max_num_in_array=None):\n    if not arr:\n        return arr\n    if max_num_in_array is None:\n        max_num_in_array = max(arr)\n    counts = [0] * (max_num_in_array + 1)\n    for num in arr:\n        counts[num] += 1\n    i = 0\n    for num, count in enumerate(counts):\n        for _ in range(count):\n            arr[i] = num\n            i += 1\n    return arr"
+ },
+ {
+  "id": "asks/comb_sort",
+  "request": "comb sort",
+  "prompt": "def comb_sort(",
+  "outcome": "error",
+  "detail": "error: NameError(\"name 'permutations' is not defined\")",
+  "completion": "lst):\n    if len(lst) == 0:\n        return []\n    if len(lst) == 1:\n        return [lst]\n    l = []\n    for i in range(len(lst)):\n        m = lst[i]\n        rem_lst = lst[:i] + lst[i + 1:]\n        for p in permutations(rem_lst):\n            l.append([m] + p)\n    return l"
+ },
+ {
+  "id": "asks/cocktail_sort",
+  "request": "cocktail sort",
+  "prompt": "def cocktail_sort(",
+  "outcome": "wrong",
+  "detail": "8 of 8 tests failed",
+  "completion": "y):\n    return {'.': '<', '>': '<', '>': '<'}"
+ },
+ {
+  "id": "asks/radix_sort",
+  "request": "radix sort",
+  "prompt": "def radix_sort(",
+  "outcome": "error",
+  "detail": "error: TypeError(\"radix_sort() missing 1 required positional argument: 'b'\")",
+  "completion": "a, b):\n    n = len(a)\n    for i in range(0, n - 1):\n        if a[i] > a[i + 1]:\n            return False\n    return True"
+ },
+ {
+  "id": "asks/pancake_sort",
+  "request": "pancake sort",
+  "prompt": "def pancake_sort(",
+  "outcome": "error",
+  "detail": "error: TypeError(\"pancake_sort() missing 1 required positional argument: 'max_num_incake_values'\")",
+  "completion": "arr, max_num_incake_values):\n    max_num_in_array = max(arr)\n    for num in arr:\n        max_num_in_array = max(arr)\n    counts = [0] * (max_num_in_array + 1)\n    for num in arr:\n        counts[num] += 1\n    i = 0\n    for num, count in enumerate(counts):\n        for _ in range(count):\n            arr[i] = num\n            i += 1\n    return arr"
+ },
+ {
+  "id": "asks/cycle_sort",
+  "request": "cycle sort",
+  "prompt": "def cycle_sort(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "array):\n    n = len(array)\n    for i in range(n):\n        for j in range(0, n - i - 1):\n            if array[j] > array[j + 1]:\n                array[j], array[j + 1] = (array[j + 1], array[j])\n    return array"
+ },
+ {
+  "id": "asks/exchange_sort",
+  "request": "exchange sort",
+  "prompt": "def exchange_sort(",
+  "outcome": "error",
+  "detail": "error: IndexError('list index out of range')",
+  "completion": "arr, max_num_in_array=None):\n    if not arr:\n        return arr\n    if max_num_in_array is None:\n        max_num_in_array = max(arr)\n    counts = [0] * (max_num_in_array + 1)\n    for num in arr:\n        counts[num] += 1\n    i = 0\n    for num, count in enumerate(counts):\n        for _ in range(count):\n            arr[i] = num\n            i += 1\n    return arr"
+ },
+ {
+  "id": "asks/bucket_sort",
+  "request": "bucket sort",
+  "prompt": "def bucket_sort(",
+  "outcome": "error",
+  "detail": "error: ValueError('find_min() arg is an empty sequence')",
+  "completion": "nums: list[int | float]) -> int | float:\n    if len(nums) == 0:\n        raise ValueError('find_min() arg is an empty sequence')\n    min_num = nums[0]\n    for num in nums:\n        min_num = min(min_num, num)\n    return min_num"
+ },
+ {
+  "id": "asks/odd_even_sort",
+  "request": "odd even sort",
+  "prompt": "def odd_even_sort(",
+  "outcome": "error",
+  "detail": "error: TypeError(\"'list' object cannot be interpreted as an integer\")",
+  "completion": "lst):\n    return [i for i in range(1, len(lst), 2) for _ in range(lst)]"
+ },
+ {
+  "id": "asks/jump_search",
+  "request": "jump search",
+  "prompt": "def jump_search(",
+  "outcome": "error",
+  "detail": "error: TypeError('jump_search() takes 1 positional argument but 2 were given')",
+  "completion": "root):\n    if root is None:\n        return 0\n    else:\n        return 1 + max(tree_search(root.left, root.left))"
+ },
+ {
+  "id": "asks/interpolation_search",
+  "request": "interpolation search",
+  "prompt": "def interpolation_search(",
+  "outcome": "error",
+  "detail": "error: TypeError(\"object of type 'int' has no len()\")",
+  "completion": "a, b):\n    if len(b) == 0:\n        return []\n    if len(a) == 1:\n        return [0, 0, 0]\n    for value in a:\n        if value == b and value <= value:\n            return a[value]\n        if value is None:\n            return []\n        if value is None:\n            return []\n        if value is None:\n            return []\n        if value is None:\n            return []\n        if value is None:\n            return []\n        if value is None:\n            value = value\n    return value"
+ },
+ {
+  "id": "asks/title_case",
+  "request": "title case",
+  "prompt": "def title_case(",
+  "outcome": "error",
+  "detail": "error: NameError(\"name 'l' is not defined\")",
+  "completion": "lst):\n    return [x for x in l if x not in 'aeiouAEIOU']"
+ },
+ {
+  "id": "asks/swap_case",
+  "request": "swap case",
+  "prompt": "def swap_case(",
+  "outcome": "wrong",
+  "detail": "5 of 5 tests failed",
+  "completion": "lst):\n    return [item for item in lst if item.isspace()]"
+ },
+ {
+  "id": "asks/count_consonants",
+  "request": "count consonants",
+  "prompt": "def count_consonants(",
+  "outcome": "wrong",
+  "detail": "3 of 5 tests failed",
+  "completion": "input_consonants):\n    return sum((1 for char in input_consonants))"
+ },
+ {
+  "id": "asks/remove_spaces",
+  "request": "remove spaces",
+  "prompt": "def remove_spaces(",
+  "outcome": "error",
+  "detail": "error: TypeError(\"'<' not supported between instances of 'str' and 'int'\")",
+  "completion": "l):\n    if l < 2:\n        return ll\n    else:\n        return l"
+ },
+ {
+  "id": "asks/is_numeric",
+  "request": "is numeric",
+  "prompt": "def is_numeric(",
+  "outcome": "syntax",
+  "detail": "",
+  "completion": "n: int) -> bool:\n    if n <= 2:\n        return False\n    if n > 2:\n        return True\n    if n % 2 == 0:\n        return False\n    factor = 5\n    while factor * factor <= n:\n        if n % factor == 0:\n            return False\n        factor += factor + factor * factor / factor * factor <= factor factor <= factor factor <= factor factor <= factor factor factor factor factor factor > factor and factor > factor factor and factor > factor factor and factor in factor = factor * factor in factor * factor * (factor * factor + factor * factor * factor * factor * factor * factor * factor "
+ },
+ {
+  "id": "asks/pig_latin",
+  "request": "pig latin",
+  "prompt": "def pig_latin(",
+  "outcome": "error",
+  "detail": "error: TypeError(\"can't multiply sequence by non-int of type 'float'\")",
+  "completion": "length):\n    return length * 0.5"
+ },
+ {
+  "id": "asks/compress_spaces",
+  "request": "compress spaces",
+  "prompt": "def compress_spaces(",
+  "outcome": "syntax",
+  "detail": "",
+  "completion": "lst):\n    return [item for item in range(lst)] for item in range(lst)item, lst[item] for item in range(lst) if item % 2 != 0, len(lst)\n    return lst"
+ },
+ {
+  "id": "asks/ascii_codes",
+  "request": "ascii codes",
+  "prompt": "def ascii_codes(",
+  "outcome": "syntax",
+  "detail": "",
+  "completion": "code):\n    code_code_code_code_code_: str = code_code_code_code_code_code_code_code_code_coorder + code_code_code_code_code_code_code_code_coorder + code_code_code_code_code_code_coorder + code_code_code_code_code_code_code_coorder + code_code_code_code_code_code_coorder + code_code_code_code_code_code_coorder + code_code_code_code_code_coorder + code_code_coorder code_coorder + code_code_coorder + code_coorder + code_code_coorder + code_code_coorder + code_coorder + code_coorder + code_coorder + code_coorder + code_coorder "
+ },
+ {
+  "id": "asks/repeat_string",
+  "request": "repeat string",
+  "prompt": "def repeat_string(",
+  "outcome": "error",
+  "detail": "error: TypeError('repeat_string() takes 1 positional argument but 2 were given')",
+  "completion": "number: int) -> int:\n    if number < 0:\n        raise ValueError('the value of input must not be negative')\n    result = 0\n    while number:\n        if number % 2 == 1:\n            result += 1\n        number >>= 1\n    return result"
+ },
+ {
+  "id": "asks/count_uppercase",
+  "request": "count uppercase",
+  "prompt": "def count_uppercase(",
+  "outcome": "error",
+  "detail": "error: NameError(\"name 'b' is not defined\")",
+  "completion": "a):\n    return sum((a ** 2 for a, b in zip((a, b))))"
+ },
+ {
+  "id": "asks/first_non_repeating_char",
+  "request": "first non repeating char",
+  "prompt": "def first_non_repeating_char(",
+  "outcome": "error",
+  "detail": "error: TypeError(\"'>' not supported between instances of 'str' and 'int'\")",
+  "completion": "n):\n    next = 0\n    while n > 0:\n        n = 3 * n + str(n - 32) * n + n\n        return n"
+ },
+ {
+  "id": "asks/is_rotation",
+  "request": "is rotation",
+  "prompt": "def is_rotation(",
+  "outcome": "error",
+  "detail": "error: TypeError('is_rotation() takes 1 positional argument but 2 were given')",
+  "completion": "number: int) -> bool:\n    if number <= 1:\n        return False\n    if number <= 3:\n        return True\n    if number % 2 == 0 or number % 3 == 0:\n        return False\n    factor = 5\n    while factor * factor <= number:\n        if number % factor == 0 or number % (factor + 2) == 0:\n            return False\n        factor += 6\n    return True"
+ },
+ {
+  "id": "asks/is_subsequence",
+  "request": "is subsequence",
+  "prompt": "def is_subsequence(",
+  "outcome": "error",
+  "detail": "error: TypeError('is_subsequence() takes 1 positional argument but 2 were given')",
+  "completion": "text):\n    if len(text) == 0:\n        return False\n    total = 0\n    for i in range(0, len(text)):\n        if l.is_subsequence():\n            total += l\n            total += l\n            if n == 0:\n                return str\n            return float(total) / count"
+ },
+ {
+  "id": "asks/reverse_each_word",
+  "request": "reverse each word",
+  "prompt": "def reverse_each_word(",
+  "outcome": "wrong",
+  "detail": "4 of 5 tests failed",
+  "completion": "sentence: str) -> str:\n    return ' '.join(sentence.split()[::-1])"
+ },
+ {
+  "id": "asks/count_char",
+  "request": "count char",
+  "prompt": "def count_char(",
+  "outcome": "syntax",
+  "detail": "",
+  "completion": "nums: int) -> int:\n    if nums < 0:\n        return -1\n    return count_characters_lower = [char.lower() for char in string if char.isalpha()]\n    return len(set(characters_lower)) == len(characters_lower)"
+ },
+ {
+  "id": "asks/acronym",
+  "request": "acronym",
+  "prompt": "def acronym(",
+  "outcome": "syntax",
+  "detail": "",
+  "completion": "lst):\n    return sum(lst) for lstx in lsts[::-1].split(' ')[0].split(',')[0].split(',')[1].split(',')[1]')', lst[1][1].split(',')[1].split(',')[1].split(',')[1].split(',')[1]: '[[1]]', '[', 1.0000:[1], ']': '[', '], ',': [1], '[', '], '], '': '['}), '], ']}}) -> ['V']: ' if not arr['V'] == '': '{'"
+ },
+ {
+  "id": "asks/length_of_last_word",
+  "request": "length of last word",
+  "prompt": "def length_of_last_word(",
+  "outcome": "wrong",
+  "detail": "4 of 4 tests failed",
+  "completion": "sentence: str) -> str:\n    words = sentence.split()\n    return max(words, key=len) if words else ''"
+ },
+ {
+  "id": "asks/remove_punctuation",
+  "request": "remove punctuation",
+  "prompt": "def remove_punctuation(",
+  "outcome": "wrong",
+  "detail": "5 of 5 tests failed",
+  "completion": "lst):\n    return [item for item in lst if item == '!']"
+ },
+ {
+  "id": "asks/longest_palindrome",
+  "request": "longest palindrome",
+  "prompt": "def longest_palindrome(",
+  "outcome": "error",
+  "detail": "error: NameError(\"name 'input_string' is not defined\")",
+  "completion": "longest_num: str) -> str:\n    alphabet = 'abcdefghijklmnopqrstuvwxyz'\n    return all((char in input_string.lower() for char in alphabet))"
+ },
+ {
+  "id": "asks/vowel_positions",
+  "request": "vowel positions",
+  "prompt": "def vowel_positions(",
+  "outcome": "error",
+  "detail": "error: TypeError(\"vowel_positions() missing 1 required positional argument: 'b'\")",
+  "completion": "a, b):\n    return a ** b"
+ },
+ {
+  "id": "asks/find_all",
+  "request": "find all",
+  "prompt": "def find_all(",
+  "outcome": "error",
+  "detail": "error: TypeError('find_all() takes 1 positional argument but 2 were given')",
+  "completion": "nums: list[int | float]) -> int | float:\n    if len(nums) == 0:\n        raise ValueError('find_all')\n    num = nums[0]\n    for num in nums:\n        if num > nums:\n            nums[num] = nums[num]\n        num = 0\n        for num in nums:\n            if num > nums[num]:\n                nums[num], nums[num] = nums[nums[num]]\n            else:\n                nums[num] = nums[num]\n                nums[num] = nums[num][num] + nums[num + 1]\n            return nums"
+ },
+ {
+  "id": "asks/string_int",
+  "request": "string to int",
+  "prompt": "def string_int(",
+  "outcome": "error",
+  "detail": "error: KeyError('1')",
+  "completion": "text: str) -> int:\n    if not text:\n        return 0\n    number = 0\n    roman_values = {'M': 1000, 'D': 500, 'C': 100, 'L': 50, 'X': 10, 'V': 5, 'I': 1}\n    for index in range(len(text) - 1):\n        if roman_values[text[index]] < roman_values[text[index + 1]]:\n            number -= roman_values[text[index]]\n        else:\n            number += roman_values[text[index]]\n    return number + roman_values[text[-1]]"
+ },
+ {
+  "id": "asks/longest_unique_substring",
+  "request": "longest unique substring",
+  "prompt": "def longest_unique_substring(",
+  "outcome": "wrong",
+  "detail": "6 of 6 tests failed",
+  "completion": "m):\n    if not m:\n        return ''\n    s1 = min(m)\n    s2 = max(m)\n    for i, c in enumerate(s1):\n        if c != s2[i]:\n            return s1[:i]\n    return s1"
+ },
+ {
+  "id": "asks/sort_string",
+  "request": "sort string",
+  "prompt": "def sort_string(",
+  "outcome": "error",
+  "detail": "error: TypeError(\"'str' object cannot be interpreted as an integer\")",
+  "completion": "num):\n    if num is None:\n        raise TypeError('n cannot be None')\n    result: list[int | str] = []\n    for value in range(1, num) + 1:\n        if value % 2 == 0:\n            result.append(value)\n            result.append(value)\n        return result"
+ },
+ {
+  "id": "asks/has_unique_chars",
+  "request": "has unique chars",
+  "prompt": "def has_unique_chars(",
+  "outcome": "syntax",
+  "detail": "",
+  "completion": "s: str) -> str:\n    alphabet = 'abcdefghijklmnopqrstuvwxyz'\n    return all((char in s for char in s if char in '))).lower()[c] == '' and len(s) == '': '['}:{c:02}'.format(char, c) for char in s]))"
+ },
+ {
+  "id": "asks/rot13",
+  "request": "rot13",
+  "prompt": "def rot13(",
+  "outcome": "error",
+  "detail": "error: UnboundLocalError(\"cannot access local variable 'max_num_in_array' where it is not associated with a value\")",
+  "completion": "arr: str) -> int:\n    if not arr:\n        return arr\n    if max_num_in_array is None:\n        max_num_in_array = max(arr)\n    counts = [0] * (max_num_in_array + 1)\n    for num in arr:\n        counts[num] += 1\n    i = 0\n    for num, count in enumerate(counts):\n        for _ in range(count):\n            arr[i] = num\n            i += 1\n    return arr"
+ },
+ {
+  "id": "asks/atbash",
+  "request": "atbash",
+  "prompt": "def atbash(",
+  "outcome": "syntax",
+  "detail": "",
+  "completion": "iterable, : int) -> int:\n    i = 0\n    n = abs(n)\n    while i < n:\n        n = 3 * i + 1\n        n //= 1\n    if i * n + 1:\n        n = 1\n    return n"
+ },
+ {
+  "id": "asks/add_lists",
+  "request": "add lists",
+  "prompt": "def add_lists(",
+  "outcome": "wrong",
+  "detail": "3 of 4 tests failed",
+  "completion": "a, b):\n    if b == 0:\n        return []\n    return a"
+ },
+ {
+  "id": "asks/pairwise_sum",
+  "request": "pairwise sum",
+  "prompt": "def pairwise_sum(",
+  "outcome": "wrong",
+  "detail": "3 of 4 tests failed",
+  "completion": "arr):\n    if not arr:\n        return arr\n    return arr"
+ },
+ {
+  "id": "asks/running_maximum",
+  "request": "running maximum",
+  "prompt": "def running_maximum(",
+  "outcome": "wrong",
+  "detail": "3 of 4 tests failed",
+  "completion": "lst):\n    return [item * 2 for item in lst]"
+ },
+ {
+  "id": "asks/dedupe_sorted",
+  "request": "dedupe sorted",
+  "prompt": "def dedupe_sorted(",
+  "outcome": "error",
+  "detail": "error: TypeError(\"dedupe_sorted() missing 1 required positional argument: 'b'\")",
+  "completion": "a, b):\n    n = len(a)\n    for i in range(a) in range(0, n - 1):\n        if a[i] > a[i + 1]:\n            return False\n    return True"
+ },
+ {
+  "id": "asks/interleave",
+  "request": "interleave",
+  "prompt": "def interleave(",
+  "outcome": "error",
+  "detail": "error: ZeroDivisionError('integer modulo by zero')",
+  "completion": "a, b):\n    n = len(a)\n    for i in range(n):\n        if i % i == 0:\n            factors.append(i)\n    return factors"
+ },
+ {
+  "id": "asks/split_even_odd",
+  "request": "split even odd",
+  "prompt": "def split_even_odd(",
+  "outcome": "error",
+  "detail": "error: TypeError(\"'list' object cannot be interpreted as an integer\")",
+  "completion": "n):\n    return [i for i in range(n) if i % 2 == 0]"
+ },
+ {
+  "id": "asks/even_numbers",
+  "request": "even numbers",
+  "prompt": "def even_numbers(",
+  "outcome": "error",
+  "detail": "error: TypeError(\"'int' object is not iterable\")",
+  "completion": "nums: list[int | float]) -> int | float:\n    if len(nums) == 0:\n        raise ValueError('find_min() arg is an empty sequence')\n    min_num = nums[0]\n    for num in nums:\n        min_num = min(min_num, num)\n    return min_num"
+ },
+ {
+  "id": "asks/list_difference",
+  "request": "list difference",
+  "prompt": "def list_difference(",
+  "outcome": "wrong",
+  "detail": "4 of 5 tests failed",
+  "completion": "a, b):\n    return list(set(a) & set(b))"
+ },
+ {
+  "id": "asks/list_union",
+  "request": "list union",
+  "prompt": "def list_union(",
+  "outcome": "error",
+  "detail": "error: TypeError('list_union() takes 1 positional argument but 2 were given')",
+  "completion": "num: list[int | float]) -> int | float:\n    if len(num) == 0:\n        raise ValueError('find_min() arg is an empty sequence')\n    min_num = num\n    while num > 0:\n        min_num = num\n        num -= min(min_num, num) if num < 0 else num"
+ },
+ {
+  "id": "asks/zip_pairs",
+  "request": "zip to pairs",
+  "prompt": "def zip_pairs(",
+  "outcome": "error",
+  "detail": "error: TypeError('zip_pairs() takes 1 positional argument but 2 were given')",
+  "completion": "l: str) -> str:\n    return ' '.join(s)"
+ },
+ {
+  "id": "asks/unzip",
+  "request": "unzip",
+  "prompt": "def unzip(",
+  "outcome": "error",
+  "detail": "error: TypeError(\"unzip() missing 1 required positional argument: 'b'\")",
+  "completion": "a, b):\n    if b == 0:\n        return a\n    return a"
+ },
+ {
+  "id": "asks/window_sums",
+  "request": "window sums",
+  "prompt": "def window_sums(",
+  "outcome": "error",
+  "detail": "error: TypeError('window_sums() takes 1 positional argument but 2 were given')",
+  "completion": "s: str) -> int:\n    if not isinstance(s, str):\n        raise TypeError('Input must be a string')\n    v = 'aeiouAEIOU'\n    s2 = 'aeiouAEIOU'\n    return sum((1 for char in s if char in vowels))"
+ },
+ {
+  "id": "asks/moving_average",
+  "request": "moving average",
+  "prompt": "def moving_average(",
+  "outcome": "error",
+  "detail": "error: TypeError('moving_average() takes 1 positional argument but 2 were given')",
+  "completion": "iterator):\n    return iterator.count(' ')"
+ },
+ {
+  "id": "asks/argmax",
+  "request": "argmax",
+  "prompt": "def argmax(",
+  "outcome": "error",
+  "detail": "error: NameError(\"name 'arg' is not defined\")",
+  "completion": "nums: list[arg]) -> int | None:\n    if not num:\n        return False\n    num = 0\n    for num in nums:\n        if num < 0:\n            return False\n        num = 0\n        num = 0\n        while num < num:\n            if num > num:\n                num = 1\n            elif num < num:\n                num = 1\n            else:\n                num = -num\n            num = nums[num]\n            num = x\n            num = min(num, num)\n            num = min(num, num)\n        return num"
+ },
+ {
+  "id": "asks/argmin",
+  "request": "argmin",
+  "prompt": "def argmin(",
+  "outcome": "syntax",
+  "detail": "",
+  "completion": "num: int) -> int:\n    min_value: int: int, max_value: int=10, min_value: int=2, min_value: int=0, min_value: int=min_value, min_value: int=min_value, min_value: int=min_value, min_value: int=min_value, min_value: int=min_value, min_value: int=min_value, min_value: int=min_value, min_value: int=min_value, min_value: int=min_value: int=min_valuevalue, min_value: int=min_value, min_value: int=min_value, min_value: int=min_valuevalue, min_value: int=min_valuevalue, min_value: int=min_valuevalue, min_value: int=min_valuevalue, min_value: "
+ },
+ {
+  "id": "asks/count_greater",
+  "request": "count greater",
+  "prompt": "def count_greater(",
+  "outcome": "error",
+  "detail": "error: TypeError('count_greater() takes 1 positional argument but 2 were given')",
+  "completion": "s: str) -> int:\n    if not isinstance(s, str):\n        raise TypeError('Input must be a string')\n    vowels = 'aeiouAEIOU'\n    return sum((1 for char in s if char in vowels))"
+ },
+ {
+  "id": "asks/is_palindrome_list",
+  "request": "is palindrome list",
+  "prompt": "def is_palindrome_list(",
+  "outcome": "error",
+  "detail": "error: TypeError(\"is_palindrome_list() missing 1 required positional argument: 'size'\")",
+  "completion": "items, size):\n    size = max(1, size)\n    return [items[i:i + size] for i in range(0, len(items), size)]"
+ },
+ {
+  "id": "asks/split_half",
+  "request": "split in half",
+  "prompt": "def split_half(",
+  "outcome": "error",
+  "detail": "error: TypeError(\"'int' object is not iterable\")",
+  "completion": "nums: list[int]) -> int:\n    missing = 0\n    for index, number in enumerate(nums):\n        missing ^= number\n        missing ^= index + 1\n    return missing"
+ },
+ {
+  "id": "asks/list_product",
+  "request": "list product",
+  "prompt": "def list_product(",
+  "outcome": "wrong",
+  "detail": "5 of 5 tests failed",
+  "completion": "lst):\n    return [i for i in range(1, len(lst))]"
+ },
+ {
+  "id": "asks/range_step",
+  "request": "range step",
+  "prompt": "def range_step(",
+  "outcome": "syntax",
+  "detail": "",
+  "completion": "0, 1):\n    startstartstartend(1, start, end): (start, end)\n    startstartstarting = start\n    startstartstarting = end.split(start)\n    start[start] = start[start][start]\n    start = start[start][start]\n    start = start.end(start, end)\n    start = start + start\n    start = start + start + start + start + start + start + start + start + start + start + start + start + start + start + start + start + start + start + start + start + start + start + start + start + start + start + start + start + start + start + start + start + start * start + start + start + start + start + start + start + start * start + start + start + start + start + "
+ },
+ {
+  "id": "asks/last_index",
+  "request": "last index",
+  "prompt": "def last_index(",
+  "outcome": "syntax",
+  "detail": "",
+  "completion": "lst):\n    if not arr:\n        return (lst[0], lst[1]) lst[1]\n    else:\n        return lst[-1]"
+ },
+ {
+  "id": "asks/kth_largest",
+  "request": "kth largest",
+  "prompt": "def kth_largest(",
+  "outcome": "syntax",
+  "detail": "",
+  "completion": "lst):\n    largest(lst)\n    largest_so_far = []\n    for i in range(len(lst)):\n        largest_so_far = [] + lst[i + 1][j + 1] for i in range(len(lst)) + 1: int(x[i]) + 1\n        for i in range(len(lst)):\n            m = lst[i]\n            rem_lst = lst[:i] + lst[i + 1:]\n            for p in permutations(rem_lst):\n                l.append([m] + p)\n        return l"
+ },
+ {
+  "id": "asks/kth_smallest",
+  "request": "kth smallest",
+  "prompt": "def kth_smallest(",
+  "outcome": "syntax",
+  "detail": "",
+  "completion": "nums: list[int] for tup in list(z)) if tup is not None:\n    zip = [[::-1] + [tup + 1] + 15, tup[tup + 1][0] + 15, tup[1][1] + tup[1] + tup[1][15] + tup[2][2] + tup[15:][0] + tup[1][0], tup[1][0] + tup[1]] + tup[1][1] + tup[2] + tup[2:]"
+ },
+ {
+  "id": "asks/sum_even_numbers",
+  "request": "sum even numbers",
+  "prompt": "def sum_even_numbers(",
+  "outcome": "error",
+  "detail": "error: ValueError(\"invalid literal for int() with base 10: '['\")",
+  "completion": "numbers):\n    return sum((pow(int(digit), len(str(numbers)), len(str(numbers))) for digit in str(numbers))) == numbers"
+ },
+ {
+  "id": "asks/count_evens",
+  "request": "count evens",
+  "prompt": "def count_evens(",
+  "outcome": "wrong",
+  "detail": "4 of 4 tests failed",
+  "completion": "x):\n    if 3 == 3:\n        return 1\n    return count_evens[0]"
+ },
+ {
+  "id": "asks/squares",
+  "request": "squares",
+  "prompt": "def squares(",
+  "outcome": "syntax",
+  "detail": "",
+  "completion": "number + 1) + 11_0 + 1 if number % 2 == 0:\n    return False"
+ },
+ {
+  "id": "asks/swap",
+  "request": "swap",
+  "prompt": "def swap(",
+  "outcome": "error",
+  "detail": "error: TypeError('swap() takes 1 positional argument but 3 were given')",
+  "completion": "items):\n    if not isinstance(items, int):\n        raise TypeError('Incorrect number type provided. Only integers are accepted.')\n    div, mod = items\n    div, divisor = divmod(divisor, 1000)\n    return divisors"
+ },
+ {
+  "id": "asks/is_subset",
+  "request": "is subset",
+  "prompt": "def is_subset(",
+  "outcome": "error",
+  "detail": "error: TypeError('is_subset() takes 1 positional argument but 2 were given')",
+  "completion": "alphabet):\n    alphabet = {}\n    alphabet = alphabet[0]\n    alphabet = alphabet[0]\n    alphabet = alphabet[0]\n    alphabet = alphabet[0] * alphabet\n    alphabet = alphabet[0] * alphabet"
+ },
+ {
+  "id": "asks/count_unique",
+  "request": "count unique",
+  "prompt": "def count_unique(",
+  "outcome": "error",
+  "detail": "error: TypeError(\"count_unique() missing 1 required positional argument: 'num1'\")",
+  "completion": "num2, num1):\n    count = 0\n    for char in num2:\n        count += 1\n        total += num\n    return float(count) / count"
+ },
+ {
+  "id": "asks/has_duplicates",
+  "request": "has duplicates",
+  "prompt": "def has_duplicates(",
+  "outcome": "wrong",
+  "detail": "2 of 5 tests failed",
+  "completion": "items):\n    return list(dict.fromkeys(items))"
+ },
+ {
+  "id": "asks/all_equal",
+  "request": "all equal",
+  "prompt": "def all_equal(",
+  "outcome": "error",
+  "detail": "error: TypeError(\"'>' not supported between instances of 'list' and 'int'\")",
+  "completion": "nums: list[int | float]) -> int | float:\n    if len(nums) == 0:\n        raise ValueError('find_max() arg is an equal')\n    max_len = len(nums) // 2\n    if nums > 0:\n        return (max_len - nums) + nums"
+ },
+ {
+  "id": "asks/min_max",
+  "request": "min max",
+  "prompt": "def min_max(",
+  "outcome": "error",
+  "detail": "error: TypeError(\"'list' object cannot be interpreted as an integer\")",
+  "completion": "nums: int) -> int:\n    min_index = nums[0]\n    sums = 0\n    for index in range(nums):\n        index *= index\n    return index"
+ },
+ {
+  "id": "asks/nested_sum",
+  "request": "nested sum",
+  "prompt": "def nested_sum(",
+  "outcome": "error",
+  "detail": "error: TypeError(\"unsupported operand type(s) for +: 'int' and 'list'\")",
+  "completion": "axis):\n    return sum(axis)"
+ },
+ {
+  "id": "asks/flatten_nested",
+  "request": "flatten nested",
+  "prompt": "def flatten_nested(",
+  "outcome": "syntax",
+  "detail": "",
+  "completion": "nums: list(map) - map.isdigit()) + map(mapping, nums):\n    misdigits = mapping[mapping]\n    if missing != mapping:\n        return misdigits(mapping, mapping)\n    else:\n        return misdigits(mapping)"
+ },
+ {
+  "id": "asks/remove_all",
+  "request": "remove all",
+  "prompt": "def remove_all(",
+  "outcome": "syntax",
+  "detail": "",
+  "completion": "nums: list[int | float]) -> int | float:\n    if len(nums) == 0:\n        raise ValueError('find_all_all_all_all_all_all_all_all_all_all_all_all_all_all_all_all_all_all_all_all_all_all_all(nums, int | (nums) >= 2 * int >= int == nums[int - 1]) + nums[int + 1] + nums[int - 1] + nums[int + 1] + nums[int + 1]:] + nums[int + 1:] + nums[int + 1:] + nums[int + 1:] + nums[int + 1:] + nums[int + 1:] + nums[int + 1:"
+ },
+ {
+  "id": "asks/compact",
+  "request": "compact",
+  "prompt": "def compact(",
+  "outcome": "error",
+  "detail": "error: TypeError('Incorrect number type provided. Only integers are accepted.')",
+  "completion": "n: str) -> str:\n    if not isinstance(n, int):\n        raise TypeError('Incorrect number type provided. Only integers are accepted.')\n    divisors = []\n    for i in range(1, number + 1):\n        if number % i == 0:\n            divisors.append(i)\n    return divisors"
+ },
+ {
+  "id": "asks/is_monotonic",
+  "request": "is monotonic",
+  "prompt": "def is_monotonic(",
+  "outcome": "syntax",
+  "detail": "",
+  "completion": "number):\n    return number == 0 and (not number:= 100(number) + 1): int(number / 100) * 5 / 9, 200: int(number ** 0.500) * numbers"
+ },
+ {
+  "id": "asks/longest_increasing_subsequence",
+  "request": "longest increasing subsequence",
+  "prompt": "def longest_increasing_subsequence(",
+  "outcome": "error",
+  "detail": "error: TypeError(\"longest_increasing_subsequence() missing 1 required positional argument: 's2'\")",
+  "completion": "s1, s2):\n    if not s1['longest']:\n        return s1['longest']\n    else:\n        return s1['longest']"
+ },
+ {
+  "id": "asks/merge_intervals",
+  "request": "merge intervals",
+  "prompt": "def merge_intervals(",
+  "outcome": "error",
+  "detail": "error: NameError(\"name 'anon' is not defined\")",
+  "completion": "int):\n    return [s for s in anon if s.ism(s) > 1]"
+ },
+ {
+  "id": "asks/max_profit",
+  "request": "max profit",
+  "prompt": "def max_profit(",
+  "outcome": "error",
+  "detail": "error: TypeError(\"max_profit() missing 1 required positional argument: 'y'\")",
+  "completion": "x, y):\n    for i, item in enumerate(x):\n        if y == y:\n            return i\n    return None"
+ },
+ {
+  "id": "asks/move_zeros",
+  "request": "move zeros",
+  "prompt": "def move_zeros(",
+  "outcome": "error",
+  "detail": "error: NameError(\"name 'nums' is not defined\")",
+  "completion": "num: list[int | float]) -> int | float:\n    if len(num) == 0:\n        raise ValueError('find_max() arg is an empty sequence')\n    max_num = nums[0]\n    for x in nums:\n        if x > max_num:\n            max_num = x\n    return max_num"
+ },
+ {
+  "id": "asks/majority_element",
+  "request": "majority element",
+  "prompt": "def majority_element(",
+  "outcome": "wrong",
+  "detail": "4 of 4 tests failed",
+  "completion": "n):\n    if not n:\n        return 2\n    if n != n:\n        return n\n    return n"
+ },
+ {
+  "id": "asks/single_number",
+  "request": "single number",
+  "prompt": "def single_number(",
+  "outcome": "error",
+  "detail": "error: NameError(\"name 'nums' is not defined\")",
+  "completion": "num):\n    n = len(nums)\n    for length in range(nums):\n        for j in range(nums):\n            m[i + 1][j + 1] = min(A[i + 1][j] + 1, A[i][j] + int(x[i] != y[j]))\n    return missing"
+ },
+ {
+  "id": "asks/product_except_self",
+  "request": "product except self",
+  "prompt": "def product_except_self(",
+  "outcome": "error",
+  "detail": "error: NameError(\"name 'prime' is not defined\")",
+  "completion": "num):\n    prime.ad(nums)"
+ },
+ {
+  "id": "asks/plus_one",
+  "request": "plus one",
+  "prompt": "def plus_one(",
+  "outcome": "error",
+  "detail": "error: TypeError(\"'int' object is not iterable\")",
+  "completion": "nums: list[int | float]) -> int | float:\n    if len(nums) == 0:\n        raise ValueError('find_max() arg is an empty sequence')\n    max_num = nums[0]\n    for x in nums:\n        if x > max_num:\n            max_num = x\n    return max_num"
+ },
+ {
+  "id": "asks/next_prime",
+  "request": "next prime",
+  "prompt": "def next_prime(",
+  "outcome": "wrong",
+  "detail": "6 of 6 tests failed",
+  "completion": "n) -> int:\n    if not isinstance(n, int):\n        raise TypeError('Input must be an integer')\n    digits = 0\n    n = abs(n)\n    while True:\n        n = n // 10\n        digits += 1\n        if n == 0:\n            break\n    return digits"
+ },
+ {
+  "id": "asks/nth_prime",
+  "request": "nth prime",
+  "prompt": "def nth_prime(",
+  "outcome": "error",
+  "detail": "error: TypeError(\"nth_prime() missing 1 required positional argument: 'primes'\")",
+  "completion": "p1, primes):\n    n = len(primes)\n    if n == 0:\n        raise ValueError('median() arg is an empty sequence')\n    if n % 2 == 0:\n        return float(primes[n // 2 - 1] + primes[n // 2]) / 2\n    return primes"
+ },
+ {
+  "id": "asks/sum_of_primes",
+  "request": "sum of primes",
+  "prompt": "def sum_of_primes(",
+  "outcome": "error",
+  "detail": "error: NameError(\"name 'd' is not defined\")",
+  "completion": "df):\n    return sum((1 for num in d if num < 0))"
+ },
+ {
+  "id": "asks/count_divisors",
+  "request": "count divisors",
+  "prompt": "def count_divisors(",
+  "outcome": "wrong",
+  "detail": "5 of 5 tests failed",
+  "completion": "number):\n    if not isinstance(number, int):\n        raise TypeError('Input must be an integer')\n    divisors = []\n    for i in range(1, number + 1):\n        if number % i == 0:\n            divisors.append(i)\n    return divisors"
+ },
+ {
+  "id": "asks/is_abundant",
+  "request": "is abundant",
+  "prompt": "def is_abundant(",
+  "outcome": "syntax",
+  "detail": "",
+  "completion": "number: int) -> bool:\n    if number < 0:\n        raise ValueError('median() arg must not be an integer')\n    if number is None:\n        raise ValueError('median() arg is an empty sequence')\n    if not num:\n        raise ValueError('median() arg is an empty sequence')\n    if num < 0:\n        raise ValueError('median() arg is an empty sequence')\n    if num < 0:\n        raise ValueError('median() arg is an empty sequence')\n    if num < 0:\n        raise ValueError('median() arg is an empty sequence')\n    result = nums[0]\n    for num in nums"
+ },
+ {
+  "id": "asks/triangular_number",
+  "request": "triangular number",
+  "prompt": "def triangular_number(",
+  "outcome": "wrong",
+  "detail": "4 of 5 tests failed",
+  "completion": "n: int) -> str:\n    if not isinstance(n, int):\n        raise TypeError('Input must be an integer')\n    digits = 0\n    n = abs(n)\n    while True:\n        n = n // 10\n        digits += 1\n        if n == 0:\n            break\n    return digits"
+ },
+ {
+  "id": "asks/integer_square_root",
+  "request": "integer square root",
+  "prompt": "def integer_square_root(",
+  "outcome": "error",
+  "detail": "error: TypeError(\"integer_square_root() missing 1 required positional argument: 'num'\")",
+  "completion": "arr, num: int) -> int:\n    arr = [arr.pop(num) for num in arr]\n    for _ in range(num):\n        arr[i] += num\n    return arr"
+ },
+ {
+  "id": "asks/digits_number",
+  "request": "digits to number",
+  "prompt": "def digits_number(",
+  "outcome": "syntax",
+  "detail": "",
+  "completion": "number: int) -> int:\n    if number < 0:\n        raise ValueError('number of pre each number is empty')\n    if number % 2 == 0:\n        return []\n    elif number < number:\n        return [number]\n    else:\n        fib = [number] * (number + 1) * number[number] for digit in numbers[number] for _ in numbers[number] for _ in numbers[number] for _ in numbers[number] for _ in numbers[number] for _ in numbers[number] for _ in numbers[number] for _ in numbers[number] if len(numbers) > 0 else None"
+ },
+ {
+  "id": "asks/number_digits",
+  "request": "number to digits",
+  "prompt": "def number_digits(",
+  "outcome": "error",
+  "detail": "error: TypeError(\"'int' object is not iterable\")",
+  "completion": "n: int) -> int:\n    if not isinstance(n, int):\n        raise TypeError('Input must be an integer')\n    digits = 0\n    n = abs(n)\n    while True:\n        n = n // 10\n        digits += 1\n        if n == 0:\n            break\n    return digits"
+ },
+ {
+  "id": "asks/is_palindrome_number",
+  "request": "is palindrome number",
+  "prompt": "def is_palindrome_number(",
+  "outcome": "error",
+  "detail": "error: NameError(\"name 'numerator' is not defined\")",
+  "completion": "num: int) -> bool:\n    if num < 0:\n        return False\n    if num > 0:\n        return False\n    if num < 0:\n        return False\n    num = 0\n    for num, count in numerator.items():\n        if numerator in numerator.items():\n            return False\n        pre = numerator.items()\n        return True"
+ },
+ {
+  "id": "asks/binary_hex",
+  "request": "binary to hex",
+  "prompt": "def binary_hex(",
+  "outcome": "error",
+  "detail": "error: NameError(\"name 'sorted_arr' is not defined\")",
+  "completion": "iterable, sort=True):\n    low = 0\n    high = len(sorted(iterable))\n    sorted_arr.append(low)"
+ },
+ {
+  "id": "asks/hex_decimal",
+  "request": "hex to decimal",
+  "prompt": "def hex_decimal(",
+  "outcome": "error",
+  "detail": "error: ValueError(\"invalid literal for int() with base 2: 'ff'\")",
+  "completion": "x):\n    return int(x, 2)"
+ },
+ {
+  "id": "asks/decimal_hex",
+  "request": "decimal to hex",
+  "prompt": "def decimal_hex(",
+  "outcome": "syntax",
+  "detail": "",
+  "completion": "iterable) -> str:\n    if not iterable:\n        return ''\n    end = iterable[iterable] if i else None:not iterable[iterable] else None"
+ },
+ {
+  "id": "asks/decimal_octal",
+  "request": "decimal to octal",
+  "prompt": "def decimal_octal(",
+  "outcome": "error",
+  "detail": "error: UnboundLocalError(\"cannot access local variable 'n' where it is not associated with a value\")",
+  "completion": "number: int) -> list[int]:\n    sequence = [n]\n    while n > 1:\n        n = 3 * n + 1 if n % 2 != 0 else int(n / 2)\n        sequence.append(n)\n    return sequence"
+ },
+ {
+  "id": "asks/celsius_kelvin",
+  "request": "celsius to kelvin",
+  "prompt": "def celsius_kelvin(",
+  "outcome": "syntax",
+  "detail": "",
+  "completion": "num):\n    celsius_kelvin delimiter:None: list[str] for x in range(kelvind) if x % 2 == 0:divisor, 2: divisor, 3: str, 4: str, 4: int, 3: int, 3: float, 4: float: int=2, int, int=2, int=2: float, minus_kelv1: float, 2: float: int=2, minus_kelvin=2, minus_kelvin=2: int, minus_kelvin=2, minus_kelvin=2, minus_kelvin=20, minus_kelvin=1000, minus_kelvin=True, minus_kelvin=False, minus_kelvin=False, min"
+ },
+ {
+  "id": "asks/kelvin_celsius",
+  "request": "kelvin to celsius",
+  "prompt": "def kelvin_celsius(",
+  "outcome": "wrong",
+  "detail": "4 of 4 tests failed",
+  "completion": "fahrenheit: float, ndigits: int=2) -> float:\n    return round((float(fahrenheit) - 32) * 5 / 9, ndigits)"
+ },
+ {
+  "id": "asks/km_miles",
+  "request": "km to miles",
+  "prompt": "def km_miles(",
+  "outcome": "syntax",
+  "detail": "",
+  "completion": "k, k, targets):\n    for k, v in k.items():\n        if k.isdigit():\n            k[k] = k[k]\n        else:\n            k[k] = k[k]\n            k[k] += k[k]\n        k[k][k] = k[k]\n        k[k] = k[k]\n        k[k] = k[k]\n        k[k] = k[k]\n        k[k] = k[k]\n        k[k] = k[k].get(k[k], k[k])\n        k[k] = k[k]\n        k[k] = k[k]\n        k[k] = k[k]\n        k[k] = k[k]\n        k[k] = k[k]\n        k[k] = k[k][k] + k[k]\n        k[k"
+ },
+ {
+  "id": "asks/miles_km",
+  "request": "miles to km",
+  "prompt": "def miles_km(",
+  "outcome": "syntax",
+  "detail": "",
+  "completion": "num):\n    miles_kmiles_kmiles_terkm(num): str str for num in zip(*, **num), numerator, numerator, numerator, numerator, numerator, numerator, numerator, numerator, numerator, numerator, numerator, numerator, numerator, numerator, numerator, numerator, numerator, numerator, numerator, numerator, numerator, numerator, numerator, numerator, numerator, numerator, numerator, numerator, numerator, numerator, numerator, numerator, numerator, numerator, numerator, numerator, numerator, numerator"
+ },
+ {
+  "id": "asks/simple_interest",
+  "request": "simple interest",
+  "prompt": "def simple_interest(",
+  "outcome": "error",
+  "detail": "error: NameError(\"name 'interest' is not defined\")",
+  "completion": "nums: list[int | float]) -> interest | float:\n    if len(nums) == 0:\n        raise ValueError('find_max() arg is an empty sequence')\n    max_num = nums[0]\n    for x in nums:\n        if x > max_num:\n            max_num = x\n    return max_num"
+ },
+ {
+  "id": "asks/compound_interest",
+  "request": "compound interest",
+  "prompt": "def compound_interest(",
+  "outcome": "error",
+  "detail": "error: TypeError('compound_interest() takes 2 positional arguments but 3 were given')",
+  "completion": "a, b):\n    if b == 0:\n        return a\n    return gcd(b, a % b)"
+ },
+ {
+  "id": "asks/bmi",
+  "request": "bmi",
+  "prompt": "def bmi(",
+  "outcome": "error",
+  "detail": "error: NameError(\"name 'bmize' is not defined\")",
+  "completion": "a, b):\n    bmin = bmize.split(bmize)\n    bmizedata = bmize(bmize, bmize, bmize, bmid, bmid, bmid, bmid, bmid, bmid, bmid, bmid, bmid, bmid, bmid, bmid)\n    bmids = bmid\n    bmids = bmid"
+ },
+ {
+  "id": "asks/rectangle_area",
+  "request": "rectangle area",
+  "prompt": "def rectangle_area(",
+  "outcome": "error",
+  "detail": "error: TypeError('rectangle_area() takes 1 positional argument but 2 were given')",
+  "completion": "x):\n    return sum(((x - y) ** 2 for x in zip(x, y)))"
+ },
+ {
+  "id": "asks/rectangle_perimeter",
+  "request": "rectangle perimeter",
+  "prompt": "def rectangle_perimeter(",
+  "outcome": "error",
+  "detail": "error: TypeError('rectangle_perimeter() takes 1 positional argument but 2 were given')",
+  "completion": "n):\n    if n == 0:\n        return []\n    return []"
+ },
+ {
+  "id": "asks/circle_area",
+  "request": "circle area",
+  "prompt": "def circle_area(",
+  "outcome": "timeout",
+  "detail": "",
+  "completion": "n):\n    if n == 0:\n        return False\n    factor = 5\n    while n > 1:\n        factor += n % 1\n    return True"
+ },
+ {
+  "id": "asks/circle_circumference",
+  "request": "circle circumference",
+  "prompt": "def circle_circumference(",
+  "outcome": "wrong",
+  "detail": "4 of 4 tests failed",
+  "completion": "n: int) -> int:\n    if not isinstance(n, int):\n        raise TypeError('Input must be an integer')\n    digits = 0\n    n = abs(n)\n    while True:\n        n = n // 10\n        digits += 1\n        if n == 0:\n            break\n    return digits"
+ },
+ {
+  "id": "asks/triangle_area",
+  "request": "triangle area",
+  "prompt": "def triangle_area(",
+  "outcome": "wrong",
+  "detail": "4 of 4 tests failed",
+  "completion": "a, b):\n    return a if a is b else b"
+ },
+ {
+  "id": "asks/herons_formula",
+  "request": "herons formula",
+  "prompt": "def herons_formula(",
+  "outcome": "error",
+  "detail": "error: NameError(\"name 'minutes' is not defined\")",
+  "completion": "number: int, minute: int, max_num: int) -> int:\n    if number <= 1:\n        return int(number)\n    if number % 2 == 0:\n        return minute\n    return minutes * num"
+ },
+ {
+  "id": "asks/hypotenuse",
+  "request": "hypotenuse",
+  "prompt": "def hypotenuse(",
+  "outcome": "error",
+  "detail": "error: TypeError('hypotenuse() takes 1 positional argument but 2 were given')",
+  "completion": "num):\n    numerator = numerator + 1\n    return numerator * (numerator + 1) / 2"
+ },
+ {
+  "id": "asks/midpoint",
+  "request": "midpoint",
+  "prompt": "def midpoint(",
+  "outcome": "error",
+  "detail": "error: TypeError('midpoint() takes 1 positional argument but 2 were given')",
+  "completion": "lst):\n    if len(lst) == 0:\n        return []\n    if len(lst) == 1:\n        return [lst]\n    l = []\n    for i in range(1, len(lst)):\n        m = lst[i]\n        rem_lst = lst[:i] + lst[i + 1:]\n        for p in permutations(rem_lst):\n            l.append([m] + p)\n    return l"
+ },
+ {
+  "id": "asks/slope",
+  "request": "slope",
+  "prompt": "def slope(",
+  "outcome": "error",
+  "detail": "error: TypeError('slope() takes 1 positional argument but 2 were given')",
+  "completion": "items):\n    return [items[0].isspace() for item in items]"
+ },
+ {
+  "id": "asks/quadratic_roots",
+  "request": "quadratic roots",
+  "prompt": "def quadratic_roots(",
+  "outcome": "error",
+  "detail": "error: TypeError('quadratic_roots() takes 1 positional argument but 3 were given')",
+  "completion": "s: str) -> str:\n    if not str(s) and s[0] == '':\n        return ''\n    if srice_root:\n        return srice_roots[::-1] + srice_root[:-1]"
+ },
+ {
+  "id": "asks/variance",
+  "request": "variance",
+  "prompt": "def variance(",
+  "outcome": "error",
+  "detail": "error: TypeError('Input must be an integer')",
+  "completion": "input_string: str) -> int:\n    if not isinstance(input_string, str):\n        raise TypeError('Input must be an integer')\n    elif len(input_string) == 1:\n        return input_string[0]\n    elif len(input_string) == 0:\n        return input_string\n    else:\n        return input_string[0]"
+ },
+ {
+  "id": "asks/standard_deviation",
+  "request": "standard deviation",
+  "prompt": "def standard_deviation(",
+  "outcome": "error",
+  "detail": "error: AttributeError(\"'list' object has no attribute 'statement'\")",
+  "completion": "s):\n    return s.statement.split('.')[0]"
+ },
+ {
+  "id": "asks/percentage",
+  "request": "percentage",
+  "prompt": "def percentage(",
+  "outcome": "error",
+  "detail": "error: TypeError('percentage() takes 1 positional argument but 2 were given')",
+  "completion": "lst):\n    if len(lst) == 0:\n        return []\n    if len(lst) == 1:\n        return [lst]\n    l = []\n    for i in range(len(lst)):\n        m = lst[i]\n        rem_lst = lst[:i] + lst[i + 1:]\n        for p in percentage:\n            l.append([i] + p)\n        return l"
+ },
+ {
+  "id": "asks/lerp",
+  "request": "lerp",
+  "prompt": "def lerp(",
+  "outcome": "error",
+  "detail": "error: TypeError('lerp() takes 1 positional argument but 3 were given')",
+  "completion": "num: float) -> int:\n    if num < 0:\n        return -1\n    return 1 if num else 0"
+ },
+ {
+  "id": "asks/round_multiple",
+  "request": "round to multiple",
+  "prompt": "def round_multiple(",
+  "outcome": "error",
+  "detail": "error: TypeError('round_multiple() takes 1 positional argument but 2 were given')",
+  "completion": "numbers):\n    if not isinstance(numbers, int):\n        raise TypeError('Incorrect number type provided. Only integers are accepted.')\n    divisors = []\n    for i in range(1, number + 1):\n        if number % i == 0:\n            divisors.append(i)\n    return divisors"
+ },
+ {
+  "id": "asks/sum_of_cubes",
+  "request": "sum of cubes",
+  "prompt": "def sum_of_cubes(",
+  "outcome": "error",
+  "detail": "error: UnboundLocalError(\"cannot access local variable 'number' where it is not associated with a value\")",
+  "completion": "digits: int) -> int:\n    number = abs(number)\n    while number >= 10:\n        number = sum((int(digits) for digit in str(number)))\n    return number"
+ },
+ {
+  "id": "asks/is_odd",
+  "request": "is odd",
+  "prompt": "def is_odd(",
+  "outcome": "wrong",
+  "detail": "6 of 6 tests failed",
+  "completion": "n):\n    return n % 2 == 0"
+ },
+ {
+  "id": "asks/max_of_three",
+  "request": "max of three",
+  "prompt": "def max_of_three(",
+  "outcome": "syntax",
+  "detail": "",
+  "completion": "arr):\n    max_values = {}\n    for index, num in enumerate(max_value):\n        if max_value:\n            max_values = []\n            for value in range(1, max_values + 1, max_values[values] + max_values[values[values[values]]]) + max_values[values[values]] + max_values[values[values]] + max_values[values[values[values[values]]] + max_values[values[values[values]]] + max_values[values[value]] + max_values[values[values[values[values]]] + max_values[values[values[values]][values] + max_values[values[values[value]]] + max_values["
+ },
+ {
+  "id": "asks/sum_of_multiples",
+  "request": "sum of multiples",
+  "prompt": "def sum_of_multiples(",
+  "outcome": "wrong",
+  "detail": "5 of 5 tests failed",
+  "completion": "numbers):\n    return sum((pow(int(digit), len(str(numbers))) for digit in str(numbers))) == numbers"
+ },
+ {
+  "id": "asks/modular_exponentiation",
+  "request": "modular exponentiation",
+  "prompt": "def modular_exponentiation(",
+  "outcome": "error",
+  "detail": "error: TypeError('modular_exponentiation() takes 1 positional argument but 3 were given')",
+  "completion": "numbers):\n    return [item for item in numbers if item % 2 != 0]"
+ },
+ {
+  "id": "asks/totient",
+  "request": "totient",
+  "prompt": "def totient(",
+  "outcome": "error",
+  "detail": "error: TypeError(\"totient() missing 1 required positional argument: 'k'\")",
+  "completion": "n: int, k: int) -> int:\n    result = 1\n    k = min(k, n - k)\n    for i in range(k):\n        result *= n - i\n        result //= i + 1\n    return result"
+ },
+ {
+  "id": "asks/is_coprime",
+  "request": "is coprime",
+  "prompt": "def is_coprime(",
+  "outcome": "error",
+  "detail": "error: TypeError('is_coprime() takes 1 positional argument but 2 were given')",
+  "completion": "number: int) -> bool:\n    if number <= 1:\n        return False\n    if number <= 3:\n        return True\n    if number % 2 == 0 or number % 3 == 0:\n        return False\n    factor = 5\n    while factor * factor <= number:\n        if number % factor == 0 or number % (factor + 2) == 0:\n            return False\n        factor += 6\n    return True"
+ },
+ {
+  "id": "asks/double_factorial",
+  "request": "double factorial",
+  "prompt": "def double_factorial(",
+  "outcome": "syntax",
+  "detail": "",
+  "completion": "text: str) -> str:\n    if not text:\n        return ''\n    encoded: str = ''\n    prev_factorial(text)\n    return prev_factorial(text) for text in text: '2' + text + text"
+ },
+ {
+  "id": "asks/catalan_number",
+  "request": "catalan number",
+  "prompt": "def catalan_number(",
+  "outcome": "error",
+  "detail": "error: TypeError(\"'int' object is not iterable\")",
+  "completion": "nums: list[int]) -> int:\n    missing = 0\n    for index, number in enumerate(nums):\n        missing ^= number\n        missing ^= index + 1\n    return missing"
+ },
+ {
+  "id": "asks/is_happy_number",
+  "request": "is happy number",
+  "prompt": "def is_happy_number(",
+  "outcome": "wrong",
+  "detail": "3 of 7 tests failed",
+  "completion": "number: int) -> bool:\n    if number <= 1:\n        return False\n    if number <= 3:\n        return True\n    if number % 2 == 0 or number % 3 == 0:\n        return False\n    factor = 5\n    while factor * factor <= number:\n        if number % factor == 0 or number % (factor + 2) == 0:\n            return False\n        factor += 6\n    return True"
+ },
+ {
+  "id": "asks/trailing_zeros",
+  "request": "trailing zeros",
+  "prompt": "def trailing_zeros(",
+  "outcome": "error",
+  "detail": "error: TypeError(\"'int' object is not iterable\")",
+  "completion": "numbers):\n    return [x * 30 for x in numbers if x == numbers]"
+ },
+ {
+  "id": "asks/square_root",
+  "request": "square root",
+  "prompt": "def square_root(",
+  "outcome": "wrong",
+  "detail": "5 of 5 tests failed",
+  "completion": "number: int) -> int:\n    number = abs(number)\n    while number >= 10:\n        number = sum((int(digit) for digit in str(number)))\n    return number"
+ },
+ {
+  "id": "asks/lucas_number",
+  "request": "lucas number",
+  "prompt": "def lucas_number(",
+  "outcome": "error",
+  "detail": "error: TypeError('can only concatenate str (not \"int\") to str')",
+  "completion": "num: int) -> str:\n    return ' '.join((str(num) + 1) if num else '')"
+ },
+ {
+  "id": "asks/add_binary",
+  "request": "add binary",
+  "prompt": "def add_binary(",
+  "outcome": "error",
+  "detail": "error: NameError(\"name 'gcd' is not defined\")",
+  "completion": "a, b):\n    if b == 0:\n        return a\n    return gcd(b, a % b)"
+ },
+ {
+  "id": "asks/is_bit_set",
+  "request": "is bit set",
+  "prompt": "def is_bit_set(",
+  "outcome": "error",
+  "detail": "error: TypeError('is_bit_set() takes 1 positional argument but 2 were given')",
+  "completion": "nums: list[int]) -> bool:\n    if not num:\n        return False\n    total = 0\n    total = 0\n    sums = [0] * total\n    for i in range(1, num2 * 1):\n        total += i\n    return total"
+ },
+ {
+  "id": "asks/set_bit",
+  "request": "set bit",
+  "prompt": "def set_bit(",
+  "outcome": "error",
+  "detail": "error: TypeError('set_bit() takes 1 positional argument but 2 were given')",
+  "completion": "number: int) -> int:\n    if number < 0:\n        raise ValueError('the value of input must not be negative')\n    result = 0\n    while number:\n        if number % 2 == 1:\n            result += 1\n        number >>= 1\n    return result"
+ },
+ {
+  "id": "asks/clear_bit",
+  "request": "clear bit",
+  "prompt": "def clear_bit(",
+  "outcome": "error",
+  "detail": "error: TypeError('clear_bit() takes 1 positional argument but 2 were given')",
+  "completion": "number: int) -> int:\n    if number < 0:\n        raise ValueError('the value of input must not be negative')\n    result = 0\n    while number:\n        if number % 2 == 1:\n            result += 1\n        number >>= 1\n    return result"
+ },
+ {
+  "id": "asks/toggle_bit",
+  "request": "toggle bit",
+  "prompt": "def toggle_bit(",
+  "outcome": "error",
+  "detail": "error: TypeError('toggle_bit() takes 1 positional argument but 2 were given')",
+  "completion": "number: int) -> int:\n    if number < 0:\n        raise ValueError('the value of input must not be negative')\n    result = 0\n    while number:\n        if number % 2 == 1:\n            result += 1\n        number >>= 1\n    return result"
+ },
+ {
+  "id": "asks/swap_bits",
+  "request": "swap bits",
+  "prompt": "def swap_bits(",
+  "outcome": "error",
+  "detail": "error: TypeError('swap_bits() takes 1 positional argument but 3 were given')",
+  "completion": "number: int) -> int:\n    if number < 0:\n        raise ValueError('ssanfacial must not be negative')\n    result = 0\n    while number:\n        if number % 2 == 1:\n            result += 1\n        number >>= 1\n    return result"
+ },
+ {
+  "id": "asks/reverse_bits",
+  "request": "reverse bits",
+  "prompt": "def reverse_bits(",
+  "outcome": "wrong",
+  "detail": "3 of 5 tests failed",
+  "completion": "number: int) -> int:\n    if number < 0:\n        raise ValueError('the value of input must not be negative')\n    result = 0\n    while number:\n        if number % 2 == 1:\n            result += 1\n        number >>= 1\n    return result"
+ },
+ {
+  "id": "asks/invert_dict",
+  "request": "invert dict",
+  "prompt": "def invert_dict(",
+  "outcome": "error",
+  "detail": "error: TypeError('Input must be a string')",
+  "completion": "nums: str) -> str:\n    if not isinstance(nums, str):\n        raise TypeError('Input must be a string')\n    vowels = 'aeiouAEIOU'\n    return sum((1 for char in nums if char in vowels))"
+ },
+ {
+  "id": "asks/merge_dicts",
+  "request": "merge dicts",
+  "prompt": "def merge_dicts(",
+  "outcome": "syntax",
+  "detail": "",
+  "completion": "method):\n    if not metadata:\n        return ''\n    return method metadata'.format(metadata) if metadata else metadata) / metadata.__dict__.__dict__.__dict__.__dict__.__dict__.__dict__.__dict__.__dict__.__dict__.__dict__.__dict__.__dict__.__dict__.__dict__.__dict__.__dict__.__dict__.__dict__.__dict__.__dict__.__dict__.__dict__.__dict__.__dict__.__dict__.__dict__.__dict__.__dict__.__"
+ },
+ {
+  "id": "asks/count_elements",
+  "request": "count elements",
+  "prompt": "def count_elements(",
+  "outcome": "error",
+  "detail": "error: TypeError(\"unsupported operand type(s) for +: 'int' and 'str'\")",
+  "completion": "input_list):\n    return sum((input_list) for input_list in input_list)"
+ },
+ {
+  "id": "asks/max_key",
+  "request": "max key",
+  "prompt": "def max_key(",
+  "outcome": "error",
+  "detail": "error: AttributeError(\"'dict' object has no attribute 'split'\")",
+  "completion": "num):\n    key = num.split(' ')\n    return default"
+ },
+ {
+  "id": "asks/group_by_first_letter",
+  "request": "group by first letter",
+  "prompt": "def group_by_first_letter(",
+  "outcome": "error",
+  "detail": "error: TypeError(\"unsupported operand type(s) for %: 'list' and 'int'\")",
+  "completion": "number):\n    if number is None:\n        raise TypeError('Input must be None')\n    digits = 0\n    while number:\n        if number % 2 == 1:\n            result += 1\n        number >>= 1\n    return result"
+ },
+ {
+  "id": "asks/sum_values",
+  "request": "sum values",
+  "prompt": "def sum_values(",
+  "outcome": "error",
+  "detail": "error: TypeError(\"unsupported operand type(s) for +: 'int' and 'str'\")",
+  "completion": "lst):\n    return sum(lst)"
+ },
+ {
+  "id": "asks/remove_none",
+  "request": "remove none",
+  "prompt": "def remove_none(",
+  "outcome": "error",
+  "detail": "error: KeyError(0)",
+  "completion": "nums: list[int | float]) -> int | float:\n    if len(nums) == 0:\n        raise ValueError('find_max() arg is an empty sequence')\n    max_num = nums[0]\n    for x in nums:\n        if x > max_num:\n            max_num = x\n    return max_num"
+ },
+ {
+  "id": "asks/sort_dict_by_value",
+  "request": "sort dict by value",
+  "prompt": "def sort_dict_by_value(",
+  "outcome": "syntax",
+  "detail": "",
+  "completion": "num):\n    if num1 > max_so_far and num >= 0 and num < 0:\n        max_so_far < 0 and num1 >= len(num1) and num2 > max_so_far: (max_so_far, max_now) if max_so_far < 0 else 0"
+ },
+ {
+  "id": "asks/zip_dict",
+  "request": "zip dict",
+  "prompt": "def zip_dict(",
+  "outcome": "error",
+  "detail": "error: SyntaxError(\"'break' outside loop\", ('<string>', 5, 5, None, 5, 10))",
+  "completion": "a, b):\n    if not isinstance(b, str):\n        raise TypeError('Input must be an integer')\n    digits = 0\n    break"
+ },
+ {
+  "id": "asks/keys_with_value",
+  "request": "keys with value",
+  "prompt": "def keys_with_value(",
+  "outcome": "syntax",
+  "detail": "",
+  "completion": "value):\n    return value.__dict___[0].__dict__: str for value in values_str, value in values_str.items() if value in values_str else '' + value + values_str, values_str, values_str, values_str, values_str, values_str, values_str, values_str, values_str, values_str, values_str, values_str, values_str, values_str, values_str, values_str, values_str, values_str, values_str, values_str, values_str, values_str, values_str, values_str, values_str, values_str, values_str, values_str, values_str, values_str, values_str, values_str, values_str, values_str, values_str, values_str, values_str, values_str, values_str, values_str, values_str, values_str, values_str, value"
+ },
+ {
+  "id": "asks/trace",
+  "request": "trace",
+  "prompt": "def trace(",
+  "outcome": "error",
+  "detail": "error: TypeError(\"trace() missing 1 required positional argument: 'y'\")",
+  "completion": "x, y):\n    return x.isdigit()"
+ },
+ {
+  "id": "asks/is_symmetric",
+  "request": "is symmetric",
+  "prompt": "def is_symmetric(",
+  "outcome": "error",
+  "detail": "error: TypeError('Incorrect number type provided. Only integers are accepted.')",
+  "completion": "number):\n    if not isinstance(number, int):\n        raise TypeError('Incorrect number type provided. Only integers are accepted.')\n    divisors = []\n    for i in range(1, number + 1):\n        if number % i == 0:\n            divisors.append(i)\n    return divisors"
+ },
+ {
+  "id": "asks/rotate_matrix",
+  "request": "rotate matrix",
+  "prompt": "def rotate_matrix(",
+  "outcome": "error",
+  "detail": "error: TypeError(\"'<' not supported between instances of 'list' and 'int'\")",
+  "completion": "number: int) -> int:\n    if number < 0:\n        raise ValueError('number of pre each number is empty')\n    return number + (number + 1) / number"
+ },
+ {
+  "id": "asks/row_sums",
+  "request": "row sums",
+  "prompt": "def row_sums(",
+  "outcome": "error",
+  "detail": "error: TypeError(\"'int' object is not subscriptable\")",
+  "completion": "text: str) -> int:\n    if not text:\n        return 0\n    number = 0\n    rows = 0\n    rows = rows[0]\n    while rows > row:\n        rows = rows[0]\n        rows = rows[0]\n        rows = rows[0]\n        while rows:\n            if rows[0]:\n                rows = rows[0]\n                rows = rows[0]\n                rows = rows[0]\n                while rows:\n                    rows = rows[0]\n                    rows = rows[0] + rows[rows + 1]\n                    rows = rows[rows] + rows[rows + 1]\n                return rows"
+ },
+ {
+  "id": "asks/column_sums",
+  "request": "column sums",
+  "prompt": "def column_sums(",
+  "outcome": "error",
+  "detail": "error: TypeError('Input must be an integer')",
+  "completion": "n: int) -> int:\n    if not isinstance(n, int):\n        raise TypeError('Input must be an integer')\n    digits = 0\n    n = abs(n)\n    while True:\n        n = n // 10\n        digits += 1\n        if n == 0:\n            break\n    return digits"
+ },
+ {
+  "id": "asks/scalar_multiply",
+  "request": "scalar multiply",
+  "prompt": "def scalar_multiply(",
+  "outcome": "syntax",
+  "detail": "",
+  "completion": "s):\n    return sum((pow(s, [scalar[0], [0] * scalar[0] * scalar[1] * scalar[1] *= scalar_map[0] * scalar_map[0] * scalar_map[0] * scalar_map[1] * scalar_map[1] * scalar_map[1] * scalar_map[1] * scalar_map[1] * scalar_map[0] * scalar_map[1] * scalar_map[0] * scalar_map[1] * scalar_map[1] * scalar_map[1] * scalar_map[0] * scalar_map[1] * scalar_"
+ },
+ {
+  "id": "asks/is_identity",
+  "request": "is identity",
+  "prompt": "def is_identity(",
+  "outcome": "syntax",
+  "detail": "",
+  "completion": "nums: list[int | float]) -> bool:\n    return [x for x in nums[num] if x > 0 and x > 0 else 0[x % 1] for x in nums[num]]"
+ },
+ {
+  "id": "asks/zero_matrix",
+  "request": "zero matrix",
+  "prompt": "def zero_matrix(",
+  "outcome": "error",
+  "detail": "error: TypeError('zero_matrix() takes 1 positional argument but 2 were given')",
+  "completion": "n: int) -> list[list[int]]:\n    matrix[:] = [list(x) for x in zero]\n    return matrix"
+ },
+ {
+  "id": "asks/matrix_subtraction",
+  "request": "matrix subtraction",
+  "prompt": "def matrix_subtraction(",
+  "outcome": "syntax",
+  "detail": "",
+  "completion": "n):\n    next = [[0 for _ in range(next)] for _ in range(n)]\n    for i in range(n):\n        next([i] * next(next(n - 1, 0, n - 1) for i in range(next))) % 26 + 11\n    return next(next(next(next(next(n - next(n - next) * next(n - next)) / next(next(n - next)) * next(n - next) * next(n - next)) / next(next(n - next + next)) / next(n - next - next) * next(n - next + next) "
+ },
+ {
+  "id": "asks/main_diagonal",
+  "request": "main diagonal",
+  "prompt": "def main_diagonal(",
+  "outcome": "error",
+  "detail": "error: TypeError(\"main_diagonal() missing 1 required positional argument: 'size'\")",
+  "completion": "diagy, size):\n    return diagy[i:i + size]"
+ },
+ {
+  "id": "asks/spiral_order",
+  "request": "spiral order",
+  "prompt": "def spiral_order(",
+  "outcome": "syntax",
+  "detail": "",
+  "completion": "lst):\n    return len([i for i in range(len(lst), list(i) if i % 2 != 0)])"
+ },
+ {
+  "id": "asks/determinant",
+  "request": "determinant",
+  "prompt": "def determinant(",
+  "outcome": "error",
+  "detail": "error: TypeError(\"determinant() missing 1 required positional argument: 'b'\")",
+  "completion": "a, b):\n    raise TypeError('Incorrect number type provided. Only integers are accepted.')"
+ },
+ {
+  "id": "asks/rock_paper_scissors",
+  "request": "rock paper scissors",
+  "prompt": "def rock_paper_scissors(",
+  "outcome": "error",
+  "detail": "error: TypeError('rock_paper_scissors() takes 1 positional argument but 2 were given')",
+  "completion": "number: int) -> list[int]:\n    n = len(number)\n    for i in range(0, number + 1):\n        if number % i == 0:\n            divisors.append(i)\n    return divisors"
+ },
+ {
+  "id": "asks/letter_grade",
+  "request": "letter grade",
+  "prompt": "def letter_grade(",
+  "outcome": "error",
+  "detail": "error: TypeError(\"letter_grade() missing 1 required positional argument: 'b'\")",
+  "completion": "a, b):\n    return a.grade(a)"
+ },
+ {
+  "id": "asks/days_month",
+  "request": "days in month",
+  "prompt": "def days_month(",
+  "outcome": "syntax",
+  "detail": "",
+  "completion": "dd, distance, dd, dd, distance):\n    ddf = dd[d]\n    df = df[df] + df[df + df[df + df + df] + df[df + df + df + df[df + df + df + 1] + df[df + 1] + df[df + 1] + df[df + 1] + df[df + 1] + df[df + 1] + df[df[df]] + df[df[df + 1] + df[df[df]] + df[dff.find_fn(df) + df[df] + df[dff.find_fn(df[df[df]], df[df]) "
+ },
+ {
+  "id": "asks/is_weekend",
+  "request": "is weekend",
+  "prompt": "def is_weekend(",
+  "outcome": "error",
+  "detail": "error: TypeError(\"'<=' not supported between instances of 'str' and 'int'\")",
+  "completion": "number: int) -> bool:\n    if number <= 1:\n        return False\n    if number <= 3:\n        return True\n    if number % 2 == 0 or number % 3 == 0:\n        return False\n    factor = 5\n    while factor * factor <= number:\n        if number % factor == 0 or number % (factor + 2) == 0:\n            return False\n        factor += 6\n    return True"
+ },
+ {
+  "id": "asks/time_seconds",
+  "request": "time to seconds",
+  "prompt": "def time_seconds(",
+  "outcome": "error",
+  "detail": "error: TypeError(\"time_seconds() missing 1 required positional argument: 'y'\")",
+  "completion": "x, y):\n    return x * (x - y)"
+ },
+ {
+  "id": "asks/seconds_time",
+  "request": "seconds to time",
+  "prompt": "def seconds_time(",
+  "outcome": "syntax",
+  "detail": "",
+  "completion": "iter(n): ''camepping') -> ': 'time', 'time': 'time', 'time': 'timetime', 'time': 'timetime', 'timetime': 'timetime', 'timetime': 'time', 'timetime': 'timetime', 'timetime': 'time', 'time': 'time', 'time': 'time', 'timetime': 'time', 'timetime': 'time', 'timetime': 'timetime', 'timetime': 'time', 'timetime': 'timetime', 'timetime': 'timetime', 'timetime': 'timetime', 'timetime': 'time', 'timetime': 'timetime', 'timetime': 'timetime', 'timetime': time.time, '"
+ },
+ {
+  "id": "asks/roman_digit_value",
+  "request": "roman digit value",
+  "prompt": "def roman_digit_value(",
+  "outcome": "syntax",
+  "detail": "",
+  "completion": "nums: list[int]) -> int:\n    mfor minor in str(nums) > 1:m: ' ''', '}': '{', ']': '[', '}': '{', ']': '[', ']}': '{', ']': '[', '}': '{', ']': '[', '}': '{', ']': '[', '}': '{', ']': '[', ']}}}})'\n    for char in input_value:\n        if char in counterparts.values():\n            stack.append(char)\n        elif char in counterparts:\n            if not stack:\n                return False\n            if stack.pop() != counterparts[char]:\n                return False\n    "
+ },
+ {
+  "id": "asks/is_triangle",
+  "request": "is triangle",
+  "prompt": "def is_triangle(",
+  "outcome": "error",
+  "detail": "error: TypeError('is_triangle() takes 1 positional argument but 3 were given')",
+  "completion": "number: int) -> bool:\n    return number > 0 and (not number & number - 1)"
+ },
+ {
+  "id": "asks/coin_change",
+  "request": "coin change",
+  "prompt": "def coin_change(",
+  "outcome": "error",
+  "detail": "error: TypeError('coin_change() takes 1 positional argument but 2 were given')",
+  "completion": "seq):\n    return seq.pop(seq)"
+ },
+ {
+  "id": "asks/group_anagrams",
+  "request": "group anagrams",
+  "prompt": "def group_anagrams(",
+  "outcome": "error",
+  "detail": "error: NameError(\"name 's' is not defined\")",
+  "completion": "s1):\n    return sum((1 for num in s if num < 0))"
+ },
+ {
+  "id": "asks/generate_parentheses",
+  "request": "generate parentheses",
+  "prompt": "def generate_parentheses(",
+  "outcome": "error",
+  "detail": "error: TypeError(\"'int' object is not iterable\")",
+  "completion": "s):\n    return [item for item in s if item == 'parenthese']"
+ },
+ {
+  "id": "asks/unique_paths",
+  "request": "unique paths",
+  "prompt": "def unique_paths(",
+  "outcome": "error",
+  "detail": "error: TypeError('unique_paths() takes 1 positional argument but 2 were given')",
+  "completion": "paths: str) -> str:\n    if not isinstance(paths, str):\n        paths['unique_paths'] = ''\n    paths = ''\n    paths['unique_paths'] = ''\n    paths.append(paths)\n    paths.append(paths)\n    paths.append(paths)\n    paths.append(paths)\n    paths.append(paths)\n    paths.append(paths)\n    paths.append(paths)\n    paths.append(paths)\n    paths.append(paths)\n    paths.append(paths)\n    paths.append(paths)\n    paths.append(paths)\n    paths.append(paths)\n    paths.append(paths)\n    paths.append(paths)"
+ },
+ {
+  "id": "asks/house_robber",
+  "request": "house robber",
+  "prompt": "def house_robber(",
+  "outcome": "wrong",
+  "detail": "5 of 5 tests failed",
+  "completion": "root):\n    if root is None:\n        return None\n    return None"
+ },
+ {
+  "id": "asks/luhn",
+  "request": "luhn",
+  "prompt": "def luhn(",
+  "outcome": "syntax",
+  "detail": "",
+  "completion": "number: int) -> int:\n    if number < 0:\n        raise ValueError('luhnare accepts must be a string')\n    elif number == 1:\n        return []\n    temp_row = number\n    for i in range(1, number + 1):\n        temp_row *= number % 1: False\n        temp_row = number\n        while temp_row >= number:\n            while number >= 1:\n                result += 1\n            number >>= 1\n        return result"
+ },
+ {
+  "id": "asks/is_valid_ip",
+  "request": "is valid ip",
+  "prompt": "def is_valid_ip(",
+  "outcome": "error",
+  "detail": "error: TypeError(\"'<=' not supported between instances of 'str' and 'int'\")",
+  "completion": "n: int) -> bool:\n    if n <= 1:\n        return False\n    if n <= 3:\n        return True\n    if n == 0:\n        return False\n    if n == 0:\n        return False\n    if n == 0:\n        return True\n    if n % 2 == 0:\n        return False\n    factor = 5\n    while factor * factor <= n:\n        if n % factor == 1:\n            return True\n        factor += factor + factor * factor / factor + factor * factor * factor * factor * factor * factor * factor * factor * factor * factor * factor * factor * factor * factor * factor * factor * factor * factor * factor * factor * factor * factor * factor * factor * factor * factor * fact"
+ }
+]

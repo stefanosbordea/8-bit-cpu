@@ -1,0 +1,11 @@
+| | |
+|---|---|
+| requests sent to the simulated CPU | 401 |
+| answers that pass the tests of their request | 400 |
+| answers equal to the integer reference, token by token | 401 of 401 |
+| tokens sent | 29,135 |
+| cycles | 17,347,450,624 |
+| time at 100 MHz, all requests | 173.5 s |
+| time per request: median, longest | 0.33 s, 1.54 s (`cycle_sort`, 241 tokens) |
+| tokens per second over all requests (prompt tokens included in the time) | 167.9 |
+| program words, memory image | 1,036 words, 450,432 bytes |

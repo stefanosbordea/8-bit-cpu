@@ -1,0 +1,12 @@
+train_2 {"rows": 30000, "method": 19313, "licence": 3121, "not_canonical": 95, "size": 1195, "overlap": 43, "duplicate": 57, "kept": 6176}
+train_3 {"rows": 60000, "method": 39421, "licence": 6309, "not_canonical": 276, "size": 2439, "overlap": 89, "duplicate": 132, "kept": 11334}
+train_4 {"rows": 90000, "method": 58168, "licence": 10194, "not_canonical": 527, "size": 3965, "overlap": 188, "duplicate": 290, "kept": 16668}
+train_5 {"rows": 120000, "method": 75599, "licence": 13849, "not_canonical": 768, "size": 5618, "overlap": 251, "duplicate": 315, "kept": 23600}
+train_6 {"rows": 150000, "method": 95229, "licence": 17806, "not_canonical": 911, "size": 6960, "overlap": 300, "duplicate": 333, "kept": 28461}
+train_7 {"rows": 180000, "method": 113732, "licence": 21311, "not_canonical": 1153, "size": 8365, "overlap": 380, "duplicate": 342, "kept": 34717}
+train_8 {"rows": 210000, "method": 131552, "licence": 25051, "not_canonical": 1393, "size": 9622, "overlap": 445, "duplicate": 384, "kept": 41553}
+train_9 {"rows": 240000, "method": 150580, "licence": 28263, "not_canonical": 1612, "size": 10978, "overlap": 503, "duplicate": 398, "kept": 47666}
+train_10 {"rows": 270000, "method": 170087, "licence": 31253, "not_canonical": 1860, "size": 12178, "overlap": 567, "duplicate": 429, "kept": 53626}
+train_11 {"rows": 300000, "method": 189610, "licence": 34600, "not_canonical": 2260, "size": 13280, "overlap": 615, "duplicate": 451, "kept": 59184}
+train_12 {"rows": 330000, "method": 209144, "licence": 38467, "not_canonical": 2606, "size": 14027, "overlap": 680, "duplicate": 489, "kept": 64587}
+train_13 {"rows": 352178, "method": 222653, "licence": 40779, "not_canonical": 2986, "size": 14708, "overlap": 753, "duplicate": 518, "kept": 69781}

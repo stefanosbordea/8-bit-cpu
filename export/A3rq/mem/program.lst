@@ -1,0 +1,994 @@
+000  1002  LDI R0, 2          ; book
+001  3004  MVH P0, R0         ; book
+002  A600  SETP0 0x600        ; book
+003  4500  LD R1, [P0]+       ; book
+004  4900  LD R2, [P0]+       ; book
+005  4100  LD R0, [P0]+       ; book
+006  2005  MOV R0, R0         ; book
+007  D3E1  BZ 0x3E1           ; book
+008  3601  MVP P1, R1, R2     ; book
+009  3005  MVH P1, R0         ; book
+00A  A600  SETP0 0x600        ; book
+00B  300E  CPP P2, P0         ; book
+00C  1C59  LDI R3, 89         ; book
+00D  4300  LD R0, [P1]+       ; book
+00E  5180  ST R0, [P2]+       ; book
+00F  F00D  DJNZ 0x00D         ; book
+010  A603  SETP0 0x603        ; book
+011  4900  LD R2, [P0]+       ; book
+012  4500  LD R1, [P0]+       ; book
+013  3603  MVL R1, R2         ; book
+014  AD3F  SETP0 0xD3F        ; prompt
+015  4000  LD R0, [P0]        ; prompt
+016  2005  MOV R0, R0         ; prompt
+017  D026  BZ 0x026           ; prompt
+018  A659  SETP0 0x659        ; prompt
+019  300E  CPP P2, P0         ; prompt
+01A  A605  SETP0 0x605        ; prompt
+01B  4800  LD R2, [P0]        ; prompt
+01C  1003  LDI R0, 3          ; prompt
+01D  3004  MVH P0, R0         ; prompt
+01E  1400  LDI R1, 0          ; prompt
+01F  3600  MVP P0, R1, R2     ; prompt
+020  4000  LD R0, [P0]        ; prompt
+021  5180  ST R0, [P2]+       ; prompt
+022  1401  LDI R1, 1          ; prompt
+023  3600  MVP P0, R1, R2     ; prompt
+024  4000  LD R0, [P0]        ; prompt
+025  5080  ST R0, [P2]        ; prompt
+026  1004  LDI R0, 4          ; filter
+027  3004  MVH P0, R0         ; filter
+028  AF03  SETP0 0xF03        ; filter
+029  300E  CPP P2, P0         ; filter
+02A  1002  LDI R0, 2          ; filter
+02B  3004  MVH P0, R0         ; filter
+02C  A659  SETP0 0x659        ; filter
+02D  4500  LD R1, [P0]+       ; filter
+02E  4800  LD R2, [P0]        ; filter
+02F  1005  LDI R0, 5          ; filter
+030  3004  MVH P0, R0         ; filter
+031  1000  LDI R0, 0          ; filter
+032  2100  ADD R0, R1         ; filter
+033  3200  MVP P0, R0, R2     ; filter
+034  4000  LD R0, [P0]        ; filter
+035  5180  ST R0, [P2]+       ; filter
+036  1002  LDI R0, 2          ; filter
+037  2100  ADD R0, R1         ; filter
+038  3200  MVP P0, R0, R2     ; filter
+039  4000  LD R0, [P0]        ; filter
+03A  5180  ST R0, [P2]+       ; filter
+03B  1003  LDI R0, 3          ; stop
+03C  3004  MVH P0, R0         ; stop
+03D  1002  LDI R0, 2          ; stop
+03E  2100  ADD R0, R1         ; stop
+03F  3200  MVP P0, R0, R2     ; stop
+040  4C00  LD R3, [P0]        ; stop
+041  1002  LDI R0, 2          ; stop
+042  3004  MVH P0, R0         ; stop
+043  AD3F  SETP0 0xD3F        ; stop
+044  4800  LD R2, [P0]        ; stop
+045  2705  MOV R1, R3         ; stop
+046  04B4  LUT R1, 11         ; stop
+047  1004  LDI R0, 4          ; stop
+048  3005  MVH P1, R0         ; stop
+049  1004  LDI R0, 4          ; stop
+04A  3004  MVH P0, R0         ; stop
+04B  AF00  SETP0 0xF00        ; stop
+04C  4000  LD R0, [P0]        ; stop
+04D  3401  MVP P1, R1, R0     ; stop
+04E  4200  LD R0, [P1]        ; stop
+04F  5100  ST R0, [P0]+       ; stop
+050  2A05  MOV R2, R2         ; stop
+051  E059  BNZ 0x059          ; stop
+052  2B05  MOV R2, R3         ; stop
+053  08C4  LUT R2, 12         ; stop
+054  D059  BZ 0x059           ; stop
+055  2807  SHR R2             ; stop
+056  D3E1  BZ 0x3E1           ; stop
+057  2005  MOV R0, R0         ; stop
+058  D3E1  BZ 0x3E1           ; stop
+059  4100  LD R0, [P0]+       ; filter
+05A  1802  LDI R2, 2          ; filter
+05B  2201  SUB R0, R2         ; filter
+05C  0074  LUT R0, 7          ; filter
+05D  E08B  BNZ 0x08B          ; filter
+05E  4000  LD R0, [P0]        ; filter
+05F  3401  MVP P1, R1, R0     ; filter
+060  4200  LD R0, [P1]        ; filter
+061  5100  ST R0, [P0]+       ; filter
+062  1006  LDI R0, 6          ; filter
+063  3005  MVH P1, R0         ; filter
+064  4500  LD R1, [P0]+       ; filter
+065  4900  LD R2, [P0]+       ; filter
+066  4000  LD R0, [P0]        ; filter
+067  2800  ADD R2, R0         ; filter
+068  3601  MVP P1, R1, R2     ; filter
+069  4200  LD R0, [P1]        ; filter
+06A  5100  ST R0, [P0]+       ; filter
+06B  2705  MOV R1, R3         ; filter
+06C  04D4  LUT R1, 13         ; filter
+06D  D071  BZ 0x071           ; filter
+06E  1801  LDI R2, 1          ; filter
+06F  2601  SUB R1, R2         ; filter
+070  5400  ST R1, [P0]        ; filter
+071  2705  MOV R1, R3         ; filter
+072  04E4  LUT R1, 14         ; filter
+073  D08B  BZ 0x08B           ; filter
+074  AF07  SETP0 0xF07        ; filter
+075  4000  LD R0, [P0]        ; filter
+076  1808  LDI R2, 8          ; filter
+077  2901  SUB R2, R1         ; filter
+078  D086  BZ 0x086           ; filter
+079  1804  LDI R2, 4          ; filter
+07A  3205  MVH P1, R2         ; filter
+07B  3401  MVP P1, R1, R0     ; filter
+07C  4A00  LD R2, [P1]        ; filter
+07D  2A05  MOV R2, R2         ; filter
+07E  D08B  BZ 0x08B           ; filter
+07F  1401  LDI R1, 1          ; filter
+080  2100  ADD R0, R1         ; filter
+081  5000  ST R0, [P0]        ; filter
+082  140E  LDI R1, 14         ; filter
+083  3402  MVP P2, R1, R0     ; filter
+084  5880  ST R2, [P2]        ; filter
+085  C08B  JMP 0x08B          ; filter
+086  2005  MOV R0, R0         ; filter
+087  D08B  BZ 0x08B           ; filter
+088  1401  LDI R1, 1          ; filter
+089  2101  SUB R0, R1         ; filter
+08A  5000  ST R0, [P0]        ; filter
+08B  AF01  SETP0 0xF01        ; filter
+08C  4000  LD R0, [P0]        ; filter
+08D  2705  MOV R1, R3         ; filter
+08E  04F4  LUT R1, 15         ; filter
+08F  2100  ADD R0, R1         ; filter
+090  0104  LUT R0, 16         ; filter
+091  5000  ST R0, [P0]        ; filter
+092  1002  LDI R0, 2          ; embedding
+093  3004  MVH P0, R0         ; embedding
+094  A659  SETP0 0x659        ; embedding
+095  4500  LD R1, [P0]+       ; embedding
+096  4900  LD R2, [P0]+       ; embedding
+097  1002  LDI R0, 2          ; embedding
+098  3004  MVH P0, R0         ; embedding
+099  1002  LDI R0, 2          ; embedding
+09A  2100  ADD R0, R1         ; embedding
+09B  3200  MVP P0, R0, R2     ; embedding
+09C  4C00  LD R3, [P0]        ; embedding
+09D  1000  LDI R0, 0          ; embedding
+09E  2100  ADD R0, R1         ; embedding
+09F  3200  MVP P0, R0, R2     ; embedding
+0A0  4000  LD R0, [P0]        ; embedding
+0A1  3C01  MVP P1, R3, R0     ; embedding
+0A2  1004  LDI R0, 4          ; embedding
+0A3  2100  ADD R0, R1         ; embedding
+0A4  3200  MVP P0, R0, R2     ; embedding
+0A5  4000  LD R0, [P0]        ; embedding
+0A6  3005  MVH P1, R0         ; embedding
+0A7  A65C  SETP0 0x65C        ; embedding
+0A8  300E  CPP P2, P0         ; embedding
+0A9  1CA0  LDI R3, 160        ; embedding
+0AA  4300  LD R0, [P1]+       ; embedding
+0AB  0094  LUT R0, 9          ; embedding
+0AC  5180  ST R0, [P2]+       ; embedding
+0AD  F0AA  DJNZ 0x0AA         ; embedding
+0AE  1400  LDI R1, 0          ; norm
+0AF  1800  LDI R2, 0          ; norm
+0B0  1002  LDI R0, 2          ; norm
+0B1  3005  MVH P1, R0         ; norm
+0B2  B65C  SETP1 0x65C        ; norm
+0B3  7601  LDA R1, R2         ; norm
+0B4  80A0  MAC #160           ; norm
+0B5  9004  RQ R0, 4, 0        ; norm
+0B6  0004  LUT R0, 0          ; norm
+0B7  A65B  SETP0 0x65B        ; norm
+0B8  5000  ST R0, [P0]        ; norm
+0B9  1400  LDI R1, 0          ; norm
+0BA  1802  LDI R2, 2          ; norm
+0BB  A65C  SETP0 0x65C        ; norm
+0BC  1CA0  LDI R3, 160        ; norm
+0BD  B65B  SETP1 0x65B        ; norm
+0BE  7601  LDA R1, R2         ; norm
+0BF  8000  MAC                ; norm
+0C0  9002  RQ R0, 2, 0        ; norm
+0C1  5180  ST R0, [P2]+       ; norm
+0C2  F0BD  DJNZ 0x0BD         ; norm
+0C3  1400  LDI R1, 0          ; qkv
+0C4  1880  LDI R2, 128        ; qkv
+0C5  1018  LDI R0, 24         ; qkv
+0C6  3005  MVH P1, R0         ; qkv
+0C7  B800  SETP1 0x800        ; qkv
+0C8  1CA0  LDI R3, 160        ; qkv
+0C9  A6FC  SETP0 0x6FC        ; qkv
+0CA  7601  LDA R1, R2         ; qkv
+0CB  80A0  MAC #160           ; qkv
+0CC  9008  RQ R0, 8, 0        ; qkv
+0CD  5180  ST R0, [P2]+       ; qkv
+0CE  F0C9  DJNZ 0x0C9         ; qkv
+0CF  1400  LDI R1, 0          ; qkv
+0D0  1880  LDI R2, 128        ; qkv
+0D1  1C28  LDI R3, 40         ; qkv
+0D2  A6FC  SETP0 0x6FC        ; qkv
+0D3  7601  LDA R1, R2         ; qkv
+0D4  80A0  MAC #160           ; qkv
+0D5  9008  RQ R0, 8, 0        ; qkv
+0D6  5180  ST R0, [P2]+       ; qkv
+0D7  F0D2  DJNZ 0x0D2         ; qkv
+0D8  1401  LDI R1, 1          ; qkv
+0D9  1800  LDI R2, 0          ; qkv
+0DA  1C28  LDI R3, 40         ; qkv
+0DB  A6FC  SETP0 0x6FC        ; qkv
+0DC  7601  LDA R1, R2         ; qkv
+0DD  80A0  MAC #160           ; qkv
+0DE  9009  RQ R0, 9, 0        ; qkv
+0DF  5180  ST R0, [P2]+       ; qkv
+0E0  F0DB  DJNZ 0x0DB         ; qkv
+0E1  A605  SETP0 0x605        ; cache
+0E2  4800  LD R2, [P0]        ; cache
+0E3  A864  SETP0 0x864        ; cache
+0E4  140D  LDI R1, 13         ; cache
+0E5  3106  MVH P2, R1         ; cache
+0E6  1C10  LDI R3, 16         ; cache
+0E7  4100  LD R0, [P0]+       ; cache
+0E8  3E02  MVP P2, R3, R2     ; cache
+0E9  5080  ST R0, [P2]        ; cache
+0EA  F0E7  DJNZ 0x0E7         ; cache
+0EB  140E  LDI R1, 14         ; cache
+0EC  3106  MVH P2, R1         ; cache
+0ED  1C10  LDI R3, 16         ; cache
+0EE  4100  LD R0, [P0]+       ; cache
+0EF  3E02  MVP P2, R3, R2     ; cache
+0F0  5080  ST R0, [P2]        ; cache
+0F1  F0EE  DJNZ 0x0EE         ; cache
+0F2  140F  LDI R1, 15         ; cache
+0F3  3106  MVH P2, R1         ; cache
+0F4  1C08  LDI R3, 8          ; cache
+0F5  4100  LD R0, [P0]+       ; cache
+0F6  3E02  MVP P2, R3, R2     ; cache
+0F7  5080  ST R0, [P2]        ; cache
+0F8  F0F5  DJNZ 0x0F5         ; cache
+0F9  A606  SETP0 0x606        ; cache
+0FA  4500  LD R1, [P0]+       ; cache
+0FB  4900  LD R2, [P0]+       ; cache
+0FC  4100  LD R0, [P0]+       ; cache
+0FD  3602  MVP P2, R1, R2     ; cache
+0FE  1410  LDI R1, 16         ; cache
+0FF  2100  ADD R0, R1         ; cache
+100  3006  MVH P2, R0         ; cache
+101  1400  LDI R1, 0          ; rope
+102  1840  LDI R2, 64         ; rope
+103  1002  LDI R0, 2          ; rope
+104  3005  MVH P1, R0         ; rope
+105  B609  SETP1 0x609        ; rope
+106  A83C  SETP0 0x83C        ; rope
+107  1C14  LDI R3, 20         ; rope
+108  7601  LDA R1, R2         ; rope
+109  8002  MAC #2             ; rope
+10A  9007  RQ R0, 7, 0        ; rope
+10B  5180  ST R0, [P2]+       ; rope
+10C  F108  DJNZ 0x108         ; rope
+10D  A83C  SETP0 0x83C        ; rope
+10E  1C14  LDI R3, 20         ; rope
+10F  7601  LDA R1, R2         ; rope
+110  8002  MAC #2             ; rope
+111  9007  RQ R0, 7, 0        ; rope
+112  5180  ST R0, [P2]+       ; rope
+113  F10F  DJNZ 0x10F         ; rope
+114  100C  LDI R0, 12         ; book
+115  3005  MVH P1, R0         ; book
+116  BC20  SETP1 0xC20        ; book
+117  1002  LDI R0, 2          ; book
+118  3004  MVH P0, R0         ; book
+119  A92C  SETP0 0x92C        ; book
+11A  300E  CPP P2, P0         ; book
+11B  1C0D  LDI R3, 13         ; book
+11C  4300  LD R0, [P1]+       ; book
+11D  5180  ST R0, [P2]+       ; book
+11E  F11C  DJNZ 0x11C         ; book
+11F  1400  LDI R1, 0          ; rope
+120  1840  LDI R2, 64         ; rope
+121  1002  LDI R0, 2          ; rope
+122  3005  MVH P1, R0         ; rope
+123  B609  SETP1 0x609        ; rope
+124  A92F  SETP0 0x92F        ; rope
+125  4100  LD R0, [P0]+       ; rope
+126  4C00  LD R3, [P0]        ; rope
+127  3300  MVP P0, R0, R3     ; rope
+128  1C14  LDI R3, 20         ; rope
+129  7601  LDA R1, R2         ; rope
+12A  8002  MAC #2             ; rope
+12B  9007  RQ R0, 7, 0        ; rope
+12C  5180  ST R0, [P2]+       ; rope
+12D  F129  DJNZ 0x129         ; rope
+12E  A92F  SETP0 0x92F        ; rope
+12F  4100  LD R0, [P0]+       ; rope
+130  4C00  LD R3, [P0]        ; rope
+131  3300  MVP P0, R0, R3     ; rope
+132  1C14  LDI R3, 20         ; rope
+133  7601  LDA R1, R2         ; rope
+134  8002  MAC #2             ; rope
+135  9007  RQ R0, 7, 0        ; rope
+136  5180  ST R0, [P2]+       ; rope
+137  F133  DJNZ 0x133         ; rope
+138  A931  SETP0 0x931        ; scores
+139  4100  LD R0, [P0]+       ; scores
+13A  3005  MVH P1, R0         ; scores
+13B  4100  LD R0, [P0]+       ; scores
+13C  4500  LD R1, [P0]+       ; scores
+13D  3101  MVP P1, R0, R1     ; scores
+13E  4500  LD R1, [P0]+       ; scores
+13F  A603  SETP0 0x603        ; scores
+140  4C00  LD R3, [P0]        ; scores
+141  1800  LDI R2, 0          ; scores
+142  A961  SETP0 0x961        ; scores
+143  300E  CPP P2, P0         ; scores
+144  A938  SETP0 0x938        ; scores
+145  4100  LD R0, [P0]+       ; scores
+146  7401  LDA R1, R0         ; scores
+147  8028  MAC #40            ; scores
+148  9208  RQ R0, 8, 1        ; scores
+149  5180  ST R0, [P2]+       ; scores
+14A  2201  SUB R0, R2         ; scores
+14B  0074  LUT R0, 7          ; scores
+14C  2800  ADD R2, R0         ; scores
+14D  F144  DJNZ 0x144         ; scores
+14E  A603  SETP0 0x603        ; scores
+14F  4C00  LD R3, [P0]        ; scores
+150  A961  SETP0 0x961        ; scores
+151  4000  LD R0, [P0]        ; scores
+152  2201  SUB R0, R2         ; scores
+153  0054  LUT R0, 5          ; scores
+154  5100  ST R0, [P0]+       ; scores
+155  F151  DJNZ 0x151         ; scores
+156  A935  SETP0 0x935        ; mix
+157  4D00  LD R3, [P0]+       ; mix
+158  4100  LD R0, [P0]+       ; mix
+159  4500  LD R1, [P0]+       ; mix
+15A  3102  MVP P2, R0, R1     ; mix
+15B  1002  LDI R0, 2          ; mix
+15C  3006  MVH P2, R0         ; mix
+15D  A961  SETP0 0x961        ; mix
+15E  1007  LDI R0, 7          ; mix
+15F  3005  MVH P1, R0         ; mix
+160  B220  SETP1 0x220        ; mix
+161  1400  LDI R1, 0          ; mix
+162  7501  LDA R1, R1         ; mix
+163  8100  MACL               ; mix
+164  0007  NRM R0             ; mix
+165  5100  ST R0, [P0]+       ; mix
+166  1807  LDI R2, 7          ; mix
+167  2201  SUB R0, R2         ; mix
+168  9100  RQV R0, R0, 0      ; mix
+169  0084  LUT R0, 8          ; mix
+16A  5100  ST R0, [P0]+       ; mix
+16B  5C00  ST R3, [P0]        ; mix
+16C  3305  MVH P1, R3         ; mix
+16D  1C10  LDI R3, 16         ; mix
+16E  4000  LD R0, [P0]        ; mix
+16F  3005  MVH P1, R0         ; mix
+170  3D01  MVP P1, R3, R1     ; mix
+171  A961  SETP0 0x961        ; mix
+172  7501  LDA R1, R1         ; mix
+173  8100  MACL               ; mix
+174  4100  LD R0, [P0]+       ; mix
+175  9900  RQV R2, R0, 0      ; mix
+176  4100  LD R0, [P0]+       ; mix
+177  6800  MUL R2, R0         ; mix
+178  1020  LDI R0, 32         ; mix
+179  7401  LDA R1, R0         ; mix
+17A  7000  ADDP               ; mix
+17B  9006  RQ R0, 6, 0        ; mix
+17C  5180  ST R0, [P2]+       ; mix
+17D  F16E  DJNZ 0x16E         ; mix
+17E  4000  LD R0, [P0]        ; mix
+17F  1801  LDI R2, 1          ; mix
+180  2200  ADD R0, R2         ; mix
+181  5000  ST R0, [P0]        ; mix
+182  3005  MVH P1, R0         ; mix
+183  1C10  LDI R3, 16         ; mix
+184  4000  LD R0, [P0]        ; mix
+185  3005  MVH P1, R0         ; mix
+186  3D01  MVP P1, R3, R1     ; mix
+187  A961  SETP0 0x961        ; mix
+188  7501  LDA R1, R1         ; mix
+189  8100  MACL               ; mix
+18A  4100  LD R0, [P0]+       ; mix
+18B  9900  RQV R2, R0, 0      ; mix
+18C  4100  LD R0, [P0]+       ; mix
+18D  6800  MUL R2, R0         ; mix
+18E  1020  LDI R0, 32         ; mix
+18F  7401  LDA R1, R0         ; mix
+190  7000  ADDP               ; mix
+191  9006  RQ R0, 6, 0        ; mix
+192  5180  ST R0, [P2]+       ; mix
+193  F184  DJNZ 0x184         ; mix
+194  4000  LD R0, [P0]        ; mix
+195  1801  LDI R2, 1          ; mix
+196  2200  ADD R0, R2         ; mix
+197  5000  ST R0, [P0]        ; mix
+198  3005  MVH P1, R0         ; mix
+199  1C08  LDI R3, 8          ; mix
+19A  3D01  MVP P1, R3, R1     ; mix
+19B  A961  SETP0 0x961        ; mix
+19C  7501  LDA R1, R1         ; mix
+19D  8100  MACL               ; mix
+19E  4100  LD R0, [P0]+       ; mix
+19F  9900  RQV R2, R0, 0      ; mix
+1A0  4100  LD R0, [P0]+       ; mix
+1A1  6800  MUL R2, R0         ; mix
+1A2  1020  LDI R0, 32         ; mix
+1A3  7401  LDA R1, R0         ; mix
+1A4  7000  ADDP               ; mix
+1A5  9006  RQ R0, 6, 0        ; mix
+1A6  5180  ST R0, [P2]+       ; mix
+1A7  F19A  DJNZ 0x19A         ; mix
+1A8  A92C  SETP0 0x92C        ; book
+1A9  4500  LD R1, [P0]+       ; book
+1AA  4900  LD R2, [P0]+       ; book
+1AB  4100  LD R0, [P0]+       ; book
+1AC  2005  MOV R0, R0         ; book
+1AD  D1B1  BZ 0x1B1           ; book
+1AE  3601  MVP P1, R1, R2     ; book
+1AF  3005  MVH P1, R0         ; book
+1B0  C117  JMP 0x117          ; book
+1B1  1880  LDI R2, 128        ; attn_out
+1B2  1021  LDI R0, 33         ; attn_out
+1B3  3005  MVH P1, R0         ; attn_out
+1B4  BE00  SETP1 0xE00        ; attn_out
+1B5  1002  LDI R0, 2          ; attn_out
+1B6  3004  MVH P0, R0         ; attn_out
+1B7  A65C  SETP0 0x65C        ; attn_out
+1B8  300E  CPP P2, P0         ; attn_out
+1B9  1CA0  LDI R3, 160        ; attn_out
+1BA  4480  LD R1, [P2]        ; attn_out
+1BB  7601  LDA R1, R2         ; attn_out
+1BC  A88C  SETP0 0x88C        ; attn_out
+1BD  80A0  MAC #160           ; attn_out
+1BE  9008  RQ R0, 8, 0        ; attn_out
+1BF  5180  ST R0, [P2]+       ; attn_out
+1C0  F1BA  DJNZ 0x1BA         ; attn_out
+1C1  1400  LDI R1, 0          ; norm
+1C2  1800  LDI R2, 0          ; norm
+1C3  A65C  SETP0 0x65C        ; norm
+1C4  1002  LDI R0, 2          ; norm
+1C5  3005  MVH P1, R0         ; norm
+1C6  B65C  SETP1 0x65C        ; norm
+1C7  7601  LDA R1, R2         ; norm
+1C8  80A0  MAC #160           ; norm
+1C9  9005  RQ R0, 5, 0        ; norm
+1CA  0014  LUT R0, 1          ; norm
+1CB  A65B  SETP0 0x65B        ; norm
+1CC  5000  ST R0, [P0]        ; norm
+1CD  1400  LDI R1, 0          ; norm
+1CE  1804  LDI R2, 4          ; norm
+1CF  A65C  SETP0 0x65C        ; norm
+1D0  1CA0  LDI R3, 160        ; norm
+1D1  B65B  SETP1 0x65B        ; norm
+1D2  7601  LDA R1, R2         ; norm
+1D3  8000  MAC                ; norm
+1D4  9003  RQ R0, 3, 0        ; norm
+1D5  5180  ST R0, [P2]+       ; norm
+1D6  F1D1  DJNZ 0x1D1         ; norm
+1D7  1400  LDI R1, 0          ; ffn
+1D8  1880  LDI R2, 128        ; ffn
+1D9  1028  LDI R0, 40         ; ffn
+1DA  3005  MVH P1, R0         ; ffn
+1DB  B200  SETP1 0x200        ; ffn
+1DC  AA64  SETP0 0xA64        ; ffn
+1DD  300E  CPP P2, P0         ; ffn
+1DE  1CDB  LDI R3, 219        ; ffn
+1DF  A6FC  SETP0 0x6FC        ; ffn
+1E0  7601  LDA R1, R2         ; ffn
+1E1  80A0  MAC #160           ; ffn
+1E2  9208  RQ R0, 8, 1        ; ffn
+1E3  5180  ST R0, [P2]+       ; ffn
+1E4  F1DF  DJNZ 0x1DF         ; ffn
+1E5  1880  LDI R2, 128        ; ffn
+1E6  A65C  SETP0 0x65C        ; ffn
+1E7  300E  CPP P2, P0         ; ffn
+1E8  1CA0  LDI R3, 160        ; ffn
+1E9  4480  LD R1, [P2]        ; ffn
+1EA  7601  LDA R1, R2         ; ffn
+1EB  AA64  SETP0 0xA64        ; ffn
+1EC  80DB  MAC #219           ; ffn
+1ED  9008  RQ R0, 8, 0        ; ffn
+1EE  5180  ST R0, [P2]+       ; ffn
+1EF  F1E9  DJNZ 0x1E9         ; ffn
+1F0  1400  LDI R1, 0          ; norm
+1F1  1800  LDI R2, 0          ; norm
+1F2  A65C  SETP0 0x65C        ; norm
+1F3  1002  LDI R0, 2          ; norm
+1F4  3005  MVH P1, R0         ; norm
+1F5  B65C  SETP1 0x65C        ; norm
+1F6  7601  LDA R1, R2         ; norm
+1F7  80A0  MAC #160           ; norm
+1F8  9008  RQ R0, 8, 0        ; norm
+1F9  0024  LUT R0, 2          ; norm
+1FA  A65B  SETP0 0x65B        ; norm
+1FB  5000  ST R0, [P0]        ; norm
+1FC  1400  LDI R1, 0          ; norm
+1FD  1808  LDI R2, 8          ; norm
+1FE  A65C  SETP0 0x65C        ; norm
+1FF  1CA0  LDI R3, 160        ; norm
+200  B65B  SETP1 0x65B        ; norm
+201  7601  LDA R1, R2         ; norm
+202  8000  MAC                ; norm
+203  9004  RQ R0, 4, 0        ; norm
+204  5180  ST R0, [P2]+       ; norm
+205  F200  DJNZ 0x200         ; norm
+206  1400  LDI R1, 0          ; qkv
+207  1880  LDI R2, 128        ; qkv
+208  1039  LDI R0, 57         ; qkv
+209  3005  MVH P1, R0         ; qkv
+20A  B3C0  SETP1 0x3C0        ; qkv
+20B  1CA0  LDI R3, 160        ; qkv
+20C  A6FC  SETP0 0x6FC        ; qkv
+20D  7601  LDA R1, R2         ; qkv
+20E  80A0  MAC #160           ; qkv
+20F  9008  RQ R0, 8, 0        ; qkv
+210  5180  ST R0, [P2]+       ; qkv
+211  F20C  DJNZ 0x20C         ; qkv
+212  1400  LDI R1, 0          ; qkv
+213  1880  LDI R2, 128        ; qkv
+214  1C28  LDI R3, 40         ; qkv
+215  A6FC  SETP0 0x6FC        ; qkv
+216  7601  LDA R1, R2         ; qkv
+217  80A0  MAC #160           ; qkv
+218  9008  RQ R0, 8, 0        ; qkv
+219  5180  ST R0, [P2]+       ; qkv
+21A  F215  DJNZ 0x215         ; qkv
+21B  1400  LDI R1, 0          ; qkv
+21C  1840  LDI R2, 64         ; qkv
+21D  1C28  LDI R3, 40         ; qkv
+21E  A6FC  SETP0 0x6FC        ; qkv
+21F  7601  LDA R1, R2         ; qkv
+220  80A0  MAC #160           ; qkv
+221  9007  RQ R0, 7, 0        ; qkv
+222  5180  ST R0, [P2]+       ; qkv
+223  F21E  DJNZ 0x21E         ; qkv
+224  A605  SETP0 0x605        ; cache
+225  4800  LD R2, [P0]        ; cache
+226  A864  SETP0 0x864        ; cache
+227  1413  LDI R1, 19         ; cache
+228  3106  MVH P2, R1         ; cache
+229  1C10  LDI R3, 16         ; cache
+22A  4100  LD R0, [P0]+       ; cache
+22B  3E02  MVP P2, R3, R2     ; cache
+22C  5080  ST R0, [P2]        ; cache
+22D  F22A  DJNZ 0x22A         ; cache
+22E  1414  LDI R1, 20         ; cache
+22F  3106  MVH P2, R1         ; cache
+230  1C10  LDI R3, 16         ; cache
+231  4100  LD R0, [P0]+       ; cache
+232  3E02  MVP P2, R3, R2     ; cache
+233  5080  ST R0, [P2]        ; cache
+234  F231  DJNZ 0x231         ; cache
+235  1415  LDI R1, 21         ; cache
+236  3106  MVH P2, R1         ; cache
+237  1C08  LDI R3, 8          ; cache
+238  4100  LD R0, [P0]+       ; cache
+239  3E02  MVP P2, R3, R2     ; cache
+23A  5080  ST R0, [P2]        ; cache
+23B  F238  DJNZ 0x238         ; cache
+23C  A606  SETP0 0x606        ; cache
+23D  4500  LD R1, [P0]+       ; cache
+23E  4900  LD R2, [P0]+       ; cache
+23F  4100  LD R0, [P0]+       ; cache
+240  3602  MVP P2, R1, R2     ; cache
+241  1416  LDI R1, 22         ; cache
+242  2100  ADD R0, R1         ; cache
+243  3006  MVH P2, R0         ; cache
+244  1400  LDI R1, 0          ; rope
+245  1840  LDI R2, 64         ; rope
+246  1002  LDI R0, 2          ; rope
+247  3005  MVH P1, R0         ; rope
+248  B609  SETP1 0x609        ; rope
+249  A83C  SETP0 0x83C        ; rope
+24A  1C14  LDI R3, 20         ; rope
+24B  7601  LDA R1, R2         ; rope
+24C  8002  MAC #2             ; rope
+24D  9007  RQ R0, 7, 0        ; rope
+24E  5180  ST R0, [P2]+       ; rope
+24F  F24B  DJNZ 0x24B         ; rope
+250  A83C  SETP0 0x83C        ; rope
+251  1C14  LDI R3, 20         ; rope
+252  7601  LDA R1, R2         ; rope
+253  8002  MAC #2             ; rope
+254  9007  RQ R0, 7, 0        ; rope
+255  5180  ST R0, [P2]+       ; rope
+256  F252  DJNZ 0x252         ; rope
+257  100C  LDI R0, 12         ; book
+258  3005  MVH P1, R0         ; book
+259  BC54  SETP1 0xC54        ; book
+25A  1002  LDI R0, 2          ; book
+25B  3004  MVH P0, R0         ; book
+25C  A92C  SETP0 0x92C        ; book
+25D  300E  CPP P2, P0         ; book
+25E  1C0D  LDI R3, 13         ; book
+25F  4300  LD R0, [P1]+       ; book
+260  5180  ST R0, [P2]+       ; book
+261  F25F  DJNZ 0x25F         ; book
+262  1400  LDI R1, 0          ; rope
+263  1840  LDI R2, 64         ; rope
+264  1002  LDI R0, 2          ; rope
+265  3005  MVH P1, R0         ; rope
+266  B609  SETP1 0x609        ; rope
+267  A92F  SETP0 0x92F        ; rope
+268  4100  LD R0, [P0]+       ; rope
+269  4C00  LD R3, [P0]        ; rope
+26A  3300  MVP P0, R0, R3     ; rope
+26B  1C14  LDI R3, 20         ; rope
+26C  7601  LDA R1, R2         ; rope
+26D  8002  MAC #2             ; rope
+26E  9007  RQ R0, 7, 0        ; rope
+26F  5180  ST R0, [P2]+       ; rope
+270  F26C  DJNZ 0x26C         ; rope
+271  A92F  SETP0 0x92F        ; rope
+272  4100  LD R0, [P0]+       ; rope
+273  4C00  LD R3, [P0]        ; rope
+274  3300  MVP P0, R0, R3     ; rope
+275  1C14  LDI R3, 20         ; rope
+276  7601  LDA R1, R2         ; rope
+277  8002  MAC #2             ; rope
+278  9007  RQ R0, 7, 0        ; rope
+279  5180  ST R0, [P2]+       ; rope
+27A  F276  DJNZ 0x276         ; rope
+27B  A931  SETP0 0x931        ; scores
+27C  4100  LD R0, [P0]+       ; scores
+27D  3005  MVH P1, R0         ; scores
+27E  4100  LD R0, [P0]+       ; scores
+27F  4500  LD R1, [P0]+       ; scores
+280  3101  MVP P1, R0, R1     ; scores
+281  4500  LD R1, [P0]+       ; scores
+282  A603  SETP0 0x603        ; scores
+283  4C00  LD R3, [P0]        ; scores
+284  1800  LDI R2, 0          ; scores
+285  A961  SETP0 0x961        ; scores
+286  300E  CPP P2, P0         ; scores
+287  A938  SETP0 0x938        ; scores
+288  4100  LD R0, [P0]+       ; scores
+289  7401  LDA R1, R0         ; scores
+28A  8028  MAC #40            ; scores
+28B  9207  RQ R0, 7, 1        ; scores
+28C  5180  ST R0, [P2]+       ; scores
+28D  2201  SUB R0, R2         ; scores
+28E  0074  LUT R0, 7          ; scores
+28F  2800  ADD R2, R0         ; scores
+290  F287  DJNZ 0x287         ; scores
+291  A603  SETP0 0x603        ; scores
+292  4C00  LD R3, [P0]        ; scores
+293  A961  SETP0 0x961        ; scores
+294  4000  LD R0, [P0]        ; scores
+295  2201  SUB R0, R2         ; scores
+296  0064  LUT R0, 6          ; scores
+297  5100  ST R0, [P0]+       ; scores
+298  F294  DJNZ 0x294         ; scores
+299  A935  SETP0 0x935        ; mix
+29A  4D00  LD R3, [P0]+       ; mix
+29B  4100  LD R0, [P0]+       ; mix
+29C  4500  LD R1, [P0]+       ; mix
+29D  3102  MVP P2, R0, R1     ; mix
+29E  1002  LDI R0, 2          ; mix
+29F  3006  MVH P2, R0         ; mix
+2A0  A961  SETP0 0x961        ; mix
+2A1  1007  LDI R0, 7          ; mix
+2A2  3005  MVH P1, R0         ; mix
+2A3  B220  SETP1 0x220        ; mix
+2A4  1400  LDI R1, 0          ; mix
+2A5  7501  LDA R1, R1         ; mix
+2A6  8100  MACL               ; mix
+2A7  0007  NRM R0             ; mix
+2A8  5100  ST R0, [P0]+       ; mix
+2A9  1807  LDI R2, 7          ; mix
+2AA  2201  SUB R0, R2         ; mix
+2AB  9100  RQV R0, R0, 0      ; mix
+2AC  0084  LUT R0, 8          ; mix
+2AD  5100  ST R0, [P0]+       ; mix
+2AE  5C00  ST R3, [P0]        ; mix
+2AF  3305  MVH P1, R3         ; mix
+2B0  1C10  LDI R3, 16         ; mix
+2B1  4000  LD R0, [P0]        ; mix
+2B2  3005  MVH P1, R0         ; mix
+2B3  3D01  MVP P1, R3, R1     ; mix
+2B4  A961  SETP0 0x961        ; mix
+2B5  7501  LDA R1, R1         ; mix
+2B6  8100  MACL               ; mix
+2B7  4100  LD R0, [P0]+       ; mix
+2B8  9900  RQV R2, R0, 0      ; mix
+2B9  4100  LD R0, [P0]+       ; mix
+2BA  6800  MUL R2, R0         ; mix
+2BB  1020  LDI R0, 32         ; mix
+2BC  7401  LDA R1, R0         ; mix
+2BD  7000  ADDP               ; mix
+2BE  9006  RQ R0, 6, 0        ; mix
+2BF  5180  ST R0, [P2]+       ; mix
+2C0  F2B1  DJNZ 0x2B1         ; mix
+2C1  4000  LD R0, [P0]        ; mix
+2C2  1801  LDI R2, 1          ; mix
+2C3  2200  ADD R0, R2         ; mix
+2C4  5000  ST R0, [P0]        ; mix
+2C5  3005  MVH P1, R0         ; mix
+2C6  1C10  LDI R3, 16         ; mix
+2C7  4000  LD R0, [P0]        ; mix
+2C8  3005  MVH P1, R0         ; mix
+2C9  3D01  MVP P1, R3, R1     ; mix
+2CA  A961  SETP0 0x961        ; mix
+2CB  7501  LDA R1, R1         ; mix
+2CC  8100  MACL               ; mix
+2CD  4100  LD R0, [P0]+       ; mix
+2CE  9900  RQV R2, R0, 0      ; mix
+2CF  4100  LD R0, [P0]+       ; mix
+2D0  6800  MUL R2, R0         ; mix
+2D1  1020  LDI R0, 32         ; mix
+2D2  7401  LDA R1, R0         ; mix
+2D3  7000  ADDP               ; mix
+2D4  9006  RQ R0, 6, 0        ; mix
+2D5  5180  ST R0, [P2]+       ; mix
+2D6  F2C7  DJNZ 0x2C7         ; mix
+2D7  4000  LD R0, [P0]        ; mix
+2D8  1801  LDI R2, 1          ; mix
+2D9  2200  ADD R0, R2         ; mix
+2DA  5000  ST R0, [P0]        ; mix
+2DB  3005  MVH P1, R0         ; mix
+2DC  1C08  LDI R3, 8          ; mix
+2DD  3D01  MVP P1, R3, R1     ; mix
+2DE  A961  SETP0 0x961        ; mix
+2DF  7501  LDA R1, R1         ; mix
+2E0  8100  MACL               ; mix
+2E1  4100  LD R0, [P0]+       ; mix
+2E2  9900  RQV R2, R0, 0      ; mix
+2E3  4100  LD R0, [P0]+       ; mix
+2E4  6800  MUL R2, R0         ; mix
+2E5  1020  LDI R0, 32         ; mix
+2E6  7401  LDA R1, R0         ; mix
+2E7  7000  ADDP               ; mix
+2E8  9006  RQ R0, 6, 0        ; mix
+2E9  5180  ST R0, [P2]+       ; mix
+2EA  F2DD  DJNZ 0x2DD         ; mix
+2EB  A92C  SETP0 0x92C        ; book
+2EC  4500  LD R1, [P0]+       ; book
+2ED  4900  LD R2, [P0]+       ; book
+2EE  4100  LD R0, [P0]+       ; book
+2EF  2005  MOV R0, R0         ; book
+2F0  D2F4  BZ 0x2F4           ; book
+2F1  3601  MVP P1, R1, R2     ; book
+2F2  3005  MVH P1, R0         ; book
+2F3  C25A  JMP 0x25A          ; book
+2F4  1880  LDI R2, 128        ; attn_out
+2F5  1042  LDI R0, 66         ; attn_out
+2F6  3005  MVH P1, R0         ; attn_out
+2F7  B9C0  SETP1 0x9C0        ; attn_out
+2F8  1002  LDI R0, 2          ; attn_out
+2F9  3004  MVH P0, R0         ; attn_out
+2FA  A65C  SETP0 0x65C        ; attn_out
+2FB  300E  CPP P2, P0         ; attn_out
+2FC  1CA0  LDI R3, 160        ; attn_out
+2FD  4480  LD R1, [P2]        ; attn_out
+2FE  7601  LDA R1, R2         ; attn_out
+2FF  A88C  SETP0 0x88C        ; attn_out
+300  80A0  MAC #160           ; attn_out
+301  9008  RQ R0, 8, 0        ; attn_out
+302  5180  ST R0, [P2]+       ; attn_out
+303  F2FD  DJNZ 0x2FD         ; attn_out
+304  1400  LDI R1, 0          ; norm
+305  1800  LDI R2, 0          ; norm
+306  A65C  SETP0 0x65C        ; norm
+307  1002  LDI R0, 2          ; norm
+308  3005  MVH P1, R0         ; norm
+309  B65C  SETP1 0x65C        ; norm
+30A  7601  LDA R1, R2         ; norm
+30B  80A0  MAC #160           ; norm
+30C  9008  RQ R0, 8, 0        ; norm
+30D  0034  LUT R0, 3          ; norm
+30E  A65B  SETP0 0x65B        ; norm
+30F  5000  ST R0, [P0]        ; norm
+310  1400  LDI R1, 0          ; norm
+311  1810  LDI R2, 16         ; norm
+312  A65C  SETP0 0x65C        ; norm
+313  1CA0  LDI R3, 160        ; norm
+314  B65B  SETP1 0x65B        ; norm
+315  7601  LDA R1, R2         ; norm
+316  8000  MAC                ; norm
+317  9005  RQ R0, 5, 0        ; norm
+318  5180  ST R0, [P2]+       ; norm
+319  F314  DJNZ 0x314         ; norm
+31A  1400  LDI R1, 0          ; ffn
+31B  1820  LDI R2, 32         ; ffn
+31C  1048  LDI R0, 72         ; ffn
+31D  3005  MVH P1, R0         ; ffn
+31E  BDC0  SETP1 0xDC0        ; ffn
+31F  AA64  SETP0 0xA64        ; ffn
+320  300E  CPP P2, P0         ; ffn
+321  1CDB  LDI R3, 219        ; ffn
+322  A6FC  SETP0 0x6FC        ; ffn
+323  7601  LDA R1, R2         ; ffn
+324  80A0  MAC #160           ; ffn
+325  9206  RQ R0, 6, 1        ; ffn
+326  5180  ST R0, [P2]+       ; ffn
+327  F322  DJNZ 0x322         ; ffn
+328  1880  LDI R2, 128        ; ffn
+329  A65C  SETP0 0x65C        ; ffn
+32A  300E  CPP P2, P0         ; ffn
+32B  1CA0  LDI R3, 160        ; ffn
+32C  4480  LD R1, [P2]        ; ffn
+32D  7601  LDA R1, R2         ; ffn
+32E  AA64  SETP0 0xA64        ; ffn
+32F  80DB  MAC #219           ; ffn
+330  9008  RQ R0, 8, 0        ; ffn
+331  5180  ST R0, [P2]+       ; ffn
+332  F32C  DJNZ 0x32C         ; ffn
+333  AD3F  SETP0 0xD3F        ; prompt
+334  4000  LD R0, [P0]        ; prompt
+335  2005  MOV R0, R0         ; prompt
+336  D33C  BZ 0x33C           ; prompt
+337  1401  LDI R1, 1          ; prompt
+338  2101  SUB R0, R1         ; prompt
+339  5000  ST R0, [P0]        ; prompt
+33A  2005  MOV R0, R0         ; prompt
+33B  E000  BNZ 0x000          ; prompt
+33C  1400  LDI R1, 0          ; norm
+33D  1800  LDI R2, 0          ; norm
+33E  A65C  SETP0 0x65C        ; norm
+33F  1002  LDI R0, 2          ; norm
+340  3005  MVH P1, R0         ; norm
+341  B65C  SETP1 0x65C        ; norm
+342  7601  LDA R1, R2         ; norm
+343  80A0  MAC #160           ; norm
+344  900A  RQ R0, 10, 0       ; norm
+345  0044  LUT R0, 4          ; norm
+346  A65B  SETP0 0x65B        ; norm
+347  5000  ST R0, [P0]        ; norm
+348  1400  LDI R1, 0          ; norm
+349  1810  LDI R2, 16         ; norm
+34A  A65C  SETP0 0x65C        ; norm
+34B  1CA0  LDI R3, 160        ; norm
+34C  B65B  SETP1 0x65B        ; norm
+34D  7601  LDA R1, R2         ; norm
+34E  8000  MAC                ; norm
+34F  9005  RQ R0, 5, 0        ; norm
+350  5180  ST R0, [P2]+       ; norm
+351  F34C  DJNZ 0x34C         ; norm
+352  1413  LDI R1, 19         ; output
+353  186E  LDI R2, 110        ; output
+354  1059  LDI R0, 89         ; output
+355  3005  MVH P1, R0         ; output
+356  BF80  SETP1 0xF80        ; output
+357  AB3F  SETP0 0xB3F        ; output
+358  300E  CPP P2, P0         ; output
+359  1C00  LDI R3, 0          ; output
+35A  A6FC  SETP0 0x6FC        ; output
+35B  7601  LDA R1, R2         ; output
+35C  80A0  MAC #160           ; output
+35D  9209  RQ R0, 9, 1        ; output
+35E  5180  ST R0, [P2]+       ; output
+35F  F35A  DJNZ 0x35A         ; output
+360  1C00  LDI R3, 0          ; output
+361  A6FC  SETP0 0x6FC        ; output
+362  7601  LDA R1, R2         ; output
+363  80A0  MAC #160           ; output
+364  9209  RQ R0, 9, 1        ; output
+365  5180  ST R0, [P2]+       ; output
+366  F361  DJNZ 0x361         ; output
+367  AB3F  SETP0 0xB3F        ; sample
+368  1C00  LDI R3, 0          ; sample
+369  4000  LD R0, [P0]        ; sample
+36A  2007  SHR R0             ; sample
+36B  0406  RND R1             ; sample
+36C  04A4  LUT R1, 10         ; sample
+36D  2100  ADD R0, R1         ; sample
+36E  5100  ST R0, [P0]+       ; sample
+36F  F369  DJNZ 0x369         ; sample
+370  1C00  LDI R3, 0          ; sample
+371  4000  LD R0, [P0]        ; sample
+372  2007  SHR R0             ; sample
+373  0406  RND R1             ; sample
+374  04A4  LUT R1, 10         ; sample
+375  2100  ADD R0, R1         ; sample
+376  5100  ST R0, [P0]+       ; sample
+377  F371  DJNZ 0x371         ; sample
+378  1004  LDI R0, 4          ; filter
+379  3006  MVH P2, R0         ; filter
+37A  1004  LDI R0, 4          ; filter
+37B  3005  MVH P1, R0         ; filter
+37C  1004  LDI R0, 4          ; filter
+37D  3004  MVH P0, R0         ; filter
+37E  AF01  SETP0 0xF01        ; filter
+37F  4000  LD R0, [P0]        ; filter
+380  0114  LUT R0, 17         ; filter
+381  E397  BNZ 0x397          ; filter
+382  AF07  SETP0 0xF07        ; filter
+383  4000  LD R0, [P0]        ; filter
+384  140E  LDI R1, 14         ; filter
+385  3402  MVP P2, R1, R0     ; filter
+386  4080  LD R0, [P2]        ; filter
+387  2005  MOV R0, R0         ; filter
+388  E397  BNZ 0x397          ; filter
+389  AF02  SETP0 0xF02        ; filter
+38A  4400  LD R1, [P0]        ; filter
+38B  AF05  SETP0 0xF05        ; filter
+38C  4900  LD R2, [P0]+       ; filter
+38D  4C00  LD R3, [P0]        ; filter
+38E  100C  LDI R0, 12         ; filter
+38F  2300  ADD R0, R3         ; filter
+390  3201  MVP P1, R0, R2     ; filter
+391  4200  LD R0, [P1]        ; filter
+392  2005  MOV R0, R0         ; filter
+393  E397  BNZ 0x397          ; filter
+394  1007  LDI R0, 7          ; filter
+395  3101  MVP P1, R0, R1     ; filter
+396  4200  LD R0, [P1]        ; filter
+397  2405  MOV R1, R0         ; filter
+398  0124  LUT R0, 18         ; filter
+399  0534  LUT R1, 19         ; filter
+39A  1807  LDI R2, 7          ; filter
+39B  3205  MVH P1, R2         ; filter
+39C  3401  MVP P1, R1, R0     ; filter
+39D  1801  LDI R2, 1          ; filter
+39E  3204  MVH P0, R2         ; filter
+39F  A400  SETP0 0x400        ; filter
+3A0  300E  CPP P2, P0         ; filter
+3A1  1C20  LDI R3, 32         ; filter
+3A2  4300  LD R0, [P1]+       ; filter
+3A3  5180  ST R0, [P2]+       ; filter
+3A4  F3A2  DJNZ 0x3A2         ; filter
+3A5  1003  LDI R0, 3          ; argmax
+3A6  3005  MVH P1, R0         ; argmax
+3A7  B200  SETP1 0x200        ; argmax
+3A8  1002  LDI R0, 2          ; argmax
+3A9  3004  MVH P0, R0         ; argmax
+3AA  A659  SETP0 0x659        ; argmax
+3AB  300E  CPP P2, P0         ; argmax
+3AC  1000  LDI R0, 0          ; argmax
+3AD  5080  ST R0, [P2]        ; argmax
+3AE  1400  LDI R1, 0          ; argmax
+3AF  1800  LDI R2, 0          ; argmax
+3B0  AB3F  SETP0 0xB3F        ; argmax
+3B1  1C00  LDI R3, 0          ; argmax
+3B2  4300  LD R0, [P1]+       ; filter
+3B3  0144  LUT R0, 20         ; filter
+3B4  D3BF  BZ 0x3BF           ; filter
+3B5  4100  LD R0, [P0]+       ; argmax
+3B6  2101  SUB R0, R1         ; argmax
+3B7  0154  LUT R0, 21         ; argmax
+3B8  D3BD  BZ 0x3BD           ; argmax
+3B9  2400  ADD R1, R0         ; argmax
+3BA  2B05  MOV R2, R3         ; argmax
+3BB  1000  LDI R0, 0          ; argmax
+3BC  5080  ST R0, [P2]        ; argmax
+3BD  F3B2  DJNZ 0x3B2         ; argmax
+3BE  C3C1  JMP 0x3C1          ; filter
+3BF  4100  LD R0, [P0]+       ; filter
+3C0  F3B2  DJNZ 0x3B2         ; filter
+3C1  1C00  LDI R3, 0          ; argmax
+3C2  4300  LD R0, [P1]+       ; filter
+3C3  0144  LUT R0, 20         ; filter
+3C4  D3CF  BZ 0x3CF           ; filter
+3C5  4100  LD R0, [P0]+       ; argmax
+3C6  2101  SUB R0, R1         ; argmax
+3C7  0154  LUT R0, 21         ; argmax
+3C8  D3CD  BZ 0x3CD           ; argmax
+3C9  2400  ADD R1, R0         ; argmax
+3CA  2B05  MOV R2, R3         ; argmax
+3CB  1001  LDI R0, 1          ; argmax
+3CC  5080  ST R0, [P2]        ; argmax
+3CD  F3C2  DJNZ 0x3C2         ; argmax
+3CE  C3D1  JMP 0x3D1          ; filter
+3CF  4100  LD R0, [P0]+       ; filter
+3D0  F3C2  DJNZ 0x3C2         ; filter
+3D1  1000  LDI R0, 0          ; book
+3D2  2201  SUB R0, R2         ; book
+3D3  4580  LD R1, [P2]+       ; book
+3D4  5080  ST R0, [P2]        ; book
+3D5  2406  SHL R1             ; book
+3D6  1880  LDI R2, 128        ; book
+3D7  2C05  MOV R3, R0         ; book
+3D8  2E02  AND R3, R2         ; book
+3D9  D3DD  BZ 0x3DD           ; book
+3DA  2204  XOR R0, R2         ; book
+3DB  1C01  LDI R3, 1          ; book
+3DC  2703  OR R1, R3          ; book
+3DD  2603  OR R1, R2          ; book
+3DE  0405  TX R1              ; book
+3DF  0005  TX R0              ; book
+3E0  C000  JMP 0x000          ; book
+3E1  0001  HALT               ; book
