@@ -27,7 +27,7 @@
    4,
    3
   ],
-  "u": 1,
+  "u": 2,
   "q": [
    6,
    6
@@ -78,7 +78,7 @@
   ]
  },
  "shifts": {
-  "sh_l": 9,
+  "sh_l": 8,
   "sh_e": 3,
   "sh_q": [
    8,
@@ -134,7 +134,7 @@
     6957
    ]
   ],
-  "c_l": 4974
+  "c_l": 4846
  },
  "tokenizer": "data/tok/f512c2",
  "tables": {
@@ -142,6 +142,7 @@
   "gain": 2.421154737472534
  },
  "notes": [
+  "logits: 4 codes per nat by request; a logit above 27.1 nats stops at code 127 (largest on the data: 30.6)",
   "Wo_0 uses only -16..16 of -127..127"
  ]
 }

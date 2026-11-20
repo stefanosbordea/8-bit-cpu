@@ -1,0 +1,32 @@
+04:23 Tier A int8 A3rq: body loss 1.7963651245973378
+04:23 Tier A int8 A3rq2: body loss 1.7933854625311783
+04:23 Tier A int8 A3ru: body loss 1.78901393255686
+04:23 Tier A int8 A3ru2: body loss 1.7856202306105893
+04:23 Tier A int8 kept: A3ru2
+wrote REPORT.md: 155 lines
+
+`artifacts/tokenizer/` holds the SentencePiece model of all of them (`tok.model`, `tok.vocab`; the same file in `data/tok/f512c2`, `data/tok/f512p`, `data/tok/f512v2`: checked).
+Each `model.json` names its tokenizer folder under `data/tok/`, which is not tracked: on a fresh copy of the repository, put the two
+files there (for example `data/tok/f512p/`) before running a tool on a model.
+
+The board model is `artifacts/board`: `PYTHONPATH=. .venv/bin/python tools/board_ask.py artifacts/board --list`.
+04:41:43 export: exit code 0
+04:41:43 run: .venv/bin/python tools/speed_report.py runs/qat/A3ru2
+04:41:44 finalize done
+04:41 Tier A: A3ru2 adopted, report regenerated
+05:21 Tier B float B2: body loss 1.4767062222064884 (B1: 1.571564690904517)
+05:37 Tier B int8 B2q: body loss 1.4920833114774446 (B1q: 1.583134882402235)
+05:37 Tier B: B2 replaces B1: yes
+05:37:27 integer model: done: integer val 1.9068 nats/token = 1.2711 bits/byte at step 2500 (float 1.8886); QAT forward and integer reference identical: True
+05:37:27 run: .venv/bin/python -m lsllm.intref.compare --float runs/f/B2/ckpt.pt --int runs/qat/B2q --data data/tok/f512c2
+05:37:35 run: .venv/bin/python -m lsllm.intref.overflow runs/qat/B2q --data data/tok/f512c2 --windows 32
+05:37:41 benchmarks: torch runs/f/B2/ckpt.pt test
+05:37:41 benchmarks: torch runs/f/B2/ckpt.pt practice
+05:37:41 benchmarks: int runs/qat/B2q test
+05:37:41 benchmarks: int runs/qat/B2q practice
+06:21:42 benchmarks finished
+06:21:42 run: .venv/bin/python -m lsllm.export runs/qat/B2q export/B2q --tokens 8 --temperature 0.8
+06:21:42 export: exit code 1
+06:21:42 finalize done
+wrote REPORT.md: 155 lines
+06:21 done

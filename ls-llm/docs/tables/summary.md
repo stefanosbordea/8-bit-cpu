@@ -1,17 +1,17 @@
-- **Model (Tier A).** 350,880 int8 parameters: 2 layers, width 160, 4 query heads sharing 1 key/value head, ReLU feed-forward of 219, 512 tokens, context 256. Its complete data memory image is 450,432 bytes (110 of the 135 block RAMs), the program 976 words.
+- **Model (Tier A).** 350,880 trained parameters, all carried by int8 values (350,080 int8 matrix entries; the 800 gains of the norms are folded into matrices and tables): 2 layers, width 160, 4 query heads sharing 1 key/value head, ReLU feed-forward of 219, 512 tokens, context 256. Its complete data memory image is 450,432 bytes (110 of the 135 block RAMs, plus one for the program), the program 976 words.
 - **Speed (level L1, 100 MHz, greedy with the syntax filter).** 495,456 / 549,600 / 766,176 cycles per token = **202 / 182 / 131 tokens per second** at context 16 / 64 / 256. The stream instruction makes the same program 3.20 / 3.15 / 3.02 times faster than one classic 4-cycle `MAC` per product.
-- **Integer arithmetic.** Validation loss 2.1770 nats per token in float and 2.2506 with the integers that the CPU computes (+0.0736); training forward pass, integer reference and generated LS program give identical tokens.
+- **Integer arithmetic.** Validation loss 2.1770 nats per token in float and 2.2376 with the integers that the CPU computes (+0.0606); training forward pass, integer reference and generated LS program give identical tokens.
 - **Scores on the test sets** (pass@1 greedy, best of filter on and off; pass@10 from 10 samples at temperature 0.8). Every model went
   through the same harness; the comparators are public models run as published. Details and the ladder below pass@1: section 3.
 
   | model | parameters | custom 200 | MBPP | HumanEval | custom: near families, tasks passed of 120 | custom: far families, of 80 | custom 200 pass@10 | MBPP pass@10 | HumanEval pass@10 |
   |---|---|---|---|---|---|---|---|---|---|
   | **Tier A, float** | 350,880 | 4.0% | 0.8% | 0.0% | 7 | 1 | 12.0% | 0.8% | 0.0% |
-  | **Tier A, int8 (what the CPU computes)** | 350,880 | 6.5% | 0.4% | 0.0% | 12 | 1 | 11.0% | 1.4% | 0.0% |
+  | **Tier A, int8 (what the CPU computes)** | 350,880 | 7.5% | 0.2% | 0.0% | 14 | 1 | 13.0% | 0.8% | 0.0% |
   | **Tier A, earlier model (10,000 steps; the editing sessions used it), float** | 350,880 | 4.5% | 0.4% | 0.0% | 9 | 0 | 6.0% | 0.8% | 0.0% |
   | **Tier A, earlier model (10,000 steps; the editing sessions used it), int8 (what the CPU computes)** | 350,880 | 5.0% | 0.2% | 0.0% | 10 | 0 | 9.5% | 0.6% | 0.0% |
-  | **Tier B, float** | 1,252,032 | 6.5% | 0.2% | 0.0% | 13 | 0 | 12.5% | 1.6% | 0.0% |
-  | **Tier B, int8 (what the CPU computes)** | 1,252,032 | 6.0% | 1.0% | 0.0% | 12 | 0 | 13.0% | 2.0% | 0.6% |
+  | **Tier B, float** | 1,252,032 | 5.5% | 0.6% | 0.6% | 11 | 0 | 13.0% | 1.4% | 0.0% |
+  | **Tier B, int8 (what the CPU computes)** | 1,252,032 | 5.0% | 0.4% | 0.6% | 10 | 0 | 14.0% | 2.2% | 0.6% |
   | stories260K | 260,032 | 0.0% | 0.0% | 0.0% | 0 | 0 | - | - | - |
   | ngram-432KB | 77,988 | 0.0% | 0.0% | 0.0% | 0 | 0 | - | - | - |
   | Pico-1 | 254,400 | 0.0% | 0.0% | 0.0% | 0 | 0 | 0.0% | 0.0% | 0.0% |

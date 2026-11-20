@@ -28,7 +28,7 @@ terms take one more instruction each, included). Level L1, 100 MHz, greedy, no f
 
 | model | L | D | F | window | parameters | weights in DDR2 (MiB) | bytes in block RAM (KV cache, tables, scratch) | cycles/token @64 | tokens/s @64 | cycles/token @256 | tokens/s @256 | weight bytes read per second (MB/s) @64 | note |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| trained: B1q | 4 | 192 | 510 | - | 1,252,032 | 1.19 | 131,072 | 1,690,457 | 59.2 | 2,173,107 | 46.0 | 74.1 | validation 2.016 nats/token |
+| trained: B2q | 4 | 192 | 510 | - | 1,252,032 | 1.19 | 131,072 | 1,690,457 | 59.2 | 2,173,107 | 46.0 | 74.1 | validation 1.907 nats/token |
 | example | 4 | 160 | 480 | - | 1,004,960 | 0.96 | 196,608 | 1,371,189 | 72.9 | 1,711,280 | 58.4 | 73.3 |  |
 | example | 6 | 192 | 510 | - | 1,939,392 | 1.85 | 327,680 | 2,556,797 | 39.1 | 3,141,008 | 31.8 | 75.9 |  |
 | example | 8 | 256 | 510 | 128 | 3,797,248 | 3.62 | 294,912 | 4,853,600 | 20.6 | 5,179,093 | 19.3 | 78.2 | attention window 128 |

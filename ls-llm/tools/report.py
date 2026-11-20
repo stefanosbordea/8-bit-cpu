@@ -46,11 +46,12 @@ def tierb_intro(spec):
     a = result(os.path.join(os.path.dirname(spec["models"][0]["float"]), "result.json"))
     c = f["config"]
     text = ("**The trained Tier B model** (`%s`%s): %d layers, width %d, %d query heads on %d key/value head, ReLU feed-forward of %d: %s parameters, "
-            "%.2f MiB of int8 weights, which do not fit the block RAM. It was trained for %s steps on benchmark-clean text (`%s`), a tenth of what Tier A got, so it is "
+            "%.2f MiB of int8 weights, which do not fit the block RAM. It was trained for %s steps in all on benchmark-clean text (`%s`; Tier A: %s steps), so it is "
             "less trained than Tier A and still better: validation loss %.4f nats per token in float%s (Tier A float: %.4f), on the body tokens %.4f%s. "
             "Its benchmark rows are in section 3. " % (
                 os.path.dirname(entry["float"]), ", int8 `%s`" % entry["int"] if q else "", c["n_layers"], c["dim"], c["n_heads"], c["n_kv_heads"], c["hidden_dim"],
-                num(f["params"]), f["params"] / 2 ** 20, num(f["steps"]), f["args"]["data"], f["val_loss"], " and %.4f in int8" % q["val_loss"] if q else "",
+                num(f["params"]), f["params"] / 2 ** 20, num(entry.get("steps_total", f["steps"])), f["args"]["data"],
+                num(spec["models"][0].get("steps_total", a["steps"])), f["val_loss"], " and %.4f in int8" % q["val_loss"] if q else "",
                 a["val_loss"], f["val_body"], " / %.4f" % q["val_body"] if q and q.get("val_body") else ""))
     row = re.search(r"^\| trained: .*$", read("docs/TIER_B.md", ""), re.M)
     if row:

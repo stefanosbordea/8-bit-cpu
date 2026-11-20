@@ -10,12 +10,12 @@
 | A2q | int8 | session s4 | on | 7 (5.8%) | 0 (0.0%) |
 | A3r | float | - | off | 7 (5.8%) | 1 (1.2%) |
 | A3r | float | - | on | 7 (5.8%) | 1 (1.2%) |
-| A3rq | int8 | - | off | 12 (10.0%) | 1 (1.2%) |
-| A3rq | int8 | - | on | 12 (10.0%) | 1 (1.2%) |
-| B1 | float | - | off | 13 (10.8%) | 0 (0.0%) |
-| B1 | float | - | on | 13 (10.8%) | 0 (0.0%) |
-| B1q | int8 | - | off | 12 (10.0%) | 0 (0.0%) |
-| B1q | int8 | - | on | 12 (10.0%) | 0 (0.0%) |
+| A3ru2 | int8 | - | off | 14 (11.7%) | 1 (1.2%) |
+| A3ru2 | int8 | - | on | 14 (11.7%) | 1 (1.2%) |
+| B2 | float | - | off | 11 (9.2%) | 0 (0.0%) |
+| B2 | float | - | on | 11 (9.2%) | 0 (0.0%) |
+| B2q | int8 | - | off | 10 (8.3%) | 0 (0.0%) |
+| B2q | int8 | - | on | 10 (8.3%) | 0 (0.0%) |
 | CinnabarLM-4M-Python-Base (as published, plain continuation) | float | - | off | 2 (1.7%) | 0 (0.0%) |
 | Pico-1 (as published, plain continuation) | float | - | off | 0 (0.0%) | 0 (0.0%) |
 | Pico-1.2 (as published, plain continuation) | float | - | off | 0 (0.0%) | 0 (0.0%) |

@@ -1,0 +1,101 @@
+A3ru2 on custom test: 200 tasks x 1 samples in 12.1 s
+  pass@1     0.0750
+  pass@10    -
+  syntax_ok  0.9250
+  runs_ok    0.4700
+  empty      0.0000
+  outcomes   pass 15, wrong 79, error 91, timeout 0, syntax 15
+  recorded in results/results.jsonl, samples in results/samples/20261120-042355_A3ru2_custom_test.jsonl.gz
+A3ru2 on custom test: 200 tasks x 10 samples in 79.3 s
+  pass@1     0.0550
+  pass@10    0.1300
+  syntax_ok  0.8650
+  runs_ok    0.4080
+  empty      0.0000
+  outcomes   pass 110, wrong 706, error 914, timeout 0, syntax 270
+  recorded in results/results.jsonl, samples in results/samples/20261120-042514_A3ru2_custom_test.jsonl.gz
+A3ru2 on mbpp test: 500 tasks x 1 samples in 37.3 s
+  pass@1     0.0020
+  pass@10    -
+  syntax_ok  0.8220
+  runs_ok    0.3380
+  empty      0.0000
+  outcomes   pass 1, wrong 168, error 242, timeout 0, syntax 89
+  recorded in results/results.jsonl, samples in results/samples/20261120-042552_A3ru2_mbpp_test.jsonl.gz
+A3ru2 on mbpp test: 500 tasks x 10 samples in 269.1 s
+  pass@1     0.0022
+  pass@10    0.0080
+  syntax_ok  0.6754
+  runs_ok    0.1724
+  empty      0.0000
+  outcomes   pass 11, wrong 851, error 2514, timeout 1, syntax 1623
+  recorded in results/results.jsonl, samples in results/samples/20261120-043022_A3ru2_mbpp_test.jsonl.gz
+A3ru2 on humaneval test: 164 tasks x 1 samples in 23.9 s
+  pass@1     0.0000
+  pass@10    -
+  syntax_ok  0.6220
+  runs_ok    0.2195
+  empty      0.0000
+  outcomes   pass 0, wrong 36, error 66, timeout 0, syntax 62
+  105 prompts were truncated by the completer
+  recorded in results/results.jsonl, samples in results/samples/20261120-043046_A3ru2_humaneval_test.jsonl.gz
+A3ru2 on humaneval test: 164 tasks x 10 samples in 113.8 s
+  pass@1     0.0000
+  pass@10    0.0000
+  syntax_ok  0.4823
+  runs_ok    0.1049
+  empty      0.0018
+  outcomes   pass 0, wrong 172, error 619, timeout 0, syntax 849
+  105 prompts were truncated by the completer
+  recorded in results/results.jsonl, samples in results/samples/20261120-043240_A3ru2_humaneval_test.jsonl.gz
+A3ru2+filter on custom test: 200 tasks x 1 samples in 11.9 s
+  pass@1     0.0750
+  pass@10    -
+  syntax_ok  0.9350
+  runs_ok    0.4750
+  empty      0.0000
+  outcomes   pass 15, wrong 80, error 92, timeout 0, syntax 13
+  recorded in results/results.jsonl, samples in results/samples/20261120-043252_A3ru2_filter_custom_test.jsonl.gz
+A3ru2+filter on custom test: 200 tasks x 10 samples in 76.0 s
+  pass@1     0.0550
+  pass@10    0.1300
+  syntax_ok  0.8880
+  runs_ok    0.4130
+  empty      0.0000
+  outcomes   pass 110, wrong 716, error 950, timeout 0, syntax 224
+  recorded in results/results.jsonl, samples in results/samples/20261120-043408_A3ru2_filter_custom_test.jsonl.gz
+A3ru2+filter on mbpp test: 500 tasks x 1 samples in 34.5 s
+  pass@1     0.0020
+  pass@10    -
+  syntax_ok  0.8840
+  runs_ok    0.3500
+  empty      0.0000
+  outcomes   pass 1, wrong 174, error 267, timeout 0, syntax 58
+  recorded in results/results.jsonl, samples in results/samples/20261120-043443_A3ru2_filter_mbpp_test.jsonl.gz
+A3ru2+filter on mbpp test: 500 tasks x 10 samples in 280.9 s
+  pass@1     0.0022
+  pass@10    0.0080
+  syntax_ok  0.7404
+  runs_ok    0.1804
+  empty      0.0000
+  outcomes   pass 11, wrong 891, error 2799, timeout 1, syntax 1298
+  recorded in results/results.jsonl, samples in results/samples/20261120-043924_A3ru2_filter_mbpp_test.jsonl.gz
+A3ru2+filter on humaneval test: 164 tasks x 1 samples in 23.8 s
+  pass@1     0.0000
+  pass@10    -
+  syntax_ok  0.6829
+  runs_ok    0.2500
+  empty      0.0000
+  outcomes   pass 0, wrong 41, error 71, timeout 0, syntax 52
+  105 prompts were truncated by the completer
+  recorded in results/results.jsonl, samples in results/samples/20261120-043948_A3ru2_filter_humaneval_test.jsonl.gz
+A3ru2+filter on humaneval test: 164 tasks x 10 samples in 112.3 s
+  pass@1     0.0000
+  pass@10    0.0000
+  syntax_ok  0.5720
+  runs_ok    0.1128
+  empty      0.0018
+  outcomes   pass 0, wrong 185, error 753, timeout 0, syntax 702
+  105 prompts were truncated by the completer
+  recorded in results/results.jsonl, samples in results/samples/20261120-044141_A3ru2_filter_humaneval_test.jsonl.gz
+done

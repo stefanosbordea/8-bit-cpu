@@ -6,20 +6,20 @@ Practice-set scores and benchmark scores are in separate tables and are never mi
 
 ## 1. Summary
 
-- **Model (Tier A).** 350,880 int8 parameters: 2 layers, width 160, 4 query heads sharing 1 key/value head, ReLU feed-forward of 219, 512 tokens, context 256. Its complete data memory image is 450,432 bytes (110 of the 135 block RAMs), the program 976 words.
+- **Model (Tier A).** 350,880 trained parameters, all carried by int8 values (350,080 int8 matrix entries; the 800 gains of the norms are folded into matrices and tables): 2 layers, width 160, 4 query heads sharing 1 key/value head, ReLU feed-forward of 219, 512 tokens, context 256. Its complete data memory image is 450,432 bytes (110 of the 135 block RAMs, plus one for the program), the program 976 words.
 - **Speed (level L1, 100 MHz, greedy with the syntax filter).** 495,456 / 549,600 / 766,176 cycles per token = **202 / 182 / 131 tokens per second** at context 16 / 64 / 256. The stream instruction makes the same program 3.20 / 3.15 / 3.02 times faster than one classic 4-cycle `MAC` per product.
-- **Integer arithmetic.** Validation loss 2.1770 nats per token in float and 2.2506 with the integers that the CPU computes (+0.0736); training forward pass, integer reference and generated LS program give identical tokens.
+- **Integer arithmetic.** Validation loss 2.1770 nats per token in float and 2.2376 with the integers that the CPU computes (+0.0606); training forward pass, integer reference and generated LS program give identical tokens.
 - **Scores on the test sets** (pass@1 greedy, best of filter on and off; pass@10 from 10 samples at temperature 0.8). Every model went
   through the same harness; the comparators are public models run as published. Details and the ladder below pass@1: section 3.
 
   | model | parameters | custom 200 | MBPP | HumanEval | custom: near families, tasks passed of 120 | custom: far families, of 80 | custom 200 pass@10 | MBPP pass@10 | HumanEval pass@10 |
   |---|---|---|---|---|---|---|---|---|---|
   | **Tier A, float** | 350,880 | 4.0% | 0.8% | 0.0% | 7 | 1 | 12.0% | 0.8% | 0.0% |
-  | **Tier A, int8 (what the CPU computes)** | 350,880 | 6.5% | 0.4% | 0.0% | 12 | 1 | 11.0% | 1.4% | 0.0% |
+  | **Tier A, int8 (what the CPU computes)** | 350,880 | 7.5% | 0.2% | 0.0% | 14 | 1 | 13.0% | 0.8% | 0.0% |
   | **Tier A, earlier model (10,000 steps; the editing sessions used it), float** | 350,880 | 4.5% | 0.4% | 0.0% | 9 | 0 | 6.0% | 0.8% | 0.0% |
   | **Tier A, earlier model (10,000 steps; the editing sessions used it), int8 (what the CPU computes)** | 350,880 | 5.0% | 0.2% | 0.0% | 10 | 0 | 9.5% | 0.6% | 0.0% |
-  | **Tier B, float** | 1,252,032 | 6.5% | 0.2% | 0.0% | 13 | 0 | 12.5% | 1.6% | 0.0% |
-  | **Tier B, int8 (what the CPU computes)** | 1,252,032 | 6.0% | 1.0% | 0.0% | 12 | 0 | 13.0% | 2.0% | 0.6% |
+  | **Tier B, float** | 1,252,032 | 5.5% | 0.6% | 0.6% | 11 | 0 | 13.0% | 1.4% | 0.0% |
+  | **Tier B, int8 (what the CPU computes)** | 1,252,032 | 5.0% | 0.4% | 0.6% | 10 | 0 | 14.0% | 2.2% | 0.6% |
   | stories260K | 260,032 | 0.0% | 0.0% | 0.0% | 0 | 0 | - | - | - |
   | ngram-432KB | 77,988 | 0.0% | 0.0% | 0.0% | 0 | 0 | - | - | - |
   | Pico-1 | 254,400 | 0.0% | 0.0% | 0.0% | 0 | 0 | 0.0% | 0.0% | 0.0% |
@@ -42,13 +42,13 @@ Cycles and tokens per second: level L1 of `docs/SPEC.md`, 100 MHz, complete prog
 
 | model | layers | width | heads / KV heads | feed-forward | window | parameters | data memory on the CPU (bytes) | program (words) | validation text | val loss float, all tokens (nats/token) | val loss int8, all tokens | int8 after calibration only | val loss on body tokens: float / int8 | bits per byte float / int8 | cycles per token @16 / @64 / @256 | tokens/s @16 / @64 / @256 | stream speed-up vs classic MAC @16 / @64 / @256 |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| Tier A | 2 | 160 | 4 / 1 | relu, 219 | - | 350,880 | 450,432 | 976 | self-contained functions (val2) | 2.1770 | 2.2506 | 2.5889 | 1.7248 / 1.7964 | 1.4512 / 1.5002 | 495,456 / 549,600 / 766,176 | 201.8 / 182.0 / 130.5 | 3.20 / 3.15 / 3.02 |
+| Tier A | 2 | 160 | 4 / 1 | relu, 219 | - | 350,880 | 450,432 | 976 | self-contained functions (val2) | 2.1770 | 2.2376 | 2.2432 | 1.7248 / 1.7856 | 1.4512 / 1.4916 | 495,456 / 549,600 / 766,176 | 201.8 / 182.0 / 130.5 | 3.20 / 3.15 / 3.02 |
 | Tier A, earlier model (10,000 steps; the editing sessions used it) | 2 | 160 | 4 / 1 | relu, 219 | - | 350,880 | 450,432 | 976 | self-contained functions (val2) | 2.2212 | 2.2543 | 2.3246 | 1.7915 / 1.8302 | 1.4807 / 1.5027 | 495,456 / 549,600 / 766,176 | 201.8 / 182.0 / 130.5 | 3.20 / 3.15 / 3.02 |
-| Tier B | 4 | 192 | 4 / 1 | relu, 510 | - | 1,252,032 | 1,350,336 | - | self-contained functions (val2) | 2.0052 | 2.0163 | 2.0533 | 1.5716 / 1.5831 | 1.3367 / 1.3440 | see docs/TIER_B.md | see docs/TIER_B.md | - |
+| Tier B | 4 | 192 | 4 / 1 | relu, 510 | - | 1,252,032 | 1,350,336 | - | self-contained functions (val2) | 1.8886 | 1.9068 | 1.9502 | 1.4767 / 1.4921 | 1.2589 / 1.2711 | see docs/TIER_B.md | see docs/TIER_B.md | - |
 
 Shape of Tier A: 2 layers, width 160, 4 query heads on 1 key/value head, ReLU feed-forward of 219, vocabulary 512, context 256; 350,880 parameters, all int8.
-Validation loss on the same 79,082 validation tokens: float 2.1770 nats per token, int8 2.2506 (straight after calibration, before
-quantization-aware training: 2.5889). The int8 number is the loss of the integers that the CPU computes: the training
+Validation loss on the same 79,082 validation tokens: float 2.1770 nats per token, int8 2.2376 (straight after calibration, before
+quantization-aware training: 2.2432). The int8 number is the loss of the integers that the CPU computes: the training
 forward pass and the integer reference gave identical logits on the check windows (`bit_exact`: True).
 
 ## 3. Benchmark scores
@@ -65,10 +65,10 @@ Every model went through the same harness, the same prompts and the same budget 
 | Tier A | float | - | off | 10 samples, T = 0.8 | 3.6% | 12.0% | 88.1% | 39.4% | 0.1% | 0.8% | 67.6% | 16.9% | 0.0% | 0.0% | 49.0% | 7.3% |
 | Tier A | float | - | on | greedy | 4.0% | - | 95.0% | 43.5% | 0.8% | - | 87.4% | 35.6% | 0.0% | - | 55.5% | 17.1% |
 | Tier A | float | - | on | 10 samples, T = 0.8 | 3.5% | 11.5% | 91.0% | 40.0% | 0.1% | 0.8% | 71.5% | 17.4% | 0.0% | 0.0% | 54.9% | 8.2% |
-| Tier A | int8 | - | off | greedy | 6.5% | - | 92.0% | 49.0% | 0.4% | - | 82.2% | 36.6% | 0.0% | - | 65.2% | 23.2% |
-| Tier A | int8 | - | off | 10 samples, T = 0.8 | 3.9% | 11.0% | 84.5% | 40.7% | 0.2% | 1.4% | 65.9% | 19.8% | 0.0% | 0.0% | 44.9% | 11.0% |
-| Tier A | int8 | - | on | greedy | 6.5% | - | 93.5% | 49.5% | 0.4% | - | 88.8% | 37.4% | 0.0% | - | 72.6% | 25.0% |
-| Tier A | int8 | - | on | 10 samples, T = 0.8 | 3.9% | 11.0% | 87.7% | 41.4% | 0.2% | 1.4% | 73.7% | 21.1% | 0.0% | 0.0% | 53.9% | 12.5% |
+| Tier A | int8 | - | off | greedy | 7.5% | - | 92.5% | 47.0% | 0.2% | - | 82.2% | 33.8% | 0.0% | - | 62.2% | 22.0% |
+| Tier A | int8 | - | off | 10 samples, T = 0.8 | 5.5% | 13.0% | 86.5% | 40.8% | 0.2% | 0.8% | 67.5% | 17.2% | 0.0% | 0.0% | 48.2% | 10.5% |
+| Tier A | int8 | - | on | greedy | 7.5% | - | 93.5% | 47.5% | 0.2% | - | 88.4% | 35.0% | 0.0% | - | 68.3% | 25.0% |
+| Tier A | int8 | - | on | 10 samples, T = 0.8 | 5.5% | 13.0% | 88.8% | 41.3% | 0.2% | 0.8% | 74.0% | 18.0% | 0.0% | 0.0% | 57.2% | 11.3% |
 | Tier A, earlier model (10,000 steps; the editing sessions used it) | float | - | off | greedy | 4.5% | - | 88.5% | 38.5% | 0.4% | - | 71.2% | 36.8% | 0.0% | - | 60.4% | 28.7% |
 | Tier A, earlier model (10,000 steps; the editing sessions used it) | float | - | off | 10 samples, T = 0.8 | 2.1% | 6.0% | 82.8% | 30.1% | 0.1% | 0.8% | 58.5% | 13.5% | 0.0% | 0.0% | 43.2% | 7.3% |
 | Tier A, earlier model (10,000 steps; the editing sessions used it) | float | - | on | greedy | 4.5% | - | 91.5% | 39.5% | 0.4% | - | 81.8% | 39.4% | 0.0% | - | 64.0% | 29.3% |
@@ -81,14 +81,14 @@ Every model went through the same harness, the same prompts and the same budget 
 | Tier A, earlier model (10,000 steps; the editing sessions used it) | int8 | session s2 | on | greedy | 4.0% | - | 91.5% | 47.5% | 0.0% | - | 87.0% | 38.8% | 0.0% | - | 74.4% | 23.8% |
 | Tier A, earlier model (10,000 steps; the editing sessions used it) | int8 | session s3 | on | greedy | 4.5% | - | 92.5% | 45.0% | 0.0% | - | 81.6% | 36.6% | 0.0% | - | 65.9% | 22.0% |
 | Tier A, earlier model (10,000 steps; the editing sessions used it) | int8 | session s4 | on | greedy | 3.5% | - | 84.5% | 45.5% | 0.4% | - | 86.0% | 40.4% | 0.0% | - | 82.3% | 54.3% |
-| Tier B | float | - | off | greedy | 6.5% | - | 94.5% | 53.0% | 0.2% | - | 82.6% | 46.2% | 0.0% | - | 55.5% | 29.3% |
-| Tier B | float | - | off | 10 samples, T = 0.8 | 5.5% | 12.5% | 90.2% | 41.7% | 0.3% | 1.6% | 70.6% | 23.2% | 0.0% | 0.0% | 53.4% | 11.7% |
-| Tier B | float | - | on | greedy | 6.5% | - | 95.0% | 53.0% | 0.2% | - | 84.2% | 46.6% | 0.0% | - | 56.7% | 29.3% |
-| Tier B | float | - | on | 10 samples, T = 0.8 | 5.5% | 12.5% | 92.0% | 41.9% | 0.3% | 1.6% | 74.1% | 23.6% | 0.0% | 0.0% | 59.8% | 12.4% |
-| Tier B | int8 | - | off | greedy | 6.0% | - | 95.5% | 54.0% | 1.0% | - | 85.2% | 50.2% | 0.0% | - | 63.4% | 21.3% |
-| Tier B | int8 | - | off | 10 samples, T = 0.8 | 5.5% | 13.0% | 89.9% | 42.2% | 0.5% | 2.0% | 75.1% | 27.9% | 0.1% | 0.6% | 57.8% | 13.7% |
-| Tier B | int8 | - | on | greedy | 6.0% | - | 96.0% | 54.0% | 1.0% | - | 86.8% | 50.4% | 0.0% | - | 65.9% | 22.6% |
-| Tier B | int8 | - | on | 10 samples, T = 0.8 | 5.5% | 13.0% | 92.8% | 43.0% | 0.5% | 2.0% | 78.9% | 28.9% | 0.1% | 0.6% | 64.7% | 15.4% |
+| Tier B | float | - | off | greedy | 5.5% | - | 94.5% | 49.0% | 0.6% | - | 78.0% | 40.6% | 0.6% | - | 60.4% | 35.4% |
+| Tier B | float | - | off | 10 samples, T = 0.8 | 5.3% | 13.0% | 91.0% | 43.2% | 0.3% | 1.4% | 70.5% | 24.0% | 0.0% | 0.0% | 60.4% | 14.3% |
+| Tier B | float | - | on | greedy | 5.5% | - | 96.5% | 50.0% | 0.6% | - | 78.6% | 40.8% | 0.6% | - | 64.0% | 36.6% |
+| Tier B | float | - | on | 10 samples, T = 0.8 | 5.3% | 13.0% | 92.7% | 43.4% | 0.3% | 1.4% | 73.5% | 24.5% | 0.0% | 0.0% | 63.0% | 14.7% |
+| Tier B | int8 | - | off | greedy | 5.0% | - | 92.5% | 46.5% | 0.4% | - | 81.6% | 46.6% | 0.6% | - | 62.8% | 24.4% |
+| Tier B | int8 | - | off | 10 samples, T = 0.8 | 5.5% | 14.0% | 91.2% | 46.0% | 0.4% | 2.0% | 74.0% | 28.8% | 0.1% | 0.6% | 61.1% | 15.5% |
+| Tier B | int8 | - | on | greedy | 5.0% | - | 94.0% | 47.0% | 0.4% | - | 83.6% | 47.2% | 0.6% | - | 65.2% | 24.4% |
+| Tier B | int8 | - | on | 10 samples, T = 0.8 | 5.5% | 14.0% | 92.8% | 46.2% | 0.4% | 2.2% | 78.0% | 29.7% | 0.1% | 0.6% | 68.4% | 16.3% |
 | stories260K (karpathy/tinyllamas, as published) | float | - | off | greedy | 0.0% | - | 62.0% | 62.0% | 0.0% | - | 55.6% | 55.4% | 0.0% | - | 28.7% | 28.7% |
 | ngram-432KB | n-gram | - | off | greedy | 0.0% | - | 23.0% | 0.0% | 0.0% | - | 32.2% | 0.0% | 0.0% | - | 62.8% | 0.0% |
 | Pico-1 (as published, plain continuation) | float | - | off | greedy | 0.0% | - | 0.0% | 0.0% | 0.0% | - | 0.0% | 0.0% | 0.0% | - | 7.9% | 6.7% |
@@ -117,12 +117,12 @@ kind. A pass on a near task shows what was learned, a pass on a far task would s
 | A2q | int8 | session s4 | on | 7 (5.8%) | 0 (0.0%) |
 | A3r | float | - | off | 7 (5.8%) | 1 (1.2%) |
 | A3r | float | - | on | 7 (5.8%) | 1 (1.2%) |
-| A3rq | int8 | - | off | 12 (10.0%) | 1 (1.2%) |
-| A3rq | int8 | - | on | 12 (10.0%) | 1 (1.2%) |
-| B1 | float | - | off | 13 (10.8%) | 0 (0.0%) |
-| B1 | float | - | on | 13 (10.8%) | 0 (0.0%) |
-| B1q | int8 | - | off | 12 (10.0%) | 0 (0.0%) |
-| B1q | int8 | - | on | 12 (10.0%) | 0 (0.0%) |
+| A3ru2 | int8 | - | off | 14 (11.7%) | 1 (1.2%) |
+| A3ru2 | int8 | - | on | 14 (11.7%) | 1 (1.2%) |
+| B2 | float | - | off | 11 (9.2%) | 0 (0.0%) |
+| B2 | float | - | on | 11 (9.2%) | 0 (0.0%) |
+| B2q | int8 | - | off | 10 (8.3%) | 0 (0.0%) |
+| B2q | int8 | - | on | 10 (8.3%) | 0 (0.0%) |
 | CinnabarLM-4M-Python-Base (as published, plain continuation) | float | - | off | 2 (1.7%) | 0 (0.0%) |
 | Pico-1 (as published, plain continuation) | float | - | off | 0 (0.0%) | 0 (0.0%) |
 | Pico-1.2 (as published, plain continuation) | float | - | off | 0 (0.0%) | 0 (0.0%) |
@@ -141,10 +141,10 @@ These tasks were used to make decisions (shape, data mix, decoding, weight edits
 | Tier A | float | - | off | 10 samples, T = 0.8 | 2.2% | 7.0% | 86.8% | 37.3% | 0.3% | 1.1% | 67.6% | 19.1% | - | - | - | - |
 | Tier A | float | - | on | greedy | 2.5% | - | 94.5% | 48.5% | 0.6% | - | 87.3% | 41.4% | - | - | - | - |
 | Tier A | float | - | on | 10 samples, T = 0.8 | 2.2% | 7.0% | 89.2% | 37.6% | 0.3% | 1.3% | 72.0% | 19.7% | - | - | - | - |
-| Tier A | int8 | - | off | greedy | 3.0% | - | 91.0% | 48.0% | 0.9% | - | 84.7% | 37.7% | - | - | - | - |
-| Tier A | int8 | - | off | 10 samples, T = 0.8 | 2.0% | 6.0% | 85.0% | 37.0% | 0.5% | 2.4% | 66.9% | 19.7% | - | - | - | - |
-| Tier A | int8 | - | on | greedy | 3.0% | - | 92.0% | 48.5% | 0.9% | - | 89.2% | 38.8% | - | - | - | - |
-| Tier A | int8 | - | on | 10 samples, T = 0.8 | 2.0% | 6.0% | 88.8% | 37.8% | 0.5% | 2.6% | 73.6% | 20.8% | - | - | - | - |
+| Tier A | int8 | - | off | greedy | 3.0% | - | 90.5% | 52.0% | 0.4% | - | 83.2% | 34.3% | - | - | - | - |
+| Tier A | int8 | - | off | 10 samples, T = 0.8 | 3.1% | 7.5% | 85.5% | 37.0% | 0.3% | 0.9% | 67.7% | 18.8% | - | - | - | - |
+| Tier A | int8 | - | on | greedy | 3.0% | - | 95.5% | 53.5% | 0.4% | - | 87.3% | 35.1% | - | - | - | - |
+| Tier A | int8 | - | on | 10 samples, T = 0.8 | 3.2% | 7.5% | 88.8% | 38.1% | 0.3% | 0.9% | 73.8% | 19.5% | - | - | - | - |
 | Tier A, earlier model (10,000 steps; the editing sessions used it) | float | - | off | greedy | 1.5% | - | 89.0% | 36.5% | 0.6% | - | 71.6% | 36.2% | - | - | - | - |
 | Tier A, earlier model (10,000 steps; the editing sessions used it) | float | - | off | 10 samples, T = 0.8 | 1.4% | 3.5% | 83.0% | 31.8% | 0.1% | 0.4% | 59.1% | 13.7% | - | - | - | - |
 | Tier A, earlier model (10,000 steps; the editing sessions used it) | float | - | on | greedy | 1.5% | - | 92.0% | 38.0% | 0.6% | - | 80.2% | 39.2% | - | - | - | - |
@@ -153,8 +153,14 @@ These tasks were used to make decisions (shape, data mix, decoding, weight edits
 | Tier A, earlier model (10,000 steps; the editing sessions used it) | int8 | - | off | 10 samples, T = 0.8 | 1.1% | 4.0% | 82.2% | 32.6% | 0.1% | 0.6% | 58.3% | 15.3% | - | - | - | - |
 | Tier A, earlier model (10,000 steps; the editing sessions used it) | int8 | - | on | greedy | 0.5% | - | 94.0% | 42.5% | 0.4% | - | 82.5% | 39.4% | - | - | - | - |
 | Tier A, earlier model (10,000 steps; the editing sessions used it) | int8 | - | on | 10 samples, T = 0.8 | 1.1% | 4.0% | 87.7% | 33.5% | 0.1% | 0.6% | 66.2% | 16.8% | - | - | - | - |
-| Tier B | float | - | off | greedy | 4.5% | - | 96.5% | 52.0% | 0.9% | - | 78.2% | 45.0% | - | - | - | - |
-| Tier B | float | - | on | greedy | 4.5% | - | 97.0% | 52.0% | 0.9% | - | 79.7% | 45.7% | - | - | - | - |
+| Tier B | float | - | off | greedy | 6.5% | - | 90.5% | 48.0% | 1.5% | - | 78.0% | 45.5% | - | - | - | - |
+| Tier B | float | - | off | 10 samples, T = 0.8 | 4.8% | 9.0% | 90.3% | 40.6% | 0.3% | 1.7% | 71.0% | 24.1% | - | - | - | - |
+| Tier B | float | - | on | greedy | 6.5% | - | 92.5% | 48.5% | 1.5% | - | 79.7% | 46.1% | - | - | - | - |
+| Tier B | float | - | on | 10 samples, T = 0.8 | 4.8% | 9.0% | 91.6% | 40.8% | 0.3% | 1.7% | 74.3% | 24.6% | - | - | - | - |
+| Tier B | int8 | - | off | greedy | 3.5% | - | 95.5% | 49.0% | 1.3% | - | 88.1% | 53.0% | - | - | - | - |
+| Tier B | int8 | - | off | 10 samples, T = 0.8 | 3.4% | 8.0% | 90.0% | 43.2% | 0.3% | 2.4% | 74.7% | 29.9% | - | - | - | - |
+| Tier B | int8 | - | on | greedy | 3.5% | - | 95.5% | 49.0% | 1.3% | - | 89.4% | 53.7% | - | - | - | - |
+| Tier B | int8 | - | on | 10 samples, T = 0.8 | 3.4% | 8.0% | 91.5% | 43.6% | 0.3% | 2.4% | 78.7% | 31.1% | - | - | - | - |
 
 ### Programs on request (recall of trained programs, not a benchmark)
 
@@ -345,8 +351,9 @@ docstring) count one tenth (D-train-2). The mix was chosen on the practice sets 
 on the test sets.
 
 **Training of the final Tier A model** (D-train-3, D-qat-7): 30,000 steps of 64 windows of 256 tokens, then 3,000 steps
-with a term that keeps the residual stream inside the range that int8 can hold, then 3,000 steps of quantization-aware
-training. The earlier model (10,000 steps) is kept in the tables because the weight-editing sessions and the board model
+with a term that keeps the residual stream inside the range that int8 can hold, then quantization-aware training in two
+stages of 3,000 steps with 4 logit codes per nat. Tier B: 3,000 steps, then 6,000 more with the same range term, then
+3,000 steps of quantization-aware training. The earlier model (10,000 steps) is kept in the tables because the weight-editing sessions and the board model
 started from it.
 
 **Tokenizer.** SentencePiece BPE with 512 tokens, trained on the Tier A text. Line structure is carried by tokens:
@@ -612,17 +619,17 @@ Float model against integer model on the same prompts (`lsllm.intref.compare`):
 
 ```
 50 prompts of 24 tokens, 32 new tokens each
-same greedy token at 85.4% of the new positions; 2 prompts identical
-first difference: median new token 2, earliest 0
+same greedy token at 86.8% of the new positions; 3 prompts identical
+first difference: median new token 5, earliest 0
 largest logit differences (nats):
-  {"prompt": 11, "new_token": 1, "token": 369, "float": -13.600784301757812, "integer": -0.653449535369873, "difference": 12.94733476638794}
-  {"prompt": 41, "new_token": 29, "token": 135, "float": 7.270589351654053, "integer": -1.4169185161590576, "difference": -8.68750786781311}
-  {"prompt": 12, "new_token": 16, "token": 282, "float": 6.066929817199707, "integer": -1.6587272584438324, "difference": -7.725657075643539}
-  {"prompt": 12, "new_token": 15, "token": 15, "float": 3.478315591812134, "integer": -4.043044567108154, "difference": -7.521360158920288}
-  {"prompt": 9, "new_token": 4, "token": 7, "float": 6.403877258300781, "integer": -0.6816920042037964, "difference": -7.085569262504578}
+  {"prompt": 12, "new_token": 17, "token": 0, "float": -8.344958305358887, "integer": 0.3874627947807312, "difference": 8.732421100139618}
+  {"prompt": 9, "new_token": 21, "token": 0, "float": -5.438015937805176, "integer": 2.894953489303589, "difference": 8.332969427108765}
+  {"prompt": 16, "new_token": 22, "token": 510, "float": 10.04486083984375, "integer": 1.746241807937622, "difference": -8.298619031906128}
+  {"prompt": 35, "new_token": 16, "token": 510, "float": -7.9413533210754395, "integer": -0.10635247826576233, "difference": 7.835000842809677}
+  {"prompt": 11, "new_token": 28, "token": 83, "float": 1.9653215408325195, "integer": 9.190635800361633, "difference": 7.225314259529114}
 ```
 
-Accumulator use (`lsllm.intref.overflow`; the limit of the signed 24-bit accumulator is 8,388,607): largest worst case: l0.a, 49.6% of the 24-bit range; largest value seen: 2.6%.
+Accumulator use (`lsllm.intref.overflow`; the limit of the signed 24-bit accumulator is 8,388,607): largest worst case: l0.a, 49.6% of the 24-bit range; largest value seen: 2.7%.
 The full table per stream is in `results/logs/overflow_A3r.txt`.
 
 ## 9. Syntax filter
@@ -727,7 +734,7 @@ then never opens a docstring). `tools/board_ask.py MODEL_DIR "request" --port ..
 
 ## 12. Tier B: weights in the DDR2
 
-**The trained Tier B model** (`runs/f/B1`, int8 `runs/qat/B1q`): 4 layers, width 192, 4 query heads on 1 key/value head, ReLU feed-forward of 510: 1,252,032 parameters, 1.19 MiB of int8 weights, which do not fit the block RAM. It was trained for 3,000 steps on benchmark-clean text (`data/tok/f512c2`), a tenth of what Tier A got, so it is less trained than Tier A and still better: validation loss 2.0052 nats per token in float and 2.0163 in int8 (Tier A float: 2.1770), on the body tokens 1.5716 / 1.5831. Its benchmark rows are in section 3. By the cost model below it needs 1,690,457 cycles per token at context 64 and 2,173,107 at 256: **59.2 and 46.0 tokens per second**. These are extrapolated counts, not counted on a generated program: the generator and the simulator stop at 2^19 bytes of data memory, and this model needs the DDR2 changes of `docs/HARDWARE_CHANGES.md`, section 3.
+**The trained Tier B model** (`runs/f/B2`, int8 `runs/qat/B2q`): 4 layers, width 192, 4 query heads on 1 key/value head, ReLU feed-forward of 510: 1,252,032 parameters, 1.19 MiB of int8 weights, which do not fit the block RAM. It was trained for 9,000 steps in all on benchmark-clean text (`data/tok/f512c2`; Tier A: 33,000 steps), so it is less trained than Tier A and still better: validation loss 1.8886 nats per token in float and 1.9068 in int8 (Tier A float: 2.1770), on the body tokens 1.4767 / 1.4921. Its benchmark rows are in section 3. By the cost model below it needs 1,690,457 cycles per token at context 64 and 2,173,107 at 256: **59.2 and 46.0 tokens per second**. These are extrapolated counts, not counted on a generated program: the generator and the simulator stop at 2^19 bytes of data memory, and this model needs the DDR2 changes of `docs/HARDWARE_CHANGES.md`, section 3.
 
 Generated by `tools/tierb.py relu`. Cycle counts: the analytic model of `tools/costfit.py`, fitted to the generated LS
 program on 100 shapes (largest error 0.83%, on 50 shapes not used for the fit 0.60%). The fit covers D up to 160;
@@ -757,7 +764,7 @@ terms take one more instruction each, included). Level L1, 100 MHz, greedy, no f
 
 | model | L | D | F | window | parameters | weights in DDR2 (MiB) | bytes in block RAM (KV cache, tables, scratch) | cycles/token @64 | tokens/s @64 | cycles/token @256 | tokens/s @256 | weight bytes read per second (MB/s) @64 | note |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| trained: B1q | 4 | 192 | 510 | - | 1,252,032 | 1.19 | 131,072 | 1,690,457 | 59.2 | 2,173,107 | 46.0 | 74.1 | validation 2.016 nats/token |
+| trained: B2q | 4 | 192 | 510 | - | 1,252,032 | 1.19 | 131,072 | 1,690,457 | 59.2 | 2,173,107 | 46.0 | 74.1 | validation 1.907 nats/token |
 | example | 4 | 160 | 480 | - | 1,004,960 | 0.96 | 196,608 | 1,371,189 | 72.9 | 1,711,280 | 58.4 | 73.3 |  |
 | example | 6 | 192 | 510 | - | 1,939,392 | 1.85 | 327,680 | 2,556,797 | 39.1 | 3,141,008 | 31.8 | 75.9 |  |
 | example | 8 | 256 | 510 | 128 | 3,797,248 | 3.62 | 294,912 | 4,853,600 | 20.6 | 5,179,093 | 19.3 | 78.2 | attention window 128 |
@@ -793,7 +800,8 @@ What the CPU needs for this is listed in `docs/HARDWARE_CHANGES.md`, section 3.
 - **The exact repair of the board model costs general ability**: about 0.01 to 0.02 nats of loss on general text
   (section 3). The board model as a whole is worse on general text than the benchmark model (its capacity holds
   the request programs); it is never scored on the benchmarks.
-- **Tier B is less trained than Tier A** (3,000 steps) and its speed is extrapolated; see below.
+- **Tier B is less trained than Tier A** (9,000 steps against 33,000) and its speed is extrapolated; see below. Its lower
+  validation loss did not show as a higher greedy score on the custom set: the differences there are one or two tasks.
 - **The long runs for a rented GPU were prepared, not run**: `notebooks/train_on_colab.ipynb` with its bundle
   (`tools/make_colab_bundle.py`). Everything reported was trained on the laptop (Apple M1, 8 GB).
 - **The generated training functions are not guaranteed to be right.** The first batch was checked only for running;
@@ -843,7 +851,12 @@ cd "/Users/kixem/Desktop/LS Architecture/ls-llm"
 PYTHONPATH=. .venv/bin/python tools/board_verify.py runs/qat/NAMEp --json results/board_NAMEp.json
 PYTHONPATH=. .venv/bin/python tools/board_ask.py runs/qat/NAMEp --list
 PYTHONPATH=. .venv/bin/python tools/board_ask.py runs/qat/NAMEp "make me a bubble sort program" "binary search trees" --simulate
+PYTHONPATH=. .venv/bin/python tools/board_emulator.py runs/qat/NAMEp
+PYTHONPATH=. .venv/bin/python tools/board_verify.py runs/qat/NAMEp --port /dev/tty.usbserial-XXXX --json results/board_measured.json
 ```
+
+The emulator prints the name of a serial device that answers like the board (the simulator behind a pseudo-terminal), for
+rehearsing the laptop side. With `--port` the verification runs on the real board and measures the time of every answer on the PC.
 
 `MODEL_DIR` and `DATA_DIR` are the folders named in `runs/final.json` (the integer model and its tokenizer folder).
 Training commands with all arguments are in `runs/jobs2.txt` and in the `result.json` of every run; longer runs for a
