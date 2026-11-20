@@ -1,0 +1,25 @@
+{
+ "what": "ST through P0 and through P2 with post-increment, read back through P1 and P2, combined with XOR and ADD",
+ "program_words": 24,
+ "data_bytes": 16384,
+ "switches": 0,
+ "rx_bytes": [],
+ "cycles": 96,
+ "out": "0xE0",
+ "tx_bytes": [],
+ "registers": [
+  "0xE0",
+  "0x8F",
+  "0x11",
+  "0x7E"
+ ],
+ "pointers": [
+  "0x00201",
+  "0x00202",
+  "0x02001"
+ ],
+ "len": 0,
+ "acc": 0,
+ "zero_flag": 0,
+ "negative_flag": 1
+}

@@ -1,0 +1,30 @@
+{
+ "what": "TX sends four bytes, the last two built with the ALU",
+ "program_words": 10,
+ "data_bytes": 256,
+ "switches": 0,
+ "rx_bytes": [],
+ "cycles": 40,
+ "out": "0xCB",
+ "tx_bytes": [
+  "0x41",
+  "0x8A",
+  "0xCB",
+  "0x45"
+ ],
+ "registers": [
+  "0xCB",
+  "0x45",
+  "0x00",
+  "0x00"
+ ],
+ "pointers": [
+  "0x00000",
+  "0x00000",
+  "0x00000"
+ ],
+ "len": 0,
+ "acc": 0,
+ "zero_flag": 0,
+ "negative_flag": 0
+}

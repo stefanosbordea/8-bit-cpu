@@ -1,0 +1,25 @@
+{
+ "what": "MAC #16 over two rows of the one data memory, then RQ; the classic MAC (one product) after it",
+ "program_words": 15,
+ "data_bytes": 8192,
+ "switches": 0,
+ "rx_bytes": [],
+ "cycles": 76,
+ "out": "0xA3",
+ "tx_bytes": [],
+ "registers": [
+  "0x01",
+  "0x00",
+  "0xA3",
+  "0x7F"
+ ],
+ "pointers": [
+  "0x00101",
+  "0x01201",
+  "0x00000"
+ ],
+ "len": 0,
+ "acc": 5337,
+ "zero_flag": 0,
+ "negative_flag": 1
+}

@@ -1,0 +1,25 @@
+{
+ "what": "MVL sets LEN to 300 and MACL runs a stream of that length: longer than MAC #n can say",
+ "program_words": 13,
+ "data_bytes": 8192,
+ "switches": 0,
+ "rx_bytes": [],
+ "cycles": 352,
+ "out": "0x17",
+ "tx_bytes": [],
+ "registers": [
+  "0x17",
+  "0x01",
+  "0x2C",
+  "0x00"
+ ],
+ "pointers": [
+  "0x0012C",
+  "0x0112C",
+  "0x00000"
+ ],
+ "len": 300,
+ "acc": 6130,
+ "zero_flag": 0,
+ "negative_flag": 0
+}

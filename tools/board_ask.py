@@ -75,20 +75,12 @@ if args.simulate:
             len(one), len(answer), "{:,}".format(cpu.cycles - before), (cpu.cycles - before) / 1e8))
         before = cpu.cycles
 elif args.port:
-    import serial
-    port = serial.Serial(args.port, args.baud, bytesize=8, parity="N", stopbits=1, timeout=None)
+    from lsllm.ls.uart import ask, open_port
+    port = open_port(args.port, args.baud)
     for prompt, one in zip(prompts, ids):
-        port.write(bytes(gen.frame(one)))
-        answer, high = [], None
-        while True:
-            byte = port.read(1)[0]
-            if byte == 0xFF:
-                break
-            if byte & 0x80:
-                high = byte & 0x7F
-            elif high is not None:
-                answer.append((high << 7) | byte)
-                high = None
+        answer, seconds = ask(port, one)
         show(prompt, answer[:-1])
+        print("    [%d prompt tokens, %d tokens received in %.2f s = %.1f tokens per second, measured on the PC]\n" % (
+            len(one), len(answer), seconds, len(answer) / seconds if seconds else 0.0))
 else:
     sys.exit("give --simulate or --port")
