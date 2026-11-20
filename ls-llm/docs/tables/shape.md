@@ -18,3 +18,10 @@ SwiGLU) is the slowest shape of the table at long context and has the highest lo
 
 The chart shows validation bits per byte against bytes of Python per second at context 64; the table has every run.
 Limits of this search: 600 steps and one seed per shape, so only clear differences count (section 13).
+
+**Second stage (D-shape-3).** The three best shapes inside the budget were trained for 4,000 steps on the final training
+text. Loss on the body tokens of the validation text: the chosen shape 1.9539, 2 x 176 with feed-forward 142: 1.9771,
+2 x 144 with feed-forward 301: 1.9909. Same order as in the short search. The chosen shape with an attention window of
+128 reached 1.9523, so the window costs nothing that this run can see, and it would give 161 instead of 131 tokens per
+second at context 256. It is not used in the final models: 84 of the 401 request programs are longer than 128 tokens,
+and using it means training the models again.
