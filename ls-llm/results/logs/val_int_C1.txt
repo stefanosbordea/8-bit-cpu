@@ -1,2 +1,0 @@
-runs/qat/C1: val 2.3964 nats/token, body only 1.9411 (307 windows)
-runs/qat/C1p: val 2.4115 nats/token, body only 1.9543 (307 windows)

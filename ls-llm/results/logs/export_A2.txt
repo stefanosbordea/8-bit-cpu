@@ -1,5 +1,0 @@
-weights: 23 .hex files read back, 368,704 bytes, all equal to the arrays
-memory: data.hex and data.coe (450,432 bytes, the 21 prompt tokens of the test vectors inside), program.hex and program.coe (994 words) and map.json equal to the Build
-simulator on data.hex and program.hex from reset to HALT (stop rule on, syntax filter on, temperature 0.8), switches 0: 20 tokens sent [4, 50, 303, 12, 449, 430, 164, 449, 13, 430, 71, 449, 430, 223, 449, 430, 95, 201, 449, 2], the last one is the end mark; 40 UART bytes equal to the integer reference; no accumulator overflow; 18,033,124 cycles = 0.18 s at 100 MHz for 21 prompt tokens and 20 generated ones
-vectors: 10 text files read back, equal to vectors.npz
-ls_tables_pkg.vhd: analysed without errors by `nvc --std=2008 -a`; 30 constants parsed back by Python, all equal to the model

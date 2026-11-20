@@ -1,1 +1,0 @@
-| **this project (simulated, not on hardware)** | LS CPU (level L1) on an Artix-7, 100 MHz, one multiply-add per clock | own model, 350,880 parameters, 2 layers, width 160 | int8 weights and activations, 24-bit sums, shifts and tables only | 202 at context 16, 182 at 64, 131 at 256 |

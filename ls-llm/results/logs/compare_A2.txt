@@ -1,9 +1,0 @@
-50 prompts of 24 tokens, 32 new tokens each
-same greedy token at 83.0% of the new positions; 1 prompts identical
-first difference: median new token 2, earliest 0
-largest logit differences (nats):
-  {"prompt": 16, "new_token": 9, "token": 8, "float": 4.316983699798584, "integer": -6.029634952545166, "difference": -10.34661865234375}
-  {"prompt": 7, "new_token": 31, "token": 27, "float": 11.069886207580566, "integer": 1.3689806461334229, "difference": -9.700905561447144}
-  {"prompt": 7, "new_token": 23, "token": 27, "float": 7.887941837310791, "integer": 1.1783232688903809, "difference": -6.70961856842041}
-  {"prompt": 8, "new_token": 27, "token": 132, "float": 2.912590265274048, "integer": -3.386389434337616, "difference": -6.298979699611664}
-  {"prompt": 28, "new_token": 28, "token": 141, "float": 2.0566887855529785, "integer": 7.745137333869934, "difference": 5.688448548316956}
