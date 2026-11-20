@@ -1,0 +1,85 @@
+\begin{tikzpicture}[x=1mm,y=1mm,font=\figfont\fontsize{6.2}{7}\selectfont]
+\def\foX{31}\def\foP{4.95}\def\foH{2.15}
+\pgfmathsetmacro{\foEnd}{\foX+23*\foP}
+\tikzset{
+  foc/.style={minimum width=4.3mm,minimum height=4.3mm,inner sep=0pt,draw=black,line width=0.3pt},
+  foctl/.style={foc,fill=black},
+  foex/.style={foc,fill=black!22},
+  fost/.style={foc,fill=white},
+  fomono/.style={font=\ttfamily\fontsize{7.2}{7.2}\selectfont,text=black!72,inner sep=0.7pt,fill=white}}
+\newcommand{\foCell}[3]{\node[#3] at ({\foX+(#2-1)*\foP},#1) {};}
+\newcommand{\foBusy}[2]{\fill ({\foX+(#2-1)*\foP},#1) circle (0.68mm);}
+\newcommand{\foBusyHalo}[2]{\fill[white] ({\foX+(#2-1)*\foP},#1) circle (1.12mm);\fill ({\foX+(#2-1)*\foP},#1) circle (0.68mm);}
+\newcommand{\foTT}[1]{{\ttfamily\fontsize{7.6}{7.3}\selectfont #1}}
+\newcommand{\foDrain}[2]{%
+  \pgfmathsetmacro{\foCx}{\foX+(#2-1)*\foP}%
+  \begin{scope}
+    \clip ({\foCx-\foH},{#1-\foH}) rectangle ({\foCx+\foH},{#1+\foH});
+    \foreach \k in {-5,...,5} {\draw[black!42,line width=0.25pt] ({\foCx-\foH+\k*0.95},{#1-\foH}) -- ++(4.3,4.3);}
+  \end{scope}
+  \draw[line width=0.3pt] ({\foCx-\foH},{#1-\foH}) rectangle ({\foCx+\foH},{#1+\foH});}
+\newcommand{\foInstr}[2]{\foCell{#1}{#2}{foctl}\foCell{#1}{#2+1}{foctl}\foCell{#1}{#2+2}{foex}\foCell{#1}{#2+3}{foex}}
+\newcommand{\foGroup}[4]{% y, first cycle, last cycle, label
+  \pgfmathsetmacro{\foA}{\foX+(#2-1)*\foP-\foH+0.15}\pgfmathsetmacro{\foB}{\foX+(#3-1)*\foP+\foH-0.15}%
+  \draw[black!42,line width=0.25pt] (\foA,{#1+3.25}) -- (\foA,{#1+3.95}) -- (\foB,{#1+3.95}) -- (\foB,{#1+3.25});
+  \node[fomono] at ({(\foA+\foB)/2},{#1+3.95}) {#4};}
+\newcommand{\foLabel}[3]{%
+  \node[anchor=west,inner sep=0pt,font=\figfont\bfseries\fontsize{10.5}{10.5}\selectfont] at (0,#1) {#2};
+  \node[anchor=west,inner sep=0pt,align=left,font=\figfont\fontsize{6.5}{7.5}\selectfont] at (5.2,#1) {#3};}
+\newcommand{\foCost}[3]{%
+  \node[anchor=east,inner sep=0pt,font=\figfont\fontsize{15.5}{15.5}\selectfont] at ({\foEnd+\foH+9.2},{#1+0.2}) {#2};
+  \node[anchor=west,inner sep=0pt,align=left,font=\figfont\fontsize{6}{6.9}\selectfont] at ({\foEnd+\foH+10.4},#1) {#3\\per input};}
+%% clock cycle ruler
+\node[anchor=west,inner sep=0pt,text=black!62,font=\figfont\fontsize{6}{6.6}\selectfont] at (0,52.6) {clock cycle};
+\foreach \g in {4,8,12,16,20,24} {\node[inner sep=0pt,text=black!62,font=\figfont\fontsize{6}{6.6}\selectfont] at ({\foX+(\g-1)*\foP},52.6) {\g};}
+%% B: no MAC instruction
+\foLabel{44}{B}{no \foTT{MAC}\\instruction}
+\foreach \s/\t in {1/LD,5/LD,9/MUL,13/ADDP,17/DJNZ,21/LD} {\foInstr{44}{\s}\foGroup{44}{\s}{\s+3}{\t}}
+\foBusy{44}{11}
+\foCost{44}{20}{cycles}
+%% L: MAC in a loop
+\foLabel{32}{L}{\foTT{MAC} in\\a loop}
+\foreach \s/\t in {1/MAC,5/DJNZ,9/MAC,13/DJNZ,17/MAC,21/DJNZ} {\foInstr{32}{\s}\foGroup{32}{\s}{\s+3}{\t}}
+\foreach \c in {3,11,19} {\foBusy{32}{\c}}
+\foCost{32}{8}{cycles}
+%% U: MAC unrolled
+\foLabel{20}{U}{\foTT{MAC},\\unrolled}
+\foreach \s in {1,5,9,13,17,21} {\foInstr{20}{\s}\foGroup{20}{\s}{\s+3}{MAC}}
+\foreach \c in {3,7,11,15,19,23} {\foBusy{20}{\c}}
+\foCost{20}{4}{cycles}
+%% S: one MAC #20
+\foLabel{8}{S}{stream,\\\foTT{MAC \#n}}
+\foCell{8}{1}{foctl}\foCell{8}{2}{foctl}
+\foreach \k in {3,...,22} {\foCell{8}{\k}{fost}}
+\foDrain{8}{23}\foDrain{8}{24}
+\foGroup{8}{1}{24}{MAC \#20}
+\foreach \c in {4,...,22} {\foBusy{8}{\c}}
+\foBusyHalo{8}{23}
+\foCost{8}{1}{cycle}
+\draw[decorate,decoration={brace,amplitude=1.05mm,mirror},line width=0.35pt]
+  ({\foX-\foH+0.15},5.05) -- ({\foX+\foP+\foH-0.15},5.05)
+  node[midway,below=1.45mm,inner sep=0pt,font=\figfont\fontsize{6.3}{7}\selectfont] {fetched and decoded once};
+\draw[decorate,decoration={brace,amplitude=1.05mm,mirror},line width=0.35pt]
+  ({\foX+3*\foP-\foH+0.15},5.05) -- ({\foX+22*\foP+\foH-0.15},5.05)
+  node[midway,below=1.45mm,inner sep=0pt,font=\figfont\fontsize{6.3}{7}\selectfont] {20 products, one per clock};
+%% legend
+\begin{scope}[font=\figfont\fontsize{6.2}{7}\selectfont]
+\def\foLy{-5.6}
+\node[foctl,minimum width=3.3mm,minimum height=3.3mm] (k1) at (38,\foLy) {};
+\node[anchor=west,inner sep=0pt] (t1) at ($(k1.east)+(1.3,0)$) {fetch, decode};
+\node[foex,minimum width=3.3mm,minimum height=3.3mm,anchor=west] (k2) at ($(t1.east)+(6.5,0)$) {};
+\node[anchor=west,inner sep=0pt] (t2) at ($(k2.east)+(1.3,0)$) {execute, write back};
+\node[fost,minimum width=3.3mm,minimum height=3.3mm,anchor=west] (k3) at ($(t2.east)+(6.5,0)$) {};
+\node[anchor=west,inner sep=0pt] (t3) at ($(k3.east)+(1.3,0)$) {\textsc{stream} state};
+\coordinate (k4c) at ($(t3.east)+(8.15,0)$);
+\begin{scope}
+  \clip ($(k4c)+(-1.65,-1.65)$) rectangle ($(k4c)+(1.65,1.65)$);
+  \foreach \k in {-4,...,4} {\draw[black!42,line width=0.25pt] ($(k4c)+(-1.65+\k*0.95,-1.65)$) -- ++(3.3,3.3);}
+\end{scope}
+\draw[line width=0.3pt] ($(k4c)+(-1.65,-1.65)$) rectangle ($(k4c)+(1.65,1.65)$);
+\node[anchor=west,inner sep=0pt] (t4) at ($(k4c)+(2.95,0)$) {drain};
+\node[fost,minimum width=3.3mm,minimum height=3.3mm,anchor=west] (k5) at ($(t4.east)+(6.5,0)$) {};
+\fill (k5.center) circle (0.6mm);
+\node[anchor=west,inner sep=0pt] (t5) at ($(k5.east)+(1.3,0)$) {multiplier busy};
+\end{scope}
+\end{tikzpicture}

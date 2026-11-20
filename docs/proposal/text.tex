@@ -1,0 +1,111 @@
+% The words of the proposal. Keep the command names as they are.
+% Write \% for %, \# for #, \& for &. A blank line starts a new paragraph.
+
+% ------------------------------- COVER -------------------------------
+
+\newcommand{\TxtCoverTitle}{The LS Architecture:\\The Loukas Stefanos Architecture}
+
+\newcommand{\TxtCoverSubtitle}{A foundational 8-bit streaming CPU that is capable of running a small language model for writing Python programs}
+
+\newcommand{\TxtPrinciple}{The LS Architecture pays for control once per stream, but not once per operation.}
+
+\newcommand{\TxtAbstract}{%
+A neural network spends the majority of its time in one discrete, very small mathematical step. It performs matrix multiplications, and each of them, analysed microscopically, comes down to the multiplication of two numbers and the addition of the product to a running total, which gives one entry of the matrix product. On a simple processor, each of those steps is a fully fledged instruction of four clock cycles, and the multiplier is busy in only one of them.
+
+In our foundational \term{LS Architecture}, the overhead of that action is removed. We introduce a new instruction. The \term{\insn{MAC~\#n}} instruction is fetched and then decoded once by the control unit, and subsequently the processor performs \textit{n} multiply-accumulates at one per clock cycle, where \textit{n} is the number that accompanies the instruction. Each of them is carried out by the datapath in one single clock cycle, without waiting for further fetch and decode cycles, so four clock cycles are condensed into one. This is not something new, but we intentionally did it to bring a small language model onto hardware that is constrained in energy and memory.
+
+Within the scope of the Digital Systems Design Laboratory course, the Nexys A7-100T is utilised to measure the gain with a cycle counter on the board, compared with the classic approach without that instruction, that is, without that particular state in the finite state machine. For the specific showcase, an extended version of the same processor runs a small language model that writes Python code. As a CPU, it is the application of a finite state machine at its finest.
+
+The overall vision behind the Loukas Stefanos Architecture goes further than this project, because it targets a potentially massive thing: that even the weakest hardware can run a language model that writes code, and that this can one day contribute to the singularity of that machine. Such a system could write its own program to improve itself recursively, exponentially, and go from something weak into something alive, having sentience, leaving the ethical question aside. This proposal is the genesis step, as we came up with it: a CPU that runs a model fast and efficiently, as efficiently as possible for the physical task it is given. It is as if a new person is being born on this planet, accommodated to the laws of physics and to how the universe operates. In some sense, the FPGA is the baby here.}
+
+\newcommand{\TxtFigOne}{%
+As discussed above, in its finest and simplest form, a small language model, and subsequently a large language model at scale, runs multiple two-number multiplications per entry of the matrix multiplication it executes. That is one \term{dot product}. In this context, one dot product is written four ways on one processor. The classic naive way utilises four cycles for every single multiplication and burns excessive cycles, which the LS Architecture needs to minimise. It minimises them by introducing a new state in the finite state machine, basically a new complex instruction, like in a \term{CISC} (complex instruction set computer). A dot represents a cycle in which the multiplier does useful work. In the streamed version of the LS Architecture this happens in nearly every single cycle, and therefore in fewer steps, subsequently with less energy, at faster speeds and with less heat. Finally, the number on the right is the cost of each extra input.}
+
+% Cover memo fields
+\newcommand{\TxtMemoDocument}{8-bit CPU final project proposal}
+\newcommand{\TxtMemoCourse}{CSEN 203L Digital Systems Design Laboratory, Section 1}
+\newcommand{\TxtMemoPlatform}{Digilent Nexys A7-100T, AMD Artix-7 XC7A100T}
+\newcommand{\TxtMemoDate}{Friday 20 November 2026}
+\newcommand{\TxtMemoTo}{Dr Eleftherios Zacharioudakis}
+\newcommand{\TxtMemoKeywords}{multiply-accumulate, instruction streaming, finite state machine, int8 inference, small language models, instruction optimisation, instruction set design, CISC, dot product, FPGA, VHDL}
+
+% ----------------------- A. TEAM AND TITLE ---------------------------
+
+\newcommand{\TxtProjectTitle}{The LS (Loukas Stefanos) Architecture: a streaming 8-bit CPU that runs a small language model at high speeds}
+
+\newcommand{\TxtOwnSubject}{Own subject: a foundational architecture for an 8-bit processor that utilises CISC concepts to minimise the cost of running a small language model in embedded hardware on an FPGA}
+
+% ------------------------- B. SPECIFICATION --------------------------
+
+\newcommand{\TxtSpecification}{%
+The Loukas Stefanos Architecture, LS Architecture for short, is an 8-bit processor that is designed in Vivado and constructed around the complex operation of the \term{multiply-accumulate}, adhering to CISC principles. The central instruction that embodies the whole essence of the project is the \insn{MAC~\#n} instruction, which is fetched and decoded once, and it gains an efficiency of four to one, meaning that work that needs four clock cycles is done in one clock cycle in this CPU. A CPU is essentially the embodiment of a finite state machine in the practical world, and the LS Architecture accommodates three more states in that machine. It stays in the \term{\st{STREAM}} state while the datapath completes one product per clock, and therefore \textit{n} products take \textit{n}\,+\,4 cycles instead of the 4\textit{n} a classic design needs, as can be seen visually in Fig.~1.
+
+For the showcase of the project, the extended processor runs an int8 small language model with 350,880 weights that writes short Python functions. In the long vision, short Python functions become big functions that improve the same model itself, which gives the project its singularity perspective. A request is typed on the laptop and reaches the board over USB-UART, the same USB connection that is utilised in every lab to transfer the bitstream generated in Vivado to the Artix-7 FPGA. Then the processor, which is designed utilising the LS Architecture, computes the answer token by token and sends it back to the laptop (Fig.~2).}
+
+\newcommand{\TxtInputs}{%
+\insn{SW[15:13]} select the program, \insn{SW[12:11]} the run mode, \insn{SW[10:8]} the display view and \insn{SW[7:0]} the input data. \insn{BTNC} starts or steps the program and \insn{BTNU} resets it. The prompt arrives over USB-UART as token ids.}
+
+\newcommand{\TxtOutputs}{%
+\insn{LED[15:8]} showcase the current FSM state and the stream valid bits, \insn{LED[7:0]} the result byte. The eight-digit display shows one of seven views, among them the cycle count. Finally, the code the model writes leaves over USB-UART, and we see it on the laptop or computer screen, depending on which one we use in the demo.}
+
+\newcommand{\TxtPeripherals}{%
+Slide switches, push buttons, LEDs, the eight-digit seven-segment display and the USB-UART bridge.}
+
+\newcommand{\TxtFigTwo}{%
+Here the system is depicted, in which a request travels from the laptop or computer unit to the central processing unit, designed utilising the new architecture, over USB-UART, and the code comes back the same way, back and forth, producing the result. Switches and buttons drive the run, and the LEDs and the display show the FSM state, as well as what is being done.}
+
+% ----------------------- C. REQUIRED ELEMENTS ------------------------
+
+\newcommand{\TxtCombinational}{%
+Arithmetic logic unit (ALU) with nine operations, instruction decoder, requantiser (shifting the accumulated result, ReLU, saturation), operand and write-back multiplexers, hex-to-segment decoder}
+
+\newcommand{\TxtSequential}{%
+Registers \insn{R0} to \insn{R3}, program counter, instruction register, pointers \insn{P0} and \insn{P1}, product register and 24-bit accumulator, stream counter, 32-bit cycle counter, synchronisers and debouncer for the mechanical switches and buttons}
+
+\newcommand{\TxtFSM}{%
+The nine-state control finite state machine of Fig.~3 sequences every instruction of the CPU. The LS instruction \insn{MAC~\#n}, the multiply-accumulate, holds it in \st{STREAM} for \textit{n} clocks, instead of the 4\textit{n} needed for the same multiplications and accumulations in a classic design.}
+
+\newcommand{\TxtPeripheralElement}{%
+Switches, buttons, LEDs and the display. USB-UART carries data both ways.}
+
+\newcommand{\TxtFigThree}{%
+In this figure, the finite state machine is depicted, with an ordinary instruction passing through four states of one clock each. The LS Architecture command, the multiply-accumulate with number \textit{n}, \insn{MAC~\#n} for short, leaves the \st{DECODE} state for the \st{STREAM} state, both inside the control unit of the CPU, and stays there for \textit{n} clocks instead of 4\textit{n}. Finally, dashed edges return to \st{IDLE} in instruction-step mode.}
+
+% --------------------- D. DIVISION OF WORK ---------------------------
+
+\newcommand{\TxtDivision}{%
+We split every module in two, and each one of us designs one half and the other verifies it, so both of us equally get the opportunity to immerse ourselves and have the LS Architecture live up to its name. LS is the superposition of the minds working on this project, catching things that one might not see from inside his own axiomatic system. As part of every module, each of us can explain all of it and have absolute control of it.}
+
+\newcommand{\TxtDivisionNote}{%
+Each bar is one module, split into a left and a right half. Each half is verified by the member who did not design it.}
+
+\newcommand{\TxtModuleOneName}{Control unit}
+\newcommand{\TxtModuleOne}{FSM and stream control, decoder, program counter and memory, run modes, cycle counter, display}
+\newcommand{\TxtModuleTwoName}{Datapath}
+\newcommand{\TxtModuleTwo}{Register file, ALU and flags, pointers, data memories, MAC unit, requantiser}
+\newcommand{\TxtModuleThreeName}{Board interface}
+\newcommand{\TxtModuleThree}{Synchronisers, debouncer, LEDs, top level, XDC constraints}
+\newcommand{\TxtModuleFourName}{Model hardware}
+\newcommand{\TxtModuleFour}{Block-RAM memories, wider pointers, the UART and the new instructions of the extension}
+\newcommand{\TxtModuleFiveName}{Model software}
+\newcommand{\TxtModuleFive}{The int8 model, its LS program, a bit-exact reference, the laptop request tool}
+
+% --------------------- E. THREE DATED MILESTONES ---------------------
+
+\newcommand{\TxtMilestoneOne}{%
+The Loukas Stefanos CPU runs on the board successfully, with programs S64, U64, L64 and B64 showing their predicted cycle counts (\pred{112}, \pred{300}, \pred{560} and \pred{1,328}) and the same result byte.}
+
+\newcommand{\TxtMilestoneTwo}{%
+The extended central processing unit passes the simulation, with the block-RAM memories, the UART and the new instructions passing their testbenches successfully, without any errors or problems. The small language model matches our integer reference token for token.}
+
+\newcommand{\TxtMilestoneThree}{%
+The model runs successfully on the board. We have the computer send a request, and a Python function returns over USB-UART. Tokens per second, Vivado utilisation and power are measured as well.}
+
+% Table and notes under the milestones (section E)
+\newcommand{\TxtTableOneTitle}{Predicted cycle counts of the eight test programs}
+
+\newcommand{\TxtTableOneNote}{%
+Every count was predicted successfully from the program listings before any VHDL was written, and our very own VHDL simulation has already reproduced all eight. Milestone 1 reads them from the cycle counter on the board.}
+
+\newcommand{\TxtModelNote}{%
+The small language model for milestone 3 has 350,880 int8 weights that, by our count, fit in \pred{110} of the board's 135 block RAMs. Our cycle-exact simulator of the extended CPU predicts about \pred{170} tokens per second at 100 MHz over the 401 test requests it was trained on.}

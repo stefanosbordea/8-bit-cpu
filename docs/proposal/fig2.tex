@@ -1,0 +1,60 @@
+\begin{tikzpicture}[x=1mm,y=1mm,font=\figfont\fontsize{6.9}{7.8}\selectfont,
+  frame/.style={line width=0.4pt,draw=black!55},
+  blk/.style={draw,line width=0.5pt,fill=white,align=center,inner sep=0.8pt},
+  core/.style={line width=0.95pt},
+  group/.style={draw=black!45,line width=0.35pt,dash pattern=on 1.2pt off 1pt,rounded corners=1.2mm},
+  ar/.style={-{Stealth[length=1.6mm,width=1.15mm]},line width=0.45pt},
+  sub/.style={font=\figfont\fontsize{6}{6.8}\selectfont},
+  tag/.style={font=\figfont\fontsize{6.2}{7}\selectfont,inner sep=0.6pt},
+  op/.style={draw,circle,line width=0.5pt,minimum size=5.6mm,inner sep=0pt,fill=white}]
+% laptop
+\node[blk,rounded corners=1.6mm,minimum width=18mm,minimum height=16mm] (lap) at (9,21) {};
+\node[anchor=north,inner sep=0pt,font=\figfont\fontsize{7.2}{8}\selectfont] at (9,27.4) {Laptop};
+\draw[line width=0.35pt,black!55] (3.5,24.3) -- (14.5,24.3);
+\node[sub,align=center,inner sep=0pt] at (9,18.6) {types the request\\[0.3mm]shows the code};
+% board
+\draw[frame] (32,-3.5) rectangle (165.4,42);
+\node[anchor=north west,inner sep=0pt,font=\figfont\fontsize{6.2}{7}\selectfont,text=black!70] at (33.6,40.4) {Nexys A7-100T};
+% usb-uart link
+\draw[ar] (18,24) -- (36,24);
+\draw[ar] (36,18) -- (18,18);
+\node[tag,anchor=base] at (25,25.1) {request};
+\node[tag] at (25,21) {USB-UART};
+\node[tag,anchor=north] at (25,17.4) {code};
+% uart
+\node[blk,minimum width=10mm,minimum height=16mm] (uart) at (41,21) {UART};
+% cpu
+\draw[core] (51,0) rectangle (133,38.5);
+\node[anchor=north west,inner sep=0pt,font=\figfont\bfseries\fontsize{7}{8}\selectfont] at (52.6,36.9) {LS CPU};
+\draw[ar] (46,24) -- (51,24);
+\draw[ar] (51,18) -- (46,18);
+% control row
+\node[blk,minimum width=36.3mm,minimum height=9mm] (fsm) at (74.65,29) {Control FSM\\[0.2mm]{\figfont\fontsize{6}{6.8}\selectfont nine states}};
+\node[blk,minimum width=22.7mm,minimum height=9mm] (rom) at (116.15,29) {Program memory\\[0.2mm]{\figfont\fontsize{6}{6.8}\selectfont 16-bit instructions}};
+\draw[ar] (rom.west) -- node[tag,above=0.5mm]{instruction} (fsm.east);
+% datapath row
+\draw[group] (53.5,2.4) rectangle (130.5,21.5);
+\node[anchor=north west,inner sep=0pt,font=\figfont\itshape\fontsize{6}{6.8}\selectfont,text=black!70] at (55,20.2) {datapath};
+\node[blk,minimum width=12.5mm,minimum height=8.6mm] (reg) at (62.75,12.6) {R0 to R3\\[0.2mm]ALU};
+\node[blk,minimum width=10.5mm,minimum height=4.6mm] (x) at (77.5,15.6) {X memory};
+\node[blk,minimum width=10.5mm,minimum height=4.6mm] (w) at (77.5,9.6) {W memory};
+\node[op] (mul) at (90,12.6) {};
+\draw[line width=0.5pt] (88.9,11.5) -- (91.1,13.7) (88.9,13.7) -- (91.1,11.5);
+\node[op] (add) at (102,12.6) {};
+\draw[line width=0.5pt] (100.55,12.6) -- (103.45,12.6) (102,11.15) -- (102,14.05);
+\node[blk,minimum width=17.5mm,minimum height=6mm,fill=black!9,line width=0.8pt] (acc) at (118.75,12.6) {ACC, 24-bit};
+\draw[ar] (x.east) -- (mul.162);
+\draw[ar] (w.east) -- (mul.198);
+\draw[ar] (mul) -- (add);
+\draw[ar] (add) -- (acc);
+\draw[ar] (acc.south) -- (118.75,7.8) -| (add.south);
+% stream control
+\draw[ar] (mul |- fsm.south) -- node[tag,right=0.7mm,pos=0.62]{\insn{MAC \#n}} (mul.north);
+% result back to the registers
+\draw[ar] ([xshift=5mm]acc.south) -- ++(0,-4.6) -| node[tag,pos=0.27,fill=white,inner xsep=1.2pt]{requantise} (reg.south);
+% board i/o
+\node[blk,minimum width=24mm,minimum height=9mm] (in) at (149.4,29) {Switches, buttons\\[0.2mm]{\ttfamily\fontsize{6}{6.8}\selectfont SW, BTNC, BTNU}};
+\node[blk,minimum width=24mm,minimum height=9mm] (out) at (149.4,12.6) {LEDs, display\\[0.2mm]{\ttfamily\fontsize{6}{6.8}\selectfont LED, 8 digits}};
+\draw[ar] (in.west) -- (133,29);
+\draw[ar] (133,12.6) -- (out.west);
+\end{tikzpicture}

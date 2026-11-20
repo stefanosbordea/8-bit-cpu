@@ -1,0 +1,41 @@
+\begin{tikzpicture}[x=1mm,y=1mm,font=\figfont\fontsize{6.8}{7.4}\selectfont,
+  s/.style={draw,line width=0.5pt,rounded corners=3.1mm,minimum width=18mm,minimum height=6.2mm,inner sep=0.6pt,fill=white,
+    font=\figfont\addfontfeature{LetterSpace=4}\fontsize{6.8}{7.4}\selectfont},
+  hot/.style={s,fill=black!10,line width=0.9pt},
+  dr/.style={s,fill=black!4},
+  ar/.style={-{Stealth[length=1.6mm,width=1.15mm]},line width=0.45pt},
+  da/.style={-{Stealth[length=1.6mm,width=1.15mm]},line width=0.45pt,dash pattern=on 1.3pt off 1pt,black!60},
+  lab/.style={font=\figfont\fontsize{6.2}{6.8}\selectfont,inner sep=0.9pt}]
+\def\frel#1{{\fontsize{7.1}{6.8}\selectfont#1}}
+\def\px{35}
+\node[s] (H) at (0,26) {HALTED};
+\node[s] (W) at (\px,26) {WRITEBACK};
+\node[s] (E) at ({2*\px},26) {EXECUTE};
+\node[s] (I) at (0,13) {IDLE};
+\node[s] (F) at (\px,13) {FETCH};
+\node[s] (D) at ({2*\px},13) {DECODE};
+\node[hot] (S) at ({3*\px},13) {STREAM};
+\node[dr] (R2) at ({2*\px},0) {DRAIN2};
+\node[dr] (R1) at ({3*\px},0) {DRAIN1};
+% reset
+\fill (-16,13) circle (0.95mm);
+\node[lab,above=0.7mm] at (-16,13) {reset};
+\draw[ar] (-14.9,13) -- (I.west);
+% the four-state loop of an ordinary instruction
+\draw[ar] (I) -- node[lab,above=0.4mm]{go} (F);
+\draw[ar] (F) -- (D);
+\draw[ar] (D) -- node[lab,right=0.6mm]{otherwise} (E);
+\draw[ar] (E) -- (W);
+\draw[ar] (W) -- node[lab,right=0.6mm]{otherwise} (F);
+\draw[ar] (W) -- node[lab,above=0.4mm]{\texttt{HALT}} (H);
+% the stream
+\draw[ar] (D) -- node[lab,above=0.4mm]{\texttt{MAC \#n}, n \frel{≥} 1} (S);
+\draw[ar] (S.58) to[out=72,in=108,looseness=5.2] node[lab,above=0.2mm]{CNT \frel{≠} 1} (S.122);
+\draw[ar] (S) -- node[lab,right=0.6mm]{CNT \frel{=} 1} (R1);
+\draw[ar] (R1) -- (R2);
+\draw[ar] (R2.west) -| node[lab,pos=0.3,below=0.4mm]{otherwise} (F.south);
+% returns to IDLE in instruction-step mode
+\draw[da] ($(W.south)+(-5,0)$) -- ++(0,-3.4) -| ($(I.north)+(3,0)$);
+\draw[da] (R2.south) -- ({2*\px},-6.6) -- (0,-6.6) -- (I.south);
+\node[lab,text=black!65,font=\figfont\itshape\fontsize{6}{6.6}\selectfont,fill=white,inner xsep=1.4pt] at (\px,-6.6) {instruction step};
+\end{tikzpicture}

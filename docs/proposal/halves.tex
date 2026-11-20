@@ -1,0 +1,12 @@
+\newcommand{\halfbar}[4]{\tikz[x=1mm,y=1mm,baseline=0,font=\figfont\fontsize{6.9}{6.9}\selectfont]{%
+  \begin{scope}
+  \clip[rounded corners=0.9mm] (0,-1.4) rectangle (33,3.2);
+  \fill[#2] (0,-1.4) rectangle (16.5,3.2);
+  \fill[#4] (16.5,-1.4) rectangle (33,3.2);
+  \end{scope}
+  \draw[line width=0.4pt,black!75,rounded corners=0.9mm] (0,-1.4) rectangle (33,3.2);
+  \draw[line width=0.3pt,black!60] (16.5,-1.4) -- (16.5,3.2);
+  \node[anchor=base,inner sep=0pt] at (8.25,0) {#1};
+  \node[anchor=base,inner sep=0pt] at (24.75,0) {#3};}}
+\newcommand{\halves}[2]{\halfbar{#1}{white}{#2}{black!11}}
+\newcommand{\halvesswap}[2]{\halfbar{#1}{black!11}{#2}{white}}

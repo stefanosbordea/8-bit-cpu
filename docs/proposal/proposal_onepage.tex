@@ -1,0 +1,153 @@
+\documentclass[a4paper]{article}
+\usepackage[a4paper,top=9mm,bottom=8mm,left=11mm,right=11mm,footskip=4mm]{geometry}
+\usepackage{fontspec}
+\setmainfont{texgyretermes}[Extension=.otf,UprightFont=*-regular,BoldFont=*-bold,ItalicFont=*-italic,BoldItalicFont=*-bolditalic,Ligatures=TeX,Numbers=Lining]
+\newfontfamily\trackedsc{texgyretermes}[Extension=.otf,UprightFont=*-regular,BoldFont=*-bold,ItalicFont=*-italic,BoldItalicFont=*-bolditalic,Letters=SmallCaps,LetterSpace=5.5,Numbers=Lining]
+\newfontfamily\figfont{texgyreheroscn}[Extension=.otf,UprightFont=*-regular,BoldFont=*-bold,ItalicFont=*-italic,BoldItalicFont=*-bolditalic]
+\setmonofont{IBMPlexMono_400Regular.ttf}[Path=fonts/,BoldFont=IBMPlexMono_600SemiBold.ttf,Scale=0.84]
+\usepackage[protrusion=true,final]{microtype}
+\usepackage{graphicx}
+\usepackage{array,tabularx,booktabs}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,decorations.pathreplacing}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\frenchspacing
+\widowpenalty=10000
+\clubpenalty=10000
+\makeatletter
+\renewcommand\normalsize{\@setfontsize\normalsize{8pt}{9.35pt}}
+\renewcommand\small{\@setfontsize\small{7.6pt}{8.9pt}}
+\renewcommand\footnotesize{\@setfontsize\footnotesize{7.1pt}{8.3pt}}
+\makeatother
+\renewcommand{\arraystretch}{1.03}
+\setlength{\aboverulesep}{0.45ex}
+\setlength{\belowrulesep}{0.5ex}
+\setlength{\heavyrulewidth}{0.7pt}
+\setlength{\lightrulewidth}{0.32pt}
+\setlength{\cmidrulewidth}{0.32pt}
+\setlength{\tabcolsep}{5pt}
+\newcommand{\lblw}{42mm}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{K}[1]{>{\raggedright\arraybackslash\itshape}p{#1}}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcommand{\tsc}[1]{{\trackedsc #1}}
+\newcommand{\insn}[1]{\texttt{#1}}
+\newcommand{\term}[1]{\textbf{#1}}
+\newcommand{\pred}[1]{\leavevmode\vtop{\hbox{#1}\kern0.32ex\hrule height 0.4pt}}
+\newcommand{\st}[1]{{\trackedsc\lowercase{#1}}}
+\newcommand{\blank}[1]{\rule[-0.4ex]{#1}{0.4pt}}
+\newcommand{\gap}[1]{\par\vspace{4.5mm minus 2.5mm}\vspace{\stretch{#1}}}
+\newcommand{\Sec}[3]{\par{\centering\tsc{#1.\hspace{0.6em}#2}\ifx&#3&\else\hspace{1.2em}{\footnotesize\itshape #3}\fi\par}\vspace{1mm}}
+\newsavebox{\capbox}
+\newcommand{\figcap}[2]{\par\vspace{2.4mm}\sbox{\capbox}{\footnotesize Fig.~#1.\enspace#2}%
+  \ifdim\wd\capbox>\linewidth{\footnotesize Fig.~#1.\enspace#2\par}\else{\centering\usebox{\capbox}\par}\fi}
+\newcommand{\placefig}[1]{\par\begingroup\leftskip=0pt plus 1fil minus 3pt\rightskip=\leftskip
+  \parfillskip=0pt\noindent\input{#1}\unskip\par\endgroup}
+\newcommand{\colhead}[1]{\tsc{#1}}
+\newcommand{\rowgap}{\addlinespace[0.35mm]}
+\newcommand{\cbox}{\raisebox{-0.25ex}{\tikz\draw[line width=0.4pt] (0,0) rectangle (2.1mm,2.1mm);}}
+\input{halves}\let\oldhalves\halves\let\oldhalvesswap\halvesswap\renewcommand{\halves}[2]{\scalebox{0.78}{\oldhalves{#1}{#2}}}\renewcommand{\halvesswap}[2]{\scalebox{0.78}{\oldhalvesswap{#1}{#2}}}
+\newenvironment{fullpage}{\noindent\begin{minipage}[t][\dimexpr\textheight-1pt\relax][s]{\linewidth}}{\par\kern0pt\end{minipage}\newpage}
+\fancypagestyle{proposal}{%
+  \fancyhf{}%
+  \fancyfoot[L]{\footnotesize\tsc{The LS Architecture}}%
+  \fancyfoot[R]{\footnotesize\thepage}%
+  \renewcommand{\headrulewidth}{0pt}%
+  \renewcommand{\footrulewidth}{0.3pt}%
+  \renewcommand{\footruleskip}{2.2mm}}
+\input{text}
+
+\begin{document}
+\thispagestyle{empty}
+{\centering
+{\fontsize{13}{15}\selectfont CSEN 203L Final Project Proposal\par}
+\vspace{0.8mm}
+{\itshape Digital Systems Design Laboratory. Teams of two. Due Friday 20 November 2026 (Week 10). Worth 3\% of the course.\par}
+}
+\vspace{1mm}
+{\footnotesize The proposal is a one-page document: fill every field and keep your answers concise. State what you will build, who does what, and three dated milestones. The system must be a complete digital system on the Nexys A7-100T, with combinational and sequential logic under finite state machine control and at least two board peripherals.\par}
+\par\vspace{1.6mm}\vspace{\stretch{1}}
+\Sec{A}{Team and title}{}
+\begin{tabularx}{\linewidth}{@{}K{\lblw}L@{}}
+\toprule
+Project title & \TxtProjectTitle \\\rowgap
+From the approved list, or own subject (write which) & \TxtOwnSubject \\\rowgap
+Team member 1: name and ID & Loucas Louka, \blank{30mm} \\\rowgap
+Team member 2: name and ID & Stefanos Bordea, \blank{30mm} \\\rowgap
+Section and bench & Section 1, bench \blank{16mm} \\
+\bottomrule
+\end{tabularx}
+\par\vspace{1.6mm}\vspace{\stretch{1}}
+\Sec{B}{Specification}{What the system does, in a few sentences. Then its inputs, its outputs, and the peripherals it uses.}
+{\setlength{\parskip}{0.9mm}\TxtSpecification\par}
+\vspace{1mm}
+\begin{tabularx}{\linewidth}{@{}K{\lblw}L@{}}
+\toprule
+Inputs (switches, buttons) & \TxtInputs \\\rowgap
+Outputs (LEDs, display, audio) & \TxtOutputs \\\rowgap
+Peripherals used (name at least two) & \TxtPeripherals \\
+\bottomrule
+\end{tabularx}
+\par\vspace{1.6mm}\vspace{\stretch{1}}
+\Sec{C}{Required elements}{Say where each required element appears in your design. All four are mandatory.}
+\begin{tabularx}{\linewidth}{@{}K{\lblw}L@{}}
+\toprule
+\colhead{\upshape Required element} & \colhead{Where it appears in your design} \\
+\midrule
+Combinational logic & \TxtCombinational \\\rowgap
+Sequential logic (flip-flops, counters or registers) & \TxtSequential \\\rowgap
+A finite state machine at the core & \TxtFSM \\\rowgap
+At least two distinct board peripherals & \TxtPeripheralElement \\
+\bottomrule
+\end{tabularx}
+\par\vspace{1.6mm}\vspace{\stretch{1}}
+\Sec{D}{Division of work between the two members}{Who designs and who verifies each module. Both members must be able to explain the whole design at the defence.}
+\TxtDivision\par
+\vspace{1mm}
+\textit{\TxtModuleOneName.} \TxtModuleOne. \textit{\TxtModuleTwoName.} \TxtModuleTwo. \textit{\TxtModuleThreeName.} \TxtModuleThree. \textit{\TxtModuleFourName.} \TxtModuleFour. \textit{\TxtModuleFiveName.} \TxtModuleFive.\par
+\vspace{0.8mm}
+{\centering\tsc{Designed by}\enspace\halves{Loucas}{Stefanos}\hspace{2.2em}\tsc{Verified by}\enspace\halvesswap{Stefanos}{Loucas}\par}
+\vspace{0.5mm}
+{\centering\footnotesize \TxtDivisionNote\par}
+\par\vspace{1.6mm}\vspace{\stretch{1}}
+\Sec{E}{Three dated milestones}{Three checkpoints of your own, each with a date. The third should land before the demonstration on 18 December. Progress is reviewed against these on 27 November.}
+\begin{tabularx}{\linewidth}{@{}p{6mm}L>{\raggedright\arraybackslash}p{27.5mm}@{}}
+\toprule
+\colhead{\#} & \colhead{Milestone (what will be working)} & \colhead{Date} \\
+\midrule
+1 & \TxtMilestoneOne & Friday 27 November \\\rowgap
+2 & \TxtMilestoneTwo & Friday 4 December \\\rowgap
+3 & \TxtMilestoneThree & Thursday 10 December \\
+\bottomrule
+\end{tabularx}
+\par\vspace{1.6mm}\vspace{\stretch{1}}
+\noindent\begin{minipage}[t]{0.40\linewidth}
+{\centering\tsc{F.\hspace{0.6em}Signatures}\par}\vspace{8mm}
+\begin{minipage}[t]{\linewidth}
+\blank{\linewidth}\par\vspace{1.3mm}
+{\footnotesize Member 1 signature and date\par}
+\end{minipage}\par\vspace{7mm}
+\begin{minipage}[t]{\linewidth}
+\blank{\linewidth}\par\vspace{1.3mm}
+{\footnotesize Member 2 signature and date\par}
+\end{minipage}\par
+\end{minipage}\hfill
+\begin{minipage}[t]{0.56\linewidth}\vspace{0pt}
+{\setlength{\fboxsep}{0pt}\setlength{\fboxrule}{0.45pt}%
+\fbox{\begin{minipage}{\dimexpr\linewidth-2\fboxrule\relax}
+\vspace{1.6mm}%
+\leftskip=4mm\rightskip=4mm
+{\tsc{For instructor use}}\par\vspace{1.2mm}
+{\small Decision:\hspace{1.6em}\cbox\enspace Approved\hspace{2.4em}\cbox\enspace Approved with changes\hspace{2.4em}\cbox\enspace Resubmit\par}
+\vspace{1.2mm}
+{\small Comments:\par}
+\nointerlineskip\vspace{4.5mm}\noindent{\color{black!35}\rule{\dimexpr\linewidth-8mm\relax}{0.3pt}}\par
+\vspace{3mm}
+{\small Instructor signature and date:\enspace\blank{62mm}\par}
+\vspace{1.6mm}
+\end{minipage}}}
+\end{minipage}\par
+\end{document}
