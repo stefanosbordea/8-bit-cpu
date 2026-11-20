@@ -32,7 +32,8 @@
 - **The practice sets were used many times** (shape, data mix, decoding settings, weight edits). The test sets were
   run only for the rows of section 3. The validation text was used to pick checkpoints.
 - **Shape search runs are short** (600 steps, one seed): they rank shapes that differ clearly; differences below about
-  0.03 nats are inside what a second seed could change (not measured).
+  0.03 nats are inside what a second seed could change (not measured). The three best shapes were trained again for
+  4,000 steps on the final text and kept their order (D-shape-3); still one seed.
 - **Tier B** speed comes from a formula fitted to the generated program (error below 1% inside the fitted range) and is
   an extrapolation for the larger shapes; the DDR2 controller was not built, its size and latency are not known.
 - **Sampling** uses the 32-bit LFSR of the CPU through a 256-entry Gumbel table, so sampled scores are those of the

@@ -28,7 +28,8 @@ Status marks: [ ] open, [~] running, [x] done. Details and numbers are in LOG.md
 - [x] Final Tier A model: long run `runs/f/A3` (30,000 steps), stream-range fine-tune `runs/f/A3r`, int8 `runs/qat/A3rq` (D-qat-7)
 - [x] Tier B float and int8 (`runs/f/B1`, `runs/qat/B1q`, 3,000 steps)
 - [x] Tier A int8 from finer logit codes and a second QAT stage (`runs/qat/A3ru2`); Tier B trained on for 6,000 steps (`runs/f/B2`, `runs/qat/B2q`); D-train-4
-- [ ] Not run: longer re-training of the three best shapes of the search; a window of 128 at full training length
+- [x] Second stage of the shape search and the window of 128 (`runs/s2`, D-shape-3): the shape is confirmed; the window is free in quality and not adopted
+- [x] The two offered extensions (request list of 1,000 or more, DDR2 model on a rented GPU) are closed with reasons (D-next-1)
 
 ## Phase 5: integer reference, decoding, editing
 - [x] Bit-exact integer reference; equal to the QAT forward pass and to the generated LS program
@@ -56,4 +57,4 @@ Status marks: [ ] open, [~] running, [x] done. Details and numbers are in LOG.md
 - [x] The eight programs of the finished level-0 CPU in the model's simulator: 32 of 32 runs agree (`docs/L0_CROSSCHECK.md`, `tools/l0_crosscheck.py`)
 - [x] What the model program uses and what the CPU still needs, with the numbers for the documents and their sources (`docs/CPU_ALIGNMENT.md`, `tools/cpu_alignment.py`)
 - [x] Level-1 conformance programs with expected cycles, OUT byte, UART bytes and final state (`export/conformance/`, `tools/l1_conformance.py`)
-- [ ] By the CPU's owners: the level-1 VHDL; then the model program in VHDL simulation against `export/board_uart/`, then the board
+- Not part of this plan, by the CPU's owners: the level-1 VHDL, the model program in VHDL simulation against `export/board_uart/`, the board
