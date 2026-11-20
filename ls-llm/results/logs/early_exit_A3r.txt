@@ -1,0 +1,7 @@
+model runs/f/A3r/ckpt.pt: 2 layers; cycles at context 64: 542688 per token, 216638 per layer, 104520 for output layer and argmax
+exit after layer | threshold | share of positions that exit | same token as the full model | cycles per token | speed-up
+1 | 0.50 | 87.8% | 5.2% | 394590 | 1.375
+1 | 0.80 | 69.7% | 4.4% | 446605 | 1.215
+1 | 0.90 | 61.6% | 4.3% | 470006 | 1.155
+1 | 0.95 | 54.9% | 3.8% | 489317 | 1.109
+1 | 0.99 | 41.2% | 3.9% | 528711 | 1.026

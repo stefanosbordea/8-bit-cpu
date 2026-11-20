@@ -1,0 +1,200 @@
+{"task_id": "custom/practice/000", "outcome": "syntax", "detail": "", "completion": "\n    return [i for i in range(1, o + 1) if i % 1, 0, 8]", "empty": false}
+{"task_id": "custom/practice/001", "outcome": "syntax", "detail": "", "completion": "\n    return (n * n[:4] + n[2:] + n[4:5] + n[2:] + n[5:5] + n[5:5] + n[5:5] + n[5:5]", "empty": false}
+{"task_id": "custom/practice/002", "outcome": "pass", "detail": "", "completion": "\n    return n - 5", "empty": false}
+{"task_id": "custom/practice/003", "outcome": "wrong", "detail": "4 of 5 tests failed", "completion": "\n    return n / 3", "empty": false}
+{"task_id": "custom/practice/004", "outcome": "wrong", "detail": "5 of 5 tests failed", "completion": "\n    return n - 10", "empty": false}
+{"task_id": "custom/practice/005", "outcome": "wrong", "detail": "5 of 5 tests failed", "completion": "\n    return a * b + 1", "empty": false}
+{"task_id": "custom/practice/006", "outcome": "error", "detail": "error: ZeroDivisionError('division by zero')", "completion": "\n    return a / b / b", "empty": false}
+{"task_id": "custom/practice/007", "outcome": "wrong", "detail": "4 of 5 tests failed", "completion": "\n    return b ** 0.5", "empty": false}
+{"task_id": "custom/practice/008", "outcome": "wrong", "detail": "4 of 5 tests failed", "completion": "\n    return b / 3", "empty": false}
+{"task_id": "custom/practice/009", "outcome": "wrong", "detail": "4 of 5 tests failed", "completion": "\n    return hours * 65", "empty": false}
+{"task_id": "custom/practice/010", "outcome": "wrong", "detail": "4 of 5 tests failed", "completion": "\n    return a - b", "empty": false}
+{"task_id": "custom/practice/011", "outcome": "wrong", "detail": "4 of 5 tests failed", "completion": "\n    return a / c", "empty": false}
+{"task_id": "custom/practice/012", "outcome": "error", "detail": "error: TypeError('divmod expected 2 arguments, got 1')", "completion": "\n    pair, price = divmod(price * 15)\n    return (pair, price * price * price * price == price[price])", "empty": false}
+{"task_id": "custom/practice/013", "outcome": "error", "detail": "error: AttributeError(\"'int' object has no attribute 'rstrip'\")", "completion": "\n    return b * c.rstrip()", "empty": false}
+{"task_id": "custom/practice/014", "outcome": "error", "detail": "error: ZeroDivisionError('integer modulo by zero')", "completion": "\n    return a % b == 0", "empty": false}
+{"task_id": "custom/practice/015", "outcome": "wrong", "detail": "3 of 6 tests failed", "completion": "\n    return b < b and b < b", "empty": false}
+{"task_id": "custom/practice/016", "outcome": "wrong", "detail": "3 of 5 tests failed", "completion": "\n    return a != a and b >= b", "empty": false}
+{"task_id": "custom/practice/017", "outcome": "error", "detail": "error: TypeError(\"'int' object is not iterable\")", "completion": "\n    return all((b < b for b in c))", "empty": false}
+{"task_id": "custom/practice/018", "outcome": "wrong", "detail": "3 of 6 tests failed", "completion": "\n    return a != total and total != total and (total != total and total != total)", "empty": false}
+{"task_id": "custom/practice/019", "outcome": "wrong", "detail": "2 of 6 tests failed", "completion": "\n    return b > b and b > c", "empty": false}
+{"task_id": "custom/practice/020", "outcome": "wrong", "detail": "1 of 6 tests failed", "completion": "\n    return a if a > b else c", "empty": false}
+{"task_id": "custom/practice/021", "outcome": "wrong", "detail": "3 of 6 tests failed", "completion": "\n    return a if a < b else c", "empty": false}
+{"task_id": "custom/practice/022", "outcome": "wrong", "detail": "5 of 5 tests failed", "completion": "\n    return a if a < b and a < c else b if b < c else c", "empty": false}
+{"task_id": "custom/practice/023", "outcome": "wrong", "detail": "5 of 6 tests failed", "completion": "\n    return (b + b) // 2", "empty": false}
+{"task_id": "custom/practice/024", "outcome": "syntax", "detail": "", "completion": "\n    return sum((1 for num in in a if num < b and num < c.isspace()))", "empty": false}
+{"task_id": "custom/practice/025", "outcome": "syntax", "detail": "", "completion": "\n    return >= n", "empty": false}
+{"task_id": "custom/practice/026", "outcome": "wrong", "detail": "2 of 6 tests failed", "completion": "\n    return n % 100 == 0", "empty": false}
+{"task_id": "custom/practice/027", "outcome": "error", "detail": "error: TypeError(\"object of type 'int' has no len()\")", "completion": "\n    return n < 0 and n < 0 and n < len(n)", "empty": false}
+{"task_id": "custom/practice/028", "outcome": "wrong", "detail": "3 of 5 tests failed", "completion": "\n    return n is False and n % 4 == 0", "empty": false}
+{"task_id": "custom/practice/029", "outcome": "syntax", "detail": "", "completion": "\n    return >= ax and b <= b", "empty": false}
+{"task_id": "custom/practice/030", "outcome": "error", "detail": "error: NameError(\"name 'day' is not defined\")", "completion": "\n    return day / 24", "empty": false}
+{"task_id": "custom/practice/031", "outcome": "wrong", "detail": "4 of 5 tests failed", "completion": "\n    return meters * 2.6", "empty": false}
+{"task_id": "custom/practice/032", "outcome": "error", "detail": "error: NameError(\"name 'day' is not defined\")", "completion": "\n    return day / 86400", "empty": false}
+{"task_id": "custom/practice/033", "outcome": "error", "detail": "error: IndexError('Replacement index 1 out of range for positional args tuple')", "completion": "\n    return '{}:{}'.format(grams) if grams else '{}'.format(grams)", "empty": false}
+{"task_id": "custom/practice/034", "outcome": "wrong", "detail": "5 of 6 tests failed", "completion": "\n    return (fahrenheit + fahrenheit) // 2", "empty": false}
+{"task_id": "custom/practice/035", "outcome": "wrong", "detail": "6 of 6 tests failed", "completion": "\n    return n > 100", "empty": false}
+{"task_id": "custom/practice/036", "outcome": "wrong", "detail": "3 of 5 tests failed", "completion": "\n    return total < 10", "empty": false}
+{"task_id": "custom/practice/037", "outcome": "wrong", "detail": "5 of 5 tests failed", "completion": "\n    return a < b + b", "empty": false}
+{"task_id": "custom/practice/038", "outcome": "error", "detail": "error: TypeError(\"'int' object is not subscriptable\")", "completion": "\n    return n < n[n + 11]", "empty": false}
+{"task_id": "custom/practice/039", "outcome": "wrong", "detail": "3 of 5 tests failed", "completion": "\n    return n if n > 0 else 0", "empty": false}
+{"task_id": "custom/practice/040", "outcome": "error", "detail": "error: AttributeError(\"'bool' object has no attribute 'isalnum'\")", "completion": "\n    return False.isalnum() and b > b", "empty": false}
+{"task_id": "custom/practice/041", "outcome": "wrong", "detail": "4 of 5 tests failed", "completion": "\n    return not b and b", "empty": false}
+{"task_id": "custom/practice/042", "outcome": "wrong", "detail": "3 of 6 tests failed", "completion": "\n    return not b and (not b)", "empty": false}
+{"task_id": "custom/practice/043", "outcome": "wrong", "detail": "2 of 6 tests failed", "completion": "\n    return not d if a is False else False", "empty": false}
+{"task_id": "custom/practice/044", "outcome": "wrong", "detail": "2 of 6 tests failed", "completion": "\n    return a or not b", "empty": false}
+{"task_id": "custom/practice/045", "outcome": "error", "detail": "error: TypeError(\"'int' object is not iterable\")", "completion": "\n    return sum((1 for num in n if num % 2 != 0 and num >= 1))", "empty": false}
+{"task_id": "custom/practice/046", "outcome": "error", "detail": "error: TypeError(\"unsupported operand type(s) for ^: 'float' and 'int'\")", "completion": "\n    return 2.59 ^ n\n    return [i for i in range(n - 1, -1, -1) for _ in range(n)]", "empty": false}
+{"task_id": "custom/practice/047", "outcome": "error", "detail": "error: NameError(\"name 'numbers' is not defined\")", "completion": "\n    return [start for start in numbers if start % 2 == 0 and start >= 0]", "empty": false}
+{"task_id": "custom/practice/048", "outcome": "error", "detail": "error: TypeError(\"'int' object is not iterable\")", "completion": "\n    return sum((1 for num in n if num % 5 == 0))", "empty": false}
+{"task_id": "custom/practice/049", "outcome": "error", "detail": "error: TypeError(\"'int' object is not iterable\")", "completion": "\n    return [start for start in start if start > include]", "empty": false}
+{"task_id": "custom/practice/050", "outcome": "error", "detail": "error: TypeError(\"'int' object is not iterable\")", "completion": "\n    return [start for start in end if start > increase or start % 2 != 0]", "empty": false}
+{"task_id": "custom/practice/051", "outcome": "error", "detail": "error: TypeError(\"unsupported operand type(s) for //: 'list' and 'int'\")", "completion": "\n    return list(range(n, n + 1)) // 2", "empty": false}
+{"task_id": "custom/practice/052", "outcome": "error", "detail": "error: NameError(\"name 'num' is not defined\")", "completion": "\n    return -31[num - 1:n - 1]", "empty": false}
+{"task_id": "custom/practice/053", "outcome": "error", "detail": "error: TypeError(\"unsupported operand type(s) for +: 'int' and 'str'\")", "completion": "\n    return count + a", "empty": false}
+{"task_id": "custom/practice/054", "outcome": "wrong", "detail": "3 of 4 tests failed", "completion": "\n    return [i for i in range(1, n + 1) if i % 2 == 0]", "empty": false}
+{"task_id": "custom/practice/055", "outcome": "wrong", "detail": "5 of 5 tests failed", "completion": "\n    return (nums[0], nums[0])", "empty": false}
+{"task_id": "custom/practice/056", "outcome": "error", "detail": "error: TypeError(\"can't multiply sequence by non-int of type 'float'\")", "completion": "\n    return nums * 0.0625", "empty": false}
+{"task_id": "custom/practice/057", "outcome": "wrong", "detail": "5 of 5 tests failed", "completion": "\n    return nums[::-1]", "empty": false}
+{"task_id": "custom/practice/058", "outcome": "wrong", "detail": "3 of 5 tests failed", "completion": "\n    return sum((nums ** 2 for nums in nums))", "empty": false}
+{"task_id": "custom/practice/059", "outcome": "wrong", "detail": "5 of 5 tests failed", "completion": "\n    return [nums for nums in nums if nums > 0 and nums >= 0]", "empty": false}
+{"task_id": "custom/practice/060", "outcome": "pass", "detail": "", "completion": "\n    return [nums for nums in nums if nums % 3 == 0]", "empty": false}
+{"task_id": "custom/practice/061", "outcome": "wrong", "detail": "3 of 5 tests failed", "completion": "\n    return [nums for nums in nums if nums > 1]", "empty": false}
+{"task_id": "custom/practice/062", "outcome": "error", "detail": "error: TypeError(\"'int' object is not subscriptable\")", "completion": "\n    return (low[high], low)", "empty": false}
+{"task_id": "custom/practice/063", "outcome": "error", "detail": "error: TypeError(\"unsupported operand type(s) for ** or pow(): 'list' and 'float'\")", "completion": "\n    return items ** 0.5", "empty": false}
+{"task_id": "custom/practice/064", "outcome": "error", "detail": "error: TypeError(\"unsupported operand type(s) for -: 'list' and 'int'\")", "completion": "\n    return words.count(8) or words - 1", "empty": false}
+{"task_id": "custom/practice/065", "outcome": "wrong", "detail": "4 of 5 tests failed", "completion": "\n    return [nums / 3 for nums in nums if nums % 20 != 0]", "empty": false}
+{"task_id": "custom/practice/066", "outcome": "error", "detail": "error: NameError(\"name 'factors' is not defined\")", "completion": "\n    return [nums * factors + x for x in nums]", "empty": false}
+{"task_id": "custom/practice/067", "outcome": "wrong", "detail": "3 of 4 tests failed", "completion": "\n    return [int(nums) for nums in nums]", "empty": false}
+{"task_id": "custom/practice/068", "outcome": "wrong", "detail": "4 of 4 tests failed", "completion": "\n    return [str(int(value) for value in words)]", "empty": false}
+{"task_id": "custom/practice/069", "outcome": "syntax", "detail": "", "completion": "\n    return [nums[len(nums) for nums in nums]:% nums]", "empty": false}
+{"task_id": "custom/practice/070", "outcome": "error", "detail": "error: TypeError(\"'>=' not supported between instances of 'list' and 'int'\")", "completion": "\n    return len(items) if items >= len(items) else items", "empty": false}
+{"task_id": "custom/practice/071", "outcome": "error", "detail": "error: NameError(\"name 'item' is not defined\")", "completion": "\n    return (items[::-1], n) + (item - 1) + 1, 2, 2, 32, 32, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3", "empty": false}
+{"task_id": "custom/practice/072", "outcome": "wrong", "detail": "4 of 4 tests failed", "completion": "\n    return [nums for nums in nums if nums > 1]", "empty": false}
+{"task_id": "custom/practice/073", "outcome": "syntax", "detail": "", "completion": "\n    return [item[-2]] for item in items[0]: item + item[0]: item + item[1] + item[1][1]: item[1] + item[item ", "empty": false}
+{"task_id": "custom/practice/074", "outcome": "error", "detail": "error: TypeError('list indices must be integers or slices, not list')", "completion": "\n    return nums[nums] + nums[nums] + nums[nums + 1:]", "empty": false}
+{"task_id": "custom/practice/075", "outcome": "syntax", "detail": "", "completion": "\n    return [items] for items in items[0] if len(items) > n:= items[0] + items[0]\n    return (items, n)", "empty": false}
+{"task_id": "custom/practice/076", "outcome": "syntax", "detail": "", "completion": "\n    return (items[0], len(items) // 2) ** 2 for item in items[0]", "empty": false}
+{"task_id": "custom/practice/077", "outcome": "error", "detail": "error: TypeError(\"'>=' not supported between instances of 'list' and 'int'\")", "completion": "\n    return [items] if items >= 0 else ''", "empty": false}
+{"task_id": "custom/practice/078", "outcome": "syntax", "detail": "", "completion": "\n    return [items] for items in items[items] if items[items] > items:= items[items] and items[items] > items[items] and items[items] !", "empty": false}
+{"task_id": "custom/practice/079", "outcome": "error", "detail": "error: NameError(\"name 'hour' is not defined\")", "completion": "\n    return items[len(items) // 2 + hour * 2 + items:]", "empty": false}
+{"task_id": "custom/practice/080", "outcome": "wrong", "detail": "2 of 5 tests failed", "completion": "\n    return items or second if not first else False", "empty": false}
+{"task_id": "custom/practice/081", "outcome": "error", "detail": "error: TypeError(\"can't multiply sequence by non-int of type 'list'\")", "completion": "\n    return items * items if items else False", "empty": false}
+{"task_id": "custom/practice/082", "outcome": "wrong", "detail": "4 of 6 tests failed", "completion": "\n    return all((nums > 0 for nums in nums))", "empty": false}
+{"task_id": "custom/practice/083", "outcome": "error", "detail": "error: TypeError(\"'int' object is not iterable\")", "completion": "\n    return all((s > limit for s in limit))", "empty": false}
+{"task_id": "custom/practice/084", "outcome": "syntax", "detail": "", "completion": "\n    return items and text if not items", "empty": false}
+{"task_id": "custom/practice/085", "outcome": "error", "detail": "error: NameError(\"name 'x' is not defined\")", "completion": "\n    return [b + x for b in items]", "empty": false}
+{"task_id": "custom/practice/086", "outcome": "error", "detail": "error: TypeError('slice indices must be integers or None or have an __index__ method')", "completion": "\n    return items[last:]", "empty": false}
+{"task_id": "custom/practice/087", "outcome": "error", "detail": "error: AttributeError(\"'list' object has no attribute 'rstrip'\")", "completion": "\n    return items.rstrip()", "empty": false}
+{"task_id": "custom/practice/088", "outcome": "error", "detail": "error: TypeError(\"unsupported operand type(s) for //: 'str' and 'int'\")", "completion": "\n    return item // 2", "empty": false}
+{"task_id": "custom/practice/089", "outcome": "wrong", "detail": "5 of 5 tests failed", "completion": "\n    if index < 0 or index >= len(items):\n        return item[:index]\n    return item", "empty": false}
+{"task_id": "custom/practice/090", "outcome": "error", "detail": "error: TypeError(\"unsupported operand type(s) for //: 'str' and 'int'\")", "completion": "\n    return a // 1", "empty": false}
+{"task_id": "custom/practice/091", "outcome": "wrong", "detail": "3 of 6 tests failed", "completion": "\n    return a < b and b < b", "empty": false}
+{"task_id": "custom/practice/092", "outcome": "error", "detail": "error: NameError(\"name 'fold' is not defined\")", "completion": "\n    return word + fold", "empty": false}
+{"task_id": "custom/practice/093", "outcome": "wrong", "detail": "2 of 6 tests failed", "completion": "\n    return not s", "empty": false}
+{"task_id": "custom/practice/094", "outcome": "wrong", "detail": "4 of 5 tests failed", "completion": "\n    return b + b + b", "empty": false}
+{"task_id": "custom/practice/095", "outcome": "error", "detail": "error: TypeError('can only concatenate list (not \"bool\") to list')", "completion": "\n    return s in ['end', '.'] + suffix.endswith(' ')", "empty": false}
+{"task_id": "custom/practice/096", "outcome": "wrong", "detail": "6 of 6 tests failed", "completion": "\n    return s[:len(s) // 2]", "empty": false}
+{"task_id": "custom/practice/097", "outcome": "wrong", "detail": "3 of 6 tests failed", "completion": "\n    return all((s for s in s))", "empty": false}
+{"task_id": "custom/practice/098", "outcome": "error", "detail": "error: NameError(\"name 'space' is not defined\")", "completion": "\n    return space * s.count(s)", "empty": false}
+{"task_id": "custom/practice/099", "outcome": "error", "detail": "error: NameError(\"name 's1' is not defined\")", "completion": "\n    return 'start' if s1 == 0 else ''", "empty": false}
+{"task_id": "custom/practice/100", "outcome": "wrong", "detail": "5 of 5 tests failed", "completion": "\n    return '{'.join((s) for s in s)", "empty": false}
+{"task_id": "custom/practice/101", "outcome": "error", "detail": "error: TypeError(\"unsupported operand type(s) for //: 'str' and 'int'\")", "completion": "\n    return (s + s) // 2", "empty": false}
+{"task_id": "custom/practice/102", "outcome": "wrong", "detail": "3 of 5 tests failed", "completion": "\n    return sum((1 for char in s if char.isdigit()))", "empty": false}
+{"task_id": "custom/practice/103", "outcome": "syntax", "detail": "", "completion": "\n    return ([s for s in s if s.islower()] and s.lower() in 'aeiou') and s.lower() in 'aeiou' in s[s + 1].lower(): '' + s", "empty": false}
+{"task_id": "custom/practice/104", "outcome": "error", "detail": "error: NameError(\"name 'string' is not defined\")", "completion": "\n    return string.count(s)", "empty": false}
+{"task_id": "custom/practice/105", "outcome": "syntax", "detail": "", "completion": "\n    return len([s]) // 2q * 2 + 20 * height[height] + 3 * (3 - 3) * height", "empty": false}
+{"task_id": "custom/practice/106", "outcome": "syntax", "detail": "", "completion": "\n    return s[:-2]// 260 + s[2:] + s[2:] + s[2:2] + s[2:2] + s[2:2] + s[2:2] + s[2:", "empty": false}
+{"task_id": "custom/practice/107", "outcome": "error", "detail": "error: TypeError('slice indices must be integers or None or have an __index__ method')", "completion": "\n    return s[:1] + s[0] + s[s:]", "empty": false}
+{"task_id": "custom/practice/108", "outcome": "wrong", "detail": "5 of 5 tests failed", "completion": "\n    return index + index", "empty": false}
+{"task_id": "custom/practice/109", "outcome": "error", "detail": "error: TypeError(\"can't multiply sequence by non-int of type 'float'\")", "completion": "\n    return 6.14159 * s + num", "empty": false}
+{"task_id": "custom/practice/110", "outcome": "error", "detail": "error: NameError(\"name 'names' is not defined\")", "completion": "\n    return names + value", "empty": false}
+{"task_id": "custom/practice/111", "outcome": "wrong", "detail": "4 of 4 tests failed", "completion": "\n    return name + name", "empty": false}
+{"task_id": "custom/practice/112", "outcome": "wrong", "detail": "4 of 4 tests failed", "completion": "\n    return s[::-1]", "empty": false}
+{"task_id": "custom/practice/113", "outcome": "error", "detail": "error: AttributeError(\"'int' object has no attribute 'format'\")", "completion": "\n    return length.format(length)", "empty": false}
+{"task_id": "custom/practice/114", "outcome": "error", "detail": "error: TypeError(\"can't multiply sequence by non-int of type 'str'\")", "completion": "\n    return word * word + 1", "empty": false}
+{"task_id": "custom/practice/115", "outcome": "syntax", "detail": "", "completion": "\n    return -c = d[::c]", "empty": false}
+{"task_id": "custom/practice/116", "outcome": "wrong", "detail": "2 of 4 tests failed", "completion": "\n    return s[::-1]", "empty": false}
+{"task_id": "custom/practice/117", "outcome": "wrong", "detail": "3 of 4 tests failed", "completion": "\n    return s[::-2]", "empty": false}
+{"task_id": "custom/practice/118", "outcome": "wrong", "detail": "4 of 5 tests failed", "completion": "\n    return b.strip().lower()", "empty": false}
+{"task_id": "custom/practice/119", "outcome": "error", "detail": "error: TypeError(\"'int' object is not subscriptable\")", "completion": "\n    return item[item:].append(item)[::-1]", "empty": false}
+{"task_id": "custom/practice/120", "outcome": "syntax", "detail": "", "completion": "\n    return sum((1 for char in ax if char >= 0 and char <= len(a) and ax <= len(a) else ax + b if ax < 0 else ax + ax / b + ax ", "empty": false}
+{"task_id": "custom/practice/121", "outcome": "error", "detail": "error: TypeError(\"'int' object is not subscriptable\")", "completion": "\n    return limit[b:b + b] if b > 0 else b + b", "empty": false}
+{"task_id": "custom/practice/122", "outcome": "error", "detail": "error: TypeError(\"'int' object is not subscriptable\")", "completion": "\n    return n + 11[1]", "empty": false}
+{"task_id": "custom/practice/123", "outcome": "error", "detail": "error: TypeError(\"'int' object is not iterable\")", "completion": "\n    return next([n] for n in n)", "empty": false}
+{"task_id": "custom/practice/124", "outcome": "wrong", "detail": "5 of 6 tests failed", "completion": "\n    return n % 2 == 0", "empty": false}
+{"task_id": "custom/practice/125", "outcome": "error", "detail": "error: NameError(\"name 'order' is not defined\")", "completion": "\n    return order.isalpha() and (not arg)", "empty": false}
+{"task_id": "custom/practice/126", "outcome": "error", "detail": "error: NameError(\"name 'backwards' is not defined\")", "completion": "\n    return backwards if backwards else False", "empty": false}
+{"task_id": "custom/practice/127", "outcome": "error", "detail": "error: IndexError('list index out of range')", "completion": "\n    return (words[0], len(words), len(words))", "empty": false}
+{"task_id": "custom/practice/128", "outcome": "wrong", "detail": "5 of 5 tests failed", "completion": "\n    return words.count(words)", "empty": false}
+{"task_id": "custom/practice/129", "outcome": "wrong", "detail": "3 of 5 tests failed", "completion": "\n    return s.isalpha() if not b else False", "empty": false}
+{"task_id": "custom/practice/130", "outcome": "wrong", "detail": "6 of 6 tests failed", "completion": "\n    return degrees < 10", "empty": false}
+{"task_id": "custom/practice/131", "outcome": "syntax", "detail": "", "completion": "\n    return 'weekd' if day == 'weekd' else 'The return 'multiple is weekd' if day is not None]))) odd number is weekd, '' ", "empty": false}
+{"task_id": "custom/practice/132", "outcome": "syntax", "detail": "", "completion": "\n    return n t.format(n)", "empty": false}
+{"task_id": "custom/practice/133", "outcome": "error", "detail": "error: NameError(\"name 'exp' is not defined\")", "completion": "\n    return b * exp + b", "empty": false}
+{"task_id": "custom/practice/134", "outcome": "syntax", "detail": "", "completion": "\n    return 'none' if count > 10", "empty": false}
+{"task_id": "custom/practice/135", "outcome": "error", "detail": "error: NameError(\"name 'length' is not defined\")", "completion": "\n    return words.count(length)", "empty": false}
+{"task_id": "custom/practice/136", "outcome": "error", "detail": "error: KeyError(slice(None, 1, None))", "completion": "\n    return d[:1]", "empty": false}
+{"task_id": "custom/practice/137", "outcome": "error", "detail": "error: TypeError(\"unsupported operand type(s) for ** or pow(): 'dict' and 'float'\")", "completion": "\n    return d ** (1 / 2)", "empty": false}
+{"task_id": "custom/practice/138", "outcome": "error", "detail": "error: TypeError('can only concatenate list (not \"str\") to list')", "completion": "\n    return d in ['value', 'cat'] + ' ' + values", "empty": false}
+{"task_id": "custom/practice/139", "outcome": "error", "detail": "error: AttributeError(\"'dict' object has no attribute 'count'\")", "completion": "\n    return d.count[d::-1]", "empty": false}
+{"task_id": "custom/practice/140", "outcome": "error", "detail": "error: TypeError(\"unsupported operand type(s) for ** or pow(): 'list' and 'float'\")", "completion": "\n    return nums ** 0.5", "empty": false}
+{"task_id": "custom/practice/141", "outcome": "syntax", "detail": "", "completion": "\n    return [nums]:(nums[0] for nums in range(nums)) if nums % 2 == 0:= nums[nums % 2 != 0]\n    return nums", "empty": false}
+{"task_id": "custom/practice/142", "outcome": "wrong", "detail": "2 of 6 tests failed", "completion": "\n    return all((nums > 0 for nums in nums))", "empty": false}
+{"task_id": "custom/practice/143", "outcome": "wrong", "detail": "5 of 5 tests failed", "completion": "\n    return len(words) // 2", "empty": false}
+{"task_id": "custom/practice/144", "outcome": "error", "detail": "error: TypeError(\"unsupported operand type(s) for -: 'int' and 'str'\")", "completion": "\n    return (word[len(word) // 2 - 15 * 15 * word])", "empty": false}
+{"task_id": "custom/practice/145", "outcome": "error", "detail": "error: TypeError(\"'>' not supported between instances of 'list' and 'int'\")", "completion": "\n    return [num for num in matrix if num > 0]", "empty": false}
+{"task_id": "custom/practice/146", "outcome": "error", "detail": "error: TypeError(\"unsupported operand type(s) for %: 'list' and 'int'\")", "completion": "\n    return [row for row in matrix if row % 2 == 0]", "empty": false}
+{"task_id": "custom/practice/147", "outcome": "error", "detail": "error: NameError(\"name 'rows' is not defined\")", "completion": "\n    return [rows + num for num in range(1, rows + 1)]", "empty": false}
+{"task_id": "custom/practice/148", "outcome": "error", "detail": "error: TypeError('can only concatenate list (not \"int\") to list')", "completion": "\n    return (matrix + 1)", "empty": false}
+{"task_id": "custom/practice/149", "outcome": "wrong", "detail": "4 of 4 tests failed", "completion": "\n    return matrix[0:column: 20] if column >= 0 else 'a'", "empty": false}
+{"task_id": "custom/practice/150", "outcome": "wrong", "detail": "4 of 4 tests failed", "completion": "\n    return text[-2::-1]", "empty": false}
+{"task_id": "custom/practice/151", "outcome": "wrong", "detail": "4 of 4 tests failed", "completion": "\n    return [space for space in words if space > space]", "empty": false}
+{"task_id": "custom/practice/152", "outcome": "wrong", "detail": "4 of 4 tests failed", "completion": "\n    return [target for target in text if target == 'cat']", "empty": false}
+{"task_id": "custom/practice/153", "outcome": "error", "detail": "error: NameError(\"name 'words' is not defined\")", "completion": "\n    return words and text and text and text if text or text else False", "empty": false}
+{"task_id": "custom/practice/154", "outcome": "syntax", "detail": "", "completion": "\n    return text[whowor:::-1] + text[whoword + 1:]", "empty": false}
+{"task_id": "custom/practice/155", "outcome": "error", "detail": "error: NameError(\"name 'run' is not defined\")", "completion": "\n    return [run[changes] for changes in changes]", "empty": false}
+{"task_id": "custom/practice/156", "outcome": "error", "detail": "error: NameError(\"name 'Tr' is not defined\")", "completion": "\n    return [nums ** Tr for nums in nums]", "empty": false}
+{"task_id": "custom/practice/157", "outcome": "wrong", "detail": "6 of 6 tests failed", "completion": "\n    return [nums + 12 for nums in nums if nums % 4 == 0]", "empty": false}
+{"task_id": "custom/practice/158", "outcome": "error", "detail": "error: TypeError(\"'int' object is not subscriptable\")", "completion": "\n    return [nums[0] for nums in nums]", "empty": false}
+{"task_id": "custom/practice/159", "outcome": "error", "detail": "error: IndexError('list index out of range')", "completion": "\n    return nums[0] + nums[1]", "empty": false}
+{"task_id": "custom/practice/160", "outcome": "syntax", "detail": "", "completion": "\n    return (n * product_product_product_product_product_product_product_product_product_product_product_product_product_product_produc", "empty": false}
+{"task_id": "custom/practice/161", "outcome": "wrong", "detail": "5 of 6 tests failed", "completion": "\n    return (n * 3.14159 / 36000)", "empty": false}
+{"task_id": "custom/practice/162", "outcome": "wrong", "detail": "4 of 5 tests failed", "completion": "\n    return interval if n < 0 else 0", "empty": false}
+{"task_id": "custom/practice/163", "outcome": "wrong", "detail": "5 of 5 tests failed", "completion": "\n    return (n + 1) // 2", "empty": false}
+{"task_id": "custom/practice/164", "outcome": "error", "detail": "error: NameError(\"name 'd' is not defined\")", "completion": "\n    return d + digits + digits", "empty": false}
+{"task_id": "custom/practice/165", "outcome": "syntax", "detail": "", "completion": "\n    return [x for x in limit if x > limit and x >= limit <= limit>= limit:None]", "empty": false}
+{"task_id": "custom/practice/166", "outcome": "error", "detail": "error: IndexError('list index out of range')", "completion": "\n    return (nums[0], nums[1], nums[1])", "empty": false}
+{"task_id": "custom/practice/167", "outcome": "error", "detail": "error: NameError(\"name 'a' is not defined\")", "completion": "\n    return (a, offset) // 2 + (s - 1) * (n - 1)", "empty": false}
+{"task_id": "custom/practice/168", "outcome": "wrong", "detail": "5 of 5 tests failed", "completion": "\n    return [nums for nums in nums if nums < nums]", "empty": false}
+{"task_id": "custom/practice/169", "outcome": "syntax", "detail": "", "completion": "\n    return last if nums is False n, otherwise return 'return' in nums", "empty": false}
+{"task_id": "custom/practice/170", "outcome": "error", "detail": "error: TypeError(\"unsupported operand type(s) for ^: 'str' and 'int'\")", "completion": "\n    return target ^ len(items)", "empty": false}
+{"task_id": "custom/practice/171", "outcome": "error", "detail": "error: TypeError('unsupported format string passed to list.__format__')", "completion": "\n    if len(items) % 2 == 0:\n        return items\n    else:\n        return '{:.1f}:{:02}'.format(items)", "empty": false}
+{"task_id": "custom/practice/172", "outcome": "wrong", "detail": "6 of 6 tests failed", "completion": "\n    return 'a' if items == 'a' else 'a'", "empty": false}
+{"task_id": "custom/practice/173", "outcome": "wrong", "detail": "3 of 6 tests failed", "completion": "\n    return False", "empty": false}
+{"task_id": "custom/practice/174", "outcome": "wrong", "detail": "3 of 5 tests failed", "completion": "\n    return [item for item in items if item == 'increas']", "empty": false}
+{"task_id": "custom/practice/175", "outcome": "syntax", "detail": "", "completion": "\n    return [b..............................\"\"\":step and b..\"\"\": a is None for a dictionary of the first of the ", "empty": false}
+{"task_id": "custom/practice/176", "outcome": "error", "detail": "error: AttributeError(\"'list' object has no attribute 'isalnum'\")", "completion": "\n    if a.isalnum() < 0:\n        return 'Error: Cannot divide by zero'\n    return a / b", "empty": false}
+{"task_id": "custom/practice/177", "outcome": "error", "detail": "error: NameError(\"name 'v' is not defined\")", "completion": "\n    return v", "empty": false}
+{"task_id": "custom/practice/178", "outcome": "wrong", "detail": "5 of 5 tests failed", "completion": "\n    return [b - b for b in a]", "empty": false}
+{"task_id": "custom/practice/179", "outcome": "error", "detail": "error: NameError(\"name 'base' is not defined\")", "completion": "\n    return base.count('s') + base", "empty": false}
+{"task_id": "custom/practice/180", "outcome": "error", "detail": "error: NameError(\"name 'each' is not defined\")", "completion": "\n    return (each + str(e), int(e))", "empty": false}
+{"task_id": "custom/practice/181", "outcome": "error", "detail": "error: TypeError(\"'int' object is not iterable\")", "completion": "\n    return sum((1 for num in n if num < k))", "empty": false}
+{"task_id": "custom/practice/182", "outcome": "error", "detail": "error: TypeError(\"unsupported operand type(s) for +: 'range' and 'int'\")", "completion": "\n    return [x + 30 for x in range(n) + 11]", "empty": false}
+{"task_id": "custom/practice/183", "outcome": "wrong", "detail": "6 of 6 tests failed", "completion": "\n    if limit > 0:\n        return '0'\n    mid = limit - 1\n    if limit < 0 or limit < 0:\n        return '0'\n    if limit < 0:\n        return '0'\n    ", "empty": false}
+{"task_id": "custom/practice/184", "outcome": "error", "detail": "error: TypeError(\"'int' object is not iterable\")", "completion": "\n    return [num for num in limit if num > 5]", "empty": false}
+{"task_id": "custom/practice/185", "outcome": "syntax", "detail": "", "completion": "\n    return 2.54595 with the specified t.\"\"\"\n         (1.0\n    >>> remove(1.0)\n    1\n    >>> remove(1.0)\n    1\n    >>> remove(1.0", "empty": false}
+{"task_id": "custom/practice/186", "outcome": "wrong", "detail": "4 of 5 tests failed", "completion": "\n    return '0' * len(s) * len(s)", "empty": false}
+{"task_id": "custom/practice/187", "outcome": "error", "detail": "error: TypeError('must be str, not int')", "completion": "\n    return s.count(count) * count", "empty": false}
+{"task_id": "custom/practice/188", "outcome": "syntax", "detail": "", "completion": "\n    return (s + s) if s", "empty": false}
+{"task_id": "custom/practice/189", "outcome": "syntax", "detail": "", "completion": "\n    return s[u::-1].upper() + s[::-1] + s[::-1] + s[::-1] + s[::-1] + s[::] + s[s:] + s[s", "empty": false}
+{"task_id": "custom/practice/190", "outcome": "error", "detail": "error: TypeError('can only concatenate list (not \"int\") to list')", "completion": "\n    return items[:len(items) - 1] + items[len(items) // 2] + items[len(items) // 2 + 1:]", "empty": false}
+{"task_id": "custom/practice/191", "outcome": "error", "detail": "error: TypeError(\"unsupported operand type(s) for //: 'tuple' and 'int'\")", "completion": "\n    return (items[0], len(items) - 1) // 2", "empty": false}
+{"task_id": "custom/practice/192", "outcome": "wrong", "detail": "4 of 4 tests failed", "completion": "\n    return items[:len(items) // 2] if len(items) % 2 == 0 else items[len(items) // 2 - 1]", "empty": false}
+{"task_id": "custom/practice/193", "outcome": "wrong", "detail": "3 of 5 tests failed", "completion": "\n    return items[index:]", "empty": false}
+{"task_id": "custom/practice/194", "outcome": "error", "detail": "error: TypeError(\"unsupported operand type(s) for -: 'list' and 'int'\")", "completion": "\n    return [items - 2 for item in items]", "empty": false}
+{"task_id": "custom/practice/195", "outcome": "wrong", "detail": "5 of 5 tests failed", "completion": "\n    return n * width * width * width * width * (n - 1) * width", "empty": false}
+{"task_id": "custom/practice/196", "outcome": "error", "detail": "error: NameError(\"name 'ax' is not defined\")", "completion": "\n    return sum([i for i in ax if i % 15 == 0])", "empty": false}
+{"task_id": "custom/practice/197", "outcome": "error", "detail": "error: TypeError(\"'builtin_function_or_method' object cannot be interpreted as an integer\")", "completion": "\n    return next(iter(next(iter(next(next(next(next(next) for n in range(next))))))))", "empty": false}
+{"task_id": "custom/practice/198", "outcome": "error", "detail": "error: NameError(\"name 'char' is not defined\")", "completion": "\n    if char < 0 or char < 0:\n        return 'Error: Cannot subtract negative amounts'\n    return char - char", "empty": false}
+{"task_id": "custom/practice/199", "outcome": "wrong", "detail": "5 of 5 tests failed", "completion": "\n    return count * (1 - 1) * (count - 1) * (count - 1)", "empty": false}

@@ -1,0 +1,2 @@
+runs/qat/C2b: val 2.3956 nats/token, body only 1.9288 (307 windows)
+runs/qat/C2bp: val 2.4105 nats/token, body only 1.9432 (307 windows)

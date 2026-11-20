@@ -1,0 +1,878 @@
+{
+ "base": "runs/qat/A2q",
+ "strategy": "Names. The largest failure class is NameError: the body uses names that the signature does not have (it writes a habitual name such as `n`, `numbers` or `s` where the argument is called something else). Find what makes the model prefer its habitual names over the names of the prompt, and change it. Candidates: (a) feed-forward units of the last layer whose W2 column points along the E rows of the habitual name tokens (they push those names; scale such columns down); (b) the attention heads that copy from the signature: find with a trace of `l<k>.e` the query head whose weights at body positions sit on the argument tokens, and strengthen what it writes (scale its columns of Wo up, as far as int8 allows), or sharpen it through its score offset c_s or the EXP table of its layer; (c) the E rows of the habitual name tokens themselves (E is input and output at once, so be careful).",
+ "limit": 50,
+ "runs": [
+  {
+   "run": 1,
+   "kind": "evaluate",
+   "note": "baseline",
+   "edits_so_far": 0,
+   "time": "2026-11-14 02:20:05",
+   "result": {
+    "run": 1,
+    "budget_left": 49,
+    "practice_loss": 1.6463,
+    "pass@1": 0.005,
+    "syntax_ok": 0.9299999999999999,
+    "runs_ok": 0.425,
+    "tests_passed": 0.095,
+    "outcomes": {
+     "pass": 1,
+     "wrong": 84,
+     "error": 101,
+     "timeout": 0,
+     "syntax": 14
+    },
+    "errors": {
+     "TypeError": 53,
+     "NameError": 38,
+     "AttributeError": 4,
+     "ZeroDivisionError": 3,
+     "IndexError": 1,
+     "ValueError": 1
+    },
+    "repeating": 0.04,
+    "note": "baseline"
+   }
+  },
+  {
+   "run": 2,
+   "kind": "trace",
+   "note": "reference solutions of the 79 shortest tasks, teacher forced",
+   "edits_so_far": 0,
+   "time": "2026-11-14 02:22:34"
+  },
+  {
+   "run": 3,
+   "kind": "evaluate",
+   "note": "wo 0 2",
+   "edits_so_far": 1,
+   "time": "2026-11-14 02:26:06",
+   "result": {
+    "run": 3,
+    "budget_left": 47,
+    "practice_loss": 1.9225,
+    "pass@1": 0.0,
+    "syntax_ok": 0.785,
+    "runs_ok": 0.255,
+    "tests_passed": 0.0624,
+    "outcomes": {
+     "pass": 0,
+     "wrong": 51,
+     "error": 106,
+     "timeout": 0,
+     "syntax": 43
+    },
+    "errors": {
+     "TypeError": 47,
+     "NameError": 41,
+     "AttributeError": 9,
+     "ZeroDivisionError": 4,
+     "IndexError": 2,
+     "UnboundLocalError": 1
+    },
+    "repeating": 0.14,
+    "note": "wo 0 2"
+   }
+  },
+  {
+   "run": 4,
+   "kind": "evaluate",
+   "note": "wo 0 1.25",
+   "edits_so_far": 3,
+   "time": "2026-11-14 02:27:24",
+   "result": {
+    "run": 4,
+    "budget_left": 46,
+    "practice_loss": 1.6705,
+    "pass@1": 0.005,
+    "syntax_ok": 0.89,
+    "runs_ok": 0.39,
+    "tests_passed": 0.0887,
+    "outcomes": {
+     "pass": 1,
+     "wrong": 77,
+     "error": 100,
+     "timeout": 0,
+     "syntax": 22
+    },
+    "errors": {
+     "TypeError": 45,
+     "NameError": 43,
+     "AttributeError": 6,
+     "ZeroDivisionError": 2,
+     "IndexError": 1,
+     "ValueError": 1
+    },
+    "repeating": 0.035,
+    "note": "wo 0 1.25"
+   }
+  },
+  {
+   "run": 5,
+   "kind": "evaluate",
+   "note": "wq 0 1.5",
+   "edits_so_far": 5,
+   "time": "2026-11-14 02:28:39",
+   "result": {
+    "run": 5,
+    "budget_left": 45,
+    "practice_loss": 1.705,
+    "pass@1": 0.005,
+    "syntax_ok": 0.89,
+    "runs_ok": 0.385,
+    "tests_passed": 0.0927,
+    "outcomes": {
+     "pass": 1,
+     "wrong": 76,
+     "error": 101,
+     "timeout": 0,
+     "syntax": 22
+    },
+    "errors": {
+     "NameError": 44,
+     "TypeError": 40,
+     "AttributeError": 9,
+     "IndexError": 4,
+     "ZeroDivisionError": 2,
+     "ValueError": 1
+    },
+    "repeating": 0.03,
+    "note": "wq 0 1.5"
+   }
+  },
+  {
+   "run": 6,
+   "kind": "evaluate",
+   "note": "wo 1 0.75 + wo 3 0.75",
+   "edits_so_far": 8,
+   "time": "2026-11-14 02:29:25",
+   "result": {
+    "run": 6,
+    "budget_left": 44,
+    "practice_loss": 1.6792,
+    "pass@1": 0.01,
+    "syntax_ok": 0.9,
+    "runs_ok": 0.44,
+    "tests_passed": 0.0959,
+    "outcomes": {
+     "pass": 2,
+     "wrong": 86,
+     "error": 92,
+     "timeout": 0,
+     "syntax": 20
+    },
+    "errors": {
+     "TypeError": 45,
+     "NameError": 41,
+     "AttributeError": 3,
+     "ZeroDivisionError": 2,
+     "IndexError": 1
+    },
+    "repeating": 0.05,
+    "note": "wo 1 0.75 + wo 3 0.75"
+   }
+  },
+  {
+   "run": 7,
+   "kind": "evaluate",
+   "note": "exp 1 0.75",
+   "edits_so_far": 11,
+   "time": "2026-11-14 02:30:54",
+   "result": {
+    "run": 7,
+    "budget_left": 43,
+    "practice_loss": 1.7125,
+    "pass@1": 0.005,
+    "syntax_ok": 0.875,
+    "runs_ok": 0.365,
+    "tests_passed": 0.0856,
+    "outcomes": {
+     "pass": 1,
+     "wrong": 72,
+     "error": 102,
+     "timeout": 0,
+     "syntax": 25
+    },
+    "errors": {
+     "TypeError": 46,
+     "NameError": 45,
+     "AttributeError": 3,
+     "IndexError": 3,
+     "ZeroDivisionError": 2,
+     "KeyError": 2
+    },
+    "repeating": 0.045,
+    "note": "exp 1 0.75"
+   }
+  },
+  {
+   "run": 8,
+   "kind": "trace",
+   "note": "prompt + own baseline completion of 61 tasks (all NameError tasks first)",
+   "edits_so_far": 15,
+   "time": "2026-11-14 02:33:25"
+  },
+  {
+   "run": 9,
+   "kind": "evaluate",
+   "note": "sigpref 6",
+   "edits_so_far": 17,
+   "time": "2026-11-14 02:37:00",
+   "result": {
+    "run": 9,
+    "budget_left": 41,
+    "practice_loss": 1.7011,
+    "pass@1": 0.015,
+    "syntax_ok": 0.88,
+    "runs_ok": 0.415,
+    "tests_passed": 0.1029,
+    "outcomes": {
+     "pass": 3,
+     "wrong": 80,
+     "error": 92,
+     "timeout": 1,
+     "syntax": 24
+    },
+    "errors": {
+     "TypeError": 49,
+     "NameError": 28,
+     "AttributeError": 7,
+     "IndexError": 4,
+     "ZeroDivisionError": 3,
+     "KeyError": 1
+    },
+    "repeating": 0.065,
+    "note": "sigpref 6"
+   }
+  },
+  {
+   "run": 10,
+   "kind": "evaluate",
+   "note": "sigpref 10",
+   "edits_so_far": 21,
+   "time": "2026-11-14 02:41:06",
+   "result": {
+    "run": 10,
+    "budget_left": 40,
+    "practice_loss": 1.7659,
+    "pass@1": 0.005,
+    "syntax_ok": 0.83,
+    "runs_ok": 0.265,
+    "tests_passed": 0.0505,
+    "outcomes": {
+     "pass": 1,
+     "wrong": 52,
+     "error": 113,
+     "timeout": 0,
+     "syntax": 34
+    },
+    "errors": {
+     "TypeError": 62,
+     "NameError": 36,
+     "AttributeError": 10,
+     "ZeroDivisionError": 2,
+     "IndexError": 2,
+     "KeyError": 1
+    },
+    "repeating": 0.12,
+    "note": "sigpref 10"
+   }
+  },
+  {
+   "run": 11,
+   "kind": "evaluate",
+   "note": "sigpref 3",
+   "edits_so_far": 25,
+   "time": "2026-11-14 02:44:11",
+   "result": {
+    "run": 11,
+    "budget_left": 39,
+    "practice_loss": 1.6735,
+    "pass@1": 0.02,
+    "syntax_ok": 0.91,
+    "runs_ok": 0.425,
+    "tests_passed": 0.1082,
+    "outcomes": {
+     "pass": 4,
+     "wrong": 81,
+     "error": 97,
+     "timeout": 0,
+     "syntax": 18
+    },
+    "errors": {
+     "TypeError": 48,
+     "NameError": 33,
+     "AttributeError": 7,
+     "IndexError": 4,
+     "ZeroDivisionError": 3,
+     "ValueError": 1
+    },
+    "repeating": 0.02,
+    "note": "sigpref 3"
+   }
+  },
+  {
+   "run": 12,
+   "kind": "evaluate",
+   "note": "sigpref 4.5",
+   "edits_so_far": 29,
+   "time": "2026-11-14 02:49:57",
+   "result": {
+    "run": 12,
+    "budget_left": 38,
+    "practice_loss": 1.6845,
+    "pass@1": 0.02,
+    "syntax_ok": 0.915,
+    "runs_ok": 0.445,
+    "tests_passed": 0.1007,
+    "outcomes": {
+     "pass": 4,
+     "wrong": 85,
+     "error": 93,
+     "timeout": 1,
+     "syntax": 17
+    },
+    "errors": {
+     "TypeError": 45,
+     "NameError": 35,
+     "AttributeError": 5,
+     "ZeroDivisionError": 3,
+     "IndexError": 3,
+     "ValueError": 1
+    },
+    "repeating": 0.06,
+    "note": "sigpref 4.5"
+   }
+  },
+  {
+   "run": 13,
+   "kind": "evaluate",
+   "note": "sigpref 3 + wo 0 1.15",
+   "edits_so_far": 34,
+   "time": "2026-11-14 02:51:17",
+   "result": {
+    "run": 13,
+    "budget_left": 37,
+    "practice_loss": 1.6903,
+    "pass@1": 0.015,
+    "syntax_ok": 0.945,
+    "runs_ok": 0.445,
+    "tests_passed": 0.1069,
+    "outcomes": {
+     "pass": 3,
+     "wrong": 86,
+     "error": 100,
+     "timeout": 0,
+     "syntax": 11
+    },
+    "errors": {
+     "TypeError": 52,
+     "NameError": 34,
+     "AttributeError": 6,
+     "ZeroDivisionError": 3,
+     "IndexError": 3,
+     "ValueError": 1
+    },
+    "repeating": 0.02,
+    "note": "sigpref 3 + wo 0 1.15"
+   }
+  },
+  {
+   "run": 14,
+   "kind": "evaluate",
+   "note": "endbias 20",
+   "edits_so_far": 40,
+   "time": "2026-11-14 02:54:16",
+   "result": {
+    "run": 14,
+    "budget_left": 36,
+    "practice_loss": 1.6718,
+    "pass@1": 0.02,
+    "syntax_ok": 0.935,
+    "runs_ok": 0.465,
+    "tests_passed": 0.1102,
+    "outcomes": {
+     "pass": 4,
+     "wrong": 89,
+     "error": 94,
+     "timeout": 0,
+     "syntax": 13
+    },
+    "errors": {
+     "TypeError": 47,
+     "NameError": 32,
+     "AttributeError": 7,
+     "ZeroDivisionError": 3,
+     "IndexError": 3,
+     "ValueError": 1
+    },
+    "repeating": 0.02,
+    "note": "endbias 20"
+   }
+  },
+  {
+   "run": 15,
+   "kind": "evaluate",
+   "note": "endbias 40",
+   "edits_so_far": 42,
+   "time": "2026-11-14 02:55:08",
+   "result": {
+    "run": 15,
+    "budget_left": 35,
+    "practice_loss": 1.6741,
+    "pass@1": 0.02,
+    "syntax_ok": 0.94,
+    "runs_ok": 0.485,
+    "tests_passed": 0.1127,
+    "outcomes": {
+     "pass": 4,
+     "wrong": 93,
+     "error": 91,
+     "timeout": 0,
+     "syntax": 12
+    },
+    "errors": {
+     "TypeError": 45,
+     "NameError": 32,
+     "AttributeError": 6,
+     "ZeroDivisionError": 3,
+     "IndexError": 3,
+     "ValueError": 1
+    },
+    "repeating": 0.015,
+    "note": "endbias 40"
+   }
+  },
+  {
+   "run": 16,
+   "kind": "evaluate",
+   "note": "endbias 70",
+   "edits_so_far": 44,
+   "time": "2026-11-14 02:55:36",
+   "result": {
+    "run": 16,
+    "budget_left": 34,
+    "practice_loss": 1.6808,
+    "pass@1": 0.02,
+    "syntax_ok": 0.94,
+    "runs_ok": 0.495,
+    "tests_passed": 0.1094,
+    "outcomes": {
+     "pass": 4,
+     "wrong": 95,
+     "error": 89,
+     "timeout": 0,
+     "syntax": 12
+    },
+    "errors": {
+     "TypeError": 44,
+     "NameError": 32,
+     "AttributeError": 5,
+     "ZeroDivisionError": 3,
+     "IndexError": 3,
+     "ValueError": 1
+    },
+    "repeating": 0.015,
+    "note": "endbias 70"
+   }
+  },
+  {
+   "run": 17,
+   "kind": "evaluate",
+   "note": "sigpref 3 0 19 60 1",
+   "edits_so_far": 47,
+   "time": "2026-11-14 02:57:53",
+   "result": {
+    "run": 17,
+    "budget_left": 33,
+    "practice_loss": 1.6768,
+    "pass@1": 0.02,
+    "syntax_ok": 0.94,
+    "runs_ok": 0.47,
+    "tests_passed": 0.108,
+    "outcomes": {
+     "pass": 4,
+     "wrong": 90,
+     "error": 94,
+     "timeout": 0,
+     "syntax": 12
+    },
+    "errors": {
+     "TypeError": 47,
+     "NameError": 30,
+     "AttributeError": 7,
+     "IndexError": 4,
+     "ZeroDivisionError": 3,
+     "no report, sandbox status memory": 1
+    },
+    "repeating": 0.025,
+    "note": "sigpref 3 0 19 60 1"
+   }
+  },
+  {
+   "run": 18,
+   "kind": "evaluate",
+   "note": "gated 4.5",
+   "edits_so_far": 50,
+   "time": "2026-11-14 02:59:28",
+   "result": {
+    "run": 18,
+    "budget_left": 32,
+    "practice_loss": 1.6695,
+    "pass@1": 0.015,
+    "syntax_ok": 0.935,
+    "runs_ok": 0.485,
+    "tests_passed": 0.1007,
+    "outcomes": {
+     "pass": 3,
+     "wrong": 94,
+     "error": 90,
+     "timeout": 0,
+     "syntax": 13
+    },
+    "errors": {
+     "TypeError": 48,
+     "NameError": 28,
+     "IndexError": 5,
+     "AttributeError": 4,
+     "ZeroDivisionError": 3,
+     "ValueError": 1
+    },
+    "repeating": 0.01,
+    "note": "gated 4.5"
+   }
+  },
+  {
+   "run": 19,
+   "kind": "evaluate",
+   "note": "gated 7",
+   "edits_so_far": 54,
+   "time": "2026-11-14 03:00:00",
+   "result": {
+    "run": 19,
+    "budget_left": 31,
+    "practice_loss": 1.679,
+    "pass@1": 0.015,
+    "syntax_ok": 0.94,
+    "runs_ok": 0.46,
+    "tests_passed": 0.099,
+    "outcomes": {
+     "pass": 3,
+     "wrong": 89,
+     "error": 96,
+     "timeout": 0,
+     "syntax": 12
+    },
+    "errors": {
+     "TypeError": 48,
+     "NameError": 31,
+     "AttributeError": 6,
+     "IndexError": 5,
+     "ZeroDivisionError": 4,
+     "ValueError": 1
+    },
+    "repeating": 0.015,
+    "note": "gated 7"
+   }
+  },
+  {
+   "run": 20,
+   "kind": "evaluate",
+   "note": "wo 1 0.75 + wo 3 0.75",
+   "edits_so_far": 58,
+   "time": "2026-11-14 03:02:19",
+   "result": {
+    "run": 20,
+    "budget_left": 30,
+    "practice_loss": 1.7071,
+    "pass@1": 0.01,
+    "syntax_ok": 0.865,
+    "runs_ok": 0.43,
+    "tests_passed": 0.0807,
+    "outcomes": {
+     "pass": 2,
+     "wrong": 84,
+     "error": 87,
+     "timeout": 0,
+     "syntax": 27
+    },
+    "errors": {
+     "TypeError": 43,
+     "NameError": 29,
+     "AttributeError": 9,
+     "ZeroDivisionError": 3,
+     "IndexError": 2,
+     "KeyError": 1
+    },
+    "repeating": 0.065,
+    "note": "wo 1 0.75 + wo 3 0.75"
+   }
+  },
+  {
+   "run": 21,
+   "kind": "evaluate",
+   "note": "wq 0 1.25",
+   "edits_so_far": 60,
+   "time": "2026-11-14 03:02:46",
+   "result": {
+    "run": 21,
+    "budget_left": 29,
+    "practice_loss": 1.7012,
+    "pass@1": 0.015,
+    "syntax_ok": 0.89,
+    "runs_ok": 0.475,
+    "tests_passed": 0.0951,
+    "outcomes": {
+     "pass": 3,
+     "wrong": 92,
+     "error": 83,
+     "timeout": 0,
+     "syntax": 22
+    },
+    "errors": {
+     "TypeError": 36,
+     "NameError": 36,
+     "AttributeError": 5,
+     "ZeroDivisionError": 2,
+     "IndexError": 2,
+     "ValueError": 1
+    },
+    "repeating": 0.015,
+    "note": "wq 0 1.25"
+   }
+  },
+  {
+   "run": 22,
+   "kind": "evaluate",
+   "note": "noquote 60",
+   "edits_so_far": 62,
+   "time": "2026-11-14 03:06:40",
+   "result": {
+    "run": 22,
+    "budget_left": 28,
+    "practice_loss": 1.6942,
+    "pass@1": 0.01,
+    "syntax_ok": 0.92,
+    "runs_ok": 0.445,
+    "tests_passed": 0.0857,
+    "outcomes": {
+     "pass": 2,
+     "wrong": 87,
+     "error": 95,
+     "timeout": 0,
+     "syntax": 16
+    },
+    "errors": {
+     "TypeError": 48,
+     "NameError": 36,
+     "AttributeError": 5,
+     "ZeroDivisionError": 2,
+     "IndexError": 2,
+     "KeyError": 2
+    },
+    "repeating": 0.035,
+    "note": "noquote 60"
+   }
+  },
+  {
+   "run": 23,
+   "kind": "evaluate",
+   "note": "sigmen 3 3",
+   "edits_so_far": 64,
+   "time": "2026-11-14 03:08:11",
+   "result": {
+    "run": 23,
+    "budget_left": 27,
+    "practice_loss": 1.6798,
+    "pass@1": 0.015,
+    "syntax_ok": 0.92,
+    "runs_ok": 0.455,
+    "tests_passed": 0.1048,
+    "outcomes": {
+     "pass": 3,
+     "wrong": 88,
+     "error": 92,
+     "timeout": 1,
+     "syntax": 16
+    },
+    "errors": {
+     "TypeError": 44,
+     "NameError": 31,
+     "AttributeError": 8,
+     "IndexError": 4,
+     "ZeroDivisionError": 3,
+     "ValueError": 1
+    },
+    "repeating": 0.055,
+    "note": "sigmen 3 3"
+   }
+  },
+  {
+   "run": 24,
+   "kind": "evaluate",
+   "note": "sigpref 0",
+   "edits_so_far": 66,
+   "time": "2026-11-14 03:10:33",
+   "result": {
+    "run": 24,
+    "budget_left": 26,
+    "practice_loss": 1.664,
+    "pass@1": 0.015,
+    "syntax_ok": 0.94,
+    "runs_ok": 0.455,
+    "tests_passed": 0.1005,
+    "outcomes": {
+     "pass": 3,
+     "wrong": 88,
+     "error": 97,
+     "timeout": 0,
+     "syntax": 12
+    },
+    "errors": {
+     "NameError": 44,
+     "TypeError": 41,
+     "AttributeError": 5,
+     "ZeroDivisionError": 3,
+     "IndexError": 2,
+     "ValueError": 1
+    },
+    "repeating": 0.01,
+    "note": "sigpref 0"
+   }
+  },
+  {
+   "run": 25,
+   "kind": "evaluate",
+   "note": "ffn 1 0.9",
+   "edits_so_far": 68,
+   "time": "2026-11-14 03:12:23",
+   "result": {
+    "run": 25,
+    "budget_left": 25,
+    "practice_loss": 1.6836,
+    "pass@1": 0.02,
+    "syntax_ok": 0.935,
+    "runs_ok": 0.465,
+    "tests_passed": 0.0964,
+    "outcomes": {
+     "pass": 4,
+     "wrong": 89,
+     "error": 94,
+     "timeout": 0,
+     "syntax": 13
+    },
+    "errors": {
+     "TypeError": 49,
+     "NameError": 32,
+     "IndexError": 4,
+     "AttributeError": 4,
+     "ZeroDivisionError": 3,
+     "ValueError": 1
+    },
+    "repeating": 0.02,
+    "note": "ffn 1 0.9"
+   }
+  },
+  {
+   "run": 26,
+   "kind": "evaluate",
+   "note": "sigpref 4.5",
+   "edits_so_far": 70,
+   "time": "2026-11-14 03:15:19",
+   "result": {
+    "run": 26,
+    "budget_left": 24,
+    "practice_loss": 1.6836,
+    "pass@1": 0.015,
+    "syntax_ok": 0.925,
+    "runs_ok": 0.495,
+    "tests_passed": 0.1054,
+    "outcomes": {
+     "pass": 3,
+     "wrong": 96,
+     "error": 86,
+     "timeout": 0,
+     "syntax": 15
+    },
+    "errors": {
+     "TypeError": 39,
+     "NameError": 34,
+     "AttributeError": 4,
+     "ZeroDivisionError": 3,
+     "IndexError": 3,
+     "no report, sandbox status memory": 1
+    },
+    "repeating": 0.035,
+    "note": "sigpref 4.5"
+   }
+  },
+  {
+   "run": 27,
+   "kind": "evaluate",
+   "note": "sigpref 6",
+   "edits_so_far": 72,
+   "time": "2026-11-14 03:15:48",
+   "result": {
+    "run": 27,
+    "budget_left": 23,
+    "practice_loss": 1.7017,
+    "pass@1": 0.015,
+    "syntax_ok": 0.92,
+    "runs_ok": 0.47,
+    "tests_passed": 0.1101,
+    "outcomes": {
+     "pass": 3,
+     "wrong": 91,
+     "error": 90,
+     "timeout": 0,
+     "syntax": 16
+    },
+    "errors": {
+     "TypeError": 47,
+     "NameError": 29,
+     "AttributeError": 6,
+     "ZeroDivisionError": 3,
+     "IndexError": 3,
+     "no report, sandbox status memory": 1
+    },
+    "repeating": 0.055,
+    "note": "sigpref 6"
+   }
+  },
+  {
+   "run": 28,
+   "kind": "evaluate",
+   "note": "final: the kept model again (signature preference 3 codes + end bias 40)",
+   "edits_so_far": 73,
+   "time": "2026-11-14 03:17:13",
+   "result": {
+    "run": 28,
+    "budget_left": 22,
+    "practice_loss": 1.6741,
+    "pass@1": 0.02,
+    "syntax_ok": 0.94,
+    "runs_ok": 0.485,
+    "tests_passed": 0.1127,
+    "outcomes": {
+     "pass": 4,
+     "wrong": 93,
+     "error": 91,
+     "timeout": 0,
+     "syntax": 12
+    },
+    "errors": {
+     "TypeError": 45,
+     "NameError": 32,
+     "AttributeError": 6,
+     "ZeroDivisionError": 3,
+     "IndexError": 3,
+     "ValueError": 1
+    },
+    "repeating": 0.015,
+    "note": "final: the kept model again (signature preference 3 codes + end bias 40)"
+   }
+  }
+ ]
+}

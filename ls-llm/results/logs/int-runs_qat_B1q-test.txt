@@ -1,0 +1,101 @@
+B1q on custom test: 200 tasks x 1 samples in 33.7 s
+  pass@1     0.0600
+  pass@10    -
+  syntax_ok  0.9550
+  runs_ok    0.5400
+  empty      0.0000
+  outcomes   pass 12, wrong 96, error 83, timeout 0, syntax 9
+  recorded in results/results.jsonl, samples in results/samples/20261114-050743_B1q_custom_test.jsonl.gz
+B1q on custom test: 200 tasks x 10 samples in 114.4 s
+  pass@1     0.0555
+  pass@10    0.1300
+  syntax_ok  0.8990
+  runs_ok    0.4225
+  empty      0.0000
+  outcomes   pass 111, wrong 734, error 953, timeout 0, syntax 202
+  recorded in results/results.jsonl, samples in results/samples/20261114-050938_B1q_custom_test.jsonl.gz
+B1q on mbpp test: 500 tasks x 1 samples in 101.9 s
+  pass@1     0.0100
+  pass@10    -
+  syntax_ok  0.8520
+  runs_ok    0.5020
+  empty      0.0000
+  outcomes   pass 5, wrong 246, error 175, timeout 0, syntax 74
+  recorded in results/results.jsonl, samples in results/samples/20261114-051120_B1q_mbpp_test.jsonl.gz
+B1q on mbpp test: 500 tasks x 10 samples in 489.5 s
+  pass@1     0.0054
+  pass@10    0.0200
+  syntax_ok  0.7506
+  runs_ok    0.2790
+  empty      0.0000
+  outcomes   pass 27, wrong 1368, error 2355, timeout 3, syntax 1247
+  recorded in results/results.jsonl, samples in results/samples/20261114-051930_B1q_mbpp_test.jsonl.gz
+B1q on humaneval test: 164 tasks x 1 samples in 70.4 s
+  pass@1     0.0000
+  pass@10    -
+  syntax_ok  0.6341
+  runs_ok    0.2134
+  empty      0.0000
+  outcomes   pass 0, wrong 35, error 69, timeout 0, syntax 60
+  105 prompts were truncated by the completer
+  recorded in results/results.jsonl, samples in results/samples/20261114-052041_B1q_humaneval_test.jsonl.gz
+B1q on humaneval test: 164 tasks x 10 samples in 234.1 s
+  pass@1     0.0006
+  pass@10    0.0061
+  syntax_ok  0.5780
+  runs_ok    0.1366
+  empty      0.0006
+  outcomes   pass 1, wrong 223, error 722, timeout 2, syntax 692
+  105 prompts were truncated by the completer
+  recorded in results/results.jsonl, samples in results/samples/20261114-052435_B1q_humaneval_test.jsonl.gz
+B1q+filter on custom test: 200 tasks x 1 samples in 33.2 s
+  pass@1     0.0600
+  pass@10    -
+  syntax_ok  0.9600
+  runs_ok    0.5400
+  empty      0.0000
+  outcomes   pass 12, wrong 96, error 84, timeout 0, syntax 8
+  recorded in results/results.jsonl, samples in results/samples/20261114-052509_B1q_filter_custom_test.jsonl.gz
+B1q+filter on custom test: 200 tasks x 10 samples in 121.3 s
+  pass@1     0.0555
+  pass@10    0.1300
+  syntax_ok  0.9275
+  runs_ok    0.4295
+  empty      0.0000
+  outcomes   pass 111, wrong 748, error 996, timeout 0, syntax 145
+  recorded in results/results.jsonl, samples in results/samples/20261114-052711_B1q_filter_custom_test.jsonl.gz
+B1q+filter on mbpp test: 500 tasks x 1 samples in 97.1 s
+  pass@1     0.0100
+  pass@10    -
+  syntax_ok  0.8680
+  runs_ok    0.5040
+  empty      0.0000
+  outcomes   pass 5, wrong 247, error 182, timeout 0, syntax 66
+  recorded in results/results.jsonl, samples in results/samples/20261114-052848_B1q_filter_mbpp_test.jsonl.gz
+B1q+filter on mbpp test: 500 tasks x 10 samples in 580.6 s
+  pass@1     0.0054
+  pass@10    0.0200
+  syntax_ok  0.7888
+  runs_ok    0.2890
+  empty      0.0000
+  outcomes   pass 27, wrong 1418, error 2496, timeout 3, syntax 1056
+  recorded in results/results.jsonl, samples in results/samples/20261114-053829_B1q_filter_mbpp_test.jsonl.gz
+B1q+filter on humaneval test: 164 tasks x 1 samples in 83.4 s
+  pass@1     0.0000
+  pass@10    -
+  syntax_ok  0.6585
+  runs_ok    0.2256
+  empty      0.0000
+  outcomes   pass 0, wrong 37, error 71, timeout 0, syntax 56
+  105 prompts were truncated by the completer
+  recorded in results/results.jsonl, samples in results/samples/20261114-053953_B1q_filter_humaneval_test.jsonl.gz
+B1q+filter on humaneval test: 164 tasks x 10 samples in 313.2 s
+  pass@1     0.0006
+  pass@10    0.0061
+  syntax_ok  0.6470
+  runs_ok    0.1543
+  empty      0.0006
+  outcomes   pass 1, wrong 252, error 806, timeout 2, syntax 579
+  105 prompts were truncated by the completer
+  recorded in results/results.jsonl, samples in results/samples/20261114-054507_B1q_filter_humaneval_test.jsonl.gz
+done
