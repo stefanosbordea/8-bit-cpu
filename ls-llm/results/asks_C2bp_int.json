@@ -1,0 +1,3210 @@
+[
+ {
+  "id": "asks/bubble_sort",
+  "request": "bubble sort",
+  "prompt": "def bubble_sort(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "array):\n    n = len(array)\n    for i in range(n):\n        for j in range(0, n - i - 1):\n            if array[j] > array[j + 1]:\n                array[j], array[j + 1] = (array[j + 1], array[j])\n    return array"
+ },
+ {
+  "id": "asks/insertion_sort",
+  "request": "insertion sort",
+  "prompt": "def insertion_sort(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "lst):\n    for i in range(1, len(lst)):\n        while i > 0 and lst[i] < lst[i - 1]:\n            lst[i], lst[i - 1] = (lst[i - 1], lst[i])\n            i -= 1\n    return lst"
+ },
+ {
+  "id": "asks/selection_sort",
+  "request": "selection sort",
+  "prompt": "def selection_sort(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "arr):\n    sorted_arr = []\n    def find_min_index(arr):\n        if not arr:\n            raise ValueError('array is empty')\n        min_index = 0\n        for i, item in enumerate(arr):\n            if item <= arr[min_index]:\n                min_index = i\n        return min_index\n    for _ in range(len(arr)):\n        index = find_min_index(arr)\n        sorted_arr.append(arr.pop(index))\n    return sorted_arr"
+ },
+ {
+  "id": "asks/merge_sort",
+  "request": "merge sort",
+  "prompt": "def merge_sort(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "arr):\n    def merge(left, right):\n        merged = []\n        while left and right:\n            if left[0] <= right[0]:\n                merged.append(left.pop(0))\n            else:\n                merged.append(right.pop(0))\n        merged.extend(left)\n        merged.extend(right)\n        return merged\n    if len(arr) <= 1:\n        return arr\n    mid = len(arr) // 2\n    left = merge_sort(arr[:mid])\n    right = merge_sort(arr[mid:])\n    return merge(left, right)"
+ },
+ {
+  "id": "asks/quick_sort",
+  "request": "quick sort",
+  "prompt": "def quick_sort(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "array):\n    if len(array) < 2:\n        return array\n    else:\n        pivot = array[0]\n        less = [i for i in array[1:] if i <= pivot]\n        greater = [i for i in array[1:] if i > pivot]\n        return quick_sort(less) + [pivot] + quick_sort(greater)"
+ },
+ {
+  "id": "asks/shell_sort",
+  "request": "shell sort",
+  "prompt": "def shell_sort(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "array: list[int]) -> list[int]:\n    n = len(array)\n    gap = n // 2\n    while gap > 0:\n        y_index = gap\n        while y_index < n:\n            y = array[y_index]\n            x_index = y_index - gap\n            while x_index >= 0 and y < array[x_index]:\n                array[x_index + gap] = array[x_index]\n                x_index -= gap\n            array[x_index + gap] = y\n            y_index += 1\n        gap //= 2\n    return array"
+ },
+ {
+  "id": "asks/heap_sort",
+  "request": "heap sort",
+  "prompt": "def heap_sort(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "a):\n    def heapify(n, i):\n        largest = i\n        l = 2 * i + 1\n        r = 2 * i + 2\n        if l < n and a[i] < a[l]:\n            largest = l\n        if r < n and a[largest] < a[r]:\n            largest = r\n        if largest != i:\n            a[i], a[largest] = (a[largest], a[i])\n            heapify(n, largest)\n    n = len(a)\n    for i in range(n // 2 - 1, -1, -1):\n        heapify(n, i)\n    for i in range(n - 1, 0, -1):\n        a[i], a[0] = (a[0], a[i])\n        heapify(i, 0)"
+ },
+ {
+  "id": "asks/counting_sort",
+  "request": "counting sort",
+  "prompt": "def counting_sort(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "arr, max_num_in_array=None):\n    if not arr:\n        return arr\n    if max_num_in_array is None:\n        max_num_in_array = max(arr)\n    counts = [0] * (max_num_in_array + 1)\n    for num in arr:\n        counts[num] += 1\n    i = 0\n    for num, count in enumerate(counts):\n        for _ in range(count):\n            arr[i] = num\n            i += 1\n    return arr"
+ },
+ {
+  "id": "asks/linear_search",
+  "request": "linear search",
+  "prompt": "def linear_search(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "array, target):\n    for i, item in enumerate(array):\n        if item == target:\n            return i\n    return -1"
+ },
+ {
+  "id": "asks/binary_search",
+  "request": "binary search",
+  "prompt": "def binary_search(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "sorted_array, target):\n    low = 0\n    high = len(sorted_array) - 1\n    while low <= high:\n        mid = (low + high) // 2\n        if target == sorted_array[mid]:\n            return mid\n        elif target < sorted_array[mid]:\n            high = mid - 1\n        elif target > sorted_array[mid]:\n            low = mid + 1\n    return -1"
+ },
+ {
+  "id": "asks/gcd",
+  "request": "gcd",
+  "prompt": "def gcd(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "a, b):\n    if b == 0:\n        return a\n    return gcd(b, a % b)"
+ },
+ {
+  "id": "asks/lcm",
+  "request": "lcm",
+  "prompt": "def lcm(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "num1, num2):\n    if num1 > num2:\n        num1, num2 = (num2, num1)\n    for x in range(num2, num1 * num2 + 1, num2):\n        if x % num1 == 0:\n            return x"
+ },
+ {
+  "id": "asks/is_prime",
+  "request": "is prime",
+  "prompt": "def is_prime(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "number: int) -> bool:\n    if number <= 1:\n        return False\n    if number <= 3:\n        return True\n    if number % 2 == 0 or number % 3 == 0:\n        return False\n    factor = 5\n    while factor * factor <= number:\n        if number % factor == 0 or number % (factor + 2) == 0:\n            return False\n        factor += 6\n    return True"
+ },
+ {
+  "id": "asks/sieve_of_eratosthenes",
+  "request": "sieve of eratosthenes",
+  "prompt": "def sieve_of_eratosthenes(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "n):\n    primes = [True] * (n + 1)\n    p = 2\n    while p * p <= n:\n        if primes[p]:\n            for i in range(p * 2, n + 1, p):\n                primes[i] = False\n        p += 1\n    primes = [element for element in range(2, n + 1) if primes[element]]\n    return primes"
+ },
+ {
+  "id": "asks/prime_factors",
+  "request": "prime factors",
+  "prompt": "def prime_factors(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "n):\n    factors = []\n    while n % 2 == 0:\n        factors.append(2)\n        n //= 2\n    i = 3\n    while i * i <= n:\n        while n % i == 0:\n            factors.append(i)\n            n //= i\n        i += 2\n    if n > 2:\n        factors.append(n)\n    return factors"
+ },
+ {
+  "id": "asks/factorial",
+  "request": "factorial",
+  "prompt": "def factorial(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "number):\n    if number == 0 or number == 1:\n        return 1\n    answer = number * factorial(number - 1)\n    return answer"
+ },
+ {
+  "id": "asks/fibonacci",
+  "request": "fibonacci",
+  "prompt": "def fibonacci(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "n):\n    if n == 1:\n        return 1\n    elif n == 0:\n        return 0\n    else:\n        return fibonacci(n - 1) + fibonacci(n - 2)"
+ },
+ {
+  "id": "asks/fibonacci_sequence",
+  "request": "fibonacci sequence",
+  "prompt": "def fibonacci_sequence(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "n):\n    if n == 0:\n        return []\n    elif n == 1:\n        return [0]\n    else:\n        fib = [0, 1]\n        while len(fib) < n:\n            fib.append(fib[-1] + fib[-2])\n        return fib"
+ },
+ {
+  "id": "asks/power",
+  "request": "power",
+  "prompt": "def power(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "a, b):\n    return a ** b"
+ },
+ {
+  "id": "asks/sum_of_digits",
+  "request": "sum of digits",
+  "prompt": "def sum_of_digits(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "n: int) -> int:\n    n = abs(n)\n    res = 0\n    while n > 0:\n        res += n % 10\n        n //= 10\n    return res"
+ },
+ {
+  "id": "asks/count_digits",
+  "request": "count digits",
+  "prompt": "def count_digits(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "n: int) -> int:\n    if not isinstance(n, int):\n        raise TypeError('Input must be an integer')\n    digits = 0\n    n = abs(n)\n    while True:\n        n = n // 10\n        digits += 1\n        if n == 0:\n            break\n    return digits"
+ },
+ {
+  "id": "asks/decimal_binary",
+  "request": "decimal to binary",
+  "prompt": "def decimal_binary(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "decimal: int) -> str:\n    decimal = int(decimal)\n    if decimal in (0, 1):\n        return str(decimal)\n    div, mod = divmod(decimal, 2)\n    return decimal_binary(div) + str(mod)"
+ },
+ {
+  "id": "asks/binary_decimal",
+  "request": "binary to decimal",
+  "prompt": "def binary_decimal(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "x):\n    return int(x, 2)"
+ },
+ {
+  "id": "asks/is_perfect_number",
+  "request": "is perfect number",
+  "prompt": "def is_perfect_number(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "n):\n    if n < 2:\n        return False\n    total = 1\n    for i in range(2, int(n ** 0.5) + 1):\n        if n % i == 0:\n            total += i\n            if i != n // i:\n                total += n // i\n    return total == n"
+ },
+ {
+  "id": "asks/is_armstrong_number",
+  "request": "is armstrong number",
+  "prompt": "def is_armstrong_number(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "number):\n    return sum((pow(int(digit), len(str(number))) for digit in str(number))) == number"
+ },
+ {
+  "id": "asks/is_even",
+  "request": "is even",
+  "prompt": "def is_even(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "n):\n    return n % 2 == 0"
+ },
+ {
+  "id": "asks/is_power_of_two",
+  "request": "is power of two",
+  "prompt": "def is_power_of_two(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "number: int) -> bool:\n    return number > 0 and (not number & number - 1)"
+ },
+ {
+  "id": "asks/is_perfect_square",
+  "request": "is perfect square",
+  "prompt": "def is_perfect_square(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "num):\n    i = 0\n    while i * i < num:\n        i += 1\n    if i * i == num:\n        return True\n    else:\n        return False"
+ },
+ {
+  "id": "asks/divisors",
+  "request": "divisors",
+  "prompt": "def divisors(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "number):\n    if not isinstance(number, int):\n        raise TypeError('Incorrect number type provided. Only integers are accepted.')\n    divisors = []\n    for i in range(1, number + 1):\n        if number % i == 0:\n            divisors.append(i)\n    return divisors"
+ },
+ {
+  "id": "asks/int_roman",
+  "request": "int to roman",
+  "prompt": "def int_roman(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "num):\n    numeral_map = {1000: 'M', 900: 'CM', 500: 'D', 400: 'CD', 100: 'C', 90: 'XC', 50: 'L', 40: 'XL', 10: 'X', 9: 'IX', 5: 'V', 4: 'IV', 1: 'I'}\n    result = ''\n    for value, numeral in numeral_map.items():\n        while num >= value:\n            result += numeral\n            num -= value\n    return result"
+ },
+ {
+  "id": "asks/roman_int",
+  "request": "roman to int",
+  "prompt": "def roman_int(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "text: str) -> int:\n    if not text:\n        return 0\n    number = 0\n    roman_values = {'M': 1000, 'D': 500, 'C': 100, 'L': 50, 'X': 10, 'V': 5, 'I': 1}\n    for index in range(len(text) - 1):\n        if roman_values[text[index]] < roman_values[text[index + 1]]:\n            number -= roman_values[text[index]]\n        else:\n            number += roman_values[text[index]]\n    return number + roman_values[text[-1]]"
+ },
+ {
+  "id": "asks/binomial_coefficient",
+  "request": "binomial coefficient",
+  "prompt": "def binomial_coefficient(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "n: int, k: int) -> int:\n    result = 1\n    k = min(k, n - k)\n    for i in range(k):\n        result *= n - i\n        result //= i + 1\n    return result"
+ },
+ {
+  "id": "asks/count_set_bits",
+  "request": "count set bits",
+  "prompt": "def count_set_bits(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "number: int) -> int:\n    if number < 0:\n        raise ValueError('the value of input must not be negative')\n    result = 0\n    while number:\n        if number % 2 == 1:\n            result += 1\n        number >>= 1\n    return result"
+ },
+ {
+  "id": "asks/sum_of_squares",
+  "request": "sum of squares",
+  "prompt": "def sum_of_squares(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "number):\n    numerator = number * (number + 1) * (2 * number + 1)\n    return numerator / 6"
+ },
+ {
+  "id": "asks/digital_root",
+  "request": "digital root",
+  "prompt": "def digital_root(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "number: int) -> int:\n    number = abs(number)\n    while number >= 10:\n        number = sum((int(digit) for digit in str(number)))\n    return number"
+ },
+ {
+  "id": "asks/reverse_number",
+  "request": "reverse number",
+  "prompt": "def reverse_number(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "number):\n    reversed_nums = 0\n    while number > 0:\n        reversed_nums *= 10\n        reversed_nums += number % 10\n        number //= 10\n    return reversed_nums"
+ },
+ {
+  "id": "asks/reverse_string",
+  "request": "reverse string",
+  "prompt": "def reverse_string(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "string):\n    return string[::-1]"
+ },
+ {
+  "id": "asks/is_palindrome",
+  "request": "is palindrome",
+  "prompt": "def is_palindrome(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "string: str) -> bool:\n    return string == string[::-1]"
+ },
+ {
+  "id": "asks/is_anagram",
+  "request": "is anagram",
+  "prompt": "def is_anagram(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "s: str, t: str) -> bool:\n    freq_s: dict[str, int] = {}\n    freq_t: dict[str, int] = {}\n    for char in s:\n        freq_s[char] = freq_s.get(char, 0) + 1\n    for char in t:\n        freq_t[char] = freq_t.get(char, 0) + 1\n    return freq_s == freq_t"
+ },
+ {
+  "id": "asks/count_vowels",
+  "request": "count vowels",
+  "prompt": "def count_vowels(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "s: str) -> int:\n    if not isinstance(s, str):\n        raise TypeError('Input must be a string')\n    vowels = 'aeiouAEIOU'\n    return sum((1 for char in s if char in vowels))"
+ },
+ {
+  "id": "asks/count_words",
+  "request": "count words",
+  "prompt": "def count_words(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "s):\n    return len(s.split())"
+ },
+ {
+  "id": "asks/word_frequency",
+  "request": "word frequency",
+  "prompt": "def word_frequency(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "s):\n    return {word: s.count(word) for word in s.split()}"
+ },
+ {
+  "id": "asks/char_frequency",
+  "request": "char frequency",
+  "prompt": "def char_frequency(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "string):\n    freq = {}\n    for char in string:\n        if char not in freq:\n            freq[char] = 0\n        freq[char] += 1\n    return freq"
+ },
+ {
+  "id": "asks/capitalize",
+  "request": "capitalize",
+  "prompt": "def capitalize(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "string):\n    if not string:\n        return string\n    if len(string) == 1:\n        return string.upper()\n    return string[0].upper() + string[1:].lower()"
+ },
+ {
+  "id": "asks/caesar_cipher",
+  "request": "caesar cipher",
+  "prompt": "def caesar_cipher(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "text: str, shift: int) -> str:\n    result = ''\n    for char in text:\n        code = ord(char)\n        if 64 < code < 91:\n            code = (code - 65 + shift) % 26 + 65\n        if 96 < code < 123:\n            code = (code - 97 + shift) % 26 + 97\n        result = result + chr(code)\n    return result"
+ },
+ {
+  "id": "asks/run_length_encoding",
+  "request": "run length encoding",
+  "prompt": "def run_length_encoding(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "data: str) -> str:\n    if not data:\n        return ''\n    encoded: str = ''\n    prev_char: str = ''\n    count: int = 1\n    for char in data:\n        if char != prev_char:\n            if prev_char:\n                encoded += str(count) + prev_char\n            count = 1\n            prev_char = char\n        else:\n            count += 1\n    return encoded + str(count) + prev_char"
+ },
+ {
+  "id": "asks/is_pangram",
+  "request": "is pangram",
+  "prompt": "def is_pangram(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "input_string: str) -> bool:\n    alphabet = 'abcdefghijklmnopqrstuvwxyz'\n    return all((char in input_string.lower() for char in alphabet))"
+ },
+ {
+  "id": "asks/is_isogram",
+  "request": "is isogram",
+  "prompt": "def is_isogram(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "string):\n    characters_lower = [char.lower() for char in string if char.isalpha()]\n    return len(set(characters_lower)) == len(characters_lower)"
+ },
+ {
+  "id": "asks/remove_vowels",
+  "request": "remove vowels",
+  "prompt": "def remove_vowels(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "s):\n    return ''.join((c for c in s if c not in 'aeiouAEIOU'))"
+ },
+ {
+  "id": "asks/reverse_words",
+  "request": "reverse words",
+  "prompt": "def reverse_words(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "sentence: str) -> str:\n    return ' '.join(sentence.split()[::-1])"
+ },
+ {
+  "id": "asks/longest_word",
+  "request": "longest word",
+  "prompt": "def longest_word(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "sentence: str) -> str:\n    words = sentence.split()\n    return max(words, key=len) if words else ''"
+ },
+ {
+  "id": "asks/hamming_distance",
+  "request": "hamming distance",
+  "prompt": "def hamming_distance(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "X, Y):\n    return sum((x != y for x, y in zip(X, Y)))"
+ },
+ {
+  "id": "asks/edit_distance",
+  "request": "edit distance",
+  "prompt": "def edit_distance(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "x, y):\n    n = len(x)\n    m = len(y)\n    A = [[i + j for j in range(m + 1)] for i in range(n + 1)]\n    for i in range(n):\n        for j in range(m):\n            A[i + 1][j + 1] = min(A[i][j + 1] + 1, A[i + 1][j] + 1, A[i][j] + int(x[i] != y[j]))\n    return A[n][m]"
+ },
+ {
+  "id": "asks/camel_snake",
+  "request": "camel to snake",
+  "prompt": "def camel_snake(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "camel):\n    if not camel:\n        return camel\n    return ''.join(('_' + x if 'A' <= x <= 'Z' else x for x in camel)).lower()[camel[0].isupper():]"
+ },
+ {
+  "id": "asks/longest_common_prefix",
+  "request": "longest common prefix",
+  "prompt": "def longest_common_prefix(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "m):\n    if not m:\n        return ''\n    s1 = min(m)\n    s2 = max(m)\n    for i, c in enumerate(s1):\n        if c != s2[i]:\n            return s1[:i]\n    return s1"
+ },
+ {
+  "id": "asks/balanced_parentheses",
+  "request": "balanced parentheses",
+  "prompt": "def balanced_parentheses(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "input_string):\n    counterparts = {')': '(', '}': '{', ']': '['}\n    stack = []\n    for char in input_string:\n        if char in counterparts.values():\n            stack.append(char)\n        elif char in counterparts:\n            if not stack:\n                return False\n            if stack.pop() != counterparts[char]:\n                return False\n    return not stack"
+ },
+ {
+  "id": "asks/find_max",
+  "request": "find max",
+  "prompt": "def find_max(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "nums: list[int | float]) -> int | float:\n    if len(nums) == 0:\n        raise ValueError('find_max_iterative() arg is an empty sequence')\n    max_num = nums[0]\n    for x in nums:\n        if x > max_num:\n            max_num = x\n    return max_num"
+ },
+ {
+  "id": "asks/find_min",
+  "request": "find min",
+  "prompt": "def find_min(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "nums: list[int | float]) -> int | float:\n    if len(nums) == 0:\n        raise ValueError('find_min_iterative() arg is an empty sequence')\n    min_num = nums[0]\n    for num in nums:\n        min_num = min(min_num, num)\n    return min_num"
+ },
+ {
+  "id": "asks/sum_list",
+  "request": "sum list",
+  "prompt": "def sum_list(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "lst):\n    return sum(lst)"
+ },
+ {
+  "id": "asks/average",
+  "request": "average",
+  "prompt": "def average(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "iterator):\n    count = 0\n    total = 0\n    for num in iterator:\n        count += 1\n        total += num\n    return float(total) / count"
+ },
+ {
+  "id": "asks/median",
+  "request": "median",
+  "prompt": "def median(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "iterable, sort=True):\n    s = sorted(iterable) if sort is True else list(iterable)\n    n = len(s)\n    if n == 0:\n        raise ValueError('median() arg is an empty sequence')\n    if n % 2 == 0:\n        return float(s[n // 2 - 1] + s[n // 2]) / 2\n    return s[n // 2]"
+ },
+ {
+  "id": "asks/mode",
+  "request": "mode",
+  "prompt": "def mode(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "seq):\n    return max(seq, key=seq.count)"
+ },
+ {
+  "id": "asks/remove_duplicates",
+  "request": "remove duplicates",
+  "prompt": "def remove_duplicates(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "items):\n    return list(dict.fromkeys(items))"
+ },
+ {
+  "id": "asks/flatten",
+  "request": "flatten",
+  "prompt": "def flatten(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "seqs):\n    return sum(seqs, [])"
+ },
+ {
+  "id": "asks/rotate_list",
+  "request": "rotate list",
+  "prompt": "def rotate_list(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "arr, k, right=True):\n    n = len(arr)\n    right %= n\n    if right:\n        k = n - k\n    return arr[k:] + arr[:k]"
+ },
+ {
+  "id": "asks/chunk_list",
+  "request": "chunk list",
+  "prompt": "def chunk_list(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "items, size):\n    size = max(1, size)\n    return [items[i:i + size] for i in range(0, len(items), size)]"
+ },
+ {
+  "id": "asks/merge_sorted_lists",
+  "request": "merge sorted lists",
+  "prompt": "def merge_sorted_lists(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "a, b):\n    c = []\n    while len(a) != 0 and len(b) != 0:\n        if a[0] < b[0]:\n            c.append(a[0])\n            a.remove(a[0])\n        else:\n            c.append(b[0])\n            b.remove(b[0])\n    if len(a) == 0:\n        c += b\n    else:\n        c += a\n    return c"
+ },
+ {
+  "id": "asks/two_sum",
+  "request": "two sum",
+  "prompt": "def two_sum(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "numbers, target):\n    for i in range(len(numbers)):\n        for j in range(i + 1, len(numbers)):\n            if numbers[i] + numbers[j] == target:\n                return [i, j]"
+ },
+ {
+  "id": "asks/transpose",
+  "request": "transpose",
+  "prompt": "def transpose(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "matrix: list[list[int]]) -> list[list[int]]:\n    matrix[:] = [list(x) for x in zip(*matrix)]\n    return matrix"
+ },
+ {
+  "id": "asks/matrix_multiply",
+  "request": "matrix multiply",
+  "prompt": "def matrix_multiply(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "matrix_a, matrix_b):\n    return [[sum((a * b for a, b in zip(row, col))) for col in zip(*matrix_b)] for row in matrix_a]"
+ },
+ {
+  "id": "asks/dot_product",
+  "request": "dot product",
+  "prompt": "def dot_product(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "x, y):\n    return sum((_x * _y for _x, _y in zip(x, y)))"
+ },
+ {
+  "id": "asks/is_sorted",
+  "request": "is sorted",
+  "prompt": "def is_sorted(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "a):\n    n = len(a)\n    for i in range(0, n - 1):\n        if a[i] > a[i + 1]:\n            return False\n    return True"
+ },
+ {
+  "id": "asks/second_largest",
+  "request": "second largest",
+  "prompt": "def second_largest(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "lst):\n    lst.sort()\n    return lst[-2] if len(lst) > 1 else None"
+ },
+ {
+  "id": "asks/reverse_list",
+  "request": "reverse list",
+  "prompt": "def reverse_list(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "list):\n    return list[::-1]"
+ },
+ {
+  "id": "asks/cumulative_sum",
+  "request": "cumulative sum",
+  "prompt": "def cumulative_sum(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "ls: [int]) -> [int]:\n    n = len(ls)\n    total = 0\n    sums = [0] * n\n    for i in range(n):\n        total += ls[i]\n        sums[i] = total\n    return sums"
+ },
+ {
+  "id": "asks/max_subarray_sum",
+  "request": "max subarray sum",
+  "prompt": "def max_subarray_sum(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "arr, allow_empty_subarrays=False):\n    if not arr:\n        return 0\n    max_sum = 0 if allow_empty_subarrays else float('-inf')\n    curr_sum = 0.0\n    for num in arr:\n        curr_sum = max(0 if allow_empty_subarrays else num, curr_sum + num)\n        max_sum = max(max_sum, curr_sum)\n    return max_sum"
+ },
+ {
+  "id": "asks/intersection",
+  "request": "intersection",
+  "prompt": "def intersection(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "a, b):\n    return list(set(a) & set(b))"
+ },
+ {
+  "id": "asks/permutations",
+  "request": "permutations",
+  "prompt": "def permutations(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "lst):\n    if len(lst) == 0:\n        return []\n    if len(lst) == 1:\n        return [lst]\n    l = []\n    for i in range(len(lst)):\n        m = lst[i]\n        rem_lst = lst[:i] + lst[i + 1:]\n        for p in permutations(rem_lst):\n            l.append([m] + p)\n    return l"
+ },
+ {
+  "id": "asks/power_set",
+  "request": "power set",
+  "prompt": "def power_set(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "nums: list[int]) -> list[list[int]]:\n    result: list[list[int]] = [[]]\n    for number in sorted(nums):\n        result += [item + [number] for item in result]\n    return result"
+ },
+ {
+  "id": "asks/identity_matrix",
+  "request": "identity matrix",
+  "prompt": "def identity_matrix(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "n: int) -> list[list[int]]:\n    return [[int(row == column) for column in range(n)] for row in range(n)]"
+ },
+ {
+  "id": "asks/missing_number",
+  "request": "missing number",
+  "prompt": "def missing_number(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "nums: list[int]) -> int:\n    missing = 0\n    for index, number in enumerate(nums):\n        missing ^= number\n        missing ^= index + 1\n    return missing"
+ },
+ {
+  "id": "asks/count_occurrences",
+  "request": "count occurrences",
+  "prompt": "def count_occurrences(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "a, b):\n    count = 0\n    for i in a:\n        if i is b or i == b:\n            count += 1\n    return count"
+ },
+ {
+  "id": "asks/matrix_addition",
+  "request": "matrix addition",
+  "prompt": "def matrix_addition(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "matrix_a: list, matrix_b: list):\n    return [[matrix_a[row][col] + matrix_b[row][col] for col in range(len(matrix_a[row]))] for row in range(len(matrix_a))]"
+ },
+ {
+  "id": "asks/find_duplicates",
+  "request": "find duplicates",
+  "prompt": "def find_duplicates(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "l: list) -> set:\n    return set([x for x in l if l.count(x) > 1])"
+ },
+ {
+  "id": "asks/reverse_linked_list",
+  "request": "reverse linked list",
+  "prompt": "def reverse_linked_list(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "ll):\n    prev_node = None\n    while ll is not None:\n        current = ll\n        ll = ll.next\n        current.next = prev_node\n        prev_node = current\n    return prev_node"
+ },
+ {
+  "id": "asks/tree_height",
+  "request": "tree height",
+  "prompt": "def tree_height(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "root):\n    if root is None:\n        return 0\n    else:\n        return 1 + max(tree_height(root.left), tree_height(root.right))"
+ },
+ {
+  "id": "asks/inorder_traversal",
+  "request": "inorder traversal",
+  "prompt": "def inorder_traversal(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "root, res=None):\n    if root is None:\n        return []\n    if res is None:\n        res = []\n    inorder_traversal(root.left, res)\n    res.append(root.val)\n    inorder_traversal(root.right, res)\n    return res"
+ },
+ {
+  "id": "asks/bst_search",
+  "request": "bst search",
+  "prompt": "def bst_search(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "root, val):\n    while root:\n        if val > root.val:\n            root = root.right\n        elif val < root.val:\n            root = root.left\n        else:\n            return True\n    return False"
+ },
+ {
+  "id": "asks/bst_insert",
+  "request": "bst insert",
+  "prompt": "def bst_insert(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "root, key):\n    if root is None:\n        return Node(key)\n    if key < root.val:\n        root.left = bst_insert(root.left, key)\n    else:\n        root.right = bst_insert(root.right, key)\n    return root"
+ },
+ {
+  "id": "asks/is_bst",
+  "request": "is bst",
+  "prompt": "def is_bst(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "root):\n    stack = []\n    pre = None\n    while root or stack:\n        while root:\n            stack.append(root)\n            root = root.left\n        root = stack.pop()\n        if pre and root.val <= pre.val:\n            return False\n        pre = root\n        root = root.right\n    return True"
+ },
+ {
+  "id": "asks/count_nodes",
+  "request": "count nodes",
+  "prompt": "def count_nodes(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "root):\n    if root is None:\n        return 0\n    return count_nodes(root.left) + count_nodes(root.right) + 1"
+ },
+ {
+  "id": "asks/stack_push",
+  "request": "stack push",
+  "prompt": "def stack_push(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "array, *items):\n    for item in items:\n        array.append(item)\n    return array"
+ },
+ {
+  "id": "asks/stack_pop",
+  "request": "stack pop",
+  "prompt": "def stack_pop(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "array, index=-1):\n    return array.pop(index)"
+ },
+ {
+  "id": "asks/enqueue",
+  "request": "enqueue",
+  "prompt": "def enqueue(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "queue, item):\n    queue.append(item)"
+ },
+ {
+  "id": "asks/dequeue",
+  "request": "dequeue",
+  "prompt": "def dequeue(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "q):\n    return q.pop(0)"
+ },
+ {
+  "id": "asks/fizzbuzz",
+  "request": "fizzbuzz",
+  "prompt": "def fizzbuzz(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "number: int) -> list[int | str]:\n    if number < 1:\n        raise ValueError('n cannot be less than one')\n    if number is None:\n        raise TypeError('n cannot be None')\n    result: list[int | str] = []\n    for value in range(1, number + 1):\n        if value % 3 == 0 and value % 5 == 0:\n            result.append('FizzBuzz')\n        elif value % 3 == 0:\n            result.append('Fizz')\n        elif value % 5 == 0:\n            result.append('Buzz')\n        else:\n            result.append(value)\n    return result"
+ },
+ {
+  "id": "asks/is_leap_year",
+  "request": "is leap year",
+  "prompt": "def is_leap_year(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "year):\n    return year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)"
+ },
+ {
+  "id": "asks/celsius_fahrenheit",
+  "request": "celsius to fahrenheit",
+  "prompt": "def celsius_fahrenheit(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "celsius: float, ndigits: int=2) -> float:\n    return round(float(celsius) * 9 / 5 + 32, ndigits)"
+ },
+ {
+  "id": "asks/fahrenheit_celsius",
+  "request": "fahrenheit to celsius",
+  "prompt": "def fahrenheit_celsius(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "fahrenheit: float, ndigits: int=2) -> float:\n    return round((float(fahrenheit) - 32) * 5 / 9, ndigits)"
+ },
+ {
+  "id": "asks/collatz_sequence",
+  "request": "collatz sequence",
+  "prompt": "def collatz_sequence(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "n: int) -> list[int]:\n    sequence = [n]\n    while n > 1:\n        n = 3 * n + 1 if n % 2 != 0 else int(n / 2)\n        sequence.append(n)\n    return sequence"
+ },
+ {
+  "id": "asks/pascal_triangle",
+  "request": "pascal triangle",
+  "prompt": "def pascal_triangle(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "row_count, previous_row=[1]):\n    if row_count < 0:\n        raise ValueError('number of rows is negative')\n    elif row_count == 0:\n        return []\n    temp_row = previous_row + [0]\n    new_row = list(map(sum, zip(temp_row, temp_row[::-1])))\n    return [previous_row] + pascal_triangle(row_count - 1, new_row)"
+ },
+ {
+  "id": "asks/tower_of_hanoi",
+  "request": "tower of hanoi",
+  "prompt": "def tower_of_hanoi(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "n, source, target, auxiliary):\n    if n == 0:\n        return []\n    moves = tower_of_hanoi(n - 1, source, auxiliary, target)\n    moves.append((source, target))\n    moves.extend(tower_of_hanoi(n - 1, auxiliary, target, source))\n    return moves"
+ },
+ {
+  "id": "asks/n_queens",
+  "request": "n queens",
+  "prompt": "def n_queens(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "n):\n    def is_safe(row, col):\n        for i in range(row):\n            if col == cols[i] or abs(row - i) == abs(col - cols[i]):\n                return False\n        return True\n    def solve(row, cols):\n        if row == n:\n            solutions.append(cols[:])\n            return\n        for col in range(n):\n            if is_safe(row, col):\n                cols[row] = col\n                solve(row + 1, cols)\n                cols[row] = -1\n    solutions = []\n    cols = [-1] * n\n    solve(0, cols)\n    return solutions"
+ },
+ {
+  "id": "asks/climb_stairs",
+  "request": "climb stairs",
+  "prompt": "def climb_stairs(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "steps: int) -> int:\n    arr = [1, 1]\n    for _ in range(1, steps):\n        arr.append(arr[-1] + arr[-2])\n    return arr[-1]"
+ },
+ {
+  "id": "asks/euclidean_distance",
+  "request": "euclidean distance",
+  "prompt": "def euclidean_distance(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "p1, p2):\n    return sum(((a - b) ** 2 for a, b in zip(p1, p2))) ** 0.5"
+ },
+ {
+  "id": "asks/manhattan_distance",
+  "request": "manhattan distance",
+  "prompt": "def manhattan_distance(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "X, Y):\n    return sum([abs(x - y) for x, y in zip(X, Y)])"
+ },
+ {
+  "id": "asks/longest_common_subsequence",
+  "request": "longest common subsequence",
+  "prompt": "def longest_common_subsequence(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "s1, s2):\n    cols = len(s1) + 1\n    rows = len(s2) + 1\n    t = [[0 for i in range(cols)] for i in range(rows)]\n    max_length = 0\n    for i in range(1, rows):\n        for j in range(1, cols):\n            if s2[i - 1] == s1[j - 1]:\n                t[i][j] = 1 + t[i - 1][j - 1]\n            else:\n                t[i][j] = max(t[i - 1][j], t[i][j - 1])\n            max_length = max(max_length, t[i][j])\n    return max_length"
+ },
+ {
+  "id": "asks/bfs",
+  "request": "bfs",
+  "prompt": "def bfs(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "graph, start):\n    visited = set()\n    queue = [start]\n    result = []\n    while queue:\n        node = queue.pop(0)\n        if node not in visited:\n            visited.add(node)\n            result.append(node)\n            queue.extend(graph[node])\n    return result"
+ },
+ {
+  "id": "asks/clamp",
+  "request": "clamp",
+  "prompt": "def clamp(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "num: int, min_value: int, max_value: int) -> int:\n    return max(min(num, max_value), min_value)"
+ },
+ {
+  "id": "asks/sign",
+  "request": "sign",
+  "prompt": "def sign(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "num: float) -> int:\n    if num < 0:\n        return -1\n    return 1 if num else 0"
+ },
+ {
+  "id": "asks/absolute_value",
+  "request": "absolute value",
+  "prompt": "def absolute_value(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "num: float) -> float:\n    return -num if num < 0 else num"
+ },
+ {
+  "id": "asks/gnome_sort",
+  "request": "gnome sort",
+  "prompt": "def gnome_sort(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "array: list[int]) -> list[int]:\n    n = len(array)\n    index = 0\n    while index < n:\n        if index == 0 or array[index] >= array[index - 1]:\n            index += 1\n        else:\n            array[index], array[index - 1] = (array[index - 1], array[index])\n            index -= 1\n    return array"
+ },
+ {
+  "id": "asks/comb_sort",
+  "request": "comb sort",
+  "prompt": "def comb_sort(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "array: list[int]) -> list[int]:\n    n = len(array)\n    gap = n\n    shrink_factor = 1.3\n    is_sorted = False\n    while not is_sorted:\n        gap = int(gap / shrink_factor)\n        if gap <= 1:\n            gap = 1\n            is_sorted = True\n        i = 0\n        while i + gap < n:\n            if array[i] > array[i + gap]:\n                array[i], array[i + gap] = (array[i + gap], array[i])\n                is_sorted = False\n            i += 1\n    return array"
+ },
+ {
+  "id": "asks/cocktail_sort",
+  "request": "cocktail sort",
+  "prompt": "def cocktail_sort(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "array: list[int]) -> list[int]:\n    n = len(array)\n    swapped = True\n    while swapped:\n        swapped = False\n        for i in range(1, n):\n            if array[i - 1] > array[i]:\n                array[i - 1], array[i] = (array[i], array[i - 1])\n                swapped = True\n        if not swapped:\n            return array\n        swapped = False\n        for i in range(n - 1, 0, -1):\n            if array[i - 1] > array[i]:\n                array[i - 1], array[i] = (array[i], array[i - 1])\n                swapped = True\n    return array"
+ },
+ {
+  "id": "asks/radix_sort",
+  "request": "radix sort",
+  "prompt": "def radix_sort(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "nums):\n    if not nums:\n        return []\n    max_num = max(nums)\n    for digit in range(3):\n        buckets = [[] for _ in range(10)]\n        for num in nums:\n            buckets[num // 10 ** digit % 10].append(num)\n        nums = [num for bucket in buckets for num in bucket]\n    return nums"
+ },
+ {
+  "id": "asks/pancake_sort",
+  "request": "pancake sort",
+  "prompt": "def pancake_sort(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "array: list[int]) -> list[int]:\n    if len(array) <= 1:\n        return array\n    for cur in range(len(array), 1, -1):\n        index_max = array.index(max(array[0:cur]))\n        if index_max + 1 != cur:\n            if index_max != 0:\n                array[:index_max + 1] = reversed(array[:index_max + 1])\n            array[:cur] = reversed(array[:cur])\n    return array"
+ },
+ {
+  "id": "asks/cycle_sort",
+  "request": "cycle sort",
+  "prompt": "def cycle_sort(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "array: list[int]) -> list[int]:\n    length = len(array)\n    for start in range(length - 1):\n        item = array[start]\n        position = start\n        for i in range(start + 1, length):\n            if array[i] < item:\n                position += 1\n        if position == start:\n            continue\n        while item == array[position]:\n            position += 1\n        array[position], item = (item, array[position])\n        while position != start:\n            position = start\n            for i in range(start + 1, length):\n                if array[i] < item:\n                    position += 1\n            while item == array[position]:\n                position += 1\n            array[position], item = (item, array[position])\n    return array"
+ },
+ {
+  "id": "asks/exchange_sort",
+  "request": "exchange sort",
+  "prompt": "def exchange_sort(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "array: list[int]) -> list[int]:\n    n = len(array)\n    for i in range(n - 1):\n        for j in range(i + 1, n):\n            if array[i] > array[j]:\n                array[i], array[j] = (array[j], array[i])\n    return array"
+ },
+ {
+  "id": "asks/bucket_sort",
+  "request": "bucket sort",
+  "prompt": "def bucket_sort(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "arr):\n    if not arr:\n        return []\n    max_val = max(arr)\n    buckets = [[] for _ in range(max_val + 1)]\n    for num in arr:\n        buckets[num].append(num)\n    sorted_arr = []\n    for bucket in buckets:\n        sorted_arr.extend(bucket)\n    return sorted_arr"
+ },
+ {
+  "id": "asks/odd_even_sort",
+  "request": "odd even sort",
+  "prompt": "def odd_even_sort(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "arr):\n    is_sorted = False\n    while not is_sorted:\n        is_sorted = True\n        for i in range(1, len(arr) - 1, 2):\n            if arr[i] > arr[i + 1]:\n                arr[i], arr[i + 1] = (arr[i + 1], arr[i])\n                is_sorted = False\n        for i in range(0, len(arr) - 1, 2):\n            if arr[i] > arr[i + 1]:\n                arr[i], arr[i + 1] = (arr[i + 1], arr[i])\n                is_sorted = False\n    return arr"
+ },
+ {
+  "id": "asks/jump_search",
+  "request": "jump search",
+  "prompt": "def jump_search(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "arr, target):\n    step = 1\n    while step < len(arr) and arr[step] <= target:\n        if arr[step] == target:\n            return step\n        step *= 2\n    step = step // 2\n    while step < len(arr) and arr[step] <= target:\n        if arr[step] == target:\n            return step\n        step += 1\n    return -1"
+ },
+ {
+  "id": "asks/interpolation_search",
+  "request": "interpolation search",
+  "prompt": "def interpolation_search(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "arr, target):\n    low = 0\n    high = len(arr) - 1\n    while low <= high and target >= arr[low] and (target <= arr[high]):\n        if low == high:\n            if arr[low] == target:\n                return low\n            return -1\n        pos = low + int((target - arr[low]) * (high - low) / (arr[high] - arr[low]))\n        if arr[pos] == target:\n            return pos\n        if arr[pos] < target:\n            low = pos + 1\n        else:\n            high = pos - 1\n    return -1"
+ },
+ {
+  "id": "asks/title_case",
+  "request": "title case",
+  "prompt": "def title_case(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "title):\n    return title.title()"
+ },
+ {
+  "id": "asks/swap_case",
+  "request": "swap case",
+  "prompt": "def swap_case(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "s):\n    return ''.join((c.swapcase() if c.isalpha() else c for c in s))"
+ },
+ {
+  "id": "asks/count_consonants",
+  "request": "count consonants",
+  "prompt": "def count_consonants(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "s):\n    return sum((1 for c in s.lower() if c not in 'aeiou '))"
+ },
+ {
+  "id": "asks/remove_spaces",
+  "request": "remove spaces",
+  "prompt": "def remove_spaces(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "s):\n    return ''.join(s.split())"
+ },
+ {
+  "id": "asks/is_numeric",
+  "request": "is numeric",
+  "prompt": "def is_numeric(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "string):\n    try:\n        int(string)\n        return True\n    except ValueError:\n        return False"
+ },
+ {
+  "id": "asks/pig_latin",
+  "request": "pig latin",
+  "prompt": "def pig_latin(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "word: str) -> str:\n    if not (word or '').strip():\n        return ''\n    word = word.lower()\n    if word[0] in 'aeiou':\n        return f'{word}way'\n    for i, char in enumerate(word):\n        if char in 'aeiou':\n            break\n    return f'{word[i:]}{word[:i]}ay'"
+ },
+ {
+  "id": "asks/compress_spaces",
+  "request": "compress spaces",
+  "prompt": "def compress_spaces(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "s):\n    return ' '.join(s.split())"
+ },
+ {
+  "id": "asks/ascii_codes",
+  "request": "ascii codes",
+  "prompt": "def ascii_codes(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "s):\n    return [ord(c) for c in s]"
+ },
+ {
+  "id": "asks/repeat_string",
+  "request": "repeat string",
+  "prompt": "def repeat_string(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "string, count):\n    return string * count"
+ },
+ {
+  "id": "asks/count_uppercase",
+  "request": "count uppercase",
+  "prompt": "def count_uppercase(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "s):\n    return sum((1 for c in s if c.isupper()))"
+ },
+ {
+  "id": "asks/first_non_repeating_char",
+  "request": "first non repeating char",
+  "prompt": "def first_non_repeating_char(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "s):\n    for char in s:\n        if s.count(char) == 1:\n            return char\n    return None"
+ },
+ {
+  "id": "asks/is_rotation",
+  "request": "is rotation",
+  "prompt": "def is_rotation(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "first: str, second: str) -> bool:\n    if len(first) == len(second):\n        return second in first + first\n    else:\n        return False"
+ },
+ {
+  "id": "asks/is_subsequence",
+  "request": "is subsequence",
+  "prompt": "def is_subsequence(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "needle, haystack):\n    it = iter(haystack)\n    for element in needle:\n        if element not in it:\n            return False\n    return True"
+ },
+ {
+  "id": "asks/reverse_each_word",
+  "request": "reverse each word",
+  "prompt": "def reverse_each_word(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "sentence: str, length: int=0) -> str:\n    return ' '.join((word[::-1] if len(word) > length else word for word in sentence.split()))"
+ },
+ {
+  "id": "asks/count_char",
+  "request": "count char",
+  "prompt": "def count_char(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "s, c):\n    return s.count(c)"
+ },
+ {
+  "id": "asks/acronym",
+  "request": "acronym",
+  "prompt": "def acronym(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "s):\n    return ''.join((word[0].upper() for word in s.split()))"
+ },
+ {
+  "id": "asks/length_of_last_word",
+  "request": "length of last word",
+  "prompt": "def length_of_last_word(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "s):\n    return len(s.split()[-1])"
+ },
+ {
+  "id": "asks/remove_punctuation",
+  "request": "remove punctuation",
+  "prompt": "def remove_punctuation(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "text):\n    return ''.join((c for c in text if c.isalnum() or c.isspace()))"
+ },
+ {
+  "id": "asks/longest_palindrome",
+  "request": "longest palindrome",
+  "prompt": "def longest_palindrome(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "s):\n    S = [[False for i in range(len(s))] for j in range(len(s))]\n    max_palindrome = ''\n    for i in range(len(s))[::-1]:\n        for j in range(i, len(s)):\n            S[i][j] = s[i] == s[j] and (j - i < 3 or S[i + 1][j - 1])\n            if S[i][j] and j - i + 1 > len(max_palindrome):\n                max_palindrome = s[i:j + 1]\n    return max_palindrome"
+ },
+ {
+  "id": "asks/vowel_positions",
+  "request": "vowel positions",
+  "prompt": "def vowel_positions(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "s):\n    return [i for i, c in enumerate(s) if c.lower() in 'aeiou']"
+ },
+ {
+  "id": "asks/find_all",
+  "request": "find all",
+  "prompt": "def find_all(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "lst, element):\n    result = []\n    offset = -1\n    while True:\n        try:\n            offset = lst.index(element, offset + 1)\n        except ValueError:\n            return result\n        result.append(offset)"
+ },
+ {
+  "id": "asks/string_int",
+  "request": "string to int",
+  "prompt": "def string_int(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "value):\n    if callable(value):\n        return string_int(value())\n    else:\n        return int(value)"
+ },
+ {
+  "id": "asks/longest_unique_substring",
+  "request": "longest unique substring",
+  "prompt": "def longest_unique_substring(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "s):\n    unique_chars = set()\n    max_length = 0\n    left = 0\n    n = len(s)\n    for i in range(n):\n        while s[i] in unique_chars:\n            unique_chars.remove(s[left])\n            left += 1\n        unique_chars.add(s[i])\n        max_length = max(max_length, i - left + 1)\n    return max_length"
+ },
+ {
+  "id": "asks/sort_string",
+  "request": "sort string",
+  "prompt": "def sort_string(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "s):\n    return ''.join(sorted(s))"
+ },
+ {
+  "id": "asks/has_unique_chars",
+  "request": "has unique chars",
+  "prompt": "def has_unique_chars(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "seq):\n    return len(seq) == len(set(seq))"
+ },
+ {
+  "id": "asks/rot13",
+  "request": "rot13",
+  "prompt": "def rot13(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "s: str, n: int=13) -> str:\n    out = ''\n    for c in s:\n        if 'A' <= c <= 'Z':\n            out += chr(ord('A') + (ord(c) - ord('A') + n) % 26)\n        elif 'a' <= c <= 'z':\n            out += chr(ord('a') + (ord(c) - ord('a') + n) % 26)\n        else:\n            out += c\n    return out"
+ },
+ {
+  "id": "asks/atbash",
+  "request": "atbash",
+  "prompt": "def atbash(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "text: str) -> str:\n    translated = ''\n    for char in text:\n        code = ord(char)\n        if char.isalpha():\n            if char.isupper():\n                offset = code - ord('A')\n                translated += chr(ord('Z') - offset)\n            elif char.islower():\n                offset = code - ord('a')\n                translated += chr(ord('z') - offset)\n        else:\n            translated += char\n    return translated"
+ },
+ {
+  "id": "asks/add_lists",
+  "request": "add lists",
+  "prompt": "def add_lists(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "x, y):\n    return tuple((a + b for a, b in zip(x, y)))"
+ },
+ {
+  "id": "asks/pairwise_sum",
+  "request": "pairwise sum",
+  "prompt": "def pairwise_sum(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "lst):\n    return [lst[i] + lst[i + 1] for i in range(len(lst) - 1)]"
+ },
+ {
+  "id": "asks/running_maximum",
+  "request": "running maximum",
+  "prompt": "def running_maximum(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "nums):\n    if not nums:\n        return []\n    max_so_far = nums[0]\n    result = [max_so_far]\n    for num in nums[1:]:\n        max_so_far = max(max_so_far, num)\n        result.append(max_so_far)\n    return result"
+ },
+ {
+  "id": "asks/dedupe_sorted",
+  "request": "dedupe sorted",
+  "prompt": "def dedupe_sorted(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "iterable):\n    seen = set()\n    return [x for x in iterable if x not in seen and (not seen.add(x))]"
+ },
+ {
+  "id": "asks/interleave",
+  "request": "interleave",
+  "prompt": "def interleave(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "*arrays, **kwargs):\n    anum = arrays.__len__()\n    rslt = []\n    length = arrays[0].__len__()\n    for j in range(0, length):\n        for i in range(0, anum):\n            array = arrays[i]\n            rslt.append(array[j])\n    return rslt"
+ },
+ {
+  "id": "asks/split_even_odd",
+  "request": "split even odd",
+  "prompt": "def split_even_odd(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "numbers):\n    even_numbers = [num for num in numbers if num % 2 == 0]\n    odd_numbers = [num for num in numbers if num % 2 != 0]\n    return (even_numbers, odd_numbers)"
+ },
+ {
+  "id": "asks/even_numbers",
+  "request": "even numbers",
+  "prompt": "def even_numbers(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "lst):\n    return [x for x in lst if x % 2 == 0]"
+ },
+ {
+  "id": "asks/list_difference",
+  "request": "list difference",
+  "prompt": "def list_difference(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "left, right):\n    blocked = set(right)\n    difference = []\n    for item in left:\n        if item not in blocked:\n            blocked.add(item)\n            difference.append(item)\n    return difference"
+ },
+ {
+  "id": "asks/list_union",
+  "request": "list union",
+  "prompt": "def list_union(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "a, b):\n    return list(set(a) | set(b))"
+ },
+ {
+  "id": "asks/zip_pairs",
+  "request": "zip to pairs",
+  "prompt": "def zip_pairs(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "*arrays):\n    return list(zip(*arrays))"
+ },
+ {
+  "id": "asks/unzip",
+  "request": "unzip",
+  "prompt": "def unzip(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "pairs):\n    lst1, lst2 = ([], [])\n    for x1, x2 in pairs:\n        lst1.append(x1)\n        lst2.append(x2)\n    return (lst1, lst2)"
+ },
+ {
+  "id": "asks/window_sums",
+  "request": "window sums",
+  "prompt": "def window_sums(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "lst, k):\n    return [sum(lst[i:i + k]) for i in range(len(lst) - k + 1)]"
+ },
+ {
+  "id": "asks/moving_average",
+  "request": "moving average",
+  "prompt": "def moving_average(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "lst, k):\n    return [sum(lst[i:i + k]) / k for i in range(len(lst) - k + 1)]"
+ },
+ {
+  "id": "asks/argmax",
+  "request": "argmax",
+  "prompt": "def argmax(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "l, f=None):\n    if f:\n        l = [f(i) for i in l]\n    return max(enumerate(l), key=lambda x: x[1])[0]"
+ },
+ {
+  "id": "asks/argmin",
+  "request": "argmin",
+  "prompt": "def argmin(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "lst):\n    return lst.index(min(lst))"
+ },
+ {
+  "id": "asks/count_greater",
+  "request": "count greater",
+  "prompt": "def count_greater(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "lst, x):\n    return sum((1 for num in lst if num > x))"
+ },
+ {
+  "id": "asks/is_palindrome_list",
+  "request": "is palindrome list",
+  "prompt": "def is_palindrome_list(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "string):\n    if string == string[::-1]:\n        return True\n    return False"
+ },
+ {
+  "id": "asks/split_half",
+  "request": "split in half",
+  "prompt": "def split_half(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "lst):\n    return (lst[:len(lst) // 2], lst[len(lst) // 2:])"
+ },
+ {
+  "id": "asks/list_product",
+  "request": "list product",
+  "prompt": "def list_product(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "a):\n    p = 1\n    for x in a:\n        p *= x\n    return p"
+ },
+ {
+  "id": "asks/range_step",
+  "request": "range step",
+  "prompt": "def range_step(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "*args, **kwargs):\n    return list(range(*args, **kwargs))"
+ },
+ {
+  "id": "asks/last_index",
+  "request": "last index",
+  "prompt": "def last_index(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "array, value, from_index=None):\n    index = array_len = len(array)\n    try:\n        from_index = int(from_index)\n    except (TypeError, ValueError):\n        pass\n    else:\n        index = max(0, index + from_index) if from_index < 0 else min(from_index, index - 1)\n    while index >= 0:\n        if index < array_len and array[index] == value:\n            return index\n        index -= 1\n    return -1"
+ },
+ {
+  "id": "asks/kth_largest",
+  "request": "kth largest",
+  "prompt": "def kth_largest(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "lst, k):\n    lst.sort(reverse=True)\n    return lst[k - 1]"
+ },
+ {
+  "id": "asks/kth_smallest",
+  "request": "kth smallest",
+  "prompt": "def kth_smallest(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "lst, k):\n    lst.sort()\n    return lst[k - 1]"
+ },
+ {
+  "id": "asks/sum_even_numbers",
+  "request": "sum even numbers",
+  "prompt": "def sum_even_numbers(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "lst):\n    return sum((x for x in lst if x % 2 == 0))"
+ },
+ {
+  "id": "asks/count_evens",
+  "request": "count evens",
+  "prompt": "def count_evens(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "lst):\n    return sum((1 for x in lst if x % 2 == 0))"
+ },
+ {
+  "id": "asks/squares",
+  "request": "squares",
+  "prompt": "def squares(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "lst):\n    return [x ** 2 for x in lst]"
+ },
+ {
+  "id": "asks/swap",
+  "request": "swap",
+  "prompt": "def swap(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "arr, i, j):\n    arr[i], arr[j] = (arr[j], arr[i])"
+ },
+ {
+  "id": "asks/is_subset",
+  "request": "is subset",
+  "prompt": "def is_subset(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "a, b):\n    return all((item in b for item in a))"
+ },
+ {
+  "id": "asks/count_unique",
+  "request": "count unique",
+  "prompt": "def count_unique(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "lst):\n    return len(set(lst))"
+ },
+ {
+  "id": "asks/has_duplicates",
+  "request": "has duplicates",
+  "prompt": "def has_duplicates(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "lst):\n    return len(lst) != len(set(lst))"
+ },
+ {
+  "id": "asks/all_equal",
+  "request": "all equal",
+  "prompt": "def all_equal(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "iterable):\n    try:\n        shape = iterable.shape\n    except AttributeError:\n        pass\n    else:\n        if len(shape) > 1:\n            message = 'The function does not works on multidimensional arrays.'\n            raise NotImplementedError(message) from None\n    iterator = iter(iterable)\n    first = next(iterator, None)\n    return all((item == first for item in iterator))"
+ },
+ {
+  "id": "asks/min_max",
+  "request": "min max",
+  "prompt": "def min_max(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "lst):\n    return (min(lst), max(lst))"
+ },
+ {
+  "id": "asks/nested_sum",
+  "request": "nested sum",
+  "prompt": "def nested_sum(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "lst):\n    return sum((nested_sum(item) if isinstance(item, list) else item for item in lst))"
+ },
+ {
+  "id": "asks/flatten_nested",
+  "request": "flatten nested",
+  "prompt": "def flatten_nested(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "x):\n    if isinstance(x, list):\n        return [k for a in x for k in flatten_nested(a)]\n    return [x]"
+ },
+ {
+  "id": "asks/remove_all",
+  "request": "remove all",
+  "prompt": "def remove_all(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "array, *values):\n    return [item for item in array if item not in values]"
+ },
+ {
+  "id": "asks/compact",
+  "request": "compact",
+  "prompt": "def compact(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "array):\n    return [item for item in array if item]"
+ },
+ {
+  "id": "asks/is_monotonic",
+  "request": "is monotonic",
+  "prompt": "def is_monotonic(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "nums: list[int]) -> bool:\n    return all((nums[i] <= nums[i + 1] for i in range(len(nums) - 1))) or all((nums[i] >= nums[i + 1] for i in range(len(nums) - 1)))"
+ },
+ {
+  "id": "asks/longest_increasing_subsequence",
+  "request": "longest increasing subsequence",
+  "prompt": "def longest_increasing_subsequence(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "arr):\n    n = len(arr)\n    if n == 0:\n        return 0\n    res = 1\n    dp = [0] * n\n    dp[0] = 1\n    for i in range(1, n):\n        dp[i] = 1\n        for j in range(0, i):\n            if arr[i] > arr[j]:\n                dp[i] = max(dp[i], dp[j] + 1)\n        res = max(res, dp[i])\n    return res"
+ },
+ {
+  "id": "asks/merge_intervals",
+  "request": "merge intervals",
+  "prompt": "def merge_intervals(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "intervals):\n    intervals.sort(key=lambda x: x[0])\n    merged = []\n    for interval in intervals:\n        if not merged or interval[0] > merged[-1][1]:\n            merged.append(interval)\n        else:\n            merged[-1][1] = max(merged[-1][1], interval[1])\n    return merged"
+ },
+ {
+  "id": "asks/max_profit",
+  "request": "max profit",
+  "prompt": "def max_profit(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "prices: list[int]) -> int:\n    if not prices:\n        return 0\n    min_price = prices[0]\n    max_profit: int = 0\n    for price in prices:\n        min_price = min(price, min_price)\n        max_profit = max(price - min_price, max_profit)\n    return max_profit"
+ },
+ {
+  "id": "asks/move_zeros",
+  "request": "move zeros",
+  "prompt": "def move_zeros(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "array):\n    result = []\n    zeros = 0\n    for element in array:\n        if element == 0 and type(element) is not bool:\n            zeros += 1\n        else:\n            result.append(element)\n    result.extend([0] * zeros)\n    return result"
+ },
+ {
+  "id": "asks/majority_element",
+  "request": "majority element",
+  "prompt": "def majority_element(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "arr):\n    length = len(arr)\n    if not length:\n        return\n    elif length < 3:\n        return arr[0]\n    frequency = {}\n    for elem in arr:\n        if elem not in frequency:\n            frequency[elem] = 0\n        frequency[elem] += 1\n    for elem in frequency:\n        if frequency[elem] > length // 2:\n            return elem"
+ },
+ {
+  "id": "asks/single_number",
+  "request": "single number",
+  "prompt": "def single_number(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "nums: list[int]) -> int:\n    result = 0\n    for number in nums:\n        result ^= number\n    return result"
+ },
+ {
+  "id": "asks/product_except_self",
+  "request": "product except self",
+  "prompt": "def product_except_self(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "nums):\n    n = len(nums)\n    if n == 0:\n        return []\n    mult = 1\n    res = [1]\n    i = 0\n    while i < n - 1:\n        mult *= nums[i]\n        res.append(mult)\n        i += 1\n    mult = 1\n    i = n - 2\n    while i >= 0:\n        mult *= nums[i + 1]\n        res[i] *= mult\n        i -= 1\n    return res"
+ },
+ {
+  "id": "asks/plus_one",
+  "request": "plus one",
+  "prompt": "def plus_one(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "num_arr: list[int]) -> list[int]:\n    for idx in reversed(list(enumerate(num_arr))):\n        num_arr[idx[0]] = (num_arr[idx[0]] + 1) % 10\n        if num_arr[idx[0]]:\n            return num_arr\n    return [1] + num_arr"
+ },
+ {
+  "id": "asks/next_prime",
+  "request": "next prime",
+  "prompt": "def next_prime(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "n):\n    def is_prime(num):\n        if num <= 1:\n            return False\n        for i in range(2, int(num ** 0.5) + 1):\n            if num % i == 0:\n                return False\n        return True\n    while True:\n        n += 1\n        if is_prime(n):\n            return n"
+ },
+ {
+  "id": "asks/nth_prime",
+  "request": "nth prime",
+  "prompt": "def nth_prime(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "n):\n    def is_prime(num):\n        if num <= 1:\n            return False\n        for i in range(2, int(num ** 0.5) + 1):\n            if num % i == 0:\n                return False\n        return True\n    count = 0\n    num = 2\n    while True:\n        if is_prime(num):\n            count += 1\n            if count == n:\n                return num\n        num += 1"
+ },
+ {
+  "id": "asks/sum_of_primes",
+  "request": "sum of primes",
+  "prompt": "def sum_of_primes(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "n):\n    def is_prime(n):\n        if n <= 1:\n            return False\n        for i in range(2, int(n ** 0.5) + 1):\n            if n % i == 0:\n                return False\n        return True\n    return sum((i for i in range(2, n) if is_prime(i)))"
+ },
+ {
+  "id": "asks/count_divisors",
+  "request": "count divisors",
+  "prompt": "def count_divisors(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "n):\n    n_divisors = 1\n    i = 2\n    while i * i <= n:\n        multiplicity = 0\n        while n % i == 0:\n            n //= i\n            multiplicity += 1\n        n_divisors *= multiplicity + 1\n        i += 1\n    if n > 1:\n        n_divisors *= 2\n    return n_divisors"
+ },
+ {
+  "id": "asks/is_abundant",
+  "request": "is abundant",
+  "prompt": "def is_abundant(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "number: int) -> bool:\n    if not isinstance(number, int):\n        msg = f'Input value of [number={number}] must be an integer'\n        raise TypeError(msg)\n    if number < 1:\n        return False\n    divisor_sum = 1\n    for i in range(2, int(number ** 0.5) + 1):\n        if number % i == 0:\n            divisor_sum += i\n            if i != number // i:\n                divisor_sum += number // i\n    return divisor_sum > number"
+ },
+ {
+  "id": "asks/triangular_number",
+  "request": "triangular number",
+  "prompt": "def triangular_number(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "position: int) -> int:\n    if position < 0:\n        raise ValueError('param `position` must be non-negative')\n    return position * (position + 1) // 2"
+ },
+ {
+  "id": "asks/integer_square_root",
+  "request": "integer square root",
+  "prompt": "def integer_square_root(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "n, k=2):\n    if n == 0:\n        return 0\n    if n < 0:\n        return -integer_square_root(-n, k) if k & 1 else None\n    u = 1 << -(-n.bit_length() // k)\n    s = u + 1\n    while u < s:\n        s = u\n        t = (k - 1) * s + n // s ** (k - 1)\n        u = t // k\n    return s"
+ },
+ {
+  "id": "asks/digits_number",
+  "request": "digits to number",
+  "prompt": "def digits_number(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "digits):\n    return int(''.join(map(str, digits)))"
+ },
+ {
+  "id": "asks/number_digits",
+  "request": "number to digits",
+  "prompt": "def number_digits(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "number):\n    return [int(digit) for digit in str(number)]"
+ },
+ {
+  "id": "asks/is_palindrome_number",
+  "request": "is palindrome number",
+  "prompt": "def is_palindrome_number(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "n: int) -> bool:\n    return str(n) == str(n)[::-1]"
+ },
+ {
+  "id": "asks/binary_hex",
+  "request": "binary to hex",
+  "prompt": "def binary_hex(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "binary_str):\n    return hex(int(binary_str, 2))[2:].lower()"
+ },
+ {
+  "id": "asks/hex_decimal",
+  "request": "hex to decimal",
+  "prompt": "def hex_decimal(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "x):\n    return int(x, 16)"
+ },
+ {
+  "id": "asks/decimal_hex",
+  "request": "decimal to hex",
+  "prompt": "def decimal_hex(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "decimal):\n    return hex(decimal)[2:].lower()"
+ },
+ {
+  "id": "asks/decimal_octal",
+  "request": "decimal to octal",
+  "prompt": "def decimal_octal(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "decimal):\n    if decimal == 0:\n        return '0'\n    octal = ''\n    while decimal > 0:\n        octal = str(decimal % 8) + octal\n        decimal //= 8\n    return octal"
+ },
+ {
+  "id": "asks/celsius_kelvin",
+  "request": "celsius to kelvin",
+  "prompt": "def celsius_kelvin(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "celsius: float, ndigits: int=2) -> float:\n    return round(float(celsius) + 273.15, ndigits)"
+ },
+ {
+  "id": "asks/kelvin_celsius",
+  "request": "kelvin to celsius",
+  "prompt": "def kelvin_celsius(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "kelvin: float, ndigits: int=2) -> float:\n    return round(float(kelvin) - 273.15, ndigits)"
+ },
+ {
+  "id": "asks/km_miles",
+  "request": "km to miles",
+  "prompt": "def km_miles(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "km):\n    return km / 1.60934"
+ },
+ {
+  "id": "asks/miles_km",
+  "request": "miles to km",
+  "prompt": "def miles_km(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "miles):\n    return miles * 1.609344"
+ },
+ {
+  "id": "asks/simple_interest",
+  "request": "simple interest",
+  "prompt": "def simple_interest(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "principal, rate, years):\n    return principal * rate * years / 100"
+ },
+ {
+  "id": "asks/compound_interest",
+  "request": "compound interest",
+  "prompt": "def compound_interest(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "principal, rate, years):\n    return principal * (1 + rate / 100) ** years - principal"
+ },
+ {
+  "id": "asks/bmi",
+  "request": "bmi",
+  "prompt": "def bmi(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "weight, height):\n    return weight / height ** 2"
+ },
+ {
+  "id": "asks/rectangle_area",
+  "request": "rectangle area",
+  "prompt": "def rectangle_area(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "length: float, width: float) -> float:\n    if length < 0 or width < 0:\n        raise ValueError('area_rectangle() only accepts non-negative values')\n    return length * width"
+ },
+ {
+  "id": "asks/rectangle_perimeter",
+  "request": "rectangle perimeter",
+  "prompt": "def rectangle_perimeter(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "width, height):\n    return 2 * (width + height)"
+ },
+ {
+  "id": "asks/circle_area",
+  "request": "circle area",
+  "prompt": "def circle_area(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "radius):\n    pi = 3.14\n    return pi * radius ** 2"
+ },
+ {
+  "id": "asks/circle_circumference",
+  "request": "circle circumference",
+  "prompt": "def circle_circumference(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "radius):\n    return 2 * 3.14 * radius"
+ },
+ {
+  "id": "asks/triangle_area",
+  "request": "triangle area",
+  "prompt": "def triangle_area(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "base: float, height: float) -> float:\n    if base < 0 or height < 0:\n        raise ValueError('area_triangle() only accepts non-negative values')\n    return base * height / 2"
+ },
+ {
+  "id": "asks/herons_formula",
+  "request": "herons formula",
+  "prompt": "def herons_formula(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "a, b, c):\n    s = (a + b + c) / 2\n    return (s * (s - a) * (s - b) * (s - c)) ** 0.5"
+ },
+ {
+  "id": "asks/hypotenuse",
+  "request": "hypotenuse",
+  "prompt": "def hypotenuse(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "a, b):\n    return (a ** 2 + b ** 2) ** 0.5"
+ },
+ {
+  "id": "asks/midpoint",
+  "request": "midpoint",
+  "prompt": "def midpoint(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "a, b):\n    return ((a[0] + b[0]) / 2, (a[1] + b[1]) / 2)"
+ },
+ {
+  "id": "asks/slope",
+  "request": "slope",
+  "prompt": "def slope(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "p1, p2):\n    return (p2[1] - p1[1]) / (p2[0] - p1[0])"
+ },
+ {
+  "id": "asks/quadratic_roots",
+  "request": "quadratic roots",
+  "prompt": "def quadratic_roots(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "a, b, c):\n    discriminant = b ** 2 - 4 * a * c\n    if discriminant < 0:\n        return []\n    sqrt_discriminant = discriminant ** 0.5\n    root1 = (-b + sqrt_discriminant) / (2 * a)\n    root2 = (-b - sqrt_discriminant) / (2 * a)\n    return [root1, root2]"
+ },
+ {
+  "id": "asks/variance",
+  "request": "variance",
+  "prompt": "def variance(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "data):\n    n = len(data)\n    mean = sum(data) / n\n    variance = sum(((x - mean) ** 2 for x in data)) / n\n    return variance"
+ },
+ {
+  "id": "asks/standard_deviation",
+  "request": "standard deviation",
+  "prompt": "def standard_deviation(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "numbers):\n    numbers = list(numbers)\n    if not numbers:\n        return 0\n    mean = sum(numbers) / len(numbers)\n    return (sum(((n - mean) ** 2 for n in numbers)) / len(numbers)) ** 0.5"
+ },
+ {
+  "id": "asks/percentage",
+  "request": "percentage",
+  "prompt": "def percentage(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "part, whole, resolution=2):\n    if whole == 0:\n        raise ZeroDivisionError\n    percent = 100 * float(part) / float(whole)\n    return round(percent, resolution) if resolution >= 1 else int(percent)"
+ },
+ {
+  "id": "asks/lerp",
+  "request": "lerp",
+  "prompt": "def lerp(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "a, b, t):\n    if t < 0.0:\n        return a\n    if t > 1.0:\n        return b\n    return a + (b - a) * t"
+ },
+ {
+  "id": "asks/round_multiple",
+  "request": "round to multiple",
+  "prompt": "def round_multiple(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "x: int, mult: int=None) -> int:\n    return int(x / mult + 0.5) * mult if mult is not None else x"
+ },
+ {
+  "id": "asks/sum_of_cubes",
+  "request": "sum of cubes",
+  "prompt": "def sum_of_cubes(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "n):\n    return sum((i ** 3 for i in range(1, n + 1)))"
+ },
+ {
+  "id": "asks/is_odd",
+  "request": "is odd",
+  "prompt": "def is_odd(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "number):\n    return number % 2 == 1"
+ },
+ {
+  "id": "asks/max_of_three",
+  "request": "max of three",
+  "prompt": "def max_of_three(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "a, b, c):\n    return max(a, b, c)"
+ },
+ {
+  "id": "asks/sum_of_multiples",
+  "request": "sum of multiples",
+  "prompt": "def sum_of_multiples(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "n: int=1000) -> int:\n    return sum((i for i in range(n) if i % 3 == 0 or i % 5 == 0))"
+ },
+ {
+  "id": "asks/modular_exponentiation",
+  "request": "modular exponentiation",
+  "prompt": "def modular_exponentiation(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "x, y, p):\n    res = 1\n    x = x % p\n    while y > 0:\n        if y & 1 == 1:\n            res = res * x % p\n        y = y >> 1\n        x = x * x % p\n    return res"
+ },
+ {
+  "id": "asks/totient",
+  "request": "totient",
+  "prompt": "def totient(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "n: int) -> int:\n    result = n\n    for i in range(2, int(n ** 0.5) + 1):\n        if n % i == 0:\n            while n % i == 0:\n                n //= i\n            result -= result // i\n    if n > 1:\n        result -= result // n\n    return result"
+ },
+ {
+  "id": "asks/is_coprime",
+  "request": "is coprime",
+  "prompt": "def is_coprime(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "a, b):\n    def gcd(x, y):\n        while y:\n            x, y = (y, x % y)\n        return x\n    return gcd(a, b) == 1"
+ },
+ {
+  "id": "asks/double_factorial",
+  "request": "double factorial",
+  "prompt": "def double_factorial(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "num: int) -> int:\n    if not isinstance(num, int):\n        raise ValueError('double_factorial_iterative() only accepts integral values')\n    if num < 0:\n        raise ValueError('double_factorial_iterative() not defined for negative values')\n    value = 1\n    for i in range(num, 0, -2):\n        value *= i\n    return value"
+ },
+ {
+  "id": "asks/catalan_number",
+  "request": "catalan number",
+  "prompt": "def catalan_number(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "n):\n    if n == 0 or n == 1:\n        return 1\n    catalan = [0] * (n + 1)\n    catalan[0] = catalan[1] = 1\n    for i in range(2, n + 1):\n        catalan[i] = sum((catalan[j] * catalan[i - 1 - j] for j in range(i)))\n    return catalan[n]"
+ },
+ {
+  "id": "asks/is_happy_number",
+  "request": "is happy number",
+  "prompt": "def is_happy_number(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "number: int) -> bool:\n    if not isinstance(number, int) or number <= 0:\n        msg = f'number={number!r} must be a positive integer'\n        raise ValueError(msg)\n    seen = set()\n    while number != 1 and number not in seen:\n        seen.add(number)\n        number = sum((int(digit) ** 2 for digit in str(number)))\n    return number == 1"
+ },
+ {
+  "id": "asks/trailing_zeros",
+  "request": "trailing zeros",
+  "prompt": "def trailing_zeros(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "n):\n    res = 0\n    k = 5\n    while k <= n:\n        res += n // k\n        k *= 5\n    return res"
+ },
+ {
+  "id": "asks/square_root",
+  "request": "square root",
+  "prompt": "def square_root(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "n):\n    return round(n ** 0.5, 6)"
+ },
+ {
+  "id": "asks/lucas_number",
+  "request": "lucas number",
+  "prompt": "def lucas_number(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "n_th_number: int) -> int:\n    if not isinstance(n_th_number, int):\n        raise TypeError('dynamic_lucas_number accepts only integer arguments.')\n    a, b = (2, 1)\n    for _ in range(n_th_number):\n        a, b = (b, a + b)\n    return a"
+ },
+ {
+  "id": "asks/add_binary",
+  "request": "add binary",
+  "prompt": "def add_binary(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "first: str, second: str) -> str:\n    result = ''\n    carry, index_a, index_b = (0, len(first) - 1, len(second) - 1)\n    zero = ord('0')\n    while index_a >= 0 or index_b >= 0 or carry == 1:\n        if index_a >= 0:\n            carry += ord(first[index_a]) - zero\n            index_a -= 1\n        if index_b >= 0:\n            carry += ord(second[index_b]) - zero\n            index_b -= 1\n        result = chr(carry % 2 + zero) + result\n        carry //= 2\n    return result"
+ },
+ {
+  "id": "asks/is_bit_set",
+  "request": "is bit set",
+  "prompt": "def is_bit_set(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "number: int, position: int) -> bool:\n    return number >> position & 1 == 1"
+ },
+ {
+  "id": "asks/set_bit",
+  "request": "set bit",
+  "prompt": "def set_bit(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "number: int, position: int) -> int:\n    return number | 1 << position"
+ },
+ {
+  "id": "asks/clear_bit",
+  "request": "clear bit",
+  "prompt": "def clear_bit(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "number: int, position: int) -> int:\n    return number & ~(1 << position)"
+ },
+ {
+  "id": "asks/toggle_bit",
+  "request": "toggle bit",
+  "prompt": "def toggle_bit(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "number: int, position: int) -> int:\n    return number ^ 1 << position"
+ },
+ {
+  "id": "asks/swap_bits",
+  "request": "swap bits",
+  "prompt": "def swap_bits(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "number, position1, position2):\n    bit1 = number >> position1 & 1\n    bit2 = number >> position2 & 1\n    number &= ~(1 << position1)\n    number &= ~(1 << position2)\n    number |= bit1 << position2\n    number |= bit2 << position1\n    return number"
+ },
+ {
+  "id": "asks/reverse_bits",
+  "request": "reverse bits",
+  "prompt": "def reverse_bits(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "number: int) -> int:\n    result = 0\n    for _ in range(32):\n        result = (result << 1) + (number & 1)\n        number >>= 1\n    return result"
+ },
+ {
+  "id": "asks/invert_dict",
+  "request": "invert dict",
+  "prompt": "def invert_dict(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "d):\n    return dict(list(zip(list(d.values()), list(d.keys()))))"
+ },
+ {
+  "id": "asks/merge_dicts",
+  "request": "merge dicts",
+  "prompt": "def merge_dicts(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "*ds):\n    result = ds[0]\n    for d in ds[1:]:\n        result.update(d)\n    return result"
+ },
+ {
+  "id": "asks/count_elements",
+  "request": "count elements",
+  "prompt": "def count_elements(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "word_list):\n    word_freqs = {}\n    for w in word_list:\n        if w in word_freqs:\n            word_freqs[w] += 1\n        else:\n            word_freqs[w] = 1\n    return word_freqs"
+ },
+ {
+  "id": "asks/max_key",
+  "request": "max key",
+  "prompt": "def max_key(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "d):\n    return max(d, key=d.get)"
+ },
+ {
+  "id": "asks/group_by_first_letter",
+  "request": "group by first letter",
+  "prompt": "def group_by_first_letter(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "words):\n    result = {}\n    for word in words:\n        if word[0] in result:\n            result[word[0]].append(word)\n        else:\n            result[word[0]] = [word]\n    return result"
+ },
+ {
+  "id": "asks/sum_values",
+  "request": "sum values",
+  "prompt": "def sum_values(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "d):\n    return sum(d.values())"
+ },
+ {
+  "id": "asks/remove_none",
+  "request": "remove none",
+  "prompt": "def remove_none(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "d: dict) -> dict:\n    return {k: v for k, v in d.items() if v is not None}"
+ },
+ {
+  "id": "asks/sort_dict_by_value",
+  "request": "sort dict by value",
+  "prompt": "def sort_dict_by_value(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "d):\n    return dict(sorted(d.items(), key=lambda x: x[1]))"
+ },
+ {
+  "id": "asks/zip_dict",
+  "request": "zip dict",
+  "prompt": "def zip_dict(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "keys, vals):\n    return dict(zip(keys, vals))"
+ },
+ {
+  "id": "asks/keys_with_value",
+  "request": "keys with value",
+  "prompt": "def keys_with_value(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "d, value):\n    return [k for k in d if d[k] == value]"
+ },
+ {
+  "id": "asks/trace",
+  "request": "trace",
+  "prompt": "def trace(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "matrix):\n    return sum((matrix[i][i] for i in range(len(matrix))))"
+ },
+ {
+  "id": "asks/is_symmetric",
+  "request": "is symmetric",
+  "prompt": "def is_symmetric(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "adjacency_matrix):\n    num_columns = len(adjacency_matrix)\n    for column in adjacency_matrix:\n        if len(column) != num_columns:\n            return False\n    max_i = 0\n    for j in range(num_columns):\n        for i in range(max_i):\n            if i == j:\n                continue\n            if adjacency_matrix[j][i] != adjacency_matrix[i][j]:\n                return False\n        max_i += 1\n    return True"
+ },
+ {
+  "id": "asks/rotate_matrix",
+  "request": "rotate matrix",
+  "prompt": "def rotate_matrix(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "matrix: list[list[int]]) -> list[list[int]]:\n    result: list[list[int]] = []\n    for row in reversed(matrix):\n        for i, elem in enumerate(row):\n            try:\n                result[i].append(elem)\n            except IndexError:\n                result.insert(i, [])\n                result[i].append(elem)\n    return result"
+ },
+ {
+  "id": "asks/row_sums",
+  "request": "row sums",
+  "prompt": "def row_sums(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "rows):\n    return [sum(row) for row in rows]"
+ },
+ {
+  "id": "asks/column_sums",
+  "request": "column sums",
+  "prompt": "def column_sums(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "arr):\n    return [sum(col) for col in zip(*arr)]"
+ },
+ {
+  "id": "asks/scalar_multiply",
+  "request": "scalar multiply",
+  "prompt": "def scalar_multiply(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "matrix: list[list[int]], n: float) -> list[list[float]]:\n    return [[x * n for x in row] for row in matrix]"
+ },
+ {
+  "id": "asks/is_identity",
+  "request": "is identity",
+  "prompt": "def is_identity(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "matrix):\n    return matrix == [[1 if i == j else 0 for j in range(len(matrix))] for i in range(len(matrix))]"
+ },
+ {
+  "id": "asks/zero_matrix",
+  "request": "zero matrix",
+  "prompt": "def zero_matrix(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "rows, columns):\n    return [[0 for _ in range(columns)] for _ in range(rows)]"
+ },
+ {
+  "id": "asks/matrix_subtraction",
+  "request": "matrix subtraction",
+  "prompt": "def matrix_subtraction(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "matrix_a: list, matrix_b: list):\n    return [[matrix_a[row][col] - matrix_b[row][col] for col in range(len(matrix_a[row]))] for row in range(len(matrix_a))]"
+ },
+ {
+  "id": "asks/main_diagonal",
+  "request": "main diagonal",
+  "prompt": "def main_diagonal(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "matrix):\n    return [matrix[i][i] for i in range(len(matrix))]"
+ },
+ {
+  "id": "asks/spiral_order",
+  "request": "spiral order",
+  "prompt": "def spiral_order(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "matrix: list[list]) -> list[int]:\n    if matrix:\n        return list(matrix.pop(0)) + spiral_order([list(row) for row in zip(*matrix)][::-1])\n    else:\n        return []"
+ },
+ {
+  "id": "asks/determinant",
+  "request": "determinant",
+  "prompt": "def determinant(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "matrix):\n    if len(matrix) == 1:\n        return matrix[0][0]\n    n = len(matrix)\n    sum = 0\n    for i in range(n):\n        sign = (-1) ** i\n        submatrix = [row[:i] + row[i + 1:] for row in matrix[1:]]\n        sum += sign * matrix[0][i] * determinant(submatrix)\n    return sum"
+ },
+ {
+  "id": "asks/rock_paper_scissors",
+  "request": "rock paper scissors",
+  "prompt": "def rock_paper_scissors(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "choice1, choice2):\n    if choice1 == 'rock' and choice2 == 'scissors' or (choice1 == 'scissors' and choice2 == 'paper') or (choice1 == 'paper' and choice2 == 'rock'):\n        return 1\n    elif choice1 == choice2:\n        return 0\n    else:\n        return 2"
+ },
+ {
+  "id": "asks/letter_grade",
+  "request": "letter grade",
+  "prompt": "def letter_grade(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "score):\n    return 'A' if score >= 90 else 'B' if score >= 80 else 'C' if score >= 70 else 'D' if score >= 60 else 'F'"
+ },
+ {
+  "id": "asks/days_month",
+  "request": "days in month",
+  "prompt": "def days_month(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "year, month):\n    if month == 2:\n        return 29 if year % 4 == 0 and (year % 100 != 0 or year % 400 == 0) else 28\n    else:\n        return 31 if month in [1, 3, 5, 7, 8, 10, 12] else 30"
+ },
+ {
+  "id": "asks/is_weekend",
+  "request": "is weekend",
+  "prompt": "def is_weekend(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "day):\n    return day in ['Saturday', 'Sunday']"
+ },
+ {
+  "id": "asks/time_seconds",
+  "request": "time to seconds",
+  "prompt": "def time_seconds(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "t):\n    l = list(map(int, t.split(':')))\n    return sum((n * sec for n, sec in zip(l[::-1], (1, 60, 3600))))"
+ },
+ {
+  "id": "asks/seconds_time",
+  "request": "seconds to time",
+  "prompt": "def seconds_time(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "seconds):\n    hours, seconds = divmod(seconds, 3600)\n    minutes, seconds = divmod(seconds, 60)\n    return f\"{hours:02.0f}:{minutes:02.0f}:{(f'{seconds:02.1f}' if seconds % 1 else f'{seconds:02.0f}')}\""
+ },
+ {
+  "id": "asks/roman_digit_value",
+  "request": "roman digit value",
+  "prompt": "def roman_digit_value(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "roman):\n    return {'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}[roman]"
+ },
+ {
+  "id": "asks/is_triangle",
+  "request": "is triangle",
+  "prompt": "def is_triangle(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "a, b, c):\n    return a + b > c and a + c > b and (b + c > a)"
+ },
+ {
+  "id": "asks/coin_change",
+  "request": "coin change",
+  "prompt": "def coin_change(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "coins, amount):\n    if amount == 0:\n        return 0\n    if len(coins) == 0:\n        return -1\n    max_value = amount + 1\n    dp = [max_value for i in range(max_value)]\n    dp[0] = 0\n    for i in range(1, max_value):\n        for c in coins:\n            if c <= i:\n                dp[i] = min(dp[i], dp[i - c] + 1)\n    if dp[amount] == max_value:\n        return -1\n    return dp[amount]"
+ },
+ {
+  "id": "asks/group_anagrams",
+  "request": "group anagrams",
+  "prompt": "def group_anagrams(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "strings: list[str]) -> list[list[str]]:\n    anagram_map: dict[str, int] = {}\n    groups: list[list[str]] = []\n    group_index = 0\n    for word in strings:\n        sorted_word = ''.join(sorted(word))\n        if sorted_word not in anagram_map:\n            anagram_map[sorted_word] = group_index\n            group_index += 1\n            groups.append([])\n            groups[-1].append(word)\n        else:\n            groups[anagram_map[sorted_word]].append(word)\n    return groups"
+ },
+ {
+  "id": "asks/generate_parentheses",
+  "request": "generate parentheses",
+  "prompt": "def generate_parentheses(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "n):\n    def backtrack(s, left, right):\n        if left == right == n:\n            result.append(s)\n            return\n        if left < n:\n            backtrack(s + '(', left + 1, right)\n        if right < left:\n            backtrack(s + ')', left, right + 1)\n    result = []\n    backtrack('', 0, 0)\n    return result"
+ },
+ {
+  "id": "asks/unique_paths",
+  "request": "unique paths",
+  "prompt": "def unique_paths(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "n, m):\n    m, n = (min(m, n), max(m, n))\n    lvl = m + n - 2\n    pos = m - 1\n    comb = 1\n    for i in range(1, pos + 1):\n        comb *= lvl\n        comb /= i\n        lvl -= 1\n    return int(comb + 0.001)"
+ },
+ {
+  "id": "asks/house_robber",
+  "request": "house robber",
+  "prompt": "def house_robber(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "houses: list[int]) -> int:\n    last, now = (0, 0)\n    for house in houses:\n        last, now = (now, max(last + house, now))\n    return now"
+ },
+ {
+  "id": "asks/luhn",
+  "request": "luhn",
+  "prompt": "def luhn(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "card_number):\n    sum = 0\n    num_digits = len(card_number)\n    oddeven = num_digits & 1\n    for count in range(0, num_digits):\n        digit = int(card_number[count])\n        if not count & 1 ^ oddeven:\n            digit *= 2\n        if digit > 9:\n            digit -= 9\n        sum += digit\n    return sum % 10 == 0"
+ },
+ {
+  "id": "asks/is_valid_ip",
+  "request": "is valid ip",
+  "prompt": "def is_valid_ip(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "ip):\n    parts = ip.split('.')\n    if len(parts) != 4:\n        return False\n    for part in parts:\n        if not part.isdigit() or not 0 <= int(part) <= 255:\n            return False\n    return True"
+ },
+ {
+  "id": "asks/preorder_traversal",
+  "request": "preorder traversal",
+  "prompt": "def preorder_traversal(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "root, res=None):\n    if root is None:\n        return []\n    if res is None:\n        res = []\n    res.append(root.val)\n    preorder_traversal(root.left, res)\n    preorder_traversal(root.right, res)\n    return res"
+ },
+ {
+  "id": "asks/postorder_traversal",
+  "request": "postorder traversal",
+  "prompt": "def postorder_traversal(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "root, res=None):\n    if root is None:\n        return []\n    if res is None:\n        res = []\n    postorder_traversal(root.left, res)\n    postorder_traversal(root.right, res)\n    res.append(root.val)\n    return res"
+ },
+ {
+  "id": "asks/level_order_traversal",
+  "request": "level order traversal",
+  "prompt": "def level_order_traversal(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "root):\n    ans = []\n    if not root:\n        return ans\n    level = [root]\n    while level:\n        current = []\n        new_level = []\n        for node in level:\n            current.append(node.val)\n            if node.left:\n                new_level.append(node.left)\n            if node.right:\n                new_level.append(node.right)\n        level = new_level\n        ans.append(current)\n    return ans"
+ },
+ {
+  "id": "asks/invert_tree",
+  "request": "invert tree",
+  "prompt": "def invert_tree(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "root):\n    if root is None:\n        return None\n    root.left, root.right = (root.right, root.left)\n    invert_tree(root.left)\n    invert_tree(root.right)\n    return root"
+ },
+ {
+  "id": "asks/is_same_tree",
+  "request": "is same tree",
+  "prompt": "def is_same_tree(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "p, q):\n    if p is None and p == q:\n        return True\n    if p is None or q is None:\n        return False\n    if p.val != q.val:\n        return False\n    if not is_same_tree(p.left, q.left):\n        return False\n    if not is_same_tree(p.right, q.right):\n        return False\n    return True"
+ },
+ {
+  "id": "asks/count_leaves",
+  "request": "count leaves",
+  "prompt": "def count_leaves(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "node):\n    if node is None:\n        return 0\n    return count_leaves(node.left) + count_leaves(node.right) + (node.left is None and node.right is None)"
+ },
+ {
+  "id": "asks/linked_list_length",
+  "request": "linked list length",
+  "prompt": "def linked_list_length(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "head):\n    return 0 if head is None else 1 + linked_list_length(head.next)"
+ },
+ {
+  "id": "asks/middle_node",
+  "request": "middle node",
+  "prompt": "def middle_node(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "head):\n    slow = fast = head\n    while fast and fast.next:\n        slow = slow.next\n        fast = fast.next.next\n    return slow"
+ },
+ {
+  "id": "asks/has_cycle",
+  "request": "has cycle",
+  "prompt": "def has_cycle(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "head):\n    if not head or not head.next:\n        return False\n    slow = head\n    fast = head.next\n    while slow != fast:\n        if fast == None or fast.next == None:\n            return False\n        slow = slow.next\n        fast = fast.next.next\n    return True"
+ },
+ {
+  "id": "asks/merge_linked_lists",
+  "request": "merge linked lists",
+  "prompt": "def merge_linked_lists(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "l1, l2):\n    if not l1 or not l2:\n        return l1 or l2\n    if l1.val < l2.val:\n        l1.next = merge_linked_lists(l1.next, l2)\n        return l1\n    else:\n        l2.next = merge_linked_lists(l1, l2.next)\n        return l2"
+ },
+ {
+  "id": "asks/delete_node",
+  "request": "delete node",
+  "prompt": "def delete_node(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "head, val):\n    while head and head.val == val:\n        head = head.next\n    if not head:\n        return None\n    curr = head\n    while curr.next:\n        if curr.next.val == val:\n            curr.next = curr.next.next\n        else:\n            curr = curr.next\n    return head"
+ },
+ {
+  "id": "asks/insert_at_end",
+  "request": "insert at end",
+  "prompt": "def insert_at_end(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "head, value):\n    if head is None:\n        return Node(value)\n    current = head\n    while current.next:\n        current = current.next\n    current.next = Node(value)\n    return head"
+ },
+ {
+  "id": "asks/nth_from_end",
+  "request": "nth from end",
+  "prompt": "def nth_from_end(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "head, k):\n    if not (head or k > -1):\n        return False\n    ahead = head\n    behind = head\n    for _ in range(1, k + 1):\n        if ahead is None:\n            raise IndexError\n        ahead = ahead.next\n    while ahead:\n        ahead = ahead.next\n        behind = behind.next\n    return behind"
+ },
+ {
+  "id": "asks/heap_push",
+  "request": "heap push",
+  "prompt": "def heap_push(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "heap, item):\n    def _siftdown(heap, startpos, pos):\n        newitem = heap[pos]\n        while pos > startpos:\n            parentpos = pos - 1 >> 1\n            parent = heap[parentpos]\n            if newitem < parent:\n                heap[pos] = parent\n                pos = parentpos\n                continue\n            break\n        heap[pos] = newitem\n    heap.append(item)\n    _siftdown(heap, 0, len(heap) - 1)"
+ },
+ {
+  "id": "asks/heap_pop",
+  "request": "heap pop",
+  "prompt": "def heap_pop(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "heap):\n    if not heap:\n        raise ValueError('Heap is empty')\n    heap[0], heap[-1] = (heap[-1], heap[0])\n    last_element = heap.pop()\n    g = 0\n    while g * 2 + 1 < len(heap):\n        child = g * 2 + 1\n        if child + 1 < len(heap) and heap[child + 1] < heap[child]:\n            child += 1\n        if heap[g] > heap[child]:\n            heap[g], heap[child] = (heap[child], heap[g])\n            g = child\n        else:\n            break\n    return last_element"
+ },
+ {
+  "id": "asks/build_min_heap",
+  "request": "build min heap",
+  "prompt": "def build_min_heap(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "data):\n    def heapify(data, i, n):\n        smallest = i\n        left = 2 * i + 1\n        right = 2 * i + 2\n        if left < n and data[left] < data[smallest]:\n            smallest = left\n        if right < n and data[right] < data[smallest]:\n            smallest = right\n        if smallest != i:\n            data[i], data[smallest] = (data[smallest], data[i])\n            heapify(data, smallest, n)\n    n = len(data)\n    for i in range(n // 2 - 1, -1, -1):\n        heapify(data, i, n)\n    return data"
+ },
+ {
+  "id": "asks/is_min_heap",
+  "request": "is min heap",
+  "prompt": "def is_min_heap(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "lst):\n    for i in range(1, len(lst)):\n        if lst[i] < lst[(i - 1) // 2]:\n            return False\n    return True"
+ },
+ {
+  "id": "asks/find_set",
+  "request": "find set",
+  "prompt": "def find_set(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "parent, x):\n    while parent[x] != x:\n        parent[x] = parent[parent[x]]\n        x = parent[x]\n    return x"
+ },
+ {
+  "id": "asks/union_sets",
+  "request": "union sets",
+  "prompt": "def union_sets(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "parent, a, b):\n    root_a = a\n    root_b = b\n    while parent[root_a] != root_a:\n        root_a = parent[root_a]\n    while parent[root_b] != root_b:\n        root_b = parent[root_b]\n    if root_a != root_b:\n        parent[root_b] = root_a"
+ },
+ {
+  "id": "asks/dijkstra",
+  "request": "dijkstra",
+  "prompt": "def dijkstra(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "graph, start):\n    distances = {node: float('inf') for node in graph}\n    distances[start] = 0\n    visited = set()\n    while visited != set(graph):\n        nearest = min(((distances[node], node) for node in graph if node not in visited))[1]\n        visited.add(nearest)\n        for neighbour, weight in graph[nearest].items():\n            distances[neighbour] = min(distances[neighbour], distances[nearest] + weight)\n    return distances"
+ },
+ {
+  "id": "asks/dfs",
+  "request": "dfs",
+  "prompt": "def dfs(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "graph, start):\n    visited = set()\n    result = []\n    def dfs_recursive(node):\n        if node in visited:\n            return\n        visited.add(node)\n        result.append(node)\n        for neighbour in graph[node]:\n            dfs_recursive(neighbour)\n    dfs_recursive(start)\n    return result"
+ },
+ {
+  "id": "asks/topological_sort",
+  "request": "topological sort",
+  "prompt": "def topological_sort(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "graph):\n    V = range(len(graph))\n    indeg = [0 for _ in V]\n    for node in V:\n        for neighbor in graph[node]:\n            indeg[neighbor] += 1\n    Q = [node for node in V if indeg[node] == 0]\n    order = []\n    while Q:\n        node = Q.pop()\n        order.append(node)\n        for neighbor in graph[node]:\n            indeg[neighbor] -= 1\n            if indeg[neighbor] == 0:\n                Q.append(neighbor)\n    return order"
+ },
+ {
+  "id": "asks/is_cyclic",
+  "request": "is cyclic",
+  "prompt": "def is_cyclic(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "graph):\n    path = set()\n    def visit(vertex):\n        path.add(vertex)\n        for neighbour in graph.get(vertex, ()):\n            if neighbour in path or visit(neighbour):\n                return True\n        path.remove(vertex)\n        return False\n    return any((visit(v) for v in graph))"
+ },
+ {
+  "id": "asks/knapsack",
+  "request": "knapsack",
+  "prompt": "def knapsack(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "p, v, cmax):\n    opt = [0] * (cmax + 1)\n    for pi, vi in zip(p, v):\n        for c in range(cmax, pi - 1, -1):\n            opt[c] = max(opt[c], opt[c - pi] + vi)\n    return opt[cmax]"
+ },
+ {
+  "id": "asks/subset_sum",
+  "request": "subset sum",
+  "prompt": "def subset_sum(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "x, R):\n    b = [False] * (R + 1)\n    b[0] = True\n    for xi in x:\n        for s in range(R, xi - 1, -1):\n            b[s] |= b[s - xi]\n    return b[R]"
+ },
+ {
+  "id": "asks/coin_change_ways",
+  "request": "coin change ways",
+  "prompt": "def coin_change_ways(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "s, n):\n    if n < 0:\n        return 0\n    table = [0] * (n + 1)\n    table[0] = 1\n    for coin_val in s:\n        for j in range(coin_val, n + 1):\n            table[j] += table[j - coin_val]\n    return table[n]"
+ },
+ {
+  "id": "asks/evaluate_postfix",
+  "request": "evaluate postfix",
+  "prompt": "def evaluate_postfix(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "tokens):\n    stack = []\n    for token in tokens:\n        if token in '+-*/':\n            b = stack.pop()\n            a = stack.pop()\n            if token == '+':\n                stack.append(a + b)\n            elif token == '-':\n                stack.append(a - b)\n            elif token == '*':\n                stack.append(a * b)\n            elif token == '/':\n                stack.append(a / b)\n        else:\n            stack.append(int(token))\n    return stack[0]"
+ },
+ {
+  "id": "asks/josephus",
+  "request": "josephus",
+  "prompt": "def josephus(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "num_people: int, step_size: int) -> int:\n    circle = list(range(1, num_people + 1))\n    current = 0\n    while len(circle) > 1:\n        current = (current + step_size - 1) % len(circle)\n        circle.pop(current)\n    return circle[0]"
+ },
+ {
+  "id": "asks/hello_world",
+  "request": "hello world",
+  "prompt": "def hello_world(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "):\n    return 'Hello, World!'"
+ },
+ {
+  "id": "asks/calculator",
+  "request": "calculator",
+  "prompt": "def calculator(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "a, b, op):\n    if op == '+':\n        return a + b\n    elif op == '-':\n        return a - b\n    elif op == '*':\n        return a * b\n    elif op == '/':\n        return a / b"
+ },
+ {
+  "id": "asks/multiplication_table",
+  "request": "multiplication table",
+  "prompt": "def multiplication_table(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "number: int, number_of_terms: int) -> str:\n    return '\\n'.join((f'{number} * {i} = {number * i}' for i in range(1, number_of_terms + 1)))"
+ },
+ {
+  "id": "asks/even_or_odd",
+  "request": "even or odd",
+  "prompt": "def even_or_odd(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "n):\n    return 'Even' if n % 2 == 0 else 'Odd'"
+ },
+ {
+  "id": "asks/positive_or_negative",
+  "request": "positive or negative",
+  "prompt": "def positive_or_negative(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "n):\n    return 'Positive' if n > 0 else 'Negative' if n < 0 else 'Zero'"
+ },
+ {
+  "id": "asks/star_triangle",
+  "request": "star triangle",
+  "prompt": "def star_triangle(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "n):\n    return '\\n'.join(('*' * i for i in range(1, n + 1)))"
+ },
+ {
+  "id": "asks/star_pyramid",
+  "request": "star pyramid",
+  "prompt": "def star_pyramid(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "n):\n    return '\\n'.join([' ' * (n - g) + '*' * (2 * g - 1) for g in range(1, n + 1)])"
+ },
+ {
+  "id": "asks/floyd_triangle",
+  "request": "floyd triangle",
+  "prompt": "def floyd_triangle(",
+  "outcome": "error",
+  "detail": "error: TypeError(\"floyd_triangle() missing 2 required positional arguments: 'b' and 'c'\")",
+  "completion": "a, b, c):\n    if c == b:\n        return a\n    if c > b:\n        return a + b\n    return a + c"
+ },
+ {
+  "id": "asks/check_guess",
+  "request": "check guess",
+  "prompt": "def check_guess(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "guess, secret):\n    return 'Too low' if guess < secret else 'Too high' if guess > secret else 'Correct'"
+ },
+ {
+  "id": "asks/tic_tac_toe_winner",
+  "request": "tic tac toe winner",
+  "prompt": "def tic_tac_toe_winner(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "board):\n    for i in range(3):\n        if board[i][0] == board[i][1] == board[i][2] != ' ':\n            return board[i][0]\n        if board[0][i] == board[1][i] == board[2][i] != ' ':\n            return board[0][i]\n    if board[0][0] == board[1][1] == board[2][2] != ' ':\n        return board[0][0]\n    if board[0][2] == board[1][1] == board[2][0] != ' ':\n        return board[0][2]\n    return None"
+ },
+ {
+  "id": "asks/is_valid_date",
+  "request": "is valid date",
+  "prompt": "def is_valid_date(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "year, month, day):\n    is_leap_year = year % 4 == 0 and year % 100 != 0 or year % 400 == 0\n    if month in [1, 3, 5, 7, 8, 10, 12] and 1 <= day <= 31:\n        return True\n    elif month in [4, 6, 9, 11] and 1 <= day <= 30:\n        return True\n    elif month == 2 and is_leap_year and (1 <= day <= 29):\n        return True\n    elif month == 2 and (not is_leap_year) and (1 <= day <= 28):\n        return True\n    else:\n        return False"
+ },
+ {
+  "id": "asks/day_of_year",
+  "request": "day of year",
+  "prompt": "def day_of_year(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "year, month, day):\n    month_days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]\n    if month > 2 and (year % 400 == 0 or (year % 4 == 0 and year % 100 != 0)):\n        month_days[1] += 1\n    return sum(month_days[:month - 1]) + day"
+ },
+ {
+  "id": "asks/sort_dict_by_key",
+  "request": "sort dict by key",
+  "prompt": "def sort_dict_by_key(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "d):\n    return dict(sorted(d.items()))"
+ },
+ {
+  "id": "asks/remove_key",
+  "request": "remove key",
+  "prompt": "def remove_key(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "inventory, item):\n    if item in inventory:\n        inventory.pop(item)\n    return inventory"
+ },
+ {
+  "id": "asks/min_key",
+  "request": "min key",
+  "prompt": "def min_key(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "d):\n    return min(d, key=d.get)"
+ },
+ {
+  "id": "asks/top_k_frequent",
+  "request": "top k frequent",
+  "prompt": "def top_k_frequent(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "nums, k):\n    counter = {}\n    for num in nums:\n        if num in counter:\n            counter[num] += 1\n        else:\n            counter[num] = 1\n    sorted_counter = sorted(counter.items(), key=lambda x: x[1], reverse=True)\n    return [x[0] for x in sorted_counter[:k]]"
+ },
+ {
+  "id": "asks/is_isomorphic",
+  "request": "is isomorphic",
+  "prompt": "def is_isomorphic(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "s: str, t: str) -> bool:\n    if len(s) != len(t):\n        return False\n    mapping: dict[str, str] = {}\n    mapped = set()\n    for char_s, char_t in zip(s, t):\n        if char_s in mapping:\n            if mapping[char_s] != char_t:\n                return False\n        else:\n            if char_t in mapped:\n                return False\n            mapping[char_s] = char_t\n            mapped.add(char_t)\n    return True"
+ },
+ {
+  "id": "asks/most_common_char",
+  "request": "most common char",
+  "prompt": "def most_common_char(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "s):\n    return max(s, key=s.count)"
+ },
+ {
+  "id": "asks/remove_duplicate_chars",
+  "request": "remove duplicate chars",
+  "prompt": "def remove_duplicate_chars(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "s):\n    return ''.join([s[i] for i in range(len(s)) if s[i] not in s[:i]])"
+ },
+ {
+  "id": "asks/count_substring",
+  "request": "count substring",
+  "prompt": "def count_substring(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "string, substring):\n    count = 0\n    for i in range(len(string) - len(substring) + 1):\n        if string[i:i + len(substring)] == substring:\n            count += 1\n    return count"
+ },
+ {
+  "id": "asks/zigzag_conversion",
+  "request": "zigzag conversion",
+  "prompt": "def zigzag_conversion(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "s, n):\n    if n <= 1:\n        return s\n    rows = [[] for _ in range(n)]\n    dir = 1\n    row = 0\n    for char in s:\n        rows[row].append(char)\n        row += dir\n        if row == n - 1 or row == 0:\n            dir *= -1\n    return ''.join((''.join(row) for row in rows))"
+ },
+ {
+  "id": "asks/compress_string",
+  "request": "compress string",
+  "prompt": "def compress_string(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "s):\n    if not s:\n        return s\n    compressed = []\n    count = 1\n    for i in range(1, len(s)):\n        if s[i] == s[i - 1]:\n            count += 1\n        else:\n            compressed.append(s[i - 1] + str(count))\n            count = 1\n    compressed.append(s[-1] + str(count))\n    return ''.join(compressed)"
+ },
+ {
+  "id": "asks/run_length_decoding",
+  "request": "run length decoding",
+  "prompt": "def run_length_decoding(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "data: str) -> str:\n    decoded: str = ''\n    count: str = ''\n    for char in data:\n        if not char.isdigit():\n            decoded += char * int(count)\n            count = ''\n        else:\n            count += char\n    return decoded"
+ },
+ {
+  "id": "asks/valid_palindrome",
+  "request": "valid palindrome",
+  "prompt": "def valid_palindrome(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "text: str) -> bool:\n    left = 0\n    right = len(text) - 1\n    while left < right:\n        while left < right and (not text[left].isalnum()):\n            left += 1\n        while left < right and (not text[right].isalnum()):\n            right -= 1\n        if text[left].lower() != text[right].lower():\n            return False\n        left, right = (left + 1, right - 1)\n    return True"
+ },
+ {
+  "id": "asks/find_substring",
+  "request": "find substring",
+  "prompt": "def find_substring(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "haystack: str, needle: str) -> int:\n    if len(needle) == 0:\n        return 0\n    if len(needle) > len(haystack):\n        return -1\n    for index in range(len(haystack)):\n        if len(haystack) - index < len(needle):\n            return -1\n        if haystack[index:index + len(needle)] == needle:\n            return index\n    return -1"
+ },
+ {
+  "id": "asks/snake_camel",
+  "request": "snake to camel",
+  "prompt": "def snake_camel(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "key):\n    return ''.join((x.capitalize() if i > 0 else x for i, x in enumerate(key.split('_'))))"
+ },
+ {
+  "id": "asks/string_permutations",
+  "request": "string permutations",
+  "prompt": "def string_permutations(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "elements: list | str) -> list:\n    if len(elements) <= 1:\n        return [elements]\n    result = []\n    for perm in string_permutations(elements[1:]):\n        for i in range(len(elements)):\n            result.append(perm[:i] + elements[0:1] + perm[i:])\n    return result"
+ },
+ {
+  "id": "asks/string_length",
+  "request": "string length",
+  "prompt": "def string_length(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "list):\n    return sum((1 for _ in list))"
+ },
+ {
+  "id": "asks/uppercase",
+  "request": "uppercase",
+  "prompt": "def uppercase(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "word: str) -> str:\n    return ''.join((chr(ord(char) - 32) if 'a' <= char <= 'z' else char for char in word))"
+ },
+ {
+  "id": "asks/lowercase",
+  "request": "lowercase",
+  "prompt": "def lowercase(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "s):\n    return s.lower()"
+ },
+ {
+  "id": "asks/count_vowels_consonants",
+  "request": "count vowels consonants",
+  "prompt": "def count_vowels_consonants(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "text: str) -> tuple[int, int]:\n    vowels = set('aeiouAEIOU')\n    vowel_count = 0\n    consonant_count = 0\n    for char in text:\n        if char.isalpha():\n            if char in vowels:\n                vowel_count += 1\n            else:\n                consonant_count += 1\n    return (vowel_count, consonant_count)"
+ },
+ {
+  "id": "asks/longest_common_substring",
+  "request": "longest common substring",
+  "prompt": "def longest_common_substring(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "s1, s2):\n    m = [[0] * (1 + len(s2)) for i in range(1 + len(s1))]\n    longest, x_longest = (0, 0)\n    for x in range(1, 1 + len(s1)):\n        for y in range(1, 1 + len(s2)):\n            if s1[x - 1] == s2[y - 1]:\n                m[x][y] = m[x - 1][y - 1] + 1\n                if m[x][y] > longest:\n                    longest = m[x][y]\n                    x_longest = x\n            else:\n                m[x][y] = 0\n    return s1[x_longest - longest:x_longest]"
+ },
+ {
+  "id": "asks/first_duplicate",
+  "request": "first duplicate",
+  "prompt": "def first_duplicate(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "arr):\n    seen_numbers = set()\n    for num in arr:\n        if num in seen_numbers:\n            return num\n        seen_numbers.add(num)"
+ },
+ {
+  "id": "asks/next_greater_element",
+  "request": "next greater element",
+  "prompt": "def next_greater_element(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "arr: list[float]) -> list[float]:\n    result = []\n    for i, outer in enumerate(arr):\n        next_item: float = -1\n        for inner in arr[i + 1:]:\n            if outer < inner:\n                next_item = inner\n                break\n        result.append(next_item)\n    return result"
+ },
+ {
+  "id": "asks/rotate_left",
+  "request": "rotate left",
+  "prompt": "def rotate_left(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "x, y):\n    if len(x) == 0:\n        return []\n    y = y % len(x)\n    return x[y:] + x[:y]"
+ },
+ {
+  "id": "asks/pairwise_swap",
+  "request": "pairwise swap",
+  "prompt": "def pairwise_swap(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "lst):\n    for i in range(0, len(lst) - 1, 2):\n        lst[i], lst[i + 1] = (lst[i + 1], lst[i])\n    return lst"
+ },
+ {
+  "id": "asks/leaders",
+  "request": "leaders",
+  "prompt": "def leaders(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "arr):\n    if not arr:\n        return []\n    max_so_far = arr[-1]\n    leaders = [max_so_far]\n    for i in range(len(arr) - 2, -1, -1):\n        if arr[i] > max_so_far:\n            max_so_far = arr[i]\n            leaders.append(max_so_far)\n    return leaders[::-1]"
+ },
+ {
+  "id": "asks/equilibrium_index",
+  "request": "equilibrium index",
+  "prompt": "def equilibrium_index(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "arr: list[int]) -> int:\n    total_sum = sum(arr)\n    left_sum = 0\n    for i, value in enumerate(arr):\n        total_sum -= value\n        if left_sum == total_sum:\n            return i\n        left_sum += value\n    return -1"
+ },
+ {
+  "id": "asks/second_smallest",
+  "request": "second smallest",
+  "prompt": "def second_smallest(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "nums):\n    nums.sort()\n    return nums[1]"
+ },
+ {
+  "id": "asks/odd_numbers",
+  "request": "odd numbers",
+  "prompt": "def odd_numbers(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "lst):\n    return [x for x in lst if x % 2 != 0]"
+ },
+ {
+  "id": "asks/combinations",
+  "request": "combinations",
+  "prompt": "def combinations(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "lst, k):\n    if k == 0:\n        return [[]]\n    elif k == len(lst):\n        return [lst]\n    else:\n        result = []\n        for i, element in enumerate(lst):\n            for combination in combinations(lst[i + 1:], k - 1):\n                result.append([element] + combination)\n        return result"
+ },
+ {
+  "id": "asks/add_numbers",
+  "request": "add numbers",
+  "prompt": "def add_numbers(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "a, b):\n    return a + b"
+ },
+ {
+  "id": "asks/swap_numbers",
+  "request": "swap numbers",
+  "prompt": "def swap_numbers(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "a, b):\n    return (b, a)"
+ },
+ {
+  "id": "asks/max_of_two",
+  "request": "max of two",
+  "prompt": "def max_of_two(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "a: int, b: int) -> int:\n    if a > b:\n        return a\n    return b"
+ },
+ {
+  "id": "asks/ascii_value",
+  "request": "ascii value",
+  "prompt": "def ascii_value(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "s):\n    return ord(s)"
+ },
+ {
+  "id": "asks/harmonic_sum",
+  "request": "harmonic sum",
+  "prompt": "def harmonic_sum(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "n):\n    return sum((1 / i for i in range(1, n + 1)))"
+ },
+ {
+  "id": "asks/is_amicable",
+  "request": "is amicable",
+  "prompt": "def is_amicable(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "a, b):\n    def sum_of_divisors(n):\n        return sum([i for i in range(1, n) if n % i == 0])\n    return sum_of_divisors(a) == b and sum_of_divisors(b) == a"
+ },
+ {
+  "id": "asks/is_strong_number",
+  "request": "is strong number",
+  "prompt": "def is_strong_number(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "number: int) -> bool:\n    def factorial(digit: int) -> int:\n        return 1 if digit in (0, 1) else digit * factorial(digit - 1)\n    fact_sum = 0\n    duplicate = number\n    while duplicate > 0:\n        duplicate, digit = divmod(duplicate, 10)\n        fact_sum += factorial(digit)\n    return fact_sum == number"
+ },
+ {
+  "id": "asks/primes_between",
+  "request": "primes between",
+  "prompt": "def primes_between(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "low, high):\n    def is_prime(n):\n        if n <= 1:\n            return False\n        for i in range(2, int(n ** 0.5) + 1):\n            if n % i == 0:\n                return False\n        return True\n    return [n for n in range(low, high + 1) if is_prime(n)]"
+ },
+ {
+  "id": "asks/first_n_primes",
+  "request": "first n primes",
+  "prompt": "def first_n_primes(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "n):\n    def is_prime(num):\n        if num <= 1:\n            return False\n        for i in range(2, int(num ** 0.5) + 1):\n            if num % i == 0:\n                return False\n        return True\n    primes = []\n    num = 2\n    while len(primes) < n:\n        if is_prime(num):\n            primes.append(num)\n        num += 1\n    return primes"
+ },
+ {
+  "id": "asks/largest_prime_factor",
+  "request": "largest prime factor",
+  "prompt": "def largest_prime_factor(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "n):\n    i = 2\n    while i * i <= n:\n        if n % i:\n            i += 1\n        else:\n            n //= i\n    return n if n > 1 else i"
+ },
+ {
+  "id": "asks/is_fibonacci",
+  "request": "is fibonacci",
+  "prompt": "def is_fibonacci(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "n):\n    if n < 2:\n        return True\n    a, b = (0, 1)\n    while b < n:\n        a, b = (b, a + b)\n    return b == n"
+ },
+ {
+  "id": "asks/tribonacci",
+  "request": "tribonacci",
+  "prompt": "def tribonacci(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "n):\n    if n == 0:\n        return 0\n    elif n == 1 or n == 2:\n        return 1\n    else:\n        a, b, c = (0, 1, 1)\n        for _ in range(3, n + 1):\n            a, b, c = (b, c, a + b + c)\n        return c"
+ },
+ {
+  "id": "asks/gcd_of_list",
+  "request": "gcd of list",
+  "prompt": "def gcd_of_list(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "lst):\n    def gcd(a, b):\n        while b:\n            a, b = (b, a % b)\n        return a\n    result = lst[0]\n    for num in lst[1:]:\n        result = gcd(result, num)\n    return result"
+ },
+ {
+  "id": "asks/product_of_digits",
+  "request": "product of digits",
+  "prompt": "def product_of_digits(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "n):\n    product = 1\n    while n > 0:\n        product *= n % 10\n        n //= 10\n    return product"
+ },
+ {
+  "id": "asks/npr",
+  "request": "npr",
+  "prompt": "def npr(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "n, r=None):\n    if r is None:\n        r = n\n    if r > n or r < 0:\n        return 0\n    if r == 0:\n        return 1\n    result = 1\n    for i in range(n, n - r, -1):\n        result *= i\n    return result"
+ },
+ {
+  "id": "asks/square_area",
+  "request": "square area",
+  "prompt": "def square_area(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "side_length: float) -> float:\n    if side_length < 0:\n        raise ValueError('area_square() only accepts non-negative values')\n    return side_length ** 2"
+ },
+ {
+  "id": "asks/square_perimeter",
+  "request": "square perimeter",
+  "prompt": "def square_perimeter(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "side):\n    return 4 * side"
+ },
+ {
+  "id": "asks/cube_volume",
+  "request": "cube volume",
+  "prompt": "def cube_volume(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "side_length: float) -> float:\n    if side_length < 0:\n        raise ValueError('vol_cube() only accepts non-negative values')\n    return pow(side_length, 3)"
+ },
+ {
+  "id": "asks/sphere_volume",
+  "request": "sphere volume",
+  "prompt": "def sphere_volume(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "radius):\n    pi = 3.14\n    return 4 / 3 * pi * radius ** 3"
+ },
+ {
+  "id": "asks/cylinder_volume",
+  "request": "cylinder volume",
+  "prompt": "def cylinder_volume(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "radius, height):\n    return 3.14159 * radius ** 2 * height"
+ },
+ {
+  "id": "asks/kg_pounds",
+  "request": "kg to pounds",
+  "prompt": "def kg_pounds(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "kg):\n    return kg * 2.20462"
+ },
+ {
+  "id": "asks/pounds_kg",
+  "request": "pounds to kg",
+  "prompt": "def pounds_kg(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "pounds):\n    return pounds / 2.2"
+ },
+ {
+  "id": "asks/feet_meters",
+  "request": "feet to meters",
+  "prompt": "def feet_meters(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "feet):\n    return feet * 0.3048"
+ },
+ {
+  "id": "asks/meters_feet",
+  "request": "meters to feet",
+  "prompt": "def meters_feet(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "meters):\n    return meters * 3.28084"
+ },
+ {
+  "id": "asks/inches_cm",
+  "request": "inches to cm",
+  "prompt": "def inches_cm(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "inches):\n    return inches * 2.54"
+ },
+ {
+  "id": "asks/cm_inches",
+  "request": "cm to inches",
+  "prompt": "def cm_inches(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "cm):\n    return cm / 2.54"
+ },
+ {
+  "id": "asks/first_occurrence",
+  "request": "first occurrence",
+  "prompt": "def first_occurrence(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "array: list[int], query: int) -> int:\n    low, high = (0, len(array) - 1)\n    while low <= high:\n        mid = low + (high - low) // 2\n        if low == high:\n            break\n        if array[mid] < query:\n            low = mid + 1\n        else:\n            high = mid\n    if array[low] == query:\n        return low\n    return -1"
+ },
+ {
+  "id": "asks/search_insert",
+  "request": "search insert",
+  "prompt": "def search_insert(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "array: list[int], val: int) -> int:\n    low = 0\n    high = len(array) - 1\n    while low <= high:\n        mid = low + (high - low) // 2\n        if val > array[mid]:\n            low = mid + 1\n        else:\n            high = mid - 1\n    return low"
+ },
+ {
+  "id": "asks/ternary_search",
+  "request": "ternary search",
+  "prompt": "def ternary_search(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "lst, target):\n    l, r = (0, len(lst) - 1)\n    while l <= r:\n        mid1 = l + (r - l) // 3\n        mid2 = r - (r - l) // 3\n        if lst[mid1] == target:\n            return mid1\n        elif lst[mid2] == target:\n            return mid2\n        if target < lst[mid1]:\n            r = mid1 - 1\n        elif target > lst[mid2]:\n            l = mid2 + 1\n        else:\n            l = mid1 + 1\n            r = mid2 - 1\n    return -1"
+ },
+ {
+  "id": "asks/stooge_sort",
+  "request": "stooge sort",
+  "prompt": "def stooge_sort(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "array: list[int]) -> list[int]:\n    def _stooge_sort(array: list[int], low: int, high: int) -> None:\n        if low >= high:\n            return\n        if array[low] > array[high]:\n            array[low], array[high] = (array[high], array[low])\n        if high - low + 1 > 2:\n            third = (high - low + 1) // 3\n            _stooge_sort(array, low, high - third)\n            _stooge_sort(array, low + third, high)\n            _stooge_sort(array, low, high - third)\n    _stooge_sort(array, 0, len(array) - 1)\n    return array"
+ },
+ {
+  "id": "asks/pigeonhole_sort",
+  "request": "pigeonhole sort",
+  "prompt": "def pigeonhole_sort(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "array: list[int]) -> list[int]:\n    max_value = max(array)\n    min_value = min(array)\n    size = max_value - min_value + 1\n    holes = [0] * size\n    for value in array:\n        holes[value - min_value] += 1\n    i = 0\n    for count in range(size):\n        while holes[count] > 0:\n            holes[count] -= 1\n            array[i] = count + min_value\n            i += 1\n    return array"
+ },
+ {
+  "id": "asks/binary_insertion_sort",
+  "request": "binary insertion sort",
+  "prompt": "def binary_insertion_sort(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "arr):\n    for i in range(1, len(arr)):\n        key = arr[i]\n        low, high = (0, i - 1)\n        while low <= high:\n            mid = (low + high) // 2\n            if arr[mid] > key:\n                high = mid - 1\n            else:\n                low = mid + 1\n        arr = arr[:low] + [key] + arr[low:i] + arr[i + 1:]\n    return arr"
+ },
+ {
+  "id": "asks/sort_colors",
+  "request": "sort colors",
+  "prompt": "def sort_colors(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "array: list[int]) -> list[int]:\n    red = white = 0\n    for k in range(len(array)):\n        value = array[k]\n        array[k] = 2\n        if value < 2:\n            array[white] = 1\n            white += 1\n        if value == 0:\n            array[red] = 0\n            red += 1\n    return array"
+ },
+ {
+  "id": "asks/sort_descending",
+  "request": "sort descending",
+  "prompt": "def sort_descending(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "nums):\n    return sorted(nums, reverse=True)"
+ },
+ {
+  "id": "asks/sort_by_length",
+  "request": "sort by length",
+  "prompt": "def sort_by_length(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "lst):\n    return sorted(lst, key=len)"
+ },
+ {
+  "id": "asks/sort_by_frequency",
+  "request": "sort by frequency",
+  "prompt": "def sort_by_frequency(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "lst):\n    return sorted(lst, key=lambda x: lst.count(x), reverse=True)"
+ },
+ {
+  "id": "asks/sort_by_second",
+  "request": "sort by second",
+  "prompt": "def sort_by_second(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "lst):\n    return sorted(lst, key=lambda pair: pair[1])"
+ },
+ {
+  "id": "asks/is_magic_square",
+  "request": "is magic square",
+  "prompt": "def is_magic_square(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "matrix):\n    n = len(matrix)\n    if n < 2:\n        return True\n    target_sum = sum(matrix[0])\n    for row in matrix:\n        if sum(row) != target_sum:\n            return False\n    for col in range(n):\n        if sum((matrix[row][col] for row in range(n))) != target_sum:\n            return False\n    if sum((matrix[i][i] for i in range(n))) != target_sum or sum((matrix[i][n - i - 1] for i in range(n))) != target_sum:\n        return False\n    return True"
+ },
+ {
+  "id": "asks/min_path_sum",
+  "request": "min path sum",
+  "prompt": "def min_path_sum(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "matrix: list[list[int]]) -> int:\n    for i in range(1, len(matrix[0])):\n        matrix[0][i] += matrix[0][i - 1]\n    for i in range(1, len(matrix)):\n        matrix[i][0] += matrix[i - 1][0]\n    for i in range(1, len(matrix)):\n        for j in range(1, len(matrix[0])):\n            matrix[i][j] += min(matrix[i - 1][j], matrix[i][j - 1])\n    return matrix[-1][-1]"
+ },
+ {
+  "id": "asks/binary_gap",
+  "request": "binary gap",
+  "prompt": "def binary_gap(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "number: int) -> int:\n    last_one_position = None\n    longest_gap = 0\n    index = 0\n    while number != 0:\n        if number & 1:\n            if last_one_position is not None:\n                longest_gap = max(longest_gap, index - last_one_position)\n            last_one_position = index\n        index += 1\n        number >>= 1\n    return longest_gap"
+ },
+ {
+  "id": "asks/binary_gray",
+  "request": "binary to gray",
+  "prompt": "def binary_gray(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "bin_list: str) -> str:\n    b = [bin_list[0]]\n    for i in range(1, len(bin_list)):\n        b += str(int(bin_list[i]) ^ int(bin_list[i - 1]))\n    return ''.join(b)"
+ },
+ {
+  "id": "asks/gray_sequence",
+  "request": "gray sequence",
+  "prompt": "def gray_sequence(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "n: int) -> list[int]:\n    return [i ^ i >> 1 for i in range(1 << n)]"
+ },
+ {
+  "id": "asks/square",
+  "request": "square",
+  "prompt": "def square(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "n):\n    return n * n"
+ },
+ {
+  "id": "asks/cube",
+  "request": "cube",
+  "prompt": "def cube(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "num):\n    num_cubed = num * num * num\n    return num_cubed"
+ },
+ {
+  "id": "asks/multiply_numbers",
+  "request": "multiply numbers",
+  "prompt": "def multiply_numbers(",
+  "outcome": "pass",
+  "detail": "",
+  "completion": "a, b):\n    return a * b"
+ }
+]

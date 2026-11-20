@@ -1,0 +1,73 @@
+A2 on custom practice: 200 tasks x 1 samples in 11.2 s
+  pass@1     0.0150
+  pass@10    -
+  syntax_ok  0.8900
+  runs_ok    0.3650
+  empty      0.0000
+  outcomes   pass 3, wrong 70, error 105, timeout 0, syntax 22
+  recorded in results/results.jsonl, samples in results/samples/20261114-020401_A2_custom_practice.jsonl.gz
+A2 on custom practice: 200 tasks x 10 samples in 123.8 s
+  pass@1     0.0135
+  pass@10    0.0350
+  syntax_ok  0.8300
+  runs_ok    0.3180
+  empty      0.0000
+  outcomes   pass 27, wrong 609, error 1024, timeout 0, syntax 340
+  recorded in results/results.jsonl, samples in results/samples/20261114-020608_A2_custom_practice.jsonl.gz
+A2 on mbpp practice: 464 tasks x 1 samples in 85.6 s
+  pass@1     0.0065
+  pass@10    -
+  syntax_ok  0.7155
+  runs_ok    0.3621
+  empty      0.0000
+  outcomes   pass 3, wrong 165, error 164, timeout 0, syntax 132
+  recorded in results/results.jsonl, samples in results/samples/20261114-020737_A2_mbpp_practice.jsonl.gz
+A2 on mbpp practice: 464 tasks x 10 samples in 323.5 s
+  pass@1     0.0006
+  pass@10    0.0043
+  syntax_ok  0.5905
+  runs_ok    0.1366
+  empty      0.0000
+  outcomes   pass 3, wrong 631, error 2105, timeout 1, syntax 1900
+  recorded in results/results.jsonl, samples in results/samples/20261114-021303_A2_mbpp_practice.jsonl.gz
+A2+filter on custom practice: 200 tasks x 1 samples in 15.5 s
+  pass@1     0.0150
+  pass@10    -
+  syntax_ok  0.9200
+  runs_ok    0.3800
+  empty      0.0000
+  outcomes   pass 3, wrong 73, error 108, timeout 0, syntax 16
+  recorded in results/results.jsonl, samples in results/samples/20261114-021321_A2_filter_custom_practice.jsonl.gz
+A2+filter on custom practice: 200 tasks x 10 samples in 88.7 s
+  pass@1     0.0135
+  pass@10    0.0350
+  syntax_ok  0.8670
+  runs_ok    0.3255
+  empty      0.0000
+  outcomes   pass 27, wrong 624, error 1083, timeout 0, syntax 266
+  recorded in results/results.jsonl, samples in results/samples/20261114-021453_A2_filter_custom_practice.jsonl.gz
+A2+filter on mbpp practice: 464 tasks x 1 samples in 46.3 s
+  pass@1     0.0065
+  pass@10    -
+  syntax_ok  0.8017
+  runs_ok    0.3922
+  empty      0.0000
+  outcomes   pass 3, wrong 179, error 190, timeout 0, syntax 92
+  recorded in results/results.jsonl, samples in results/samples/20261114-021542_A2_filter_mbpp_practice.jsonl.gz
+A2 on custom practice: 200 tasks x 1 samples in 24.5 s
+  pass@1     0.0150
+  pass@10    -
+  syntax_ok  0.8900
+  runs_ok    0.3650
+  empty      0.0000
+  outcomes   pass 3, wrong 70, error 105, timeout 0, syntax 22
+  recorded in results/results.jsonl, samples in results/samples/20261114-022009_A2_custom_practice.jsonl.gz
+A2+filter on mbpp practice: 464 tasks x 10 samples in 913.6 s
+  pass@1     0.0006
+  pass@10    0.0043
+  syntax_ok  0.6485
+  runs_ok    0.1437
+  empty      0.0000
+  outcomes   pass 3, wrong 664, error 2341, timeout 1, syntax 1631
+  recorded in results/results.jsonl, samples in results/samples/20261114-023059_A2_filter_mbpp_practice.jsonl.gz
+done

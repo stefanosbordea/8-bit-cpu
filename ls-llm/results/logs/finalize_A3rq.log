@@ -1,0 +1,12 @@
+23:29:18 integer model: done: integer val 2.2506 nats/token = 1.5002 bits/byte at step 3000 (float 2.1770); QAT forward and integer reference identical: True
+23:29:18 run: .venv/bin/python -m lsllm.intref.compare --float runs/f/A3r/ckpt.pt --int runs/qat/A3rq --data data/tok/f512c2
+23:29:22 run: .venv/bin/python -m lsllm.intref.overflow runs/qat/A3rq --data data/tok/f512c2 --windows 32
+23:29:24 benchmarks: torch runs/f/A3r/ckpt.pt test
+23:29:24 benchmarks: torch runs/f/A3r/ckpt.pt practice
+23:29:24 benchmarks: int runs/qat/A3rq test
+23:29:24 benchmarks: int runs/qat/A3rq practice
+23:51:40 benchmarks finished
+23:51:40 run: .venv/bin/python -m lsllm.export runs/qat/A3rq export/A3rq --tokens 8 --temperature 0.8
+23:51:42 export: exit code 0
+23:51:42 run: .venv/bin/python tools/speed_report.py runs/qat/A3rq
+23:51:43 finalize done

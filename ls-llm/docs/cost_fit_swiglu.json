@@ -1,0 +1,36 @@
+{
+ "options": {
+  "norm": "rms",
+  "ffn": "swiglu"
+ },
+ "terms": [
+  "multiply-adds",
+  "L*D",
+  "L*kv",
+  "L*F",
+  "V",
+  "L*H*n",
+  "L*H*d",
+  "L*H",
+  "L",
+  "D",
+  "1"
+ ],
+ "coefficients": [
+  1.0034,
+  108.1231,
+  88.8043,
+  72.1577,
+  43.8491,
+  59.8727,
+  108.1231,
+  338.9444,
+  315.3509,
+  35.4775,
+  993.71
+ ],
+ "fit_shapes": 100,
+ "largest_error_fit": 0.008345932627377348,
+ "held_out_shapes": 50,
+ "largest_error_held_out": 0.004124755367320042
+}

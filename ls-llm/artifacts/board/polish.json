@@ -1,0 +1,10 @@
+{
+ "texts": 400,
+ "exact": 400,
+ "failing_positions": 0,
+ "positions": 29103,
+ "entries_of_E_moved": 2481,
+ "repairs": 78,
+ "input_embedding_unchanged": true,
+ "not_exact": []
+}

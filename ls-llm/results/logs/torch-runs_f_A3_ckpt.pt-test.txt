@@ -1,0 +1,101 @@
+A3 on custom test: 200 tasks x 1 samples in 11.8 s
+  pass@1     0.0450
+  pass@10    -
+  syntax_ok  0.8900
+  runs_ok    0.3650
+  empty      0.0000
+  outcomes   pass 9, wrong 64, error 105, timeout 0, syntax 22
+  recorded in results/results.jsonl, samples in results/samples/20261114-081325_A3_custom_test.jsonl.gz
+A3 on custom test: 200 tasks x 10 samples in 95.5 s
+  pass@1     0.0360
+  pass@10    0.1000
+  syntax_ok  0.8810
+  runs_ok    0.3735
+  empty      0.0000
+  outcomes   pass 72, wrong 675, error 1014, timeout 1, syntax 238
+  recorded in results/results.jsonl, samples in results/samples/20261114-081502_A3_custom_test.jsonl.gz
+A3 on mbpp test: 500 tasks x 1 samples in 60.6 s
+  pass@1     0.0040
+  pass@10    -
+  syntax_ok  0.8160
+  runs_ok    0.3660
+  empty      0.0000
+  outcomes   pass 2, wrong 181, error 225, timeout 0, syntax 92
+  recorded in results/results.jsonl, samples in results/samples/20261114-081605_A3_mbpp_test.jsonl.gz
+A3 on mbpp test: 500 tasks x 10 samples in 436.5 s
+  pass@1     0.0024
+  pass@10    0.0120
+  syntax_ok  0.6646
+  runs_ok    0.1678
+  empty      0.0000
+  outcomes   pass 12, wrong 827, error 2482, timeout 2, syntax 1677
+  recorded in results/results.jsonl, samples in results/samples/20261114-082323_A3_mbpp_test.jsonl.gz
+A3 on humaneval test: 164 tasks x 1 samples in 40.7 s
+  pass@1     0.0000
+  pass@10    -
+  syntax_ok  0.6220
+  runs_ok    0.2073
+  empty      0.0000
+  outcomes   pass 0, wrong 34, error 68, timeout 0, syntax 62
+  43 prompts were truncated by the completer
+  recorded in results/results.jsonl, samples in results/samples/20261114-082405_A3_humaneval_test.jsonl.gz
+A3 on humaneval test: 164 tasks x 10 samples in 235.6 s
+  pass@1     0.0006
+  pass@10    0.0061
+  syntax_ok  0.4720
+  runs_ok    0.0835
+  empty      0.0018
+  outcomes   pass 1, wrong 136, error 636, timeout 1, syntax 866
+  43 prompts were truncated by the completer
+  recorded in results/results.jsonl, samples in results/samples/20261114-082802_A3_humaneval_test.jsonl.gz
+A3+filter on custom test: 200 tasks x 1 samples in 16.2 s
+  pass@1     0.0450
+  pass@10    -
+  syntax_ok  0.8900
+  runs_ok    0.3650
+  empty      0.0000
+  outcomes   pass 9, wrong 64, error 105, timeout 0, syntax 22
+  recorded in results/results.jsonl, samples in results/samples/20261114-082821_A3_filter_custom_test.jsonl.gz
+A3+filter on custom test: 200 tasks x 10 samples in 67.5 s
+  pass@1     0.0360
+  pass@10    0.1000
+  syntax_ok  0.9055
+  runs_ok    0.3810
+  empty      0.0000
+  outcomes   pass 72, wrong 690, error 1048, timeout 1, syntax 189
+  recorded in results/results.jsonl, samples in results/samples/20261114-082930_A3_filter_custom_test.jsonl.gz
+A3+filter on mbpp test: 500 tasks x 1 samples in 21.8 s
+  pass@1     0.0040
+  pass@10    -
+  syntax_ok  0.8740
+  runs_ok    0.3780
+  empty      0.0000
+  outcomes   pass 2, wrong 187, error 248, timeout 0, syntax 63
+  recorded in results/results.jsonl, samples in results/samples/20261114-082954_A3_filter_mbpp_test.jsonl.gz
+A3+filter on mbpp test: 500 tasks x 10 samples in 270.1 s
+  pass@1     0.0024
+  pass@10    0.0120
+  syntax_ok  0.7112
+  runs_ok    0.1752
+  empty      0.0000
+  outcomes   pass 12, wrong 864, error 2675, timeout 5, syntax 1444
+  recorded in results/results.jsonl, samples in results/samples/20261114-083425_A3_filter_mbpp_test.jsonl.gz
+A3+filter on humaneval test: 164 tasks x 1 samples in 19.2 s
+  pass@1     0.0000
+  pass@10    -
+  syntax_ok  0.6463
+  runs_ok    0.2134
+  empty      0.0000
+  outcomes   pass 0, wrong 35, error 71, timeout 0, syntax 58
+  43 prompts were truncated by the completer
+  recorded in results/results.jsonl, samples in results/samples/20261114-083446_A3_filter_humaneval_test.jsonl.gz
+A3+filter on humaneval test: 164 tasks x 10 samples in 128.9 s
+  pass@1     0.0006
+  pass@10    0.0061
+  syntax_ok  0.5280
+  runs_ok    0.0915
+  empty      0.0018
+  outcomes   pass 1, wrong 149, error 715, timeout 1, syntax 774
+  43 prompts were truncated by the completer
+  recorded in results/results.jsonl, samples in results/samples/20261114-083656_A3_filter_humaneval_test.jsonl.gz
+done

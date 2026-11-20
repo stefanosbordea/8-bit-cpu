@@ -1,0 +1,65 @@
+A3rq on custom practice: 200 tasks x 1 samples in 18.0 s
+  pass@1     0.0300
+  pass@10    -
+  syntax_ok  0.9100
+  runs_ok    0.4800
+  empty      0.0000
+  outcomes   pass 6, wrong 90, error 86, timeout 0, syntax 18
+  recorded in results/results.jsonl, samples in results/samples/20261114-232942_A3rq_custom_practice.jsonl.gz
+A3rq on custom practice: 200 tasks x 10 samples in 106.7 s
+  pass@1     0.0205
+  pass@10    0.0600
+  syntax_ok  0.8495
+  runs_ok    0.3705
+  empty      0.0000
+  outcomes   pass 41, wrong 700, error 958, timeout 0, syntax 301
+  recorded in results/results.jsonl, samples in results/samples/20261114-233129_A3rq_custom_practice.jsonl.gz
+A3rq on mbpp practice: 464 tasks x 1 samples in 41.6 s
+  pass@1     0.0086
+  pass@10    -
+  syntax_ok  0.8470
+  runs_ok    0.3772
+  empty      0.0000
+  outcomes   pass 4, wrong 171, error 218, timeout 0, syntax 71
+  recorded in results/results.jsonl, samples in results/samples/20261114-233211_A3rq_mbpp_practice.jsonl.gz
+A3rq on mbpp practice: 464 tasks x 10 samples in 322.4 s
+  pass@1     0.0045
+  pass@10    0.0237
+  syntax_ok  0.6685
+  runs_ok    0.1970
+  empty      0.0000
+  outcomes   pass 21, wrong 893, error 2187, timeout 1, syntax 1538
+  recorded in results/results.jsonl, samples in results/samples/20261114-233734_A3rq_mbpp_practice.jsonl.gz
+A3rq+filter on custom practice: 200 tasks x 1 samples in 19.0 s
+  pass@1     0.0300
+  pass@10    -
+  syntax_ok  0.9200
+  runs_ok    0.4850
+  empty      0.0000
+  outcomes   pass 6, wrong 91, error 87, timeout 0, syntax 16
+  recorded in results/results.jsonl, samples in results/samples/20261114-233753_A3rq_filter_custom_practice.jsonl.gz
+A3rq+filter on custom practice: 200 tasks x 10 samples in 106.9 s
+  pass@1     0.0205
+  pass@10    0.0600
+  syntax_ok  0.8875
+  runs_ok    0.3780
+  empty      0.0000
+  outcomes   pass 41, wrong 715, error 1019, timeout 0, syntax 225
+  recorded in results/results.jsonl, samples in results/samples/20261114-233940_A3rq_filter_custom_practice.jsonl.gz
+A3rq+filter on mbpp practice: 464 tasks x 1 samples in 39.5 s
+  pass@1     0.0086
+  pass@10    -
+  syntax_ok  0.8922
+  runs_ok    0.3879
+  empty      0.0000
+  outcomes   pass 4, wrong 176, error 234, timeout 0, syntax 50
+  recorded in results/results.jsonl, samples in results/samples/20261114-234020_A3rq_filter_mbpp_practice.jsonl.gz
+A3rq+filter on mbpp practice: 464 tasks x 10 samples in 326.4 s
+  pass@1     0.0047
+  pass@10    0.0259
+  syntax_ok  0.7356
+  runs_ok    0.2078
+  empty      0.0000
+  outcomes   pass 22, wrong 942, error 2448, timeout 1, syntax 1227
+  recorded in results/results.jsonl, samples in results/samples/20261114-234547_A3rq_filter_mbpp_practice.jsonl.gz
+done

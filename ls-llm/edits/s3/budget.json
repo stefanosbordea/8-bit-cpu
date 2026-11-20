@@ -1,0 +1,1097 @@
+{
+ "base": "runs/qat/A2q",
+ "strategy": "The hardware-specific knobs. Quantisation chose the tables and offsets by rules, not by what helps the task: (a) the attention table EXP[l] of each layer, round(127 exp(-d / kappa)) for code distance d with EXP[l][0] = 127: rebuild it with a smaller or larger kappa (sharper or flatter attention), per layer; (b) the score offsets `preloads.c_s[l][h]` per head (they decide which scores fall off at code 0 or 127; steps of 8 or 16 codes, i.e. 8 or 16 times 2^sh_s); (c) the gain of the norm tables NORM[n] (scale a table by 0.85 to 1.2 and clamp), per site; (d) the reciprocal table. Try them one at a time with a few values each, keep what helps the practice score, then combine the winners.",
+ "limit": 50,
+ "runs": [
+  {
+   "run": 1,
+   "kind": "evaluate",
+   "note": "baseline",
+   "edits_so_far": 0,
+   "time": "2026-11-14 02:20:06",
+   "result": {
+    "run": 1,
+    "budget_left": 49,
+    "practice_loss": 1.6463,
+    "pass@1": 0.005,
+    "syntax_ok": 0.9299999999999999,
+    "runs_ok": 0.425,
+    "tests_passed": 0.095,
+    "outcomes": {
+     "pass": 1,
+     "wrong": 84,
+     "error": 101,
+     "timeout": 0,
+     "syntax": 14
+    },
+    "errors": {
+     "TypeError": 53,
+     "NameError": 38,
+     "AttributeError": 4,
+     "ZeroDivisionError": 3,
+     "IndexError": 1,
+     "ValueError": 1
+    },
+    "repeating": 0.04,
+    "note": "baseline"
+   }
+  },
+  {
+   "run": 2,
+   "kind": "trace",
+   "note": "prompt + reference solution of 50 practice tasks, knob statistics",
+   "edits_so_far": 0,
+   "time": "2026-11-14 02:22:15"
+  },
+  {
+   "run": 3,
+   "kind": "evaluate",
+   "note": "EXP[0] kappa 3.00",
+   "edits_so_far": 1,
+   "time": "2026-11-14 02:24:28",
+   "result": {
+    "run": 3,
+    "budget_left": 47,
+    "practice_loss": 1.6833,
+    "pass@1": 0.01,
+    "syntax_ok": 0.88,
+    "runs_ok": 0.36,
+    "tests_passed": 0.0842,
+    "outcomes": {
+     "pass": 2,
+     "wrong": 70,
+     "error": 104,
+     "timeout": 0,
+     "syntax": 24
+    },
+    "errors": {
+     "NameError": 47,
+     "TypeError": 45,
+     "AttributeError": 5,
+     "ZeroDivisionError": 3,
+     "KeyError": 2,
+     "IndexError": 1
+    },
+    "repeating": 0.03,
+    "note": "EXP[0] kappa 3.00"
+   }
+  },
+  {
+   "run": 4,
+   "kind": "evaluate",
+   "note": "EXP[0] kappa 5.50",
+   "edits_so_far": 3,
+   "time": "2026-11-14 02:24:57",
+   "result": {
+    "run": 4,
+    "budget_left": 46,
+    "practice_loss": 1.7198,
+    "pass@1": 0.01,
+    "syntax_ok": 0.9299999999999999,
+    "runs_ok": 0.495,
+    "tests_passed": 0.1207,
+    "outcomes": {
+     "pass": 2,
+     "wrong": 97,
+     "error": 87,
+     "timeout": 0,
+     "syntax": 14
+    },
+    "errors": {
+     "TypeError": 47,
+     "NameError": 33,
+     "ZeroDivisionError": 2,
+     "IndexError": 2,
+     "KeyError": 2,
+     "AttributeError": 1
+    },
+    "repeating": 0.03,
+    "note": "EXP[0] kappa 5.50"
+   }
+  },
+  {
+   "run": 5,
+   "kind": "evaluate",
+   "note": "EXP[1] kappa 3.00",
+   "edits_so_far": 5,
+   "time": "2026-11-14 02:25:42",
+   "result": {
+    "run": 5,
+    "budget_left": 45,
+    "practice_loss": 1.6935,
+    "pass@1": 0.01,
+    "syntax_ok": 0.885,
+    "runs_ok": 0.37,
+    "tests_passed": 0.0898,
+    "outcomes": {
+     "pass": 2,
+     "wrong": 72,
+     "error": 103,
+     "timeout": 0,
+     "syntax": 23
+    },
+    "errors": {
+     "NameError": 44,
+     "TypeError": 43,
+     "AttributeError": 8,
+     "ZeroDivisionError": 3,
+     "ValueError": 2,
+     "IndexError": 2
+    },
+    "repeating": 0.035,
+    "note": "EXP[1] kappa 3.00"
+   }
+  },
+  {
+   "run": 6,
+   "kind": "evaluate",
+   "note": "EXP[1] kappa 5.50",
+   "edits_so_far": 7,
+   "time": "2026-11-14 02:26:23",
+   "result": {
+    "run": 6,
+    "budget_left": 44,
+    "practice_loss": 1.6977,
+    "pass@1": 0.015,
+    "syntax_ok": 0.905,
+    "runs_ok": 0.415,
+    "tests_passed": 0.0951,
+    "outcomes": {
+     "pass": 3,
+     "wrong": 80,
+     "error": 98,
+     "timeout": 0,
+     "syntax": 19
+    },
+    "errors": {
+     "NameError": 45,
+     "TypeError": 43,
+     "AttributeError": 5,
+     "ZeroDivisionError": 2,
+     "IndexError": 2,
+     "ValueError": 1
+    },
+    "repeating": 0.05,
+    "note": "EXP[1] kappa 5.50"
+   }
+  },
+  {
+   "run": 7,
+   "kind": "evaluate",
+   "note": "EXP[0] kappa 4.70",
+   "edits_so_far": 9,
+   "time": "2026-11-14 02:28:08",
+   "result": {
+    "run": 7,
+    "budget_left": 43,
+    "practice_loss": 1.6654,
+    "pass@1": 0.01,
+    "syntax_ok": 0.905,
+    "runs_ok": 0.415,
+    "tests_passed": 0.1069,
+    "outcomes": {
+     "pass": 2,
+     "wrong": 81,
+     "error": 98,
+     "timeout": 0,
+     "syntax": 19
+    },
+    "errors": {
+     "TypeError": 56,
+     "NameError": 33,
+     "AttributeError": 6,
+     "IndexError": 2,
+     "ZeroDivisionError": 1
+    },
+    "repeating": 0.03,
+    "note": "EXP[0] kappa 4.70"
+   }
+  },
+  {
+   "run": 8,
+   "kind": "evaluate",
+   "note": "EXP[0] kappa 7.00",
+   "edits_so_far": 11,
+   "time": "2026-11-14 02:28:36",
+   "result": {
+    "run": 8,
+    "budget_left": 42,
+    "practice_loss": 1.9201,
+    "pass@1": 0.015,
+    "syntax_ok": 0.89,
+    "runs_ok": 0.435,
+    "tests_passed": 0.087,
+    "outcomes": {
+     "pass": 3,
+     "wrong": 84,
+     "error": 91,
+     "timeout": 0,
+     "syntax": 22
+    },
+    "errors": {
+     "TypeError": 46,
+     "NameError": 37,
+     "IndexError": 4,
+     "AttributeError": 2,
+     "ZeroDivisionError": 1,
+     "KeyError": 1
+    },
+    "repeating": 0.075,
+    "note": "EXP[0] kappa 7.00"
+   }
+  },
+  {
+   "run": 9,
+   "kind": "evaluate",
+   "note": "EXP[0] kappa 9.00",
+   "edits_so_far": 13,
+   "time": "2026-11-14 02:29:20",
+   "result": {
+    "run": 9,
+    "budget_left": 41,
+    "practice_loss": 2.2408,
+    "pass@1": 0.005,
+    "syntax_ok": 0.755,
+    "runs_ok": 0.255,
+    "tests_passed": 0.0522,
+    "outcomes": {
+     "pass": 1,
+     "wrong": 50,
+     "error": 100,
+     "timeout": 0,
+     "syntax": 49
+    },
+    "errors": {
+     "NameError": 52,
+     "TypeError": 38,
+     "AttributeError": 3,
+     "IndexError": 3,
+     "KeyError": 2,
+     "ZeroDivisionError": 1
+    },
+    "repeating": 0.1,
+    "note": "EXP[0] kappa 9.00"
+   }
+  },
+  {
+   "run": 10,
+   "kind": "evaluate",
+   "note": "NORM[0] x 0.90",
+   "edits_so_far": 15,
+   "time": "2026-11-14 02:32:27",
+   "result": {
+    "run": 10,
+    "budget_left": 40,
+    "practice_loss": 1.7068,
+    "pass@1": 0.01,
+    "syntax_ok": 0.905,
+    "runs_ok": 0.4,
+    "tests_passed": 0.0885,
+    "outcomes": {
+     "pass": 2,
+     "wrong": 78,
+     "error": 101,
+     "timeout": 0,
+     "syntax": 19
+    },
+    "errors": {
+     "TypeError": 50,
+     "NameError": 41,
+     "AttributeError": 4,
+     "IndexError": 3,
+     "ZeroDivisionError": 2,
+     "KeyError": 1
+    },
+    "repeating": 0.06,
+    "note": "NORM[0] x 0.90"
+   }
+  },
+  {
+   "run": 11,
+   "kind": "evaluate",
+   "note": "NORM[0] x 1.10",
+   "edits_so_far": 17,
+   "time": "2026-11-14 02:32:57",
+   "result": {
+    "run": 11,
+    "budget_left": 39,
+    "practice_loss": 1.6963,
+    "pass@1": 0.015,
+    "syntax_ok": 0.835,
+    "runs_ok": 0.38,
+    "tests_passed": 0.0814,
+    "outcomes": {
+     "pass": 3,
+     "wrong": 73,
+     "error": 91,
+     "timeout": 0,
+     "syntax": 33
+    },
+    "errors": {
+     "TypeError": 48,
+     "NameError": 36,
+     "ZeroDivisionError": 3,
+     "AttributeError": 3,
+     "IndexError": 1
+    },
+    "repeating": 0.025,
+    "note": "NORM[0] x 1.10"
+   }
+  },
+  {
+   "run": 12,
+   "kind": "evaluate",
+   "note": "NORM[1] x 0.90",
+   "edits_so_far": 19,
+   "time": "2026-11-14 02:33:31",
+   "result": {
+    "run": 12,
+    "budget_left": 38,
+    "practice_loss": 1.6634,
+    "pass@1": 0.015,
+    "syntax_ok": 0.915,
+    "runs_ok": 0.37,
+    "tests_passed": 0.1012,
+    "outcomes": {
+     "pass": 3,
+     "wrong": 71,
+     "error": 109,
+     "timeout": 0,
+     "syntax": 17
+    },
+    "errors": {
+     "TypeError": 54,
+     "NameError": 44,
+     "AttributeError": 5,
+     "ZeroDivisionError": 2,
+     "IndexError": 1,
+     "ValueError": 1
+    },
+    "repeating": 0.04,
+    "note": "NORM[1] x 0.90"
+   }
+  },
+  {
+   "run": 13,
+   "kind": "evaluate",
+   "note": "NORM[1] x 1.10",
+   "edits_so_far": 21,
+   "time": "2026-11-14 02:34:16",
+   "result": {
+    "run": 13,
+    "budget_left": 37,
+    "practice_loss": 1.6553,
+    "pass@1": 0.01,
+    "syntax_ok": 0.9,
+    "runs_ok": 0.465,
+    "tests_passed": 0.1016,
+    "outcomes": {
+     "pass": 2,
+     "wrong": 91,
+     "error": 87,
+     "timeout": 0,
+     "syntax": 20
+    },
+    "errors": {
+     "TypeError": 48,
+     "NameError": 29,
+     "AttributeError": 7,
+     "IndexError": 2,
+     "ZeroDivisionError": 1
+    },
+    "repeating": 0.01,
+    "note": "NORM[1] x 1.10"
+   }
+  },
+  {
+   "run": 14,
+   "kind": "evaluate",
+   "note": "NORM[2] x 0.90",
+   "edits_so_far": 23,
+   "time": "2026-11-14 02:37:13",
+   "result": {
+    "run": 14,
+    "budget_left": 36,
+    "practice_loss": 1.6873,
+    "pass@1": 0.015,
+    "syntax_ok": 0.94,
+    "runs_ok": 0.42,
+    "tests_passed": 0.0895,
+    "outcomes": {
+     "pass": 3,
+     "wrong": 81,
+     "error": 104,
+     "timeout": 0,
+     "syntax": 12
+    },
+    "errors": {
+     "TypeError": 50,
+     "NameError": 47,
+     "AttributeError": 4,
+     "ZeroDivisionError": 2,
+     "IndexError": 1
+    },
+    "repeating": 0.03,
+    "note": "NORM[2] x 0.90"
+   }
+  },
+  {
+   "run": 15,
+   "kind": "evaluate",
+   "note": "NORM[2] x 1.10",
+   "edits_so_far": 25,
+   "time": "2026-11-14 02:40:33",
+   "result": {
+    "run": 15,
+    "budget_left": 35,
+    "practice_loss": 1.6949,
+    "pass@1": 0.015,
+    "syntax_ok": 0.885,
+    "runs_ok": 0.415,
+    "tests_passed": 0.0983,
+    "outcomes": {
+     "pass": 3,
+     "wrong": 80,
+     "error": 94,
+     "timeout": 0,
+     "syntax": 23
+    },
+    "errors": {
+     "TypeError": 49,
+     "NameError": 32,
+     "AttributeError": 4,
+     "IndexError": 3,
+     "ZeroDivisionError": 2,
+     "ValueError": 2
+    },
+    "repeating": 0.04,
+    "note": "NORM[2] x 1.10"
+   }
+  },
+  {
+   "run": 16,
+   "kind": "evaluate",
+   "note": "NORM[3] x 0.90",
+   "edits_so_far": 27,
+   "time": "2026-11-14 02:43:26",
+   "result": {
+    "run": 16,
+    "budget_left": 34,
+    "practice_loss": 1.6542,
+    "pass@1": 0.005,
+    "syntax_ok": 0.925,
+    "runs_ok": 0.41,
+    "tests_passed": 0.0868,
+    "outcomes": {
+     "pass": 1,
+     "wrong": 81,
+     "error": 103,
+     "timeout": 0,
+     "syntax": 15
+    },
+    "errors": {
+     "TypeError": 50,
+     "NameError": 42,
+     "AttributeError": 4,
+     "IndexError": 3,
+     "ZeroDivisionError": 2,
+     "ValueError": 1
+    },
+    "repeating": 0.02,
+    "note": "NORM[3] x 0.90"
+   }
+  },
+  {
+   "run": 17,
+   "kind": "evaluate",
+   "note": "NORM[3] x 1.10",
+   "edits_so_far": 29,
+   "time": "2026-11-14 02:47:14",
+   "result": {
+    "run": 17,
+    "budget_left": 33,
+    "practice_loss": 1.6497,
+    "pass@1": 0.005,
+    "syntax_ok": 0.9299999999999999,
+    "runs_ok": 0.415,
+    "tests_passed": 0.088,
+    "outcomes": {
+     "pass": 1,
+     "wrong": 82,
+     "error": 103,
+     "timeout": 0,
+     "syntax": 14
+    },
+    "errors": {
+     "TypeError": 49,
+     "NameError": 42,
+     "IndexError": 4,
+     "AttributeError": 4,
+     "ZeroDivisionError": 2,
+     "ValueError": 1
+    },
+    "repeating": 0.02,
+    "note": "NORM[3] x 1.10"
+   }
+  },
+  {
+   "run": 18,
+   "kind": "evaluate",
+   "note": "NORM[4] x 1.20",
+   "edits_so_far": 32,
+   "time": "2026-11-14 02:49:36",
+   "result": {
+    "run": 18,
+    "budget_left": 32,
+    "practice_loss": 1.6805,
+    "pass@1": 0.005,
+    "syntax_ok": 0.92,
+    "runs_ok": 0.405,
+    "tests_passed": 0.0895,
+    "outcomes": {
+     "pass": 1,
+     "wrong": 80,
+     "error": 103,
+     "timeout": 0,
+     "syntax": 16
+    },
+    "errors": {
+     "TypeError": 51,
+     "NameError": 41,
+     "AttributeError": 5,
+     "ZeroDivisionError": 2,
+     "IndexError": 2,
+     "ValueError": 1
+    },
+    "repeating": 0.035,
+    "note": "NORM[4] x 1.20"
+   }
+  },
+  {
+   "run": 19,
+   "kind": "evaluate",
+   "note": "RECIP x 0.88",
+   "edits_so_far": 35,
+   "time": "2026-11-14 02:51:34",
+   "result": {
+    "run": 19,
+    "budget_left": 31,
+    "practice_loss": 1.6689,
+    "pass@1": 0.01,
+    "syntax_ok": 0.89,
+    "runs_ok": 0.365,
+    "tests_passed": 0.0781,
+    "outcomes": {
+     "pass": 2,
+     "wrong": 71,
+     "error": 105,
+     "timeout": 0,
+     "syntax": 22
+    },
+    "errors": {
+     "TypeError": 53,
+     "NameError": 41,
+     "AttributeError": 5,
+     "IndexError": 4,
+     "ZeroDivisionError": 2
+    },
+    "repeating": 0.02,
+    "note": "RECIP x 0.88"
+   }
+  },
+  {
+   "run": 20,
+   "kind": "evaluate",
+   "note": "RECIP x 1.12",
+   "edits_so_far": 37,
+   "time": "2026-11-14 02:52:46",
+   "result": {
+    "run": 20,
+    "budget_left": 30,
+    "practice_loss": 1.6688,
+    "pass@1": 0.01,
+    "syntax_ok": 0.895,
+    "runs_ok": 0.405,
+    "tests_passed": 0.093,
+    "outcomes": {
+     "pass": 2,
+     "wrong": 79,
+     "error": 98,
+     "timeout": 0,
+     "syntax": 21
+    },
+    "errors": {
+     "TypeError": 43,
+     "NameError": 40,
+     "AttributeError": 6,
+     "ZeroDivisionError": 3,
+     "IndexError": 2,
+     "ValueError": 2
+    },
+    "repeating": 0.045,
+    "note": "RECIP x 1.12"
+   }
+  },
+  {
+   "run": 21,
+   "kind": "evaluate",
+   "note": "c_s layer all moved by -16 codes",
+   "edits_so_far": 46,
+   "time": "2026-11-14 02:53:41",
+   "result": {
+    "run": 21,
+    "budget_left": 29,
+    "practice_loss": 1.6464,
+    "pass@1": 0.005,
+    "syntax_ok": 0.9299999999999999,
+    "runs_ok": 0.425,
+    "tests_passed": 0.095,
+    "outcomes": {
+     "pass": 1,
+     "wrong": 84,
+     "error": 101,
+     "timeout": 0,
+     "syntax": 14
+    },
+    "errors": {
+     "TypeError": 53,
+     "NameError": 38,
+     "AttributeError": 4,
+     "ZeroDivisionError": 3,
+     "IndexError": 1,
+     "ValueError": 1
+    },
+    "repeating": 0.04,
+    "note": "c_s layer all moved by -16 codes"
+   }
+  },
+  {
+   "run": 22,
+   "kind": "evaluate",
+   "note": "c_s layer 1 moved by 8 codes",
+   "edits_so_far": 58,
+   "time": "2026-11-14 02:54:18",
+   "result": {
+    "run": 22,
+    "budget_left": 28,
+    "practice_loss": 1.6463,
+    "pass@1": 0.005,
+    "syntax_ok": 0.9299999999999999,
+    "runs_ok": 0.425,
+    "tests_passed": 0.095,
+    "outcomes": {
+     "pass": 1,
+     "wrong": 84,
+     "error": 101,
+     "timeout": 0,
+     "syntax": 14
+    },
+    "errors": {
+     "TypeError": 53,
+     "NameError": 38,
+     "AttributeError": 4,
+     "ZeroDivisionError": 3,
+     "IndexError": 1,
+     "ValueError": 1
+    },
+    "repeating": 0.04,
+    "note": "c_s layer 1 moved by 8 codes"
+   }
+  },
+  {
+   "run": 23,
+   "kind": "evaluate",
+   "note": "E[135] ('and ') x 0.85",
+   "edits_so_far": 63,
+   "time": "2026-11-14 02:57:17",
+   "result": {
+    "run": 23,
+    "budget_left": 27,
+    "practice_loss": 1.6457,
+    "pass@1": 0.005,
+    "syntax_ok": 0.925,
+    "runs_ok": 0.42,
+    "tests_passed": 0.0955,
+    "outcomes": {
+     "pass": 1,
+     "wrong": 83,
+     "error": 101,
+     "timeout": 0,
+     "syntax": 15
+    },
+    "errors": {
+     "TypeError": 50,
+     "NameError": 40,
+     "AttributeError": 5,
+     "ZeroDivisionError": 2,
+     "IndexError": 2,
+     "ValueError": 1
+    },
+    "repeating": 0.03,
+    "note": "E[135] ('and ') x 0.85"
+   }
+  },
+  {
+   "run": 24,
+   "kind": "evaluate",
+   "note": "norm:1:0.9+exp:1:5.5",
+   "edits_so_far": 66,
+   "time": "2026-11-14 02:58:20",
+   "result": {
+    "run": 24,
+    "budget_left": 26,
+    "practice_loss": 1.6999,
+    "pass@1": 0.01,
+    "syntax_ok": 0.85,
+    "runs_ok": 0.355,
+    "tests_passed": 0.0857,
+    "outcomes": {
+     "pass": 2,
+     "wrong": 69,
+     "error": 99,
+     "timeout": 0,
+     "syntax": 30
+    },
+    "errors": {
+     "NameError": 47,
+     "TypeError": 47,
+     "ZeroDivisionError": 3,
+     "ValueError": 1,
+     "KeyError": 1
+    },
+    "repeating": 0.035,
+    "note": "norm:1:0.9+exp:1:5.5"
+   }
+  },
+  {
+   "run": 25,
+   "kind": "evaluate",
+   "note": "norm:1:0.9+norm:2:1.1",
+   "edits_so_far": 69,
+   "time": "2026-11-14 02:58:49",
+   "result": {
+    "run": 25,
+    "budget_left": 25,
+    "practice_loss": 1.7254,
+    "pass@1": 0.005,
+    "syntax_ok": 0.83,
+    "runs_ok": 0.34,
+    "tests_passed": 0.0821,
+    "outcomes": {
+     "pass": 1,
+     "wrong": 67,
+     "error": 98,
+     "timeout": 0,
+     "syntax": 34
+    },
+    "errors": {
+     "TypeError": 48,
+     "NameError": 36,
+     "AttributeError": 7,
+     "IndexError": 3,
+     "ZeroDivisionError": 2,
+     "ValueError": 1
+    },
+    "repeating": 0.065,
+    "note": "norm:1:0.9+norm:2:1.1"
+   }
+  },
+  {
+   "run": 26,
+   "kind": "evaluate",
+   "note": "norm:1:0.9+norm:2:0.9",
+   "edits_so_far": 71,
+   "time": "2026-11-14 02:59:33",
+   "result": {
+    "run": 26,
+    "budget_left": 24,
+    "practice_loss": 1.6881,
+    "pass@1": 0.01,
+    "syntax_ok": 0.885,
+    "runs_ok": 0.315,
+    "tests_passed": 0.0829,
+    "outcomes": {
+     "pass": 2,
+     "wrong": 61,
+     "error": 114,
+     "timeout": 0,
+     "syntax": 23
+    },
+    "errors": {
+     "TypeError": 57,
+     "NameError": 46,
+     "IndexError": 4,
+     "AttributeError": 4,
+     "ZeroDivisionError": 2,
+     "KeyError": 1
+    },
+    "repeating": 0.065,
+    "note": "norm:1:0.9+norm:2:0.9"
+   }
+  },
+  {
+   "run": 27,
+   "kind": "evaluate",
+   "note": "norm:1:1.1+exp:0:5.5",
+   "edits_so_far": 74,
+   "time": "2026-11-14 03:00:03",
+   "result": {
+    "run": 27,
+    "budget_left": 23,
+    "practice_loss": 1.7446,
+    "pass@1": 0.01,
+    "syntax_ok": 0.915,
+    "runs_ok": 0.395,
+    "tests_passed": 0.1049,
+    "outcomes": {
+     "pass": 2,
+     "wrong": 77,
+     "error": 104,
+     "timeout": 0,
+     "syntax": 17
+    },
+    "errors": {
+     "TypeError": 54,
+     "NameError": 38,
+     "IndexError": 4,
+     "AttributeError": 3,
+     "ZeroDivisionError": 2,
+     "KeyError": 2
+    },
+    "repeating": 0.04,
+    "note": "norm:1:1.1+exp:0:5.5"
+   }
+  },
+  {
+   "run": 28,
+   "kind": "evaluate",
+   "note": "norm:1:0.95",
+   "edits_so_far": 77,
+   "time": "2026-11-14 03:00:53",
+   "result": {
+    "run": 28,
+    "budget_left": 22,
+    "practice_loss": 1.6534,
+    "pass@1": 0.015,
+    "syntax_ok": 0.9,
+    "runs_ok": 0.375,
+    "tests_passed": 0.0926,
+    "outcomes": {
+     "pass": 3,
+     "wrong": 72,
+     "error": 105,
+     "timeout": 0,
+     "syntax": 20
+    },
+    "errors": {
+     "TypeError": 51,
+     "NameError": 44,
+     "IndexError": 4,
+     "AttributeError": 3,
+     "ZeroDivisionError": 2,
+     "KeyError": 1
+    },
+    "repeating": 0.045,
+    "note": "norm:1:0.95"
+   }
+  },
+  {
+   "run": 29,
+   "kind": "evaluate",
+   "note": "norm:1:0.85",
+   "edits_so_far": 79,
+   "time": "2026-11-14 03:01:20",
+   "result": {
+    "run": 29,
+    "budget_left": 21,
+    "practice_loss": 1.6824,
+    "pass@1": 0.01,
+    "syntax_ok": 0.89,
+    "runs_ok": 0.375,
+    "tests_passed": 0.0963,
+    "outcomes": {
+     "pass": 2,
+     "wrong": 73,
+     "error": 103,
+     "timeout": 0,
+     "syntax": 22
+    },
+    "errors": {
+     "NameError": 48,
+     "TypeError": 47,
+     "AttributeError": 3,
+     "IndexError": 2,
+     "ZeroDivisionError": 1,
+     "ValueError": 1
+    },
+    "repeating": 0.04,
+    "note": "norm:1:0.85"
+   }
+  },
+  {
+   "run": 30,
+   "kind": "evaluate",
+   "note": "norm:1:0.9+norm:3:1.1",
+   "edits_so_far": 81,
+   "time": "2026-11-14 03:01:45",
+   "result": {
+    "run": 30,
+    "budget_left": 20,
+    "practice_loss": 1.6688,
+    "pass@1": 0.01,
+    "syntax_ok": 0.87,
+    "runs_ok": 0.365,
+    "tests_passed": 0.0986,
+    "outcomes": {
+     "pass": 2,
+     "wrong": 71,
+     "error": 101,
+     "timeout": 0,
+     "syntax": 26
+    },
+    "errors": {
+     "TypeError": 51,
+     "NameError": 36,
+     "AttributeError": 6,
+     "ZeroDivisionError": 3,
+     "IndexError": 2,
+     "KeyError": 2
+    },
+    "repeating": 0.055,
+    "note": "norm:1:0.9+norm:3:1.1"
+   }
+  },
+  {
+   "run": 31,
+   "kind": "evaluate",
+   "note": "norm:1:0.9+norm:3:0.9",
+   "edits_so_far": 83,
+   "time": "2026-11-14 03:02:08",
+   "result": {
+    "run": 31,
+    "budget_left": 19,
+    "practice_loss": 1.6675,
+    "pass@1": 0.01,
+    "syntax_ok": 0.915,
+    "runs_ok": 0.395,
+    "tests_passed": 0.107,
+    "outcomes": {
+     "pass": 2,
+     "wrong": 77,
+     "error": 104,
+     "timeout": 0,
+     "syntax": 17
+    },
+    "errors": {
+     "TypeError": 51,
+     "NameError": 41,
+     "AttributeError": 6,
+     "IndexError": 3,
+     "ZeroDivisionError": 1,
+     "ValueError": 1
+    },
+    "repeating": 0.04,
+    "note": "norm:1:0.9+norm:3:0.9"
+   }
+  },
+  {
+   "run": 32,
+   "kind": "evaluate",
+   "note": "norm:1:0.92",
+   "edits_so_far": 85,
+   "time": "2026-11-14 03:02:42",
+   "result": {
+    "run": 32,
+    "budget_left": 18,
+    "practice_loss": 1.6562,
+    "pass@1": 0.015,
+    "syntax_ok": 0.9,
+    "runs_ok": 0.405,
+    "tests_passed": 0.1089,
+    "outcomes": {
+     "pass": 3,
+     "wrong": 78,
+     "error": 99,
+     "timeout": 0,
+     "syntax": 20
+    },
+    "errors": {
+     "TypeError": 46,
+     "NameError": 43,
+     "AttributeError": 4,
+     "IndexError": 3,
+     "ZeroDivisionError": 1,
+     "ValueError": 1
+    },
+    "repeating": 0.035,
+    "note": "norm:1:0.92"
+   }
+  },
+  {
+   "run": 33,
+   "kind": "evaluate",
+   "note": "norm:1:0.88",
+   "edits_so_far": 87,
+   "time": "2026-11-14 03:04:01",
+   "result": {
+    "run": 33,
+    "budget_left": 17,
+    "practice_loss": 1.666,
+    "pass@1": 0.015,
+    "syntax_ok": 0.895,
+    "runs_ok": 0.415,
+    "tests_passed": 0.1042,
+    "outcomes": {
+     "pass": 3,
+     "wrong": 80,
+     "error": 96,
+     "timeout": 0,
+     "syntax": 21
+    },
+    "errors": {
+     "TypeError": 46,
+     "NameError": 42,
+     "IndexError": 3,
+     "AttributeError": 2,
+     "ZeroDivisionError": 1,
+     "ValueError": 1
+    },
+    "repeating": 0.02,
+    "note": "norm:1:0.88"
+   }
+  },
+  {
+   "run": 34,
+   "kind": "evaluate",
+   "note": "norm:1:0.92",
+   "edits_so_far": 89,
+   "time": "2026-11-14 03:04:57",
+   "result": {
+    "run": 34,
+    "budget_left": 16,
+    "practice_loss": 1.6562,
+    "pass@1": 0.015,
+    "syntax_ok": 0.9,
+    "runs_ok": 0.405,
+    "tests_passed": 0.1089,
+    "outcomes": {
+     "pass": 3,
+     "wrong": 78,
+     "error": 99,
+     "timeout": 0,
+     "syntax": 20
+    },
+    "errors": {
+     "TypeError": 46,
+     "NameError": 43,
+     "AttributeError": 4,
+     "IndexError": 3,
+     "ZeroDivisionError": 1,
+     "ValueError": 1
+    },
+    "repeating": 0.035,
+    "note": "norm:1:0.92"
+   }
+  }
+ ]
+}

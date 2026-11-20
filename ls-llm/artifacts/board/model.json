@@ -1,0 +1,148 @@
+{
+ "config": {
+  "vocab_size": 512,
+  "dim": 160,
+  "n_layers": 2,
+  "n_heads": 4,
+  "n_kv_heads": 1,
+  "hidden_dim": 219,
+  "max_seq_len": 256,
+  "tied_embeddings": true,
+  "ffn": "relu",
+  "norm": "rmsnorm",
+  "attn": "softmax",
+  "window": 0
+ },
+ "options": {
+  "norm": "rms",
+  "ffn": "relu"
+ },
+ "frac": {
+  "x": 4,
+  "E": 7,
+  "y": [
+   5,
+   5,
+   4,
+   4,
+   3
+  ],
+  "u": 1,
+  "q": [
+   6,
+   6
+  ],
+  "k": [
+   4,
+   3
+  ],
+  "v": [
+   6,
+   5
+  ],
+  "o": [
+   5,
+   5
+  ],
+  "s": [
+   2,
+   2
+  ],
+  "g": [
+   5,
+   5
+  ],
+  "Wq": [
+   10,
+   10
+  ],
+  "Wk": [
+   7,
+   7
+  ],
+  "Wv": [
+   10,
+   8
+  ],
+  "Wo": [
+   7,
+   7
+  ],
+  "W1": [
+   9,
+   8
+  ],
+  "W2": [
+   7,
+   7
+  ]
+ },
+ "shifts": {
+  "sh_l": 9,
+  "sh_e": 3,
+  "sh_q": [
+   9,
+   8
+  ],
+  "sh_k": [
+   8,
+   8
+  ],
+  "sh_v": [
+   9,
+   7
+  ],
+  "sh_s": [
+   8,
+   7
+  ],
+  "sh_o": [
+   7,
+   6
+  ],
+  "sh_1": [
+   9,
+   7
+  ],
+  "sa": [
+   4,
+   5,
+   7,
+   8,
+   11
+  ],
+  "sb": [
+   2,
+   2,
+   4,
+   4,
+   5
+  ]
+ },
+ "preloads": {
+  "c_s": [
+   [
+    15653,
+    13108,
+    14286,
+    14551
+   ],
+   [
+    5028,
+    6605,
+    8243,
+    7720
+   ]
+  ],
+  "c_l": 8026
+ },
+ "tokenizer": "data/tok/f512p",
+ "tables": {
+  "alpha": null,
+  "gain": 2.6085445880889893
+ },
+ "notes": [
+  "Wo_0 uses only -28..28 of -127..127",
+  "E repaired by lsllm.intref.polish: 2481 entries moved by at most 7 codes, no input embedding changed"
+ ]
+}
